@@ -1,0 +1,13 @@
+type Query {
+    zipcode(code: String @doc(description: "Query by pincode.")) : Zipcode @resolver( class: "Auraine\\ZipCode\\Model\\Resolver\\Zipcode")  
+}
+
+type Zipcode {
+    status: Boolean  @doc(description: "Status of the pincode.")
+    city: String @doc(description: "City of the pincode.")
+    country: String @doc(description: "Country of the pincode.")
+}
+
+type Cart {
+    zipcode_check: Boolean @doc(description: "Add zipcode_check filed to existing cart module") @resolver(class: "Auraine\\ZipCode\\Model\\Resolver\\ZipCheck")
+}
