@@ -2,6 +2,7 @@ type Query {
 getBrandsList (
  entity_id: Int @doc(description: "The id of the brand"),
  filter_label: String @doc(description: "Is featured or not")
+ url_key: String @doc(description: "filter by url key")
 
  )
 : [BrandsList] @resolver (class:"\\Auraine\\Brands\\Model\\Resolver\\BrandsList") @doc(description:"List of Brands")

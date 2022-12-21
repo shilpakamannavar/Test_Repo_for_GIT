@@ -1,9 +1,5 @@
 <?php
-/**
- * Pack
- *
- * Lice
- */
+
 namespace Auraine\Brands\Controller\Adminhtml\Brands;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -26,8 +22,8 @@ class Save extends \Magento\Backend\App\Action
         \Auraine\Brands\Model\GridFactory $gridFactory,
         \Magento\MediaStorage\Model\File\UploaderFactory $fileUploaderFactory
     ) {
-
-
+       
+     
         $this->gridFactory = $gridFactory;
         $this->_fileUploaderFactory = $fileUploaderFactory;
         parent::__construct($context);
@@ -40,12 +36,12 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         // $rowId = (int) $this->getRequest()->getParam('id');
-
+        
         $data = $this->getRequest()->getPostValue();
-
+       
         // $cat=implode(",",$data['categories_id']);
         // $data['categories_id']=$cat;
-
+       
 
         if (isset($_FILES['image']) && isset($_FILES['image']['name']) && strlen($_FILES['image']['name'])) {
                 /*
@@ -61,7 +57,7 @@ class Save extends \Magento\Backend\App\Action
                     $imageAdapter = $this->_objectManager->get('Magento\Framework\Image\AdapterFactory')->create();
 
                     //$imageAdapter = $this->adapterFactory->create();
-
+            
                     $uploader->addValidateCallback('image', $imageAdapter, 'validateUploadFile');
                     $uploader->setAllowRenameFiles(true);
                     $uploader->setFilesDispersion(true);
@@ -69,7 +65,7 @@ class Save extends \Magento\Backend\App\Action
                 /** @var \Magento\Framework\Filesystem\Directory\Read $mediaDirectory */
                 $mediaDirectory = $this->_objectManager->get('Magento\Framework\Filesystem') ->getDirectoryRead(DirectoryList::MEDIA);
                     //     $mediaDirectory = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
-
+            
                     $result = $uploader->save(
                     $mediaDirectory->getAbsolutePath($base_media_path)
                     );
@@ -91,7 +87,7 @@ class Save extends \Magento\Backend\App\Action
                     }
                 }
             }
-
+            
 
         if (!$data) {
             $this->_redirect('brands/brands/addrow');

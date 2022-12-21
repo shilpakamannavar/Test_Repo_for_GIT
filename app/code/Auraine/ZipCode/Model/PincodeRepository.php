@@ -42,7 +42,6 @@ class PincodeRepository implements PincodeRepositoryInterface
      */
     protected $pincodeFactory;
 
-
     /**
      * @param ResourcePincode $resource
      * @param PincodeInterfaceFactory $pincodeFactory

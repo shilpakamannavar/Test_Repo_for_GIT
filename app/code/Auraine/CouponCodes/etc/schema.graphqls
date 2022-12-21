@@ -1,0 +1,28 @@
+type Query {
+    getCoupons(
+        cart_id: String @doc(description: "Cart id")
+    ) : [Coupons] @resolver (class:"\\Auraine\\CouponCodes\\Model\\Resolver\\Coupons") @doc(description:"List of Training Informations")
+}
+
+type Coupons {
+    name: String @doc(description: "Copuon Name")
+    description: String @doc(description: "Coupon description")
+    coupon: String @doc(description: "Copuon Code")
+    value: String @doc(description: "Coupon discount value")
+    from_date: String @doc(description: "From date")
+    to_date: String @doc(description: "To date")
+    is_active: String @doc(description: "Active status of code")
+    action: String @doc(description: "Type of action type")
+    discount_amount: String @doc(description: "Discount amount")
+    uses_per_customer: Int @doc(description: "Uses per customer")
+    uses_per_coupon: Int @doc(description: "Uses per coupon")
+    times_used: Int @doc(description: "Times used")
+    rule: [Rule] @doc(description: "Coupon rules")
+    product_ids: [String] @doc(description: "Product ids")
+}
+
+type Rule {
+    attribute: String @doc(description: "Attribute")
+    operator: String @doc(description: "Operator")
+    value: String @doc(description: "Value")
+}

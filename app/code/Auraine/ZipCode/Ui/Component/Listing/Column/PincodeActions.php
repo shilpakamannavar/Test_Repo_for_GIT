@@ -6,10 +6,16 @@ namespace Auraine\ZipCode\Ui\Component\Listing\Column;
 class PincodeActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
 
-    const URL_PATH_DETAILS = 'auraine_zipcode/pincode/details';
+    /**
+     * * Edit Url path
+     * @var string const
+     */
     const URL_PATH_EDIT = 'auraine_zipcode/pincode/edit';
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
     protected $urlBuilder;
-    const URL_PATH_DELETE = 'auraine_zipcode/pincode/delete';
 
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
@@ -49,19 +55,6 @@ class PincodeActions extends \Magento\Ui\Component\Listing\Columns\Column
                                 ]
                             ),
                             'label' => __('Edit')
-                        ],
-                        'delete' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_DELETE,
-                                [
-                                    'pincode_id' => $item['pincode_id']
-                                ]
-                            ),
-                            'label' => __('Delete'),
-                            'confirm' => [
-                                'title' => __('Delete "${ $.$data.title }"'),
-                                'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
-                            ]
                         ]
                     ];
                 }

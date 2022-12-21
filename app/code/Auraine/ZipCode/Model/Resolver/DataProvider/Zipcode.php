@@ -7,7 +7,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 
 class Zipcode
 {
- 
+
     /**
      * Pincode Model factory
      * 
@@ -16,13 +16,23 @@ class Zipcode
     protected $_pincodeFactory;
 
     /**
+     * @var \Magento\Directory\Model\CountryFactory
+     */
+    protected $_countryFactory;
+
+    /**
      * Constructes model Pincode Model factory service
+     * @param \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory,
+     * @param \Magento\Directory\Model\CountryFactory $countryFactory,
      */
     public function __construct(
-        \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory
+        \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory,
+        \Magento\Directory\Model\CountryFactory $countryFactory,
     )
     {
         $this->_pincodeFactory = $pincodeFactory;
+        $this->_countryFactory = $countryFactory;
+
     }
 
     /**
@@ -34,7 +44,7 @@ class Zipcode
     private function isAvailable($code): bool
     {
         $pincode = $this->_pincodeFactory->create()->load($code, 'code');
-        
+
         return $pincode->getStatus() ? (bool) $pincode->getStatus() : false;
     }
 
@@ -46,15 +56,20 @@ class Zipcode
      */
     public function generateZipCodeResponse($code): array
     {
+
         $pincode = $this->_pincodeFactory->create()->load($code, 'code');
+
 
         if (empty($pincode->getData())) {
             throw new GraphQlInputException(__("Pincode isn't available "));
         }
+        
+        $countryModel = $this->_countryFactory->create();
+        $country = $countryModel->loadByCode($pincode->getCountry());
 
         return [
                 'city' => $pincode->getCity(),
-                'country' => $pincode->getCountry(),
+                'country' => $country->getName(),
                 'status' => $pincode->getStatus()
             ];
     }
@@ -78,4 +93,3 @@ class Zipcode
         return $this->isAvailable($code);
     }
 }
-

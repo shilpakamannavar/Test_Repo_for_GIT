@@ -20,7 +20,7 @@ class BrandsList
         $this->_objectManager = $objectManager;
     }
  
-    public function getBrandsList($filter_entity_id,$filter_label)
+    public function getBrandsList($filter_entity_id,$filter_label, $filter_url)
     {
         $brandData = [];
         try {
@@ -35,6 +35,11 @@ class BrandsList
             if($filter_label)
             {
                 $brandData =   $this->filter_function($filter_label);
+            }
+            if($filter_url)
+            {
+                $collection = $this->_brandsFactory->create()->addFieldToFilter('url_key',$filter_url);
+                $brandData = $collection->getData();
             }
 
         } catch (NoSuchEntityException $e) {

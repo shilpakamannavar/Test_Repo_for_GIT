@@ -34,7 +34,8 @@ class BrandsList implements ResolverInterface
     {
          $filter_entity_id = $args['entity_id'] ?? null;
          $filter_label = $args['filter_label'] ?? null; 
+         $filter_url = $args['url_key'] ?? null; 
                  
-        return $this->dataProvider->getBrandsList($filter_entity_id,$filter_label);
+        return $this->dataProvider->getBrandsList($filter_entity_id,$filter_label, $filter_url);
     }
 }

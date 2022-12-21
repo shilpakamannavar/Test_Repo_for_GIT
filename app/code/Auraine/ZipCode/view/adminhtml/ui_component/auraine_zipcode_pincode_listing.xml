@@ -19,7 +19,7 @@
 			</button>
 		</buttons>
 	</settings>
-
+	
 	<dataSource name="auraine_zipcode_pincode_listing_data_source" component="Magento_Ui/js/grid/provider">
 		<settings>
 			<storageConfig>
@@ -35,7 +35,7 @@
 			</settings>
 		</dataProvider>
 	</dataSource>
-
+	
 	<listingToolbar name="listing_top">
 		<settings>
 			<sticky>true</sticky>
@@ -44,6 +44,52 @@
 		<columnsControls name="columns_controls"/>
 		<filters name="listing_filters"/>
 		<paging name="listing_paging"/>
+
+		<massaction name="listing_massaction">
+
+			<argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">auraine_zipcode_pincode_listing.auraine_zipcode_pincode_listing.auraine_zipcode_pincode_columns.ids</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    <item name="indexField" xsi:type="string">pincode_id</item>
+                </item>
+            </argument>
+
+			<action name="status">
+                <settings>
+                    <type>status</type>
+                    <label translate="true">Change status</label>
+                    <actions>
+                        <action name="0">
+                            <type>enable</type>
+                            <label translate="true">Enable</label>
+                            <url path="auraine_zipcode/index/massstatusupdate">
+                                <param name="status">1</param>
+                            </url>
+                        </action>
+                        <action name="1">
+                            <type>disable</type>
+                            <label translate="true">Disable</label>
+                            <url path="auraine_zipcode/index/massstatusupdate">
+                                <param name="status">0</param>
+                            </url>
+                        </action>
+                    </actions>
+                </settings>
+            </action>
+
+			<action name="delete">
+				<settings>
+					<confirm>
+						<message translate="true">Are you sure to delete selected items?</message>
+						<title translate="true">Delete items</title>
+					</confirm>
+					<url path="auraine_zipcode/index/massaction"/>
+					<type>delete</type>
+					<label translate="true">Delete</label>
+				</settings>
+			</action>
+		</massaction>
 	</listingToolbar>
 
 	<columns name="auraine_zipcode_pincode_columns">
@@ -53,15 +99,15 @@
 			</settings>
 		</selectionsColumn>
 
-		<column name="pincode_id">
+		<column name="pincode_id" sortOrder="10">
 			<settings>
 				<filter>text</filter>
 				<sorting>asc</sorting>
 				<label translate="true">ID</label>
 			</settings>
 		</column>
-
-		<column name="code">
+		
+		<column name="code" sortOrder="20">
 			<settings>
 				<filter>text</filter>
 				<label translate="true">Code</label>
@@ -74,7 +120,18 @@
 			</settings>
 		</column>
 
-		<column name="city">
+		<actionsColumn name="actions" class="Auraine\ZipCode\Ui\Component\Listing\Column\PincodeActions">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="resizeEnabled" xsi:type="boolean">false</item>
+					<item name="resizeDefaultWidth" xsi:type="string">107</item>
+					<item name="indexField" xsi:type="string">id</item>
+					<item name="sortOrder" xsi:type="number">110</item>
+				</item>
+			</argument>
+		</actionsColumn>
+		
+		<column name="city" sortOrder="140">
 			<settings>
 				<filter>text</filter>
 				<label translate="true">City</label>
@@ -87,39 +144,24 @@
 			</settings>
 		</column>
 
-		<column name="country">
+		<column name="country" sortOrder="50" component="Magento_Ui/js/grid/columns/select">
 			<settings>
-				<filter>text</filter>
 				<label translate="true">Country</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
+				<options class="Auraine\ZipCode\Model\Config\Source\Countries"/>
+				<filter>select</filter>
+				<dataType>select</dataType>
 			</settings>
 		</column>
 
-		<column name="status">
+		<column name="status" component="Magento_Ui/js/grid/columns/select">
 			<settings>
-				<filter>text</filter>
 				<label translate="true">Status</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
+				<options class="Auraine\ZipCode\Model\Config\Source\Status"/>
+				<filter>select</filter>
+				<dataType>select</dataType>
 			</settings>
 		</column>
 
-		<actionsColumn name="actions" class="Auraine\ZipCode\Ui\Component\Listing\Column\PincodeActions">
-			<settings>
-				<indexField>pincode_id</indexField>
-				<resizeEnabled>false</resizeEnabled>
-				<resizeDefaultWidth>107</resizeDefaultWidth>
-			</settings>
-		</actionsColumn>
 
 	</columns>
 </listing>
