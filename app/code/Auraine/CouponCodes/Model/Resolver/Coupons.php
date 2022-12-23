@@ -13,6 +13,16 @@ use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 class Coupons implements ResolverInterface
 {
 
+     /**
+     * Custom header name constant.
+     */
+    CONST CUSTOM_MOBILE_HEADER_NAME = "X-REQUESTED-WITH";
+
+    /**
+     * Custom header content constant.
+     */
+    CONST CUSTOM_MOBILE_HEADER_CONTENT = "Application/Mobile";
+
     /**
      * Quote repository.
      *
@@ -33,19 +43,26 @@ class Coupons implements ResolverInterface
     private $maskedQuoteIdToQuoteId;
 
     /**
+     * @var \Magento\Framework\ObjectManagerInterface
+     */
+    private $_objectManager;
+
+    /**
      * Constructs a coupon read service object.
      */
     public function __construct(
         QuoteIdMask $quoteIdMaskFactory,
         \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
         \Auraine\CouponCodes\Model\DataProvider\Collection $ruleCollection,
-        MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+        MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
+        \Magento\Framework\ObjectManagerInterface $objectManger
         )
     {
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
         $this->quoteRepository = $quoteRepository;
         $this->ruleCollection = $ruleCollection;
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
+        $this->_objectManager = $objectManger;
     }
 
     /**
@@ -54,13 +71,18 @@ class Coupons implements ResolverInterface
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
         
+        $request = $this->_objectManager->create("Magento\Framework\App\RequestInterface");
+
         $cartId = $this->getCartId($args);
         $cartId = $this->maskedQuoteIdToQuoteId->execute($cartId);
-        
+
+        $mobileHeader = $request->getHeader(self::CUSTOM_MOBILE_HEADER_NAME);
+        $headerStatus = $mobileHeader == self::CUSTOM_MOBILE_HEADER_CONTENT;
+      
         /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $this->quoteRepository->getActive($cartId);
 
-        $data = $this->ruleCollection->getValidCouponList($quote);
+        $data = $this->ruleCollection->getValidCouponList($quote, $headerStatus);
 
         return $data;
 
@@ -77,7 +99,7 @@ class Coupons implements ResolverInterface
         if (!isset($args['cart_id'])) {
             throw new GraphQlInputException(__('"Cart id should be specified'));
         }
-        
+
         return $args['cart_id'];
     }
 }
