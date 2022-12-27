@@ -1,0 +1,22 @@
+{
+    "auraine_shopbrand": {
+        "column": {
+            "entity_id": true,
+            "title": true,
+            "image": true,
+            "description": true,
+            "stores": true,
+            "is_popular": true,
+            "is_featured": true,
+            "is_justin": true,
+            "is_exclusive": true,
+            "status": true,
+            "url_key": true,
+            "meta_key": true,
+            "meta_description": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

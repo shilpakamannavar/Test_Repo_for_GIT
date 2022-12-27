@@ -1,0 +1,8 @@
+type StoreConfig {
+   coupen_display_text: String @doc(description: "To fetch coupen label text message")
+   free_shipping_subtotal:Int @doc(description: "To fetch amount of free shipping")
+}
+
+interface ProductInterface {
+    product_quatity : Float @doc(description: "The Total quantity.")  @resolver(class: "Auraine\\Offerlabel\\Model\\Resolver\\Product\\Quantity") @doc(description: "Stock status attributes")
+}

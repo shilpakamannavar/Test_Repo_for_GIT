@@ -1,0 +1,10 @@
+type Customer {
+    mobile_number: String
+        @doc(description: "Customer Number of orders")
+        @resolver(class: "\\Auraine\\CustomerAttribute\\Model\\Resolver\\GetMobileNumber")
+}
+
+input CustomerInput {
+    mobile_number: String
+}
+
