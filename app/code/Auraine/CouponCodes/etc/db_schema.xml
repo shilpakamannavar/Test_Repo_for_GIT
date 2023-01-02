@@ -2,6 +2,7 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="salesrule" resource="default" engine="innodb" comment="Sales rules table">
         <column xsi:type="smallint" name="is_mobile_specific" nullable="false" default="0" comment="Is mobile specific"/>
+        <column xsi:type="smallint" name="is_applied_on_full_price" nullable="false" default="0" comment="Is Promo code applied on full price of cart."/>
         <index referenceId="INDEX_IS_MOBILE_SPECIFIC" indexType="btree">
             <column name="is_mobile_specific"/>
         </index>

@@ -95,12 +95,22 @@ class Save extends \Magento\Backend\App\Action
         }
         try {
             $rowData = $this->gridFactory->create();
+
+            $rowData->load($data['title'], 'title');
+            if ($rowData->getId()) {
+               $this->messageManager->addError(__('Brand name already exists.'));
+                $this->_redirect('brands/brands/index');
+              
+            }
+        else{
+
             $rowData->setData($data);
             if (isset($data['id'])) {
                 $rowData->setId($data['id']);
             }
             $rowData->save();
             $this->messageManager->addSuccess(__('Brand data has been successfully saved.'));
+             }
         } catch (\Exception $e) {
             $this->messageManager->addError(__($e->getMessage()));
         }

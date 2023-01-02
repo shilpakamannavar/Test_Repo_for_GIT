@@ -9,6 +9,7 @@ type Coupons {
     description: String @doc(description: "Coupon description")
     coupon: String @doc(description: "Copuon Code")
     is_mobile_specific: Boolean @doc(description: "Mobile specific coupon")
+    is_applied_on_full_price: Boolean @doc(description: "Is applied on full product price")
     value: String @doc(description: "Coupon discount value")
     from_date: String @doc(description: "From date")
     to_date: String @doc(description: "To date")

@@ -1,0 +1,3 @@
+input CategoryFilterInput {
+    slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with slider_id Value")
+}

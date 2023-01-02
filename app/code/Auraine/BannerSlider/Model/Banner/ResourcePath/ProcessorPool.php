@@ -1,0 +1,31 @@
+<?php
+
+namespace Auraine\BannerSlider\Model\Banner\ResourcePath;
+
+
+class ProcessorPool
+{
+    /**
+     * @var ProcessorInterface[]
+     */
+    private $processors;
+
+    /**
+     * ProcessorPool constructor.
+     * @param array $processors
+     */
+    public function __construct(
+        array $processors = []
+    )
+    {
+        $this->processors = $processors;
+    }
+
+    /**
+     * @return ProcessorInterface[]
+     */
+    public function getProcessors(): array
+    {
+        return $this->processors;
+    }
+}

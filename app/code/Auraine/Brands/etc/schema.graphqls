@@ -50,3 +50,9 @@ type Aggregation @doc(description: "Contains information for each filterable opt
 type Products @doc(description: "Contains the results of a `products` query.") {
      aggregations (filter: AggregationsFilterInput): [Aggregation] @doc(description: "A bucket that contains the attribute code and label for each filterable option.")@resolver(class: "Auraine\\Brands\\Model\\Resolver\\Aggregations")
    }
+
+interface OrderItemInterface @doc(description: "Order item details.") @resolver(class:"Auraine\\Brands\\Model\\Resolver\\OrderItem\\DataProvider") {
+    brand_name: Int @doc(description: "Returns the product brand id.")
+    image_url: String @doc(description: "Returns Product thumbnail.")
+    order_status_cancel: Boolean @doc(description: "The current status of the order can be cancel or not.") 
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @package     magento2
+ * @author      Akansha rajput
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/auraine/bannerslider/slider/loadById/:id" method="GET">
+        <service class="Auraine\BannerSlider\Api\SliderRepositoryInterface" method="loadById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/auraine/bannerslider/banner/loadById/:id" method="GET">
+        <service class="Auraine\BannerSlider\Api\BannerRepositoryInterface" method="loadById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/auraine/bannerslider/resource_map/loadById/:id" method="GET">
+        <service class="Auraine\BannerSlider\Api\ResourceMapRepositoryInterface" method="loadById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>
