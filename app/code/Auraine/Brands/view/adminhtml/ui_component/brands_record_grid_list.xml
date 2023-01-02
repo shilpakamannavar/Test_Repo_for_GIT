@@ -141,7 +141,14 @@
                </item>
            </argument>
        </selectionsColumn>
-       
+         <column name="entity_id" >
+           <argument name="data" xsi:type="array">
+               <item name="config" xsi:type="array">
+                   <item name="filter" xsi:type="string">false</item>
+                   <item name="label" xsi:type="string" translate="true">Brand ID</item>
+               </item>
+           </argument>
+       </column>
        <column name="title" >
            <argument name="data" xsi:type="array">
                <item name="config" xsi:type="array">

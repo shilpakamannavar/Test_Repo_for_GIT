@@ -1,0 +1,44 @@
+type Query {
+    BannerSlider(sliderId: Int!): BannerSlider @resolver(class: "Auraine\\BannerSlider\\Model\\Resolver\\BannerSlider") @doc(description: "Get banner slider bu slider ID")
+    getSliderList 
+   : [SliderList] @resolver (class:"\\Auraine\\BannerSlider\\Model\\Resolver\\SliderList") @doc(description:"List of Slider")
+}
+
+type BannerSlider {
+    slider_id: Int
+    title: String
+    is_show_title: Int
+    is_enabled: Int
+    link:String
+    product_ids:String
+    additional_information:String
+    discover:String
+    product_banner: Int
+    banners: [BannerSliderBanner]
+}
+
+type BannerSliderBanner {
+    slider_id: Int
+    resource_type: String
+    resource_path: String
+    is_enabled: Int
+    title: String
+    alt_text: String
+    link: String
+    sort_order: Int
+    resource_map: BannerSliderResourceMap
+}
+
+type BannerSliderResourceMap {
+    title: String
+    min_width: Int
+    max_width: Int
+}
+
+type SliderList {
+    entity_id: Int
+    title: String
+    is_show_title: Int
+    is_enabled: Int
+    banners: [BannerSliderBanner]
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Auraine_BannerSlider::banner_slider" title="Banner Slider" translate="title" module="Auraine_BannerSlider" sortOrder="100" parent="Magento_Backend::content" resource="Auraine_BannerSlider::banner_slider"/>
+        <add id="Auraine_BannerSlider::slider" title="Manage Sliders" translate="title" module="Auraine_BannerSlider" sortOrder="10" action="codbansli/slider" parent="Auraine_BannerSlider::banner_slider" resource="Auraine_BannerSlider::slider"/>
+        <add id="Auraine_BannerSlider::banner" title="Manage Banners" translate="title" module="Auraine_BannerSlider" sortOrder="20" action="codbansli/banner" parent="Auraine_BannerSlider::banner_slider" resource="Auraine_BannerSlider::banner"/>
+        <add id="Auraine_BannerSlider::resource_map" title="Manage Resource Maps" translate="title" module="Auraine_BannerSlider" sortOrder="30" action="codbansli/resmap" parent="Auraine_BannerSlider::banner_slider" resource="Auraine_BannerSlider::resource_map"/>
+    </menu>
+</config>

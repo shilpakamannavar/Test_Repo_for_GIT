@@ -95,7 +95,7 @@ class Aggregations implements ResolverInterface
             $storeId = (int)$store->getId();
             $results = $this->layerBuilder->build($aggregations, $storeId);
             if (isset($results['brand_name_bucket'])) {
-                $results['brand_name_bucket']['label'] = 'Brands';
+                $results['brand_name_bucket']['label'] = 'Brand';
                 $results['brand_name_bucket']['attribute_code'] = 'brand_name';
                 foreach ($results['brand_name_bucket']['options'] as &$value) {
                     $id = $value['value'];

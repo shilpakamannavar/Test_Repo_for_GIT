@@ -24,7 +24,8 @@ class Collection
     protected $serializer;
 
     /**
-     * @codeCoverageIgnore
+     * Filter Sales rules with condition and return valid coupons only.
+     *CouponManagementInterface $couponManagement
      */
     public function __construct(
         \Auraine\CouponCodes\Helper\Data $helperData,
@@ -46,14 +47,7 @@ class Collection
      */
     private function getRulesCollection($isMobile = false)
     {
-        $websiteId = $this->_helperData->getWebsiteId();
-        $customerGroupId = $this->_helperData->getCustomerGroupId();
-
-        $collection = $this->_collectionFactory->create()
-            ->addWebsiteGroupDateFilter($websiteId, $customerGroupId)
-            ->addAllowedSalesRulesFilter()
-            ->addFieldToFilter('coupon_type', ['neq' => '1'])
-            ->addFieldToFilter('is_visible_in_list', ['eq' => '1']);
+        $collection = $this->_helperData->getCurrentCouponRule();
 
          return !$isMobile ? $collection->addFieldToFilter('is_mobile_specific',['neq' => '1']) : $collection;
          
@@ -106,6 +100,7 @@ class Collection
             'description' => $rule->getDescription(),
             'coupon' => $rule->getCode(),
             'is_mobile_specific' => (bool) $rule->getIsMobileSpecific(),
+            'is_applied_on_full_price' => (bool) $rule->getIsAppliedOnFullPrice(),
             'value' => $rule->getValue(),
             'from_date' => $rule->getFromDate(),
             'to_date' => $rule->getToDate(),
@@ -121,7 +116,7 @@ class Collection
 
     }
 
-    /**
+     /**
      * The rules array element from the response array is been commented since it is not useful for the mobile and web.
      * If in future if it is needed please uncomment the codes you can get the from when you start to uncomment from the schema.graphqls file.
      */
