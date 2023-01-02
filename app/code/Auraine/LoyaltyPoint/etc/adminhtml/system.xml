@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="loyalty_point" translate="label" sortOrder="10000">
+            <label>Gbook Configurations</label>
+        </tab>
+        <section id="auraine" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Loyalty Point Slabs</label>
+            <tab>loyalty_point</tab>
+            <resource>Auraine_LoyaltyPoint::module_config</resource>
+            <group id="tire_one" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Tire 1</label>
+                
+                <field id="tire_one_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Amount</label>
+                    <comment>Tire 1 will be the max. slab.</comment>
+                </field>
+
+                <field id="tire_one_value" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Discount percentage value</label>
+                    <comment>Value will used to calculate the loyalty points of an order.</comment>
+                </field>
+            </group>
+
+            <group id="tire_two" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Tire 2</label>
+                
+                <field id="tire_two_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Amount</label>
+                    <comment>Tire 2 will be second max. and the comparision happens with Tire 1.</comment>
+                </field>
+
+                <field id="tire_two_value" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Discount percentage value</label>
+                    <comment>Value will used to calculate the loyalty points of an order.</comment>
+                </field>
+            </group>
+
+            <group id="tire_three" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Tire 3</label>
+                
+                <field id="tire_three_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Amount</label>
+                    <comment>Tire 3 will be third max. and the comparision happens with Tire 2.</comment>
+                </field>
+
+                <field id="tire_three_value" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Discount percentage value</label>
+                    <comment>Value will used to calculate the loyalty points of an order.</comment>
+                </field>
+            </group>
+
+            <group id="tire_four" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Tire 4</label>
+                
+                <field id="tire_four_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Amount</label>
+                    <comment>Tire 4 will be min. and the comparision happens with Tire 3.</comment>
+                </field>
+
+                <field id="tire_four_value" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Discount percentage value</label>
+                    <comment>Value will used to calculate the loyalty points of an order.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

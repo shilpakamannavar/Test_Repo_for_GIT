@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ce1468e470dcfefe3adc06abb49d92c",
+    "content-hash": "8c7b17e9473260c23e937ce2a8d979b5",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -50,6 +50,249 @@
                 "source": "https://github.com/2tvenom/CBOREncode/tree/1.0.2"
             },
             "time": "2020-10-27T07:22:41+00:00"
+        },
+        {
+            "name": "amasty/base",
+            "version": "1.14.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/base-1.14.4.zip"
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Base\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Amasty Base"
+        },
+        {
+            "name": "amasty/cron-schedule-list",
+            "version": "1.0.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/cron-schedule-list-1.0.6-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.2",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\CronScheduleList\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Cron Schedule List by Amasty"
+        },
+        {
+            "name": "amasty/module-advanced-conditions",
+            "version": "1.5.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/module-advanced-conditions-1.5.7.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.4",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Conditions\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Advanced Conditions by Amasty"
+        },
+        {
+            "name": "amasty/module-banners-lite",
+            "version": "1.0.21",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/module-banners-lite-1.0.21-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.4",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\BannersLite\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Promo Banners Lite by Amasty"
+        },
+        {
+            "name": "amasty/module-salesrulewizard",
+            "version": "1.0.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/module-salesrulewizard-1.0.4-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.2",
+                "amasty/promo": ">=2.11.1",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\SalesRuleWizard\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Sales Rule Wizard by Amasty"
+        },
+        {
+            "name": "amasty/promo",
+            "version": "2.12.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/promo-2.12.1.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.14.4",
+                "amasty/module-advanced-conditions": ">=1.3.6",
+                "amasty/module-banners-lite": ">=1.0.5",
+                "amasty/module-salesrulewizard": "*",
+                "amasty/rgrid": "*",
+                "php": ">=7.3.0"
+            },
+            "suggest": {
+                "amasty/module-promo-mftf-2": "Install module-promo-mftf-2 module to be able to run Free Gift MFTF tests for Magento 2.3.5+ version.",
+                "amasty/module-promo-mftf-3": "Install module-promo-mftf-3 module to be able to run Free Gift MFTF tests for Magento 2.4.0+ version."
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Promo\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Free Gift by Amasty"
+        },
+        {
+            "name": "amasty/rewards",
+            "version": "1.17.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/rewards-1.17.6.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.14.1",
+                "amasty/cron-schedule-list": "*",
+                "amasty/module-advanced-conditions": ">=1.3.6",
+                "php": ">=7.3"
+            },
+            "suggest": {
+                "amasty/rewards-graph-ql": "Install rewards-graph-ql module to be able to use Reward Points GraphQL queries.",
+                "amasty/rewards-mftf-2": "Install rewards-mftf-2 module to be able to run Reward Points MFTF tests for Magento 2.3.5+ version",
+                "amasty/rewards-mftf-3": "Install rewards-mftf-3 module to be able to run Reward Points MFTF tests for Magento 2.4.0+ version"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Rewards\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Amasty Rewards"
+        },
+        {
+            "name": "amasty/rewards-graph-ql",
+            "version": "1.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/rewards-graph-ql-1.2.0-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.4",
+                "amasty/rewards": ">=1.11.1",
+                "magento/module-customer-graph-ql": ">=100.3.1",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\RewardsGraphQl\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Reward Points GraphQl By Amasty"
+        },
+        {
+            "name": "amasty/rgrid",
+            "version": "1.0.9",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/rgrid-1.0.9-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.3",
+                "php": ">=7.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Rgrid\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Extended Rules Grid by Amasty"
         },
         {
             "name": "astock/stock-api-libphp",
