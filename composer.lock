@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c7b17e9473260c23e937ce2a8d979b5",
+    "content-hash": "2453b7383ae68d4d7acef9912534a5ed",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -4945,6 +4945,135 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "magecomp/magento-2-mobile-otp-login",
+            "version": "3.0.8",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:magecomp_extensions/magento-2-mobile-otp-login-extension.git",
+                "reference": "ff9df54bb17bd152bc825912e2a6b62e42830a74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://magecomp.com/magecomp_composerrepo/index/download/file/magecomp/magento-2-mobile-otp-login/magecomp-magento-2-mobile-otp-login-ff9df54bb17bd152bc825912e2a6b62e42830a74-zip-292869.zip",
+                "reference": "ff9df54bb17bd152bc825912e2a6b62e42830a74"
+            },
+            "require": {
+                "magecomp/module-mobileloginmsg91": ">=1.0.0",
+                "magecomp/module-mobilelogintwilio": ">=1.0.0",
+                "php": "~5.5.0||~5.6.0||~7.0.0||~7.1.0||~7.2.0||~7.3.0||~7.4.0||~8.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magecomp\\Mobilelogin\\": ""
+                }
+            },
+            "notification-url": "https://magecomp.com/magecomp_composerrepo/download/notify",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "Magecomp",
+                    "email": "support@magecomp.com",
+                    "homepage": "https://magecomp.com"
+                }
+            ],
+            "description": "Magento 2 Mobile OTP Login Extension",
+            "support": {
+                "issues": "https://gitlab.com/api/v4/projects/36776097/issues"
+            },
+            "time": "2022-12-08T16:11:25+05:30"
+        },
+        {
+            "name": "magecomp/module-mobileloginmsg91",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:magecomp_extensions/magento-2-mobile-otp-login-extension-msg91.git",
+                "reference": "b7394144a7cec36868655635016a33424a455d60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://magecomp.com/magecomp_composerrepo/index/download/file/magecomp/module-mobileloginmsg91/magecomp-module-mobileloginmsg91-b7394144a7cec36868655635016a33424a455d60-zip-44554d.zip",
+                "reference": "b7394144a7cec36868655635016a33424a455d60"
+            },
+            "require": {
+                "php": "~5.5.0||~5.6.0||~7.0.0||~7.1.0||~7.2.0||~7.3.0||~7.4.0||~8.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magecomp\\Mobileloginmsg91\\": ""
+                }
+            },
+            "notification-url": "https://magecomp.com/magecomp_composerrepo/download/notify",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "Magecomp",
+                    "email": "support@magecomp.com",
+                    "homepage": "https://magecomp.com"
+                }
+            ],
+            "description": "Magento 2 Mobile OTP Login Extension Msg91",
+            "support": {
+                "issues": "https://gitlab.com/api/v4/projects/36775976/issues"
+            },
+            "time": "2022-06-06T11:22:16+05:30"
+        },
+        {
+            "name": "magecomp/module-mobilelogintwilio",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:magecomp_extensions/magento-2-mobile-otp-login-extension-twilio.git",
+                "reference": "5bef2c412c2fdb2360c5e229eb01d359ade8a5ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://magecomp.com/magecomp_composerrepo/index/download/file/magecomp/module-mobilelogintwilio/magecomp-module-mobilelogintwilio-5bef2c412c2fdb2360c5e229eb01d359ade8a5ae-zip-8840f5.zip",
+                "reference": "5bef2c412c2fdb2360c5e229eb01d359ade8a5ae"
+            },
+            "require": {
+                "php": "~5.5.0||~5.6.0||~7.0.0||~7.1.0||~7.2.0||~7.3.0||~7.4.0||~8.1.0",
+                "twilio/sdk": "^5.13"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magecomp\\Mobilelogintwilio\\": ""
+                }
+            },
+            "notification-url": "https://magecomp.com/magecomp_composerrepo/download/notify",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "Magecomp",
+                    "email": "support@magecomp.com",
+                    "homepage": "https://magecomp.com"
+                }
+            ],
+            "description": "Magento 2 Mobile OTP Login Extension Twilio",
+            "support": {
+                "issues": "https://gitlab.com/api/v4/projects/36776022/issues"
+            },
+            "time": "2022-06-06T11:26:00+05:30"
         },
         {
             "name": "magento/adobe-stock-integration",
@@ -26748,6 +26877,60 @@
                 "source": "https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port"
             },
             "time": "2018-01-15T15:26:51+00:00"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "5.42.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "0cfcb871b18a9c427dd9e8f0ed7458d43009b48a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/0cfcb871b18a9c427dd9e8f0ed7458d43009b48a",
+                "reference": "0cfcb871b18a9c427dd9e8f0ed7458d43009b48a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "^4.1",
+                "guzzlehttp/guzzle": "^6.3",
+                "phpunit/phpunit": ">=4.5"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "src/Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "support": {
+                "issues": "https://github.com/twilio/twilio-php/issues",
+                "source": "https://github.com/twilio/twilio-php/tree/5.42.2"
+            },
+            "time": "2020-02-05T19:55:13+00:00"
         },
         {
             "name": "web-token/jwt-framework",
