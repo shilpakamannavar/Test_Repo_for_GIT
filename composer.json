@@ -31,9 +31,9 @@
         "amasty/promo": "^2.12",
         "amasty/rewards": "^1.17",
         "amasty/rewards-graph-ql": "^1.2",
-        "magecomp/magento-2-mobile-otp-login": "^3.0",
         "magento/composer-root-update-plugin": "^2.0.2",
-        "magento/magento-cloud-metapackage": ">=2.4.5 <2.4.6"
+        "magento/magento-cloud-metapackage": ">=2.4.5 <2.4.6",
+        "twilio/sdk": "^6.44"
     },
     "suggest": {
         "ext-pcntl": "Need for run processes in parallel mode"
