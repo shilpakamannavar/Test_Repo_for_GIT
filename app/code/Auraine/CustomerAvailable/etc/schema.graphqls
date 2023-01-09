@@ -1,9 +1,0 @@
-type Query {
-    isCustomerEmailAvailable (
-        email: String @doc(description: "Email of Customer")
-    ): CustomerRecord @resolver(class: "Auraine\\CustomerAvailable\\Model\\Resolver\\CustomerRecord") @doc(description: "The query returns information about a customer")
-}
-
-type CustomerRecord @doc(description: "Gather Data of specific customer") {
-    is_email_available: Boolean @doc(description: "Specifies if customer is exist or not")
-}
