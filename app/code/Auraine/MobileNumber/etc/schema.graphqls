@@ -1,0 +1,7 @@
+type Customer {
+    mobilenumber: String @doc(description: "Customer Mobile Number") @resolver(class: "\\Auraine\\MobileNumber\\Model\\Resolver\\MobileNumber")
+}
+
+type Query {
+    checkCustomerExists(field_value:String, type:String) : Boolean @resolver( class: "\\Auraine\\MobileNumber\\Model\\Resolver\\CheckCustomerExists" ) @doc(description: "Customer exist or not based on email & mobile")
+}

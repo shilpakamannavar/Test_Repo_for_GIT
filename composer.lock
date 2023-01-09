@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c7b17e9473260c23e937ce2a8d979b5",
+    "content-hash": "328592b4c7c684209de5a179f5b7a733",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -26748,6 +26748,55 @@
                 "source": "https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port"
             },
             "time": "2018-01-15T15:26:51+00:00"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "6.44.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:twilio/twilio-php.git",
+                "reference": "d0f8b4c642209a08066990eaea55ee6f292e4f8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/d0f8b4c642209a08066990eaea55ee6f292e4f8d",
+                "reference": "d0f8b4c642209a08066990eaea55ee6f292e4f8d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "phpunit/phpunit": ">=7.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "src/Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "https://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2022-12-14T22:22:57+00:00"
         },
         {
             "name": "web-token/jwt-framework",
