@@ -1,0 +1,22 @@
+{
+    "name": "auraine/module-staticcontent",
+    "description": "dsdsf",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Shiffin Thomas",
+            "email": "shiffin.thomas@maisondauraine.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Auraine\\Staticcontent\\": ""
+        }
+    }
+}

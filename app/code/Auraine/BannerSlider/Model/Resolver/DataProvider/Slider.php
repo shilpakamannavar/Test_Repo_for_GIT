@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Auraine\BannerSlider\Model\Resolver\DataProvider;
-
 
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Api\Data\SliderInterface;
@@ -21,15 +19,15 @@ class Slider
      */
     private $storeManager;
 
+
     /**
      * Slider constructor.
      * @param SliderRepositoryInterface $sliderRepository
      */
     public function __construct(
         SliderRepositoryInterface $sliderRepository,
-        StoreManagerInterface $storeManager
-        )
-    {
+        StoreManagerInterface $storeManager,
+    ) {
         $this->sliderRepository = $sliderRepository;
         $this->storeManager = $storeManager;
     }
@@ -39,25 +37,52 @@ class Slider
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getData($sliderId)
+    public function getData($args)
     {
-        $data = [];
-        $slider = $this->sliderRepository->loadById($sliderId);
-        $data = $this->extractData($slider, [
-            'slider_id' => 'entity_id',
-            'title',
-            'is_show_title',
-            'is_enabled',
-            'additional_information',
-            'link',
-            'product_ids',
-            'additional_information',
-            'discover',
-            'product_banner'
+        $data = $result = [];
+        $sliderId = $args['sliderId'] ?? null;
+        $sliderType = $args['slider_type'] ?? null;
+        $pageType = $args['page_type'] ?? null;
+        $sortOrder = $args['sort_order'] ?? null;
+        $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
+        
+        if (!empty($sliderId)) {
+            $collection->addFieldToFilter('entity_id', $sliderId);
+        } 
 
-        ]);
-        $data['banners'] = $this->getBanners($slider);
-        return $data;
+        if (!empty($sliderType)) {
+            $collection->addFieldToFilter('slider_type', $sliderType);
+        }
+
+        if (!empty($pageType)) {
+            $collection->addFieldToFilter('page_type', $pageType);
+        }
+        
+        if ($collection->getSize() > 0) {
+            $collection->setOrder('sort_order','ASC');
+            foreach($collection as $slider) {
+                $data = $this->extractData($slider, [
+                    'slider_id' => 'entity_id',
+                    'title',
+                    'is_show_title',
+                    'is_enabled',
+                    'additional_information',
+                    'link',
+                    'product_ids',
+                    'additional_information',
+                    'discover',
+                    'product_banner',
+                    'identifier',
+                    'slider_type',
+                    'page_type',
+                    'target_type',
+                    'sort_order'
+                ]);
+                $data['banners'] = $this->getBanners($slider); 
+                $result[] = $data;      
+            }
+        }
+        return $result;   
     }
 
     /**

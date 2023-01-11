@@ -19,6 +19,10 @@ class Zipcode
      * @var \Magento\Directory\Model\CountryFactory
      */
     protected $_countryFactory;
+    /**
+     * @var regionFactory
+     */
+    protected $_regionFactory;
 
     /**
      * Constructes model Pincode Model factory service
@@ -28,10 +32,12 @@ class Zipcode
     public function __construct(
         \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory,
         \Magento\Directory\Model\CountryFactory $countryFactory,
+        \Magento\Directory\Model\RegionFactory $regionFactory,
     )
     {
         $this->_pincodeFactory = $pincodeFactory;
         $this->_countryFactory = $countryFactory;
+        $this->_regionFactory = $regionFactory;
 
     }
 
@@ -63,14 +69,21 @@ class Zipcode
         if (empty($pincode->getData())) {
             throw new GraphQlInputException(__("Pincode isn't available "));
         }
-        
+
+        $country_id=$pincode->getCountry();
+        $state_id=$pincode->getState();
+
         $countryModel = $this->_countryFactory->create();
-        $country = $countryModel->loadByCode($pincode->getCountry());
+        $country = $countryModel->loadByCode($country_id);
+        $region = $this->_regionFactory->create()->load($state_id);
 
         return [
                 'city' => $pincode->getCity(),
                 'country' => $country->getName(),
-                'status' => $pincode->getStatus()
+                'status' => $pincode->getStatus(),
+                'state' => $region->getName(),
+                'country_id' => $country_id,
+                'state_id' => $state_id
             ];
     }
 

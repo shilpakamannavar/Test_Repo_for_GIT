@@ -26,7 +26,7 @@ class InstallSchema implements InstallSchemaInterface
         $installer->startSetup();
 
         /*
-         * Create table 'auraine_bestseller'
+         * Create table 'auraine_shopbrands for brands module'
          */
 
         $table = $installer->getConnection()->newTable(
@@ -86,7 +86,7 @@ class InstallSchema implements InstallSchemaInterface
              [],
             'Is Exclusive'
         )->setComment(
-            'Auraine Gbookbrands'
+            'Auraine Brands'
         );
 
         $installer->getConnection()->createTable($table);

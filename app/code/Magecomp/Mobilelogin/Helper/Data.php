@@ -500,10 +500,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             )
             ->setTemplateVars(
                 [
-                'ip'  => $remoteId,
-                'email' => $mail,
-                'datetime' => $date,
-                'browser' => $browser
+                    'ip'  => $remoteId,
+                    'email' => $mail,
+                    'datetime' => $date,
+                    'browser' => $browser
                 ]
             )
             ->setFrom($this->scopeConfig->getValue(self::XML_PATH_EMAIL_ADMIN_QUOTE_SENDER, $storeScope))
@@ -808,13 +808,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $accurate = [$storeName,$storeUrl,$randomCode];
         return str_replace($codes, $accurate, $this->getLoginOtpTemplate());
     }public function getForgotOtpMessage($mobile, $randomCode)
-    {
-        $storeName = $this->getStoreName();
-        $storeUrl = $this->getStoreUrl();
-        $codes = ['{{shop_name}}','{{shop_url}}','{{random_code}}'];
-        $accurate = [$storeName,$storeUrl,$randomCode];
-        return str_replace($codes, $accurate, $this->getForgotOtpTemplate());
-    }
+{
+    $storeName = $this->getStoreName();
+    $storeUrl = $this->getStoreUrl();
+    $codes = ['{{shop_name}}','{{shop_url}}','{{random_code}}'];
+    $accurate = [$storeName,$storeUrl,$randomCode];
+    return str_replace($codes, $accurate, $this->getForgotOtpTemplate());
+}
     public function getUpdateOtpTemplate()
     {
         return $this->scopeConfig->getValue(
@@ -893,6 +893,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 ->addFieldToFilter('website_id', $websiteId);
 
 
+
             if (count($collection) == 1) {
                 $item = $collection->getFirstItem();
                 $item->setIsVerify(1);
@@ -923,7 +924,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 ->addFieldToFilter('random_code', $data['verifyotp'])
                 ->addFieldToFilter('type', self::UPDATE_OTP_TYPE)
                 ->addFieldToFilter('website_id', $websiteId);
-
 
             if (count($collection) == 1) {
                 $item = $collection->getFirstItem();
