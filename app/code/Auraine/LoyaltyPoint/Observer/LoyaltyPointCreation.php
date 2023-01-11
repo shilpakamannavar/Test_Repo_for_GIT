@@ -72,8 +72,9 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
                 $customerOrders = $this->_orderCollectionFactory
                     ->create()
                     ->addFieldToFilter('customer_id', $customerId)
-                    ->addFieldToFilter('created_at', ['lteq' => date('Y-m-d')])
-                    ->addFieldToFilter('created_at', ['gteq' => date('Y-m-d', strtotime('-1 year'))]);
+                    ->addFieldToFilter('state', Order::STATE_COMPLETE)
+                    ->addFieldToFilter('created_at', ['lteq' => date('Y-m-d H:i:s', strtotime($order->getCreatedAt()))])
+                    ->addFieldToFilter('created_at', ['gteq' => date('Y-m-d H:i:s', strtotime('-1 year'))]);
 
                 /** Calculating the sum of one year orders from current date. */
                 $grandTotal = 0;
@@ -83,6 +84,8 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
 
                 $slabs = $this->_helperData->getSlabs();
                 $slabValues = $this->_helperData->getValues();
+
+                $grandTotal -= $order->getGrandTotal();
 
                 /** Getting applicable slab value for the customer. */
                 if ($grandTotal >= $slabs[1]) {
@@ -105,5 +108,4 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
         return $this;
     }
 
-    
 }

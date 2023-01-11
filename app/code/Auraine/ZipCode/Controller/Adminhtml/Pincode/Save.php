@@ -41,6 +41,8 @@ class Save extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
         
+            $data['country'] = $data['country_id'];
+            
             $model->setData($data);
         
             try {

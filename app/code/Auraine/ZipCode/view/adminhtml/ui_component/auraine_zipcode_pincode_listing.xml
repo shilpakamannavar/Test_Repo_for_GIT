@@ -143,8 +143,15 @@
 				</editor>
 			</settings>
 		</column>
-
-		<column name="country" sortOrder="50" component="Magento_Ui/js/grid/columns/select">
+		<column name="state" sortOrder="150" component="Magento_Ui/js/grid/columns/select">
+					<settings>
+						<label translate="true">State</label>
+						<options class="Auraine\ZipCode\Model\Config\Source\Regions"/>
+						<filter>select</filter>
+						<dataType>select</dataType>
+					</settings>
+		</column>
+		<column name="country" sortOrder="250" component="Magento_Ui/js/grid/columns/select">
 			<settings>
 				<label translate="true">Country</label>
 				<options class="Auraine\ZipCode\Model\Config\Source\Countries"/>

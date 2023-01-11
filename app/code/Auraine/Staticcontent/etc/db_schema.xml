@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="auraine_staticcontent_content" resource="default" engine="innodb" comment="auraine_staticcontent_content Table">
+		<column xsi:type="int" name="content_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="content_id"/>
+		</constraint>
+		<column name="type" nullable="true" xsi:type="text" comment="type"/>
+		<column name="label" nullable="true" xsi:type="text" comment="label"/>
+		<column name="value" nullable="true" xsi:type="text" comment="value"/>
+		<column name="sortorder" nullable="true" xsi:type="int" comment="sortorder" identity="false"/>
+		<column name="enable" nullable="true" xsi:type="boolean" comment="enable"/>
+	</table>
+	<table name="auraine_staticcontent_type" resource="default" engine="innodb" comment="auraine_staticcontent_type Table">
+		<column xsi:type="int" name="type_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="type_id"/>
+		</constraint>
+		<column name="type" nullable="true" xsi:type="text" comment="type"/>
+	</table>
+</schema>

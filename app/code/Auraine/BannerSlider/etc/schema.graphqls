@@ -1,44 +1,53 @@
 type Query {
-    BannerSlider(sliderId: Int!): BannerSlider @resolver(class: "Auraine\\BannerSlider\\Model\\Resolver\\BannerSlider") @doc(description: "Get banner slider bu slider ID")
-    getSliderList 
-   : [SliderList] @resolver (class:"\\Auraine\\BannerSlider\\Model\\Resolver\\SliderList") @doc(description:"List of Slider")
-}
+    BannerSlider(
+        sliderId: Int @doc(description: "filter by slider id")
+        slider_type: String @doc(description: "filter by slider type")
+        page_type: String @doc(description: "filter by page type")
+        sort_order: Int @doc(description: "filter by sort order")
+        ): [BannerSlider] @resolver(class: "Auraine\\BannerSlider\\Model\\Resolver\\BannerSlider") @doc(description: "Get banner slider bu slider ID")
+    getSliderList : [SliderList] @resolver (class:"\\Auraine\\BannerSlider\\Model\\Resolver\\SliderList") @doc(description:"List of Slider")
+    
+   }
 
 type BannerSlider {
-    slider_id: Int
-    title: String
-    is_show_title: Int
-    is_enabled: Int
-    link:String
-    product_ids:String
-    additional_information:String
-    discover:String
-    product_banner: Int
-    banners: [BannerSliderBanner]
+    slider_id: Int @doc(description: "slider id")
+    title: String @doc(description: "title")
+    identifier: String @doc(description: "identifier")
+    slider_type: String @doc(description: "slider type")
+    page_type: String @doc(description: "page type")
+    target_type: String @doc(description: "target type")
+    is_show_title: Int @doc(description: "is show title")
+    is_enabled: Int @doc(description: "is enabled")
+    product_ids: String @doc(description: "product ids")
+    additional_information:String @doc(description: "additional information")
+    discover:String @doc(description: "discover")
+    product_banner: Int @doc(description: "product banner")
+    sort_order: Int @doc(description: "sort order")
+    banners: [BannerSliderBanner] @doc(description: "banner slider")
 }
 
 type BannerSliderBanner {
-    slider_id: Int
-    resource_type: String
-    resource_path: String
-    is_enabled: Int
-    title: String
-    alt_text: String
-    link: String
-    sort_order: Int
-    resource_map: BannerSliderResourceMap
+    slider_id: Int @doc(description: "Slider Id")
+    resource_type: String @doc(description: "resource type")
+    resource_path: String @doc(description: "resource path")
+    is_enabled: Int @doc(description: "is enabled")
+    title: String @doc(description: "title")
+    alt_text: String @doc(description: "alt text")
+    link: String @doc(description: "link")
+    sort_order: Int @doc(description: "sort order")
+    resource_map: BannerSliderResourceMap @doc(description: "banner slider resource map")
 }
 
 type BannerSliderResourceMap {
-    title: String
-    min_width: Int
-    max_width: Int
+    title: String @doc(description: "title")
+    min_width: Int @doc(description: "min width")
+    max_width: Int @doc(description: "max width")
 }
 
 type SliderList {
-    entity_id: Int
-    title: String
-    is_show_title: Int
-    is_enabled: Int
-    banners: [BannerSliderBanner]
+    entity_id: Int @doc(description: "entity id")
+    title: String @doc(description: "title")
+    is_show_title: Int @doc(description: "is show title")
+    is_enabled: Int @doc(description: "is enabled")
+    banners: [BannerSliderBanner]  @doc(description: "banner slider")
 }

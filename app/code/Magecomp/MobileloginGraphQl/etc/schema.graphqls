@@ -25,6 +25,12 @@ type Mutation {
         otp: String @doc(description: "OTP")
         websiteId: Int = 1 @doc (description: "Website Id")
     ): MobileCreateCustomerAccountOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\CreateCustomerAccount") @doc(description:"Create an Account")
+    updateMobilenumber (
+        newmobileNumber: String @doc(description: " New Mobile Number")
+        customerId: String @doc(description: "Customer Id")
+        oldmobileNumber: String @doc(description: " old Mobile Number")
+        websiteId: Int = 1 @doc (description: "Website Id")
+    ): UpdateMobileNumberOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\UpdateMobilenumber") @doc(description:"Update Mobile Number")
 }
 
 type Query {
@@ -43,6 +49,13 @@ type Query {
         otp: String @doc(description: "OTP")
         websiteId: Int = 1 @doc (description: "Website Id")
     ): MobileForgotPassworOTPVerifyOtpOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\CreateAccountVerifyOtp") @doc(description:"Verify Forgpt Password OTP")
+    updateMobileNumberOTPVerify (
+        newmobileNumber: String @doc(description: " New Mobile Number")
+        otp: String @doc(description: "OTP")
+        customerId: String @doc(description: "Customer Id")
+        oldmobileNumber: String @doc(description: " old Mobile Number")
+        websiteId: Int = 1 @doc (description: "Website Id")
+    ): UpdateMobileNumberVerifyOtpOtpOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\UpdateMobileNumberVerifyOtp") @doc(description:"Verify Forgpt Password OTP")
 }
 
 type MobileLoginOtpOutput {
@@ -62,6 +75,10 @@ type MobileForgotPassworOTPVerifyOtpOutput {
     status: Boolean
     message: String
 }
+type UpdateMobileNumberVerifyOtpOtpOutput {
+    status: Boolean
+    message: String
+}
 type MobileResetPassworOutput {
     status: Boolean
     message: String
@@ -72,6 +89,10 @@ type MobileCreateAccountOtpOutput {
 }
 type MobileCreateCustomerAccountOutput {
     customer: Customer!
+    status: Boolean
+    message: String
+}
+type UpdateMobileNumberOutput {
     status: Boolean
     message: String
 }

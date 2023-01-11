@@ -50,36 +50,21 @@ class Collection
         $collection = $this->_helperData->getCurrentCouponRule();
 
          return !$isMobile ? $collection->addFieldToFilter('is_mobile_specific',['neq' => '1']) : $collection;
-         
     }
 
     /**
      * Filter Sales rules with condition and return valid coupons only.
      *
-     * @param array $quote
      * @param boolean $isMobile default = false
      * @return string[] couponCodeArray
      */
-    public function getValidCouponList($quote, $isMobile = false)
+    public function getValidCouponList($isMobile = false)
     {
         $rules = $this->getRulesCollection($isMobile);
         $ruleArray = [];
 
-        $items = $quote->getAllVisibleItems();
-
         foreach ($rules as $rule) {
-
-            $validAction = false;
-
-            foreach ($items as $item) {
-                if ($validAction = $rule->getActions()->validate($item)) {
-                    break;
-                }
-            }
-
-            if ($validAction) {
-                $ruleArray [] = $this->generateResponse($rule);
-            }
+            $ruleArray [] = $this->generateResponse($rule);
         }
 
         return $ruleArray;
@@ -120,7 +105,6 @@ class Collection
      * The rules array element from the response array is been commented since it is not useful for the mobile and web.
      * If in future if it is needed please uncomment the codes you can get the from when you start to uncomment from the schema.graphqls file.
      */
-
 
     /**
      * Filter Sales rules conditions collection for individual coupons.

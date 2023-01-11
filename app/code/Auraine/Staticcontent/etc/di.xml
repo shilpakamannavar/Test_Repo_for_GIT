@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Auraine\Staticcontent\Api\ContentRepositoryInterface" type="Auraine\Staticcontent\Model\ContentRepository"/>
+	<preference for="Auraine\Staticcontent\Api\Data\ContentInterface" type="Auraine\Staticcontent\Model\Content"/>
+	<preference for="Auraine\Staticcontent\Api\Data\ContentSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Auraine\Staticcontent\Model\ResourceModel\Content\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">auraine_staticcontent_content</argument>
+			<argument name="resourceModel" xsi:type="string">Auraine\Staticcontent\Model\ResourceModel\Content\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="auraine_staticcontent_content_listing_data_source" xsi:type="string">Auraine\Staticcontent\Model\ResourceModel\Content\Grid\Collection</item>
+				<item name="auraine_staticcontent_type_listing_data_source" xsi:type="string">Auraine\Staticcontent\Model\ResourceModel\Type\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<preference for="Auraine\Staticcontent\Api\TypeRepositoryInterface" type="Auraine\Staticcontent\Model\TypeRepository"/>
+	<preference for="Auraine\Staticcontent\Api\Data\TypeInterface" type="Auraine\Staticcontent\Model\Type"/>
+	<preference for="Auraine\Staticcontent\Api\Data\TypeSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Auraine\Staticcontent\Model\ResourceModel\Type\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">auraine_staticcontent_type</argument>
+			<argument name="resourceModel" xsi:type="string">Auraine\Staticcontent\Model\ResourceModel\Type\Collection</argument>
+		</arguments>
+	</virtualType>
+</config>

@@ -24,7 +24,7 @@ class BrandsList
     {
         $brandData = [];
         try {
-            $collection = $this->_brandsFactory->create();
+            $collection = $this->_brandsFactory->create()->addFieldToFilter('status',1);
             $brandData = $collection->getData();
        
              if($filter_entity_id){

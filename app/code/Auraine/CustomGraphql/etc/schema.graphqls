@@ -1,0 +1,21 @@
+type Query {
+getProductsByAttributeType (
+        attribute_type: String @doc(description: "Attribute Type")
+        category_id: Int @doc(description: "Category Id")
+    ): [ProductCollection] @resolver(class: "Auraine\\CustomGraphql\\Model\\Resolver\\Getproductslist") @doc(description: "The getProductsByAttributeType query returns wod contents according to provided Attribute Type And Category Id")
+}
+
+type ProductCollection @doc(description: "ProductCollection defines all wod information") {
+    product_id: Int @doc(description: "Product Id")
+    product_name: String @doc(description: "Product Name")
+    category_id: Int @doc(description: "Category Id")
+    sku: String @doc(description: "Sku")
+    created_at: String @doc(description: "Created At")
+    updated_at: String @doc(description: "Updated At")
+    product_price: Float @doc(description: "Product Price")
+    category_name : String @doc(description: "Category Name")
+    short_description : String @doc(description: "Short Description")
+    image: String @doc(description: "The relative path to the main image on the product page.")
+    small_image: String @doc(description: "The relative path to the small image, which is used on catalog pages.")
+    thumbnail: String @doc(description: "The relative path to the product's thumbnail image.")
+}

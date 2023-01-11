@@ -11,6 +11,7 @@ interface PincodeInterface
     const CODE = 'code';
     const COUNTRY = 'country';
     const CITY = 'city';
+    const STATE = 'state';
 
     /**
      * Get pincode_id
@@ -76,5 +77,18 @@ interface PincodeInterface
      * @return \Auraine\ZipCode\Pincode\Api\Data\PincodeInterface
      */
     public function setStatus($status);
+
+     /**
+     * Get State
+     * @return string|null
+     */
+    public function getState();
+
+    /**
+     * Set State
+     * @param string $State
+     * @return \Auraine\ZipCode\Pincode\Api\Data\PincodeInterface
+     */
+    public function setState($state);
 }
 
