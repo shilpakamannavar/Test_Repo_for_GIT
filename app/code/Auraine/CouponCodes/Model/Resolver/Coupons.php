@@ -24,13 +24,6 @@ class Coupons implements ResolverInterface
     CONST CUSTOM_MOBILE_HEADER_CONTENT = "Application/Mobile";
 
     /**
-     * Quote repository.
-     *
-     * @var \Magento\Quote\Api\CartRepositoryInterface
-     */
-    protected $quoteRepository;
-
-    /**
      * Sales Rules collection.
      *
      * @var \Auraine\CouponCodes\Model\DataProvider\Collection
@@ -52,14 +45,12 @@ class Coupons implements ResolverInterface
      */
     public function __construct(
         QuoteIdMask $quoteIdMaskFactory,
-        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
         \Auraine\CouponCodes\Model\DataProvider\Collection $ruleCollection,
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
         \Magento\Framework\ObjectManagerInterface $objectManger
         )
     {
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
-        $this->quoteRepository = $quoteRepository;
         $this->ruleCollection = $ruleCollection;
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
         $this->_objectManager = $objectManger;
@@ -70,7 +61,7 @@ class Coupons implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        
+
         $request = $this->_objectManager->create("Magento\Framework\App\RequestInterface");
 
         $cartId = $this->getCartId($args);
@@ -78,14 +69,10 @@ class Coupons implements ResolverInterface
 
         $mobileHeader = $request->getHeader(self::CUSTOM_MOBILE_HEADER_NAME);
         $headerStatus = $mobileHeader == self::CUSTOM_MOBILE_HEADER_CONTENT;
-      
-        /** @var \Magento\Quote\Model\Quote $quote */
-        $quote = $this->quoteRepository->getActive($cartId);
 
-        $data = $this->ruleCollection->getValidCouponList($quote, $headerStatus);
+        $data = $this->ruleCollection->getValidCouponList($headerStatus);
 
         return $data;
-
     }
 
     /**

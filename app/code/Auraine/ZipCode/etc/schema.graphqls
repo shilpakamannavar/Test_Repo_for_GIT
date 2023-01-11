@@ -6,6 +6,9 @@ type Zipcode {
     status: Boolean  @doc(description: "Status of the pincode.")
     city: String @doc(description: "City of the pincode.")
     country: String @doc(description: "Country of the pincode.")
+    state:String @doc(description: "State of the pincode.")
+    country_id:String @doc(description: "country Id of the pincode.")
+    state_id:String @doc(description: "State Id of the pincode.")
 }
 
 type Cart {

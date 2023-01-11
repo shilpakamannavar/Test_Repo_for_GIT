@@ -32,7 +32,8 @@ class SliderList implements ResolverInterface
 
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        
-        return $this->dataProvider->getSliderList();
+        $filter_entity_id = $args['entity_id'] ?? null;
+
+        return $this->dataProvider->getSliderList($filter_entity_id);
     }
 }

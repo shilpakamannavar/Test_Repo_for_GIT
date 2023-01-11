@@ -460,6 +460,7 @@ return [
         'Auraine_LoyaltyPoint' => 1,
         'Magecomp_Mobilelogin' => 1,
         'Auraine_Offerlabel' => 1,
+        'Auraine_Staticcontent' => 1,
         'Auraine_SwatchData' => 1,
         'Auraine_ZipCode' => 1,
         'Fastly_Cdn' => 1,

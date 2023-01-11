@@ -35,12 +35,8 @@ class Save extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        // $rowId = (int) $this->getRequest()->getParam('id');
         
         $data = $this->getRequest()->getPostValue();
-       
-        // $cat=implode(",",$data['categories_id']);
-        // $data['categories_id']=$cat;
        
 
         if (isset($_FILES['image']) && isset($_FILES['image']['name']) && strlen($_FILES['image']['name'])) {
@@ -49,14 +45,12 @@ class Save extends \Magento\Backend\App\Action
                 */
                 try {
                     $base_media_path = 'auraine/brands';
-                        //  $uploader = new Varien_File_Uploader('file_path');
-                        // $uploader = $this->uploader->create(['fileId' => 'image'] );
+                       
                     $uploader = $this->_fileUploaderFactory->create(['fileId' => 'image']);
                     $uploader->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png']);
                     /** @var \Magento\Framework\Image\Adapter\AdapterInterface $imageAdapter */
                     $imageAdapter = $this->_objectManager->get('Magento\Framework\Image\AdapterFactory')->create();
 
-                    //$imageAdapter = $this->adapterFactory->create();
             
                     $uploader->addValidateCallback('image', $imageAdapter, 'validateUploadFile');
                     $uploader->setAllowRenameFiles(true);
@@ -95,22 +89,13 @@ class Save extends \Magento\Backend\App\Action
         }
         try {
             $rowData = $this->gridFactory->create();
-
-            $rowData->load($data['title'], 'title');
-            if ($rowData->getId()) {
-               $this->messageManager->addError(__('Brand name already exists.'));
-                $this->_redirect('brands/brands/index');
-              
-            }
-        else{
-
             $rowData->setData($data);
             if (isset($data['id'])) {
                 $rowData->setId($data['id']);
             }
             $rowData->save();
             $this->messageManager->addSuccess(__('Brand data has been successfully saved.'));
-             }
+             
         } catch (\Exception $e) {
             $this->messageManager->addError(__($e->getMessage()));
         }
