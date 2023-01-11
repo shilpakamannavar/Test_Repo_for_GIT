@@ -59,4 +59,19 @@ class Data
     {
         return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
+
+    /**
+     * Prepare array with tire Names
+     *
+     * @return array
+     */
+    public function getNames()
+    {
+        return [
+            1 => $this->getStoreConfigValue('auraine/tire_one/tire_one_name'),
+            2 => $this->getStoreConfigValue('auraine/tire_two/tire_two_name'),
+            3 => $this->getStoreConfigValue('auraine/tire_three/tire_three_name'),
+            4 => $this->getStoreConfigValue('auraine/tire_four/tire_four_name'),
+        ];
+    }
 }

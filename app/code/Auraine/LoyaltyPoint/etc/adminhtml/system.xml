@@ -12,6 +12,11 @@
             <group id="tire_one" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Tire 1</label>
                 
+                <field id="tire_one_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Name</label>
+                    <comment>Tire 1 name.</comment>
+                </field>
+                
                 <field id="tire_one_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Tire Amount</label>
                     <comment>Tire 1 will be the max. slab.</comment>
@@ -25,6 +30,11 @@
 
             <group id="tire_two" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Tire 2</label>
+
+                 <field id="tire_two_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Name</label>
+                    <comment>Tire 2 name.</comment>
+                </field>
                 
                 <field id="tire_two_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Tire Amount</label>
@@ -40,7 +50,12 @@
             <group id="tire_three" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Tire 3</label>
                 
-                <field id="tire_three_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="tire_three_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Name</label>
+                    <comment>Tire 3 name.</comment>
+                </field>
+
+                  <field id="tire_three_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Tire Amount</label>
                     <comment>Tire 3 will be third max. and the comparision happens with Tire 2.</comment>
                 </field>
@@ -54,7 +69,12 @@
             <group id="tire_four" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Tire 4</label>
                 
-                <field id="tire_four_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="tire_four_name" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Tire Name</label>
+                    <comment>Tire 4 name.</comment>
+                </field>
+
+                 <field id="tire_four_amount" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Tire Amount</label>
                     <comment>Tire 4 will be min. and the comparision happens with Tire 3.</comment>
                 </field>

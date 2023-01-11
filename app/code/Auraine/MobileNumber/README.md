@@ -33,6 +33,20 @@ Extended Magecomp Mobile Login module for achieving bellow graphql results
   checkCustomerExists(field_value: "917815048029", type: "mobile")
 }
 ```
+3. get mobile number using email
+```graphql
+{
+  getMobileUsingEmail(email: "praveenvishnoi165@gmail.com")
+}
+```
+4. generateCustomerTokenMobile
+```graphql
+mutation {
+  generateCustomerTokenMobile(mobile: "917815048029", password: "vishnoi29#") {
+    token
+  }
+}
+```
 ## Installation
 \* = in production please use the `--keep-generated` option
 

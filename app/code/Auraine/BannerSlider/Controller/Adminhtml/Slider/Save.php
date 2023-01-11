@@ -18,6 +18,7 @@ class Save extends Action
      * @var SliderRepositoryInterface
      */
     private $sliderRepository;
+
     /**
      * @var DataPersistorInterface
      */
@@ -50,13 +51,12 @@ class Save extends Action
      */
     public function execute()
     {
-        $id = $this->getRequest()->getParam('entity_id');
+        $sliderId = $this->getRequest()->getParam('entity_id');
+        $sliderData = $this->getRequest()->getPostValue();
+
         try {
-            if ($id) {
-                $model = $this->sliderRepository->loadById($id);
-            } else {
-                $model = $this->sliderRepository->create();
-            }
+            $model = $sliderId ? $this->sliderRepository->loadById($sliderId) : $this->sliderRepository->create();
+           
             $this->populateModelWithData($model, [
                 'title',
                 'is_show_title',
@@ -66,12 +66,19 @@ class Save extends Action
                 'product_ids',
                 'additional_information',
                 'discover',
-                'product_banner'
+                'product_banner',
+                'identifier',
+                'slider_type',
+                'page_type',
+                'sort_order',
+                'target_type'
             ]);
+
             $this->dataPersistor->set('bannerslider_slider', $model->getData());
             $model = $this->sliderRepository->save($model);
             $this->dataPersistor->clear('bannerslider_slider');
             $this->messageManager->addSuccessMessage(__('Slider %1 saved successfully', $model->getEntityId()));
+            
             switch ($this->getRequest()->getParam('back')) {
                 case 'continue':
                     $url = $this->getUrl('*/*/edit', ['entity_id' => $model->getEntityId()]);
@@ -89,6 +96,7 @@ class Save extends Action
             $this->messageManager->addErrorMessage($exception->getMessage());
             $url = $this->getUrl('*/*/edit', ['entity_id' => $id]);
         }
+        
         return $this->resultRedirectFactory->create()->setUrl($url);
     }
 

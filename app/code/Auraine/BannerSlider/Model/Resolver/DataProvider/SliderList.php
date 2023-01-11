@@ -20,18 +20,20 @@ class SliderList
         $this->_objectManager = $objectManager;
     }
  
-    public function getSliderList()
+    public function getSliderList($filter_entity_id)
     {
         $sliderData = [];
         try {
             $collection = $this->_sliderFactory->create();
             $sliderData = $collection->getData();
-           
-
+            if($filter_entity_id){
+                $collection = $this->_sliderFactory->create()->addFieldToFilter('entity_id',$filter_entity_id);
+                $brandData = $collection->getData();
+            }
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
         }
         return $sliderData;
     } 
-   
+    
 }
