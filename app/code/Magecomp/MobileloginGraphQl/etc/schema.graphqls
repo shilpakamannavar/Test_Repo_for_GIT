@@ -19,6 +19,12 @@ type Mutation {
         mobileNumber: String @doc(description: "Mobile Number")
         websiteId: Int = 1 @doc (description: "Website Id")
     ): MobileCreateAccountOtpOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\CreateAccount") @doc(description:"Send Mobile OTP to create an Account")
+
+    createAccountEmailOTP (
+        email: String @doc(description: "Email")
+        websiteId: Int = 1 @doc (description: "Website Id")
+    ): MobileCreateAccountOtpOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\CreateAccountEmail") @doc(description:"Send Mobile OTP to create an Account Using Email")
+
     createCustomerAccount (
         input: CustomerInput!
         mobileNumber: String @doc(description: "Mobile Number")
@@ -49,6 +55,12 @@ type Query {
         otp: String @doc(description: "OTP")
         websiteId: Int = 1 @doc (description: "Website Id")
     ): MobileForgotPassworOTPVerifyOtpOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\CreateAccountVerifyOtp") @doc(description:"Verify Forgpt Password OTP")
+    createAccountEmailOTPVerify (
+        email: String @doc(description: "Email")
+        otp: String @doc(description: "OTP")
+        websiteId: Int = 1 @doc (description: "Website Id")
+    ): MobileForgotPassworOTPVerifyOtpOutput @resolver(class: "Magecomp\\MobileloginGraphQl\\Model\\Resolver\\CreateAccountEmailVerifyOtp") @doc(description:"Create Account Using Email Verify Otp")
+
     updateMobileNumberOTPVerify (
         newmobileNumber: String @doc(description: " New Mobile Number")
         otp: String @doc(description: "OTP")

@@ -17,6 +17,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\SalesGraphQl\Model\OrderItem\OptionsProcessor;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\SalesGraphQl\Model\OrderItem\DataProvider as CoreDataProvider;
+
 /**
  * Data provider for order items
  */
@@ -56,8 +57,12 @@ class DataProvider extends CoreDataProvider
      * @var array
      */
     private $orderItemList = [];
+    
+    /**
+     * @var StoreManagerInterface
+     */
+    private $_storeManager;
 
-    protected $storeManager;
     /**
      * @param OrderItemRepositoryInterface $orderItemRepository
      * @param ProductRepositoryInterface $productRepository
@@ -160,7 +165,7 @@ class DataProvider extends CoreDataProvider
                 'quantity_canceled' => $orderItem->getQtyCanceled(),
                 'quantity_returned' => $orderItem->getQtyReturned(),
                 'brand_name' => $associatedProduct->getData('brand_name'),
-                'image_url' =>$this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).ltrim($ImageUrl, '/'),
+                'image_url' => $this->_storeManager->getStore()->getBaseUrl().'media/catalog/product'.$ImageUrl,
                 'order_status_cancel'=>$associatedOrder->canCancel(),
             ];
 
