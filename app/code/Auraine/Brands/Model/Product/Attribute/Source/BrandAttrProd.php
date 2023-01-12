@@ -78,10 +78,9 @@ class BrandAttrProd extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractS
      * @param int $id
      * @return brandData|array
      */
-
-    public function getBrandDataById($id)
+    public function getAllBrandDataById($id)
     {
-        $collection = $this->_brandsFactory->create()->addFieldToSelect('entity_id','value')->addFieldToSelect('title','label')->addFieldToFilter('entity_id',$id)->addFieldToFilter('status','1');
+        $collection = $this->_brandsFactory->create()->addFieldToSelect('entity_id','value')->addFieldToSelect('title','label')->addFieldToFilter('entity_id',$id);
         $brandData = $collection->getData();
         return  $brandData;
 
