@@ -1,6 +1,7 @@
 <?php
 namespace Magecomp\Mobilelogin\Helper;
 
+use Magento\Framework\App\Area;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\Translate\Inline\StateInterface;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
@@ -514,6 +515,36 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->inlineTranslation->resume();
         return "true";
     }
+
+    /**
+     * @param $otp
+     * @param $email
+     * @return string
+     */
+    public function sendEmailOtp($otp, $email): string
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $templateOptions = [
+            'area' => 'frontend',
+            'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID,
+        ];
+
+        $templateVars = [
+            'random' => $otp
+        ];
+
+        $this->inlineTranslation->suspend();
+        $transport = $this->transportBuilder->setTemplateIdentifier('email_otp_notify')
+            ->setTemplateOptions($templateOptions)
+            ->setTemplateVars($templateVars)
+            ->setFrom($this->scopeConfig->getValue(self::XML_PATH_EMAIL_ADMIN_QUOTE_SENDER, $storeScope))
+            ->addTo([$email])
+            ->getTransport();
+        $transport->sendMessage();
+        $this->inlineTranslation->resume();
+        return "true";
+    }
+
     public function get_browser_name($user_agent)
     {
         // Make case insensitive.
@@ -772,7 +803,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $websiteId = 1;
         }
 
-
         return $this->_otpCollection->create()
             ->addFieldToFilter('type', $type)
             ->addFieldToFilter('mobile', $data['mobile'])
@@ -877,6 +907,44 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @param $data
      * @param int $websiteId
+     * @return array|bool[]|string
+     */
+    public function sendRegistrationEmailOTP($data, $websiteId = 1)
+    {
+        try {
+            if ($this->checkCustomerWithSameMobileNo($data['mobile'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer already exists.")];
+            }
+
+            $randomCode = $this->generateRandomString();
+            $message = $this->getRegOtpMessage($data['mobile'], $randomCode);
+            $dlt = $this->getregdlt();
+
+
+            $otpModel = $this->_otpModal->create();
+
+            $collection = $this->checkOTPExists($data['mobile'], self::REGISTRATION_OTP_TYPE, $websiteId);
+
+            if (count($collection) > 0) {
+                $otpModel = $collection->getFirstItem();
+            }
+
+            $otpModel->setType(self::REGISTRATION_OTP_TYPE);
+            $otpModel->setRandomCode($randomCode);
+            $otpModel->setIsVerify(0);
+            $otpModel->setMobile($data['mobile']);
+            $otpModel->setWebsiteId($websiteId);
+            $otpModel->save();
+            $this->sendEmailOtp($message, $data['mobile']);
+            return ["status"=>true, "Message Sent"];
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+
+    /**
+     * @param $data
+     * @param int $websiteId
      * @return array|bool[]
      */
     public function verifyRegistrationOTP($data, $websiteId = 1)
@@ -891,8 +959,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 ->addFieldToFilter('random_code', $data['verifyotp'])
                 ->addFieldToFilter('type', self::REGISTRATION_OTP_TYPE)
                 ->addFieldToFilter('website_id', $websiteId);
-
-
 
             if (count($collection) == 1) {
                 $item = $collection->getFirstItem();
