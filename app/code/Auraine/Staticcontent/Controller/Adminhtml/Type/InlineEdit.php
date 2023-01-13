@@ -45,13 +45,7 @@ class InlineEdit extends \Magento\Backend\App\Action
                 foreach (array_keys($postItems) as $modelid) {
                     /** @var \Auraine\Staticcontent\Model\Type $model */
                     $model = $this->_objectManager->create(\Auraine\Staticcontent\Model\Type::class)->load($modelid);
-                    try {
-                        $model->setData(array_merge($model->getData(), $postItems[$modelid]));
-                        $model->save();
-                    } catch (\Exception $e) {
-                        $messages[] = "[Type ID: {$modelid}]  {$e->getMessage()}";
-                        $error = true;
-                    }
+                    $this->arrayMerge($model, $postItems, $modelid);
                 }
             }
         }
@@ -61,5 +55,15 @@ class InlineEdit extends \Magento\Backend\App\Action
             'error' => $error
         ]);
     }
-}
 
+    private function arrayMerge($model, $postItems, $modelid)
+    {
+        try {
+            $model->setData(array_merge($model->getData(), $postItems[$modelid]));
+            $model->save();
+        } catch (\Exception $e) {
+            $messages[] = "[Content ID: {$modelid}]  {$e->getMessage()}";
+            $error = true;
+        }
+    }
+}

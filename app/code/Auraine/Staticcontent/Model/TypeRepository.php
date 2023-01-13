@@ -46,7 +46,6 @@ class TypeRepository implements TypeRepositoryInterface
      */
     protected $collectionProcessor;
 
-
     /**
      * @param ResourceType $resource
      * @param TypeInterfaceFactory $typeFactory
@@ -146,4 +145,3 @@ class TypeRepository implements TypeRepositoryInterface
         return $this->delete($this->get($typeId));
     }
 }
-

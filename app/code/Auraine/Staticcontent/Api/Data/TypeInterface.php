@@ -39,4 +39,3 @@ interface TypeInterface
      */
     public function setType($type);
 }
-

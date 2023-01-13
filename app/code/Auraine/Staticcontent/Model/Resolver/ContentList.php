@@ -20,9 +20,9 @@ class ContentList implements ResolverInterface
 
     public function __construct(
         CollectionFactory $value
-        ) {
+    ) {
             $this->_value = $value;
-        }
+    }
  
    /**
     * @param Field $field
@@ -39,29 +39,28 @@ class ContentList implements ResolverInterface
 
         $collection = $this->_value->create()
                         ->addFieldToFilter('type', $content)
-                        ->addFieldToFilter('enable',1)
-                        ->setOrder('sortorder','ASC');
+                        ->addFieldToFilter('enable', 1)
+                        ->setOrder('sortorder', 'ASC');
 
         $data = $collection->getData();
 
         $result = [];
-        foreach($data as $value) {
+        foreach ($data as $value) {
             $result[] = [
                     'label' => $value['label'],
                     'value' => $value['value'],
                 ];
         }
         
-      return $result;
+        return $result;
     }
 
     private function getContent($args)
     {
-        if(!isset($args['content'])) {
+        if (!isset($args['content'])) {
             throw new GraphQlInputException(__('Content should be specified'));
         }
 
         return $args['content'];
     }
 }
-

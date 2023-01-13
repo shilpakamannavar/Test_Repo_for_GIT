@@ -59,4 +59,3 @@ interface ContentRepositoryInterface
      */
     public function deleteById($contentId);
 }
-

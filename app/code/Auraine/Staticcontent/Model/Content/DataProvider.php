@@ -28,7 +28,6 @@ class DataProvider extends AbstractDataProvider
      */
     protected $collection;
 
-
     /**
      * @param string $name
      * @param string $primaryFieldName
@@ -76,4 +75,3 @@ class DataProvider extends AbstractDataProvider
         return $this->loadedData;
     }
 }
-

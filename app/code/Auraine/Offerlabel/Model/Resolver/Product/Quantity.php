@@ -22,8 +22,8 @@ class Quantity implements ResolverInterface
 {
 
      /**
-     * @var ScopeConfigInterface
-     */
+      * @var ScopeConfigInterface
+      */
     private $scopeConfig;
 
     /**
