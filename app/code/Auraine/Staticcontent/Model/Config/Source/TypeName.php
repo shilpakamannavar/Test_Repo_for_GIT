@@ -20,10 +20,8 @@ class TypeName implements OptionSourceInterface
      * @param array $data
      */
     public function __construct(
-    \Magento\Backend\Block\Template\Context $context,
-    Content $typeName,
-    array $data = []
-    ) {
+        Content $typeName,
+       ) {
         $this->_typeName = $typeName;
     }
     
@@ -44,5 +42,4 @@ class TypeName implements OptionSourceInterface
 
         return $result;
     }
-
 }

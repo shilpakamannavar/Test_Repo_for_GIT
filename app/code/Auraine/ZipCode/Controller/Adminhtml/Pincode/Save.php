@@ -40,8 +40,6 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addErrorMessage(__('This Pincode no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
-        
-            $data['country'] = $data['country_id'];
             
             $model->setData($data);
         

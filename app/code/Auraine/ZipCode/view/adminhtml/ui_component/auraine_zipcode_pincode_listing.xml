@@ -151,7 +151,7 @@
 						<dataType>select</dataType>
 					</settings>
 		</column>
-		<column name="country" sortOrder="250" component="Magento_Ui/js/grid/columns/select">
+		<column name="country_id" sortOrder="250" component="Magento_Ui/js/grid/columns/select">
 			<settings>
 				<label translate="true">Country</label>
 				<options class="Auraine\ZipCode\Model\Config\Source\Countries"/>

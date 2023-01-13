@@ -20,4 +20,3 @@ class Content extends AbstractDb
         $this->_init('auraine_staticcontent_content', 'content_id');
     }
 }
-

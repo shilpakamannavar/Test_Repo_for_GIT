@@ -68,4 +68,3 @@ class Save extends \Magento\Backend\App\Action
         return $resultRedirect->setPath('*/*/');
     }
 }
-

@@ -117,4 +117,3 @@ class Content extends AbstractModel implements ContentInterface
         return $this->setData(self::ENABLE, $enable);
     }
 }
-
