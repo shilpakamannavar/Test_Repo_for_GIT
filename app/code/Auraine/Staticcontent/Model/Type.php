@@ -53,4 +53,3 @@ class Type extends AbstractModel implements TypeInterface
         return $this->setData(self::TYPE, $type);
     }
 }
-

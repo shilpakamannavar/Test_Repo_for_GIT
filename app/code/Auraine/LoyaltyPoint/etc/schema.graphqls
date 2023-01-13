@@ -1,6 +1,11 @@
 type Customer @doc(description: "An input object that assigns or updates customer attributes.") {
    loyalty_tire: String @resolver(class: "Auraine\\LoyaltyPoint\\Model\\Resolver\\CustomerLoyaltyResolver")
 }
+
+type Cart {
+    reward_points_will_earn: Float @doc(description: "Add reward_points_will_earn filed to existing cart module") @resolver(class: "Auraine\\LoyaltyPoint\\Model\\Resolver\\RewardPointsWillEarn")
+}
+
 type GetRewardsStatisticOutput {
     tire: String @resolver(class: "Auraine\\LoyaltyPoint\\Model\\Resolver\\LoyaltyResolver")
 }

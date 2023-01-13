@@ -44,4 +44,3 @@ class Delete extends \Auraine\Staticcontent\Controller\Adminhtml\Content
         return $resultRedirect->setPath('*/*/');
     }
 }
-

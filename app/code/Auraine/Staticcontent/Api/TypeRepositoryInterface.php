@@ -59,4 +59,3 @@ interface TypeRepositoryInterface
      */
     public function deleteById($typeId);
 }
-
