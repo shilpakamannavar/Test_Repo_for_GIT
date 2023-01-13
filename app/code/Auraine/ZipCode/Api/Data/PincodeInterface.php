@@ -9,7 +9,7 @@ interface PincodeInterface
     const PINCODE_ID = 'pincode_id';
     const STATUS = 'status';
     const CODE = 'code';
-    const COUNTRY = 'country';
+    const COUNTRY = 'country_id';
     const CITY = 'city';
     const STATE = 'state';
 

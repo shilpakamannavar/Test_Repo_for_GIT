@@ -61,4 +61,3 @@ class Edit extends \Auraine\Staticcontent\Controller\Adminhtml\Type
         return $resultPage;
     }
 }
-

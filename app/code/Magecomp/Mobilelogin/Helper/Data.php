@@ -727,6 +727,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return false;
     }
 
+    /**
+     * @param $mobile
+     * @param int $websiteId
+     * @return bool
+     */
+    public function checkCustomerWithSameEmail($email, $websiteId = 1)
+    {
+        $customer = $this->checkCustomerExists($email, "email", $websiteId);
+        if (count($customer) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function sendUpdateOTPCode($data, $websiteId = 1)
     {
 
@@ -1060,6 +1075,41 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @param $data
      * @param int $websiteId
+     * @return array|bool[]|string
+     */
+    public function sendLoginEmailOTP($data, $websiteId = 1)
+    {
+        try {
+            if (!$this->checkCustomerWithSameEmail($data['loginotpmob'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer does not exists.")];
+            }
+
+            $randomCode = $this->generateRandomString();
+            $message = $this->getLoginOtpMessage($data['loginotpmob'], $randomCode);
+            $dlt = $this->getlogindlt();
+            $otpModel = $this->_otpModal->create();
+            $collection = $this->checkOTPExists($data['loginotpmob'], self::LOGIN_OTP_TYPE, $websiteId);
+
+            if (count($collection) > 0) {
+                $otpModel = $collection->getFirstItem();
+            }
+
+            $otpModel->setType(self::LOGIN_OTP_TYPE);
+            $otpModel->setRandomCode($randomCode);
+            $otpModel->setIsVerify(0);
+            $otpModel->setMobile($data['loginotpmob']);
+            $otpModel->setWebsiteId($websiteId);
+            $otpModel->save();
+            $this->sendEmailOtp($message, $data['loginotpmob']);
+            return ["status"=>true, "Message Sent"];
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+    
+    /**
+     * @param $data
+     * @param int $websiteId
      * @return array|bool[]
      */
     public function verifyLoginOTP($data, $websiteId = 1)
@@ -1067,6 +1117,38 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         try {
             if (!$this->checkCustomerWithSameMobileNo($data['mobile'], $websiteId)) {
                 return ["status"=>false, "message"=>__("ss Customer does not exists.")];
+            }
+
+            $collection = $this->_otpCollection->create()
+                ->addFieldToFilter('mobile', $data['mobile'])
+                ->addFieldToFilter('random_code', $data['verifyotp'])
+                ->addFieldToFilter('type', self::LOGIN_OTP_TYPE)
+                ->addFieldToFilter('is_verify', 0)
+                ->addFieldToFilter('website_id', $websiteId);
+
+            if (count($collection) == 1) {
+                $item = $collection->getFirstItem();
+                $item->setIsVerify(1);
+                $item->save();
+                return ["status"=>true];
+            }
+
+            return ["status"=>false,"message"=>__("Entered OTP is not correct.")];
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+
+    /**
+     * @param $data
+     * @param int $websiteId
+     * @return array|bool[]
+     */
+    public function verifyLoginEmailOTP($data, $websiteId = 1)
+    {
+        try {
+            if (!$this->checkCustomerWithSameEmail($data['mobile'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer does not exists.")];
             }
 
             $collection = $this->_otpCollection->create()

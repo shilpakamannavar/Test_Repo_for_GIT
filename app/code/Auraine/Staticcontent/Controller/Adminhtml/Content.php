@@ -39,4 +39,3 @@ abstract class Content extends \Magento\Backend\App\Action
         return $resultPage;
     }
 }
-

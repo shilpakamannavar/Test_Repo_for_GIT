@@ -51,7 +51,8 @@ class CreateCustomerAccount implements ResolverInterface
         if (empty($args['input']) || !isset($args['input'])) {
             throw new GraphQlInputException(__('Invalid parameter list.'));
         }
-        if(!$this->validateMobile($args['mobileNumber'])) {
+        $type = $args['type'];
+        if(($type === 'mobile') && !$this->validateMobile($args['mobileNumber'])) {
             throw new GraphQlAuthenticationException(__('Invalid number.'));
         }
         $output = [];
@@ -61,19 +62,28 @@ class CreateCustomerAccount implements ResolverInterface
         try {
             $isVerified = $this->_helperData->checkOTPisVerified(
                 [
-                    "mobile"=>$args['mobileNumber'],
-                    "otp"=>$args['otp'],
+                    "mobile" => ($type === 'mobile') ? $args['mobileNumber'] : $args['input']['email'],
+                    "otp" => $args['otp'],
                 ],
                 $this->_helperData::REGISTRATION_OTP_TYPE,
                 $args['websiteId']
             );
 
             if (count($isVerified) == 1) {
-                $collection = $this->_helperData->checkCustomerExists(
-                    $args['mobileNumber'],
-                    "mobile",
-                    $args['websiteId']
-                );
+                if ($type === 'mobile') {
+                    $collection = $this->_helperData->checkCustomerExists(
+                        $args['mobileNumber'],
+                        "mobile",
+                        $args['websiteId']
+                    );
+                } else {
+                    $collection = $this->_helperData->checkCustomerExists(
+                        $args['input']['email'],
+                        "email",
+                        $args['websiteId']
+                    );
+                }
+                
                 if (count($collection) == 0) {
                     if (isset($args['input']['date_of_birth'])) {
                         $args['input']['dob'] = $args['input']['date_of_birth'];

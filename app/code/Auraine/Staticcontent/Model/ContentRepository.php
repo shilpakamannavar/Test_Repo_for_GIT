@@ -46,7 +46,6 @@ class ContentRepository implements ContentRepositoryInterface
      */
     protected $collectionProcessor;
 
-
     /**
      * @param ResourceContent $resource
      * @param ContentInterfaceFactory $contentFactory
@@ -146,4 +145,3 @@ class ContentRepository implements ContentRepositoryInterface
         return $this->delete($this->get($contentId));
     }
 }
-

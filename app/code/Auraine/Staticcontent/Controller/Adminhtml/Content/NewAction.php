@@ -38,4 +38,3 @@ class NewAction extends \Auraine\Staticcontent\Controller\Adminhtml\Content
         return $resultForward->forward('edit');
     }
 }
-

@@ -1,6 +1,8 @@
 <?php
 namespace Auraine\LoyaltyPoint\Helper;
 
+use Magento\Sales\Model\Order;
+
 class Data
 {
 
@@ -10,13 +12,25 @@ class Data
     private $_scopeConfig;
 
     /**
+     * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
+     */
+    private $_orderCollectionFactory;
+
+    /**
      * Constructs helper Service provider to fetch Store config values.
      * 
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory
+     * 
      */
-    public function __construct(\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig)
+    public function __construct(
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory
+        
+        )
     {
         $this->_scopeConfig = $scopeConfig;
+        $this->_orderCollectionFactory = $orderCollectionFactory;
     }
 
     /**
@@ -24,7 +38,7 @@ class Data
      *
      * @return array
      */
-    public function getSlabs()
+    private function getSlabs()
     {
         return [
             1 => $this->getStoreConfigValue('auraine/tire_one/tire_one_amount'),
@@ -39,7 +53,7 @@ class Data
      *
      * @return array
      */
-    public function getValues()
+    private function getValues()
     {
         return [
             1 => $this->getStoreConfigValue('auraine/tire_one/tire_one_value'),
@@ -55,7 +69,7 @@ class Data
      * @param string $path
      * @return int
      */
-    public function getStoreConfigValue($path)
+    private function getStoreConfigValue($path)
     {
         return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
@@ -65,7 +79,7 @@ class Data
      *
      * @return array
      */
-    public function getNames()
+    private function getNames()
     {
         return [
             1 => $this->getStoreConfigValue('auraine/tire_one/tire_one_name'),
@@ -74,4 +88,64 @@ class Data
             4 => $this->getStoreConfigValue('auraine/tire_four/tire_four_name'),
         ];
     }
+
+    /**
+     * Calculate all the completed orders grand total
+     *
+     * @param int $customerId
+     * @return float
+     */
+    public function getYearOldGrandTotal($customerId)
+    {
+        /** Fetching one year old orders of customer from current date */
+        $customerOrders = $this->_orderCollectionFactory
+            ->create()
+            ->addFieldToFilter('customer_id', $customerId)
+            ->addFieldToFilter('state', Order::STATE_COMPLETE)
+            ->addFieldToFilter('created_at', ['lteq' => date('Y-m-d H:i:s')])
+            ->addFieldToFilter('created_at', ['gteq' => date('Y-m-d H:i:s', strtotime('-1 year'))]);
+
+        /** Calculating the sum of one year orders from current date. */
+        $grandTotal = 0;
+        foreach($customerOrders as $customerOrder) {
+            $grandTotal += $customerOrder->getGrandTotal();
+        }
+
+        return $grandTotal;
+    }
+
+    /**
+     * Returns slab value/name
+     *
+     * @param float $grandTotal
+     * @param boolean $name
+     * @return mixed
+     */
+    public function getSlabValueOrName($grandTotal, $nameFlag=false)
+    {
+        $slabs = $this->getSlabs();
+        $slabValues = $this->getValues();
+        $slabNames = $this->getNames();
+
+        $name = null;
+        $value = null;
+
+        /** Getting applicable slab value and names for the customer. */
+        if ($grandTotal >= $slabs[1]) {
+            $value = $slabValues[1];
+            $name = $slabNames[1];
+        } else if($grandTotal >= $slabs[2] && $grandTotal < $slabs[1]) {
+            $value = $slabValues[2];
+            $name = $slabNames[2];
+        } else if($grandTotal >= $slabs[3] && $grandTotal < $slabs[2]) {
+            $value = $slabValues[3];
+            $name = $slabNames[3];
+        } else {
+            $value = $slabValues[4];
+            $name = $slabNames[4];
+        }
+
+        return $nameFlag ? $name : $value;
+    }
+
 }

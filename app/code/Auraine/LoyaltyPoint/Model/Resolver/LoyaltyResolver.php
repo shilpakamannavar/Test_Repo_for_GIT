@@ -10,10 +10,8 @@ namespace Auraine\LoyaltyPoint\Model\Resolver;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
-use Magento\Sales\Model\ResourceModel\Order\CollectionFactory ;
 use Auraine\LoyaltyPoint\Helper\Data ;
 use Magento\CustomerGraphQl\Model\Customer\GetCustomer;
-use Auraine\LoyaltyPoint\Helper\GetTireNameByid ;
 
 /**
  * @inheritdoc
@@ -27,27 +25,21 @@ class LoyaltyResolver implements ResolverInterface
     protected $_helperData;
 
     /**
-     * @var \Auraine\LoyaltyPoint\Helper\GetTireNameByid
-     */
-    protected $_helperNameById;
-
-    /**
      * @var GetCustomer
      */
     private $customerGetter;
  
     /**
      *
-     * @param CollectionFactory $orderCollectionFactory
-     * @param Data $helperData
      * @param GetCustomer $customerGetter
+     * @param Data $helperData
      */
     public function __construct(
         GetCustomer $customerGetter,
-        GetTireNameByid $helperNameById,
+        Data $helperData
     ) {
         $this->customerGetter = $customerGetter;
-        $this->_helperNameById = $helperNameById;
+        $this->_helperData = $helperData;
     }
 
     /**
@@ -62,7 +54,9 @@ class LoyaltyResolver implements ResolverInterface
     ) {
         $customer = $this->customerGetter->execute($context);
         $customerId = (int)$customer->getId();
-        return $this->_helperNameById->getTireNameById($customerId);
+        $grandTotal = $this->_helperData->getYearOldGrandTotal($customerId);
+
+        return $this->_helperData->getSlabValueOrName($grandTotal, true);
     }
     
 }
