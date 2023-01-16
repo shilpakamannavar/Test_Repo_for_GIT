@@ -14,7 +14,7 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
-class AddLabelProductAttribute implements DataPatchInterface, PatchRevertableInterface
+class AddLabelsProductAttribute implements DataPatchInterface, PatchRevertableInterface
 {
 
     /**
@@ -50,7 +50,7 @@ class AddLabelProductAttribute implements DataPatchInterface, PatchRevertableInt
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
-            'label',
+            'labels',
             [
                 'type' => 'varchar',
                 'label' => 'Label',
