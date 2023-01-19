@@ -1,0 +1,18 @@
+type Order {
+    details: Details @doc(description: "Details") @resolver(class: "Auraine\\ExtendedPlaceOrderMutation\\Model\\Resolver\\ExtendedPlaceOrderResolver")
+}
+
+type Details {
+    firstname: String @doc(description: "Name")
+    lastname: String @doc(description: "Name")
+    email: String @doc(description: "Email")
+    mobile: String @doc(description: "Mobile")
+    address: Address @doc(description: "Address")
+}
+
+type Address {
+    street: String @doc(description: "door no.")
+    city: String @doc(description: "door no.")
+    region: String @doc(description: "door no.")
+    country: String @doc(description: "door no.")    
+}
