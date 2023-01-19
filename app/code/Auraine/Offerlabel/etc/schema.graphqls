@@ -1,8 +1,22 @@
 type StoreConfig {
    coupen_display_text: String @doc(description: "To fetch coupen label text message")
    free_shipping_subtotal:Int @doc(description: "To fetch amount of free shipping")
+    free_shipping_enable: String @doc(description: "To check free shipping enabled 0 for disable 1 for enabled")
+
+    general_store_information_name : String  @doc(description: "Store Name"),
+    general_store_information_phone : String  @doc(description: "Store Phone Number	"),
+    general_store_information_hours : String  @doc(description: "Store Hours of operation"),
+    general_store_information_street1 : String  @doc(description: "Store Street address line1")
+    general_store_information_street2 : String  @doc(description: "Store Street address line2"),
+    general_store_information_city : String  @doc(description: "Store City")
+    general_store_information_region_id : String @doc(description: "store region id")
+    general_store_information_country_id : String @doc(description: "store country id")
+    general_store_information_postcode : String  @doc(description: "Store Pincode")
+    general_store_information_merchant_vat_number : String @doc (description:"Store VAT number")
+   
 }
 
 interface ProductInterface {
-    product_quatity : Float @doc(description: "The Total quantity.")  @resolver(class: "Auraine\\Offerlabel\\Model\\Resolver\\Product\\Quantity") @doc(description: "Stock status attributes")
+    product_quatity: Float @doc(description: "The Total quantity.")  @resolver(class: "Auraine\\Offerlabel\\Model\\Resolver\\Product\\Quantity") @doc(description: "Stock status attributes")
 }
+

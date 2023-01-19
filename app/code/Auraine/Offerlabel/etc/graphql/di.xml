@@ -5,6 +5,18 @@
             <argument name="extendedConfigData">
                <item name="coupen_display_text" xsi:type="string">offerlabel_id/general/coupen_display_text</item>
                <item name="free_shipping_subtotal" xsi:type="string">carriers/freeshipping/free_shipping_subtotal</item>
+
+               <item name="free_shipping_enable" xsi:type="string">carriers/freeshipping/active</item>
+                <item name="general_store_information_name" xsi:type="string">general/store_information/name</item>
+				<item name="general_store_information_phone" xsi:type="string">general/store_information/phone</item>
+                <item name="general_store_information_hours" xsi:type="string">general/store_information/hours</item>
+                <item name="general_store_information_street1" xsi:type="string">general/store_information/street_line1</item>
+                <item name="general_store_information_street2" xsi:type="string">general/store_information/street_line2</item>
+                <item name="general_store_information_city" xsi:type="string">general/store_information/city</item>
+                <item name="general_store_information_region_id" xsi:type="string">general/store_information/region_id</item>
+                <item name="general_store_information_country_id" xsi:type="string">general/store_information/country_id</item>
+                <item name="general_store_information_postcode" xsi:type="string">general/store_information/postcode</item>
+                <item name="general_store_information_merchant_vat_number" xsi:type="string">general/store_information/merchant_vat_number</item>
             </argument>
         </arguments>
     </type>
