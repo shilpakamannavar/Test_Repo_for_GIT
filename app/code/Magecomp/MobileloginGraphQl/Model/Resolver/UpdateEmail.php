@@ -9,7 +9,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 
-class UpdateMobilenumber implements ResolverInterface
+class UpdateEmail implements ResolverInterface
 {
     /**
      * @var Data
@@ -42,8 +42,8 @@ class UpdateMobilenumber implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        if (!isset($args['newmobileNumber']) || !isset($args['oldmobileNumber']) ||  !isset($args['websiteId']) ||
-            empty($args['newmobileNumber']) || empty($args['oldmobileNumber']) || empty($args['websiteId'])
+        if (!isset($args['new_email']) || !isset($args['old_email']) ||  !isset($args['websiteId']) ||
+            empty($args['new_email']) || empty($args['old_email']) || empty($args['websiteId'])
         ) {
             throw new GraphQlInputException(__('Invalid parameter list.'));
         }
@@ -58,18 +58,20 @@ class UpdateMobilenumber implements ResolverInterface
         $output['message'] = "";
         $customerId = $context->getUserId();
 
-        try {
+        try{
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
             $customerObj = $objectManager->get('Magento\Customer\Model\ResourceModel\Customer\Collection');
             $collection = $customerObj->addAttributeToSelect('*')
-                ->addAttributeToFilter('mobilenumber', $args['newmobileNumber'])
+                ->addAttributeToFilter('email', $args['new_email'])
                 ->addAttributeToFilter('entity_id', $customerId)
                 ->load();
+
             if (!count($collection) > 0) {
-                $output = $this->_helperData->sendUpdateOTPCode($args['newmobileNumber'], $args['websiteId']);
+                $output = $this->_helperData->sendUpdateEmailOTPCode($args['new_email'], $args['websiteId']);
             } else {
                 $output =["status"=>false, "message"=>__("Customer already exist.")];
             }
+
             return $output;
         }
         catch (\Exception $e) {
@@ -77,4 +79,5 @@ class UpdateMobilenumber implements ResolverInterface
             throw new AuthenticationException(__($e->getMessage()));
         }
     }
+
 }
