@@ -2,45 +2,60 @@
 namespace Magecomp\MobileloginGraphQl\Model\Resolver;
 
 use Magecomp\Mobilelogin\Helper\Data;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Customer\Model\Data\Customer as CustomerData;
 use Magento\Customer\Model\Customer;
 use Magento\Customer\Model\ResourceModel\Customer as CustomerResource;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 
-class UpdateMobileNumberVerifyOtp implements ResolverInterface
+class UpdateEmailVerifyOtp implements ResolverInterface
 {
+    /**
+     * @var CustomerRepositoryInterface
+     */
+    protected $customerRepository;
+
     /**
      * @var Data
      */
     protected $_helperData;
 
     /**
-     * SendOtp constructor.
      * @param Data $helperData
+     * @param CustomerData $customerData
+     * @param Customer $customer
+     * @param CustomerResource $customerResource
+     * @param CustomerRepositoryInterface $customerRepository
      */
     public function __construct(
         Data $helperData,
         CustomerData $customerData,
         Customer $customer,
-        CustomerResource $customerResource
+        CustomerResource $customerResource,
+        CustomerRepositoryInterface $customerRepository
     ) {
         $this->_helperData = $helperData;
         $this->customerData    = $customerData;
         $this->customer    = $customer;
         $this->customerResource = $customerResource;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
      * @param Field $field
-     * @param $context
+     * @param \Magento\Framework\GraphQl\Query\Resolver\ContextInterface $context
      * @param ResolveInfo $info
      * @param array|null $value
      * @param array|null $args
-     * @return array|bool[]|\Magento\Framework\GraphQl\Query\Resolver\Value|mixed
+     * @return array|\Magento\Framework\GraphQl\Query\Resolver\Value|mixed
      * @throws GraphQlInputException
      */
     public function resolve(
@@ -50,8 +65,8 @@ class UpdateMobileNumberVerifyOtp implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        if (!isset($args['newmobileNumber']) || !isset($args['otp']) ||  !isset($args['oldmobileNumber']) || !isset($args['websiteId']) ||
-            empty($args['newmobileNumber']) || empty($args['otp']) || empty($args['oldmobileNumber']) || empty($args['websiteId'])
+        if (!isset($args['new_email']) || !isset($args['otp']) ||  !isset($args['old_email']) || !isset($args['websiteId']) ||
+            empty($args['new_email']) || empty($args['otp']) || empty($args['old_email']) || empty($args['websiteId'])
         ) {
             throw new GraphQlInputException(__('Invalid parameter list.'));
         }
@@ -65,35 +80,38 @@ class UpdateMobileNumberVerifyOtp implements ResolverInterface
         $output['status'] = false;
         $output['message'] = "";
         $customerId = $context->getUserId();
-        try{
+
+        try {
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
             $customerObj = $objectManager->create('Magento\Customer\Model\ResourceModel\Customer\Collection');
             $collection = $customerObj->addAttributeToSelect('*')
-                ->addAttributeToFilter('mobilenumber', $args['oldmobileNumber'])
+                ->addAttributeToFilter('email', $args['old_email'])
                 ->addAttributeToFilter('entity_id', $customerId)
                 ->load();
 
             if (count($collection) > 0) {
-                $output = $this->_helperData->verifyUpdateMobilenumberOTP(
-                    ["mobile"=> $args['newmobileNumber'], "verifyotp"=> $args['otp']],
+                $output = $this->_helperData->verifyUpdateEmailOTP(
+                    ["mobile"=> $args['new_email'], "verifyotp"=> $args['otp']],
                     $args['websiteId']
                 );
-
                 if ($output['status'] == 1) {
-                    $this->customerData->setId($customerId);
-                    $this->customerData->setCustomAttribute('mobilenumber', $args['newmobileNumber']);
-                    $this->customer->updateData($this->customerData);
-                    $this->customerResource->saveAttribute($this->customer, 'mobilenumber');
-                    $output = ["status" => true, "message" => __("Mobile number updated successfully.")];
-                    return $output;
+                    $customer = $this->customerRepository->getById($customerId);
+                    if($customer->getId())
+                    {
+                        $customer->setWebsiteId($args['websiteId']);
+                        $customer->setEmail($args['new_email']);
+                    }
+                    $this->customerRepository->save($customer)  ;
+                    return ["status" => true, "message" => __("Email updated successfully.")];
                 }
             } else {
-                $output =["status"=>false, "message"=>__("Customer does not exist.")];
-                return $output ;
+                return ["status"=>false, "message"=>__("Customer does not exist.")];
             }
             return $output;
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
+        } catch (LocalizedException $e) {
+            throw new GraphQlAuthorizationException(__($e->getMessage()), $e);
         }
     }
 }

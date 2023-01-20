@@ -744,7 +744,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     public function sendUpdateOTPCode($data, $websiteId = 1)
     {
-
         try {
             if ($this->checkCustomerWithSameMobileNo($data, $websiteId)) {
                 return ["status"=>false, "message"=>__("Customer already exists.")];
@@ -768,6 +767,35 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $otpModel->setWebsiteId($websiteId);
             $otpModel->save();
             return $this->callApiUrl($message, $data, $dlt);
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+
+    public function sendUpdateEmailOTPCode($data, $websiteId = 1)
+    {
+        try {
+            if ($this->checkCustomerWithSameEmail($data, $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer already exists.")];
+            }
+            $randomCode = $this->generateRandomString();
+            $message = $this->getUpdateOtpMessage($data, $randomCode);
+            $dlt = $this->getupdatedlt();
+            $otpModel = $this->_otpModal->create();
+
+            $collection = $this->checkOTPExists($data, self::UPDATE_OTP_TYPE, $websiteId);
+
+            if (count($collection) > 0) {
+                $otpModel = $collection->getFirstItem();
+            }
+
+            $otpModel->setType(self::UPDATE_OTP_TYPE);
+            $otpModel->setRandomCode($randomCode);
+            $otpModel->setIsVerify(0);
+            $otpModel->setMobile($data);
+            $otpModel->setWebsiteId($websiteId);
+            $otpModel->save();
+            $this->sendEmailOtp($message, $data);
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -982,7 +1010,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 return ["status"=>true];
             }
 
-            return ["status"=>false,"message"=>__("Entered OTP is not correct.")];
+            return ["status"=>false,"message"=>__("Incorrect OTP")];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -1013,7 +1041,38 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 return ["status"=>true];
             }
 
-            return ["status"=>false,"message"=>__("Entered OTP is not correct.")];
+            return ["status"=>false,"message"=>__("Incorrect OTP")];
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+
+    /**
+     * @param $data
+     * @param int $websiteId
+     * @return array|bool[]
+     */
+    public function verifyUpdateEmailOTP($data, $websiteId = 1)
+    {
+        try {
+            if ($this->checkCustomerWithSameEmail($data['email'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer already exists.")];
+            }
+
+            $collection = $this->_otpCollection->create()
+                ->addFieldToFilter('mobile', $data['email'])
+                ->addFieldToFilter('random_code', $data['verifyotp'])
+                ->addFieldToFilter('type', self::UPDATE_OTP_TYPE)
+                ->addFieldToFilter('website_id', $websiteId);
+
+            if (count($collection) == 1) {
+                $item = $collection->getFirstItem();
+                $item->setIsVerify(1);
+                $item->save();
+                return ["status"=>true];
+            }
+
+            return ["status"=>false,"message"=>__("Incorrect OTP")];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -1106,7 +1165,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             return ["status"=>false, "message"=>$e->getMessage()];
         }
     }
-    
+
     /**
      * @param $data
      * @param int $websiteId
@@ -1133,7 +1192,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 return ["status"=>true];
             }
 
-            return ["status"=>false,"message"=>__("Entered OTP is not correct.")];
+            return ["status"=>false,"message"=>__("Incorrect OTP")];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -1165,7 +1224,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 return ["status"=>true];
             }
 
-            return ["status"=>false,"message"=>__("Entered OTP is not correct.")];
+            return ["status"=>false,"message"=>__("Incorrect OTP")];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -1248,6 +1307,41 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
+    /**
+     * @param $data
+     * @param $websiteId
+     * @return array|bool[]|string
+     */
+    public function sendForgotPasswordEmailOTP($data, $websiteId)
+    {
+        try {
+            if (!$this->checkCustomerWithSameEmail($data['forgotmob'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer does not exists.")];
+            }
+
+            $randomCode = $this->generateRandomString();
+            $message = $this->getForgotOtpMessage($data['forgotmob'], $randomCode);
+            $dlt = $this->getforgotdlt();
+            $otpModel = $this->_otpModal->create();
+
+            $collection = $this->checkOTPExists($data['forgotmob'], self::FORGOTPASSWORD_OTP_TYPE, $websiteId);
+
+            if (count($collection) > 0) {
+                $otpModel = $collection->getFirstItem();
+            }
+
+            $otpModel->setType(self::FORGOTPASSWORD_OTP_TYPE);
+            $otpModel->setRandomCode($randomCode);
+            $otpModel->setIsVerify(0);
+            $otpModel->setMobile($data['forgotmob']);
+            $otpModel->setWebsiteId($websiteId);
+            $otpModel->save();
+            return $this->sendEmailOtp($message, $data);
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+
     /***
      * @param $data
      * @param int $websiteId
@@ -1305,12 +1399,42 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 return ["status"=>true];
             }
 
-            return ["status"=>false,"message"=>__("Entered OTP is not correct.")];
+            return ["status"=>false,"message"=>__("Incorrect OTP.")];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
     }
 
+    /**
+     * @param $data
+     * @param int $websiteId
+     * @return array|bool[]
+     */
+    public function verifyForgotPasswordEmailOTP($data, $websiteId = 1)
+    {
+        try {
+            if (!$this->checkCustomerWithSameEmail($data['mobile'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer does not exists.")];
+            }
+
+            $collection = $this->_otpCollection->create()
+                ->addFieldToFilter('mobile', $data['mobile'])
+                ->addFieldToFilter('random_code', $data['verifyotp'])
+                ->addFieldToFilter('type', self::FORGOTPASSWORD_OTP_TYPE)
+                ->addFieldToFilter('website_id', $websiteId);
+
+            if (count($collection) == 1) {
+                $item = $collection->getFirstItem();
+                $item->setIsVerify(1);
+                $item->save();
+                return ["status"=>true];
+            }
+
+            return ["status"=>false,"message"=>__("Incorrect OTP")];
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
 
     /**
      * @param $data
@@ -1326,6 +1450,41 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
             $collection = $this->_customerFactory->create()->getCollection()
                 ->addFieldToFilter("mobilenumber", $data['mobile']);
+            if (count($collection) == 1) {
+                $item = $collection->getFirstItem();
+                $customer = $this->_customerFactory->create();
+                $customer = $customer->setWebsiteId($websiteId);
+                $customer = $customer->loadByEmail($item->getEmail());
+                $customer->setRpToken($item->getRpToken());
+                $customer->setPassword($data['password']);
+
+                $customerData = $customer->getDataModel();
+                $customerData->setCustomAttribute('mobilenumber', $data['mobile']);
+                $customer->updateData($customerData);
+                $customer->save();
+                return ["status"=>true, "message"=>__("Your password changed successfully.")];
+            }
+
+            return ["status"=>false, "message"=>__("Customer does not exists.")];
+        } catch (\Exception $e) {
+            return ["status"=>false, "message"=>$e->getMessage()];
+        }
+    }
+
+    /**
+     * @param $data
+     * @param int $websiteId
+     * @return array
+     */
+    public function resetForgotPasswordEmail($data, $websiteId = 1)
+    {
+        try {
+            if (!$this->checkCustomerWithSameEmail($data['email'], $websiteId)) {
+                return ["status"=>false, "message"=>__("Customer does not exists.")];
+            }
+
+            $collection = $this->_customerFactory->create()->getCollection()
+                ->addFieldToFilter("email", $data['email']);
             if (count($collection) == 1) {
                 $item = $collection->getFirstItem();
                 $customer = $this->_customerFactory->create();
