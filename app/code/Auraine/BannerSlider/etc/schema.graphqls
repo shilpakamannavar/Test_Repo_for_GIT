@@ -17,6 +17,7 @@ type BannerSlider {
     slider_type: String @doc(description: "slider type")
     page_type: String @doc(description: "page type")
     category_id: String @doc(description: "category id")
+    target_id: String @doc(description: "target id")
     target_type: String @doc(description: "target type")
     is_show_title: Int @doc(description: "is show title")
     is_enabled: Int @doc(description: "is enabled")

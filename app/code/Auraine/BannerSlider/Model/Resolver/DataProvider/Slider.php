@@ -49,7 +49,7 @@ class Slider
         
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
-        } 
+        }
 
         if (!empty($sliderType)) {
             $collection->addFieldToFilter('slider_type', $sliderType);
@@ -64,8 +64,8 @@ class Slider
         }
 
         if ($collection->getSize() > 0) {
-            $collection->setOrder('sort_order','ASC');
-            foreach($collection as $slider) {
+            $collection->setOrder('sort_order', 'ASC');
+            foreach ($collection as $slider) {
                 $data = $this->extractData($slider, [
                     'slider_id' => 'entity_id',
                     'title',
@@ -82,13 +82,14 @@ class Slider
                     'page_type',
                     'target_type',
                     'sort_order',
-                    'category_id'
+                    'category_id',
+                    'target_id'
                 ]);
-                $data['banners'] = $this->getBanners($slider); 
-                $result[] = $data;      
+                $data['banners'] = $this->getBanners($slider);
+                $result[] = $data;
             }
         }
-        return $result;   
+        return $result;
     }
 
     /**
@@ -141,7 +142,7 @@ class Slider
             if (is_numeric($key)) {
                 $key = $field;
             }
-            if($key=== 'resource_path') {
+            if ($key=== 'resource_path') {
                 $currentStore = $this->storeManager->getStore();
                 $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
                 $data[$key] = $mediaUrl.$object->getData($field);
