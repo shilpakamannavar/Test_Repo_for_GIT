@@ -56,7 +56,6 @@ class Save extends Action
 
         try {
             $model = $sliderId ? $this->sliderRepository->loadById($sliderId) : $this->sliderRepository->create();
-           
             $this->populateModelWithData($model, [
                 'title',
                 'is_show_title',
@@ -71,9 +70,11 @@ class Save extends Action
                 'slider_type',
                 'page_type',
                 'sort_order',
-                'target_type'
+                'target_type',
+                'target_id',
+                'category_id'
+                
             ]);
-
             $this->dataPersistor->set('bannerslider_slider', $model->getData());
             $model = $this->sliderRepository->save($model);
             $this->dataPersistor->clear('bannerslider_slider');

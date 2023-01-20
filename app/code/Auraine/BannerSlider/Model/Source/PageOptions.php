@@ -19,7 +19,10 @@ public function toOptionArray()
         ['label' => __('Select Type'), 'value' => ''],
         ['label' => __('Home page'), 'value' => 'home_page'],
         ['label' => __('Category Page'), 'value' => 'category_page'],
-        ['label' => __('Brand Page'), 'value' => 'brand_page']
+        ['label' => __('Brand Page'), 'value' => 'brand_page'],
+        ['label' => __('Gift Page'), 'value' => 'gift_page'],
+        ['label' => __('Offer Page'), 'value' => 'offer_page'],
+        ['label' => __('Community Page'), 'value' => 'community_page']
     ];
 }
 }

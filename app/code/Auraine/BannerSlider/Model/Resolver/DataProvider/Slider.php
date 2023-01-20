@@ -44,6 +44,7 @@ class Slider
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
         $sortOrder = $args['sort_order'] ?? null;
+        $categoryId = $args['category_id'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
         
         if (!empty($sliderId)) {
@@ -58,6 +59,10 @@ class Slider
             $collection->addFieldToFilter('page_type', $pageType);
         }
         
+        if (!empty($categoryId)) {
+            $collection->addFieldToFilter('category_id', $categoryId);
+        }
+
         if ($collection->getSize() > 0) {
             $collection->setOrder('sort_order','ASC');
             foreach($collection as $slider) {
@@ -76,7 +81,8 @@ class Slider
                     'slider_type',
                     'page_type',
                     'target_type',
-                    'sort_order'
+                    'sort_order',
+                    'category_id'
                 ]);
                 $data['banners'] = $this->getBanners($slider); 
                 $result[] = $data;      
