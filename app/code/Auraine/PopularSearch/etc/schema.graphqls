@@ -1,0 +1,4 @@
+input CategoryFilterInput {
+    popular_search: FilterEqualTypeInput @doc(description: "Category Data filter with popular search flag 1/0")
+  
+}

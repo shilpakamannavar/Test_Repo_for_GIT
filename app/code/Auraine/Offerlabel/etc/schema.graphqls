@@ -13,7 +13,7 @@ type StoreConfig {
     general_store_information_country_id : String @doc(description: "store country id")
     general_store_information_postcode : String  @doc(description: "Store Pincode")
     general_store_information_merchant_vat_number : String @doc (description:"Store VAT number")
-   
+    payment_razorpay_key_id : String @doc (description:"Store RAZORPAY Key")
 }
 
 interface ProductInterface {
