@@ -17,6 +17,7 @@
                 <item name="general_store_information_country_id" xsi:type="string">general/store_information/country_id</item>
                 <item name="general_store_information_postcode" xsi:type="string">general/store_information/postcode</item>
                 <item name="general_store_information_merchant_vat_number" xsi:type="string">general/store_information/merchant_vat_number</item>
+                <item name="payment_razorpay_key_id" xsi:type="string">payment/razorpay/key_id</item>
             </argument>
         </arguments>
     </type>
