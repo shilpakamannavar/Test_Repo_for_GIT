@@ -38,6 +38,7 @@ type BannerSliderBanner {
     alt_text: String @doc(description: "alt text")
     link: String @doc(description: "link")
     sort_order: Int @doc(description: "sort order")
+    additional_information: String @doc(description: "Addtional information")
     resource_map: BannerSliderResourceMap @doc(description: "banner slider resource map")
 }
 

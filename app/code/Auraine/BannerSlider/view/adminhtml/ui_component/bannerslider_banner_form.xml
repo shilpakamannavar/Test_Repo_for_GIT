@@ -136,7 +136,7 @@
             </argument>
             <settings>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>int</dataType>
                 <label translate="true">Resource Map</label>
@@ -150,7 +150,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="resource_type" sortOrder="60" formElement="select">
+        <field name="resource_type" sortOrder="70" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -190,7 +190,7 @@
                 <visible>false</visible>
             </settings>
         </field>
-        <field name="resource_path_local_image" sortOrder="70" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+        <field name="resource_path_local_image" sortOrder="80" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -268,7 +268,35 @@
                 </wysiwyg>
             </formElements>
         </field>
-        <field name="alt_text" sortOrder="80" formElement="input">
+        <field name="additional_information" sortOrder="100" formElement="wysiwyg" template="ui/form/field">
+         <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="source" xsi:type="string">lrpricerules</item>
+                <item name="wysiwygConfigData" xsi:type="array">
+                    <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+                    <item name="toggle_button" xsi:type="boolean">true</item>
+                    <item name="height" xsi:type="string">150px</item>
+                    <item name="add_variables" xsi:type="boolean">true</item>
+                    <item name="add_widgets" xsi:type="boolean">true</item>
+                    <item name="add_images" xsi:type="boolean">true</item>
+                    <item name="add_directives" xsi:type="boolean">true</item>
+                </item>
+            </item>
+        </argument>
+        <settings>
+            <label translate="true">Additional Information</label>
+            <dataScope>additional_information</dataScope>
+        </settings>
+        <formElements>
+            <wysiwyg>
+                <settings>
+                    <rows>5</rows>
+                    <wysiwyg>true</wysiwyg>
+                </settings>
+            </wysiwyg>
+        </formElements>
+    </field>
+        <field name="alt_text" sortOrder="110" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -280,7 +308,7 @@
                 <dataScope>alt_text</dataScope>
             </settings>
         </field>
-        <field name="link" sortOrder="90" formElement="input">
+        <field name="link" sortOrder="120" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -292,5 +320,28 @@
                 <dataScope>link</dataScope>
             </settings>
         </field>
+      <field name="resource_type" sortOrder="70" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Resource Type</label>
+                <dataScope>resource_type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\ResourceType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
     </fieldset>
 </form>
