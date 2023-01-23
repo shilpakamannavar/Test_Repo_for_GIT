@@ -219,13 +219,15 @@ class SaveTest extends TestCase
         $this->assertEquals($data['target_type'], "target_type");
         $this->assertEquals($data['slider_type'], "slider_type");
         $this->assertEquals($data['is_enabled'], 1);
-        //$this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertEquals($data['category_id'], "category_id");
+
     }
     
 
     protected function getSliderData()
       {
        $data = [
+        'category_id' =>'category_id',
         'slider_id' =>'slider_id',
         'title' =>'title',
         'product_ids'=>'product_ids',

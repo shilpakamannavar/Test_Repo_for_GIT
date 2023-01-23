@@ -160,6 +160,7 @@
                 </select>
             </formElements>
         </field>
+       
          <field name="page_type" sortOrder="50" formElement="select">
             <settings>
                 <validation>
@@ -176,10 +177,25 @@
                 </select>
             </formElements>
         </field>
-        <field name="target_type" sortOrder="60" formElement="select">
+           <field name="target_id" sortOrder="60" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
             <settings>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Target ID</label>
+                <dataScope>target_id</dataScope>
+            </settings>
+        </field>
+        <field name="target_type" sortOrder="70" formElement="select">
+            <settings>
+                <validation>
+                    <rule xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
                 <label translate="true">Target Type</label>
@@ -192,9 +208,30 @@
                 </select>
             </formElements>
         </field>
-        
-     
-           <field name="product_banner" sortOrder="70" formElement="checkbox">
+        <field name="category_id" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">category</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Category</label>
+                <dataScope>category_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\Categories"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+           <field name="product_banner" sortOrder="80" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">slider</item>
@@ -218,7 +255,6 @@
                 </checkbox>
             </formElements>
         </field>
-        
         
         <field name="Product_ids" sortOrder="100" formElement="textarea">
             <argument name="data" xsi:type="array">
