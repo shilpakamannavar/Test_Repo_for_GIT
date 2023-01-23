@@ -24,7 +24,8 @@ public function toOptionArray()
         ['label' => __('Secondary Carousel '), 'value' => 'secondary_carousel'],
         ['label' => __('Product Slider'), 'value' => 'product_slider'],
         ['label' => __('Look'), 'value' => 'look'],
-        ['label' => __('Blog Slider'), 'value' => 'blog_slider']
+        ['label' => __('Blog Slider'), 'value' => 'blog_slider'],
+        ['label' => __('Other'), 'value' => 'other']
     ];
 }
 }
