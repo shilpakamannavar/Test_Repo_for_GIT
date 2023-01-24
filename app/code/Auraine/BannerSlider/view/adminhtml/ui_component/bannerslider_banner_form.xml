@@ -243,31 +243,6 @@
                 <visible>false</visible>
             </settings>
         </field>
-        <field name="resource_path_custom_html" sortOrder="70" component="Auraine_BannerSlider/js/form/element/depends/wysiwyg" formElement="wysiwyg">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">banner</item>
-                    <item name="depends" xsi:type="array">
-                        <item name="resource_type" xsi:type="array">
-                            <item name="field" xsi:type="string">resource_type</item>
-                            <item name="value" xsi:type="string">custom_html</item>
-                        </item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Content</label>
-                <visible>false</visible>
-            </settings>
-            <formElements>
-                <wysiwyg>
-                    <settings>
-                        <wysiwyg>true</wysiwyg>
-                    </settings>
-                </wysiwyg>
-            </formElements>
-        </field>
         <field name="additional_information" sortOrder="100" formElement="wysiwyg" template="ui/form/field">
          <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
