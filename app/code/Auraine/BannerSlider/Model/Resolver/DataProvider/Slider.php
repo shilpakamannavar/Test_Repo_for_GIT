@@ -22,6 +22,7 @@ class Slider
 
     /**
      * Slider constructor.
+     *
      * @param SliderRepositoryInterface $sliderRepository
      */
     public function __construct(
@@ -33,6 +34,8 @@ class Slider
     }
 
     /**
+     * Get Slider Data
+     *
      * @param $sliderId
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -93,6 +96,8 @@ class Slider
     }
 
     /**
+     * Get Banner Data
+     *
      * @param SliderInterface $slider
      * @return array
      */
@@ -108,6 +113,7 @@ class Slider
                 'title',
                 'alt_text',
                 'link',
+                'additional_information',
                 'sort_order'
             ]);
             $bannerData['resource_map'] = $this->getResourceMap($banner);
@@ -117,6 +123,8 @@ class Slider
     }
 
     /**
+     * Get Banner Map Data
+     *
      * @param BannerInterface $banner
      * @return array
      */
@@ -131,6 +139,7 @@ class Slider
     }
 
     /**
+     * Extract Data 
      * @param \Magento\Framework\DataObject $object
      * @param string[] $fields
      * @return array

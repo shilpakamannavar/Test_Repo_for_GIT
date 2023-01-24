@@ -44,6 +44,7 @@
                 comment="Resouce Type"/>
         <column xsi:type="text" name="resource_path" nullable="false" comment="Resource Path/URL"/>
         <column xsi:type="varchar" name="alt_text" nullable="false" comment="Alt Text"/>
+        <column xsi:type="varchar" name="additional_information" nullable="false" comment="additional_information"/>
         <column xsi:type="varchar" name="link" nullable="false" comment="Link URL"/>
         <column xsi:type="smallint" name="is_enabled" padding="2" unsigned="true" nullable="false"
                 default="0" comment="Is Enabled"/>
