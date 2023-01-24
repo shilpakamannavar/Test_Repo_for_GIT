@@ -45,7 +45,7 @@ class AddData implements DataPatchInterface
             $regionId = $this->moduleDataSetup->getConnection()->
                 lastInsertId($this->moduleDataSetup->getTable('directory_country_region'));
 
-            $binds = ['locale'=> 'hi_IN', 'region_id' => $regionId, 'name'=> $name];
+            $binds = ['locale'=> 'en_US', 'region_id' => $regionId, 'name'=> $name];
             $this->moduleDataSetup->getConnection()->insert($this->moduleDataSetup->
                 getTable('directory_country_region_name'), $binds);
         }
