@@ -24,7 +24,6 @@
                 <item name="local_image" xsi:type="string">Local Image</item>
                 <item name="external_image" xsi:type="string">External Image</item>
                 <item name="youtube_video" xsi:type="string">Youtube Video</item>
-                <item name="custom_html" xsi:type="string">Custom HTML</item>
             </argument>
         </arguments>
     </type>
