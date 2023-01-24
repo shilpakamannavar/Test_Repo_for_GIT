@@ -243,7 +243,7 @@
                 <visible>false</visible>
             </settings>
         </field>
-        <field name="resource_path_custom_html" sortOrder="70" component="Auraine_BannerSlider/js/form/element/depends/wysiwyg" formElement="wysiwyg">
+        <!-- <field name="resource_path_custom_html" sortOrder="70" component="Auraine_BannerSlider/js/form/element/depends/wysiwyg" formElement="wysiwyg">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -267,7 +267,7 @@
                     </settings>
                 </wysiwyg>
             </formElements>
-        </field>
+        </field> -->
         <field name="additional_information" sortOrder="100" formElement="wysiwyg" template="ui/form/field">
          <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
