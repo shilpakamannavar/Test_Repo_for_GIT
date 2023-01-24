@@ -796,8 +796,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $otpModel->setWebsiteId($websiteId);
             $otpModel->save();
             $this->sendEmailOtp($message, $data);
+            return ["status" => true, "message" => __("OTP Sent to Email")];
         } catch (\Exception $e) {
-            return ["status"=>false, "message"=>$e->getMessage()];
+            return ["status" => false, "message" => $e->getMessage()];
         }
     }
 
@@ -979,7 +980,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $otpModel->setWebsiteId($websiteId);
             $otpModel->save();
             $this->sendEmailOtp($message, $data['mobile']);
-            return ["status"=>true, "Message Sent"];
+            return ["status" => true, "Message Sent"];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -1160,7 +1161,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $otpModel->setWebsiteId($websiteId);
             $otpModel->save();
             $this->sendEmailOtp($message, $data['loginotpmob']);
-            return ["status"=>true, "Message Sent"];
+            return ["status" => true, "Message Sent"];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
@@ -1336,7 +1337,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $otpModel->setMobile($data['forgotmob']);
             $otpModel->setWebsiteId($websiteId);
             $otpModel->save();
-            return $this->sendEmailOtp($message, $data);
+            $this->sendEmailOtp($message, $data['forgotmob']);
+            return ["status" => true, "message" => __("OTP Sent to Email")];
         } catch (\Exception $e) {
             return ["status"=>false, "message"=>$e->getMessage()];
         }
