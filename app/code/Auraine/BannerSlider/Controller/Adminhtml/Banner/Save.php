@@ -40,8 +40,7 @@ class Save extends Action
         BannerRepositoryInterface $bannerRepository,
         DataPersistorInterface $dataPersistor,
         ProcessorPool $processorPool
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->dataPersistor = $dataPersistor;
         $this->bannerRepository = $bannerRepository;
@@ -73,6 +72,7 @@ class Save extends Action
                 'alt_text',
                 'link',
                 'sort_order',
+                'additional_information',
                 'is_enabled'
             ]);
             $resourcePathProcessors = $this->processorPool->getProcessors();
