@@ -1494,10 +1494,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 $customer = $customer->loadByEmail($item->getEmail());
                 $customer->setRpToken($item->getRpToken());
                 $customer->setPassword($data['password']);
-
-                $customerData = $customer->getDataModel();
-                $customerData->setCustomAttribute('mobilenumber', $data['mobile']);
-                $customer->updateData($customerData);
                 $customer->save();
                 return ["status"=>true, "message"=>__("Your password changed successfully.")];
             }

@@ -70,7 +70,7 @@ class ResetPasswordEmail implements ResolverInterface
             );
             if (count($isVerified) == 1) {
                 $output = $this->_helperData->resetForgotPasswordEmail(
-                    ["mobile" => $args['email'], "password" => $args['password']],
+                    ["email" => $args['email'], "password" => $args['password']],
                     $args['websiteId']
                 );
             } else {
