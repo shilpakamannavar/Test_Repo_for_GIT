@@ -188,7 +188,7 @@
                     <rule xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Target ID</label>
+                <label translate="true">Target ID (Mobile)</label>
                 <dataScope>target_id</dataScope>
             </settings>
         </field>
