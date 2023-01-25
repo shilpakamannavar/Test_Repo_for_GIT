@@ -164,7 +164,7 @@ return [
         'Magento_GoogleOptimizer' => 1,
         'Magento_GoogleOptimizerStaging' => 1,
         'Magento_GoogleShoppingAds' => 1,
-        'Magento_Banner' => 1,
+        'Magento_Banner' => 0,
         'Magento_AdminGraphQlServer' => 1,
         'Magento_GraphQlCache' => 1,
         'Magento_ServicesId' => 1,
