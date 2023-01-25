@@ -18,17 +18,15 @@ class Data
 
     /**
      * Constructs helper Service provider to fetch Store config values.
-     * 
+     *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory
-     * 
+     *
      */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory
-        
-        )
-    {
+    ) {
         $this->_scopeConfig = $scopeConfig;
         $this->_orderCollectionFactory = $orderCollectionFactory;
     }
@@ -107,7 +105,7 @@ class Data
 
         /** Calculating the sum of one year orders from current date. */
         $grandTotal = 0;
-        foreach($customerOrders as $customerOrder) {
+        foreach ($customerOrders as $customerOrder) {
             $grandTotal += $customerOrder->getGrandTotal();
         }
 
@@ -118,10 +116,10 @@ class Data
      * Returns slab value/name
      *
      * @param float $grandTotal
-     * @param boolean $name
+     * @param boolean $nameFlag
      * @return mixed
      */
-    public function getSlabValueOrName($grandTotal, $nameFlag=false)
+    public function getSlabValueOrName($grandTotal, $nameFlag = false)
     {
         $slabs = $this->getSlabs();
         $slabValues = $this->getValues();
@@ -134,10 +132,10 @@ class Data
         if ($grandTotal >= $slabs[1]) {
             $value = $slabValues[1];
             $name = $slabNames[1];
-        } else if($grandTotal >= $slabs[2] && $grandTotal < $slabs[1]) {
+        } elseif ($grandTotal >= $slabs[2] && $grandTotal < $slabs[1]) {
             $value = $slabValues[2];
             $name = $slabNames[2];
-        } else if($grandTotal >= $slabs[3] && $grandTotal < $slabs[2]) {
+        } elseif ($grandTotal >= $slabs[3] && $grandTotal < $slabs[2]) {
             $value = $slabValues[3];
             $name = $slabNames[3];
         } else {
@@ -147,5 +145,4 @@ class Data
 
         return $nameFlag ? $name : $value;
     }
-
 }

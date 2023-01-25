@@ -6,6 +6,10 @@ namespace Auraine\ZipCode\Controller\Adminhtml\Pincode;
 class NewAction extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
 {
 
+    /**
+     *
+     * @var \Magento\Backend\Model\View\Result\ForwardFactory
+     */
     protected $resultForwardFactory;
 
     /**
@@ -34,4 +38,3 @@ class NewAction extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
         return $resultForward->forward('edit');
     }
 }
-

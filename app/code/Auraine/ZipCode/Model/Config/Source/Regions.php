@@ -6,33 +6,33 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Regions implements OptionSourceInterface
 {
     /**
-     * @var CollectionFactory
+     * @var \Magento\Directory\Model\ResourceModel\Region\Collection
      */
-    protected $_regionCollection;  
+    protected $_regionCollection;
 
     /**
-     * @var regionFactory
+     * @var \Magento\Directory\Model\RegionFactory
      */
     protected $_regionFactory;
 
     /**
-     * @param Context $context
-     * @param CollectionFactory $regionCollectionFactory
-     * @param regionFactory $regionFactory
+     * @param \Magento\Backend\Block\Template\Context $context
+     * @param \Magento\Directory\Model\ResourceModel\Region\Collection $regionCollection
+     * @param \Magento\Directory\Model\RegionFactory $regionFactory
      * @param array $data
      */
     public function __construct(
-    \Magento\Backend\Block\Template\Context $context,
-    \Magento\Directory\Model\ResourceModel\Region\Collection $regionCollection,
-    \Magento\Directory\Model\RegionFactory $regionFactory,
-    array $data = []
+        \Magento\Backend\Block\Template\Context $context,
+        \Magento\Directory\Model\ResourceModel\Region\Collection $regionCollection,
+        \Magento\Directory\Model\RegionFactory $regionFactory,
+        array $data = []
     ) {
         $this->_regionFactory = $regionFactory;
         $this->_regionCollection = $regionCollection;
     }
     
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {
@@ -62,8 +62,8 @@ class Regions implements OptionSourceInterface
         foreach ($this->_regionCollection->getData() as $value => $label) {
             $region = $regionModel->load($label['region_id']);
             
-            if (!is_null($region)) {
-                $result[$label['region_id']] = $label['name'];             
+            if ($region !== null) {
+                $result[$label['region_id']] = $label['name'];
             }
         }
        

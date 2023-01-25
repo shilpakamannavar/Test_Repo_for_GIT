@@ -12,15 +12,14 @@ class ZipCheck implements ResolverInterface
 {
  
     /**
-     * Zipcode data provider.
      *
-     * @var \Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode
+     * @var DataProvider\Zipcode
      */
     private $zipcodeDataProvider;
 
      /**
-     * Constructs a coupon read service object.
-     */
+      * @param DataProvider\Zipcode $zipcodeDataProvider
+      */
     public function __construct(
         DataProvider\Zipcode $zipcodeDataProvider
     ) {
@@ -33,13 +32,12 @@ class ZipCheck implements ResolverInterface
     public function resolve(
         Field $field,
         $context,
-        ResolveInfo $info, 
-        array $value = null, 
+        ResolveInfo $info,
+        array $value = null,
         array $args = null
     ) {
 
         return $this->zipcodeDataProvider->isAvailableToShip($this->getCart($value));
-
     }
 
     /**

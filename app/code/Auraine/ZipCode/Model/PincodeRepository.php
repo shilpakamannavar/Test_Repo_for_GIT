@@ -141,4 +141,3 @@ class PincodeRepository implements PincodeRepositoryInterface
         return $this->delete($this->get($pincodeId));
     }
 }
-

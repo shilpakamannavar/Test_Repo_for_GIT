@@ -9,7 +9,7 @@ class Collection extends AbstractCollection
 {
 
     /**
-     * @inheritDoc
+     * @var string $_idFieldName
      */
     protected $_idFieldName = 'pincode_id';
 
@@ -24,4 +24,3 @@ class Collection extends AbstractCollection
         );
     }
 }
-

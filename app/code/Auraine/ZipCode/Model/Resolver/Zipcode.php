@@ -14,15 +14,15 @@ class Zipcode implements ResolverInterface
 {
 
     /**
-     * Zipcode data provider.
      *
-     * @var \Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode
+     * @var DataProvider\Zipcode
      */
     private $zipcodeDataProvider;
 
      /**
-     * Constructs a zipcode read service object.
-     */
+      *
+      * @param DataProvider\Zipcode $zipcodeDataProvider
+      */
     public function __construct(
         DataProvider\Zipcode $zipcodeDataProvider
     ) {
@@ -42,7 +42,6 @@ class Zipcode implements ResolverInterface
         $code = $this->getCode($args);
 
         return $this->zipcodeDataProvider->generateZipCodeResponse($code);
-
     }
 
     /**
@@ -56,8 +55,7 @@ class Zipcode implements ResolverInterface
         if (!isset($args['code'])) {
             throw new GraphQlInputException(__('Pincode should be specified should be specified'));
         }
-        
+
         return $args['code'];
     }
 }
-

@@ -6,7 +6,7 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Status implements OptionSourceInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {
@@ -22,10 +22,10 @@ class Status implements OptionSourceInterface
     }
 
      /**
-     * Prepare status array 
-     *
-     * @return array
-     */
+      * Prepare status array
+      *
+      * @return array
+      */
     public function getOptions()
     {
         return [

@@ -39,7 +39,7 @@ class CheckoutCouponApplyTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->helperData = $this->createMock(\Auraine\CouponCodes\Helper\Data::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CouponCodes\Plugin\CheckoutCouponApply::class,
+            \Auraine\CouponCodes\Plugin\CheckoutCouponApply::class,
             [
                 'helperData' => $this->helperData,
             ]
