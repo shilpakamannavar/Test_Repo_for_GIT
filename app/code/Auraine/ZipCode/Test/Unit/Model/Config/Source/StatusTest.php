@@ -32,7 +32,7 @@ class StatusTest extends TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Model\Config\Source\Status::class,
+            \Auraine\ZipCode\Model\Config\Source\Status::class,
             [
 
             ]

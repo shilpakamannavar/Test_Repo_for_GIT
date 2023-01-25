@@ -75,12 +75,16 @@ class DataTest extends TestCase
         $this->context = $this->createMock(\Magento\Framework\App\Helper\Context::class);
         $this->storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
         $this->customerSession = $this->createMock(\Magento\Customer\Model\Session::class);
-        $this->collectionFactoryInstance = $this->createMock(\Magento\SalesRule\Model\ResourceModel\Rule\Collection::class);
-        $this->collectionFactory = $this->createMock(\Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory::class);
+        $this->collectionFactoryInstance = $this->createMock(
+            \Magento\SalesRule\Model\ResourceModel\Rule\Collection::class
+        );
+        $this->collectionFactory = $this->createMock(
+            \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory::class
+        );
         $this->collectionFactory->method('create')->willReturn($this->collectionFactoryInstance);
         $this->objectManger = $this->createMock(\Magento\Framework\ObjectManagerInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CouponCodes\Helper\Data::class,
+            \Auraine\CouponCodes\Helper\Data::class,
             [
                 'context' => $this->context,
                 'storeManager' => $this->storeManager,

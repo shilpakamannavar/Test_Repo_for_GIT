@@ -34,8 +34,6 @@ class Slider
     }
 
     /**
-     * Get Slider Data
-     *
      * @param $sliderId
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -47,7 +45,6 @@ class Slider
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
         $sortOrder = $args['sort_order'] ?? null;
-        $categoryId = $args['category_id'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
         
         if (!empty($sliderId)) {
@@ -62,10 +59,6 @@ class Slider
             $collection->addFieldToFilter('page_type', $pageType);
         }
         
-        if (!empty($categoryId)) {
-            $collection->addFieldToFilter('category_id', $categoryId);
-        }
-
         if ($collection->getSize() > 0) {
             $collection->setOrder('sort_order', 'ASC');
             foreach ($collection as $slider) {
@@ -77,16 +70,14 @@ class Slider
                     'additional_information',
                     'link',
                     'product_ids',
-                    'additional_information',
                     'discover',
+                    'category_id',
                     'product_banner',
                     'identifier',
                     'slider_type',
                     'page_type',
                     'target_type',
-                    'sort_order',
-                    'category_id',
-                    'target_id'
+                    'sort_order'
                 ]);
                 $data['banners'] = $this->getBanners($slider);
                 $result[] = $data;
@@ -123,8 +114,7 @@ class Slider
     }
 
     /**
-     * Get Banner Map Data
-     *
+     * Get Resource Map Data
      * @param BannerInterface $banner
      * @return array
      */
@@ -139,7 +129,6 @@ class Slider
     }
 
     /**
-     * Extract Data 
      * @param \Magento\Framework\DataObject $object
      * @param string[] $fields
      * @return array
@@ -148,18 +137,36 @@ class Slider
     {
         $data = [];
         foreach ($fields as $key => $field) {
+            
             if (is_numeric($key)) {
                 $key = $field;
             }
+
             if ($key=== 'resource_path') {
-                $currentStore = $this->storeManager->getStore();
-                $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-                $data[$key] = $mediaUrl.$object->getData($field);
+                $data[$key] = $this->videoCheck($object->getData($field));
             } else {
                 $data[$key] = $object->getData($field);
             }
             
         }
         return $data;
+    }
+
+    /**
+     * checking for youtube video
+     *
+     * @param string $url
+     * @return void
+     */
+    protected function videoCheck($url)
+    {
+        $currentStore = $this->storeManager->getStore();
+        $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+       
+        if (strpos($url, 'youtube.com') > 0) {
+            return $url;
+        } else {
+            return $mediaUrl.$url;
+        }
     }
 }

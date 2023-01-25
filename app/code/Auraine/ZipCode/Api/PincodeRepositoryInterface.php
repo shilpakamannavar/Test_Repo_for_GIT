@@ -10,6 +10,7 @@ interface PincodeRepositoryInterface
 
     /**
      * Save pincode
+     *
      * @param \Auraine\ZipCode\Api\Data\PincodeInterface $pincode
      * @return \Auraine\ZipCode\Api\Data\PincodeInterface
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -20,6 +21,7 @@ interface PincodeRepositoryInterface
 
     /**
      * Retrieve pincode
+     *
      * @param string $pincodeId
      * @return \Auraine\ZipCode\Api\Data\PincodeInterface
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -28,6 +30,7 @@ interface PincodeRepositoryInterface
 
     /**
      * Retrieve pincode matching the specified criteria.
+     *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Auraine\ZipCode\Api\Data\PincodeSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -38,6 +41,7 @@ interface PincodeRepositoryInterface
 
     /**
      * Delete pincode
+     *
      * @param \Auraine\ZipCode\Api\Data\PincodeInterface $pincode
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -48,6 +52,7 @@ interface PincodeRepositoryInterface
 
     /**
      * Delete pincode by ID
+     *
      * @param string $pincodeId
      * @return bool true on success
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -55,4 +60,3 @@ interface PincodeRepositoryInterface
      */
     public function deleteById($pincodeId);
 }
-

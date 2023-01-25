@@ -9,6 +9,8 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
 {
 
     /**
+     * Get Save button
+     *
      * @return array
      */
     public function getButtonData()
@@ -24,4 +26,3 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
         ];
     }
 }
-

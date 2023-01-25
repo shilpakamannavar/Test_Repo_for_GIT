@@ -10,7 +10,7 @@ class Zipcode
 
     /**
      * Pincode Model factory
-     * 
+     *
      * @var \Auraine\Zipcode\Model\PincodeFactory
      */
     protected $_pincodeFactory;
@@ -19,26 +19,27 @@ class Zipcode
      * @var \Magento\Directory\Model\CountryFactory
      */
     protected $_countryFactory;
+
     /**
-     * @var regionFactory
+     * @var \Magento\Directory\Model\RegionFactory
      */
     protected $_regionFactory;
 
     /**
      * Constructes model Pincode Model factory service
-     * @param \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory,
-     * @param \Magento\Directory\Model\CountryFactory $countryFactory,
+     *
+     * @param \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory
+     * @param \Magento\Directory\Model\CountryFactory $countryFactory
+     * @param \Magento\Directory\Model\RegionFactory $regionFactory
      */
     public function __construct(
         \Auraine\ZipCode\Model\PincodeFactory $pincodeFactory,
         \Magento\Directory\Model\CountryFactory $countryFactory,
         \Magento\Directory\Model\RegionFactory $regionFactory,
-    )
-    {
+    ) {
         $this->_pincodeFactory = $pincodeFactory;
         $this->_countryFactory = $countryFactory;
         $this->_regionFactory = $regionFactory;
-
     }
 
     /**
@@ -65,7 +66,6 @@ class Zipcode
 
         $pincode = $this->_pincodeFactory->create()->load($code, 'code');
 
-
         if (empty($pincode->getData())) {
             throw new GraphQlInputException(__("Pincode isn't available "));
         }
@@ -90,7 +90,7 @@ class Zipcode
     /**
      * Extending the cart GraphQL with zipcode_check attribute.
      *
-     * @param \Magento\Quote\Model\Quote $code
+     * @param \Magento\Quote\Model\Quote $cart
      * @return bool
      */
     public function isAvailableToShip($cart)
@@ -99,8 +99,8 @@ class Zipcode
 
         $code = $shippingAddress->getPostcode();
 
-        if (!isset($shippingAddress) || is_null($code)) {
-            return false; 
+        if (!isset($shippingAddress) || $code === null) {
+            return false;
         }
 
         return $this->isAvailable($code);

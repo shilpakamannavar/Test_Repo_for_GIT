@@ -35,6 +35,8 @@ class MassStatusUpdate extends \Magento\Backend\App\Action
     }
 
     /**
+     * Controller method for mass status update.
+     *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
     public function execute()
@@ -53,6 +55,4 @@ class MassStatusUpdate extends \Magento\Backend\App\Action
 
         return $resultRedirect->setUrl($this->_redirect->getRefererUrl());
     }
-
-  
 }

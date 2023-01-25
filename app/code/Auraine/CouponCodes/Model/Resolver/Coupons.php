@@ -9,20 +9,10 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Quote\Model\QuoteIdMask;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
+use Auraine\CouponCodes\Helper\Data;
 
 class Coupons implements ResolverInterface
 {
-
-     /**
-     * Custom header name constant.
-     */
-    CONST CUSTOM_MOBILE_HEADER_NAME = "X-REQUESTED-WITH";
-
-    /**
-     * Custom header content constant.
-     */
-    CONST CUSTOM_MOBILE_HEADER_CONTENT = "Application/Mobile";
-
     /**
      * Sales Rules collection.
      *
@@ -42,14 +32,18 @@ class Coupons implements ResolverInterface
 
     /**
      * Constructs a coupon read service object.
+     *
+     * @param QuoteIdMask $quoteIdMaskFactory
+     * @param \Auraine\CouponCodes\Model\DataProvider\Collection $ruleCollection
+     * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+     * @param \Magento\Framework\ObjectManagerInterface $objectManger
      */
     public function __construct(
         QuoteIdMask $quoteIdMaskFactory,
         \Auraine\CouponCodes\Model\DataProvider\Collection $ruleCollection,
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
         \Magento\Framework\ObjectManagerInterface $objectManger
-        )
-    {
+    ) {
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
         $this->ruleCollection = $ruleCollection;
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
@@ -57,18 +51,18 @@ class Coupons implements ResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
 
-        $request = $this->_objectManager->create("Magento\Framework\App\RequestInterface");
+        $request = $this->_objectManager->create(\Magento\Framework\App\RequestInterface::class);
 
         $cartId = $this->getCartId($args);
         $cartId = $this->maskedQuoteIdToQuoteId->execute($cartId);
 
-        $mobileHeader = $request->getHeader(self::CUSTOM_MOBILE_HEADER_NAME);
-        $headerStatus = $mobileHeader == self::CUSTOM_MOBILE_HEADER_CONTENT;
+        $mobileHeader = $request->getHeader(Data::CUSTOM_MOBILE_HEADER_NAME);
+        $headerStatus = $mobileHeader == Data::CUSTOM_MOBILE_HEADER_CONTENT;
 
         $data = $this->ruleCollection->getValidCouponList($headerStatus);
 

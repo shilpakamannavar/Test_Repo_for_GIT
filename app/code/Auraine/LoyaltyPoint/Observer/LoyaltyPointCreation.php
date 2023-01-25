@@ -33,7 +33,7 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
 
     /**
      * Constructs Loyalty point creation service object.
-     * 
+     *
      * @param \Amasty\Rewards\Api\RewardsProviderInterface $rewardsProvider
      * @param \Amasty\Rewards\Model\Rule $rule
      * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
@@ -52,13 +52,16 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
+     *
+     * @param \Magento\Framework\Event\Observer $observer
+     * @return this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
         if ($order instanceof \Magento\Framework\Model\AbstractModel) {
-            if($order->getState() == Order::STATE_COMPLETE && !$order->getCustomerIsGuest()) {
+            if ($order->getState() == Order::STATE_COMPLETE && !$order->getCustomerIsGuest()) {
 
                 $customerId = $order->getCustomerId();
                 $grandTotal = $this->_helperData->getYearOldGrandTotal($customerId) - $order->getGrandTotal();
@@ -68,11 +71,16 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
                 /** Calculating loyalty points and updating it with the previous values if any. */
                 $amount = $order->getGrandTotal() * ($this->slab / 100);
                 $customer = $this->_customerRepository->getById($customerId);
-                $this->_rewardsProvider->addPointsByRule($this->rule, $customer->getId(), $customer->getStoreId(), $amount, "Purchase is made bonus for");
+                $this->_rewardsProvider->addPointsByRule(
+                    $this->rule,
+                    $customer->getId(),
+                    $customer->getStoreId(),
+                    $amount,
+                    "Purchase is made bonus for"
+                );
             }
         }
 
         return $this;
     }
-
 }

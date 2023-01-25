@@ -56,7 +56,7 @@ class InlineEditTest extends TestCase
         $this->jsonFactory = $this->createMock(\Magento\Framework\Controller\Result\JsonFactory::class);
         $this->jsonFactory->method('create')->willReturn($this->jsonFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Pincode\InlineEdit::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Pincode\InlineEdit::class,
             [
                 'context' => $this->context,
                 'jsonFactory' => $this->jsonFactory,
@@ -109,7 +109,7 @@ class InlineEditTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -120,9 +120,9 @@ class InlineEditTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

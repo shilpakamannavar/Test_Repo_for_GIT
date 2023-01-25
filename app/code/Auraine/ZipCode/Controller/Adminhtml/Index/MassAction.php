@@ -10,6 +10,11 @@ use Auraine\ZipCode\Model\ResourceModel\Pincode\CollectionFactory;
 class MassAction extends Action
 {
     /**
+     * @var Context
+     */
+    private $context;
+
+    /**
      * @var Filter
      */
     private $filter;
@@ -20,8 +25,9 @@ class MassAction extends Action
     private $collectionFactory;
 
     /**
-     * @param Context     $context
-     * @param JsonFactory $resultJsonFactory
+     * @param Context $context
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
      */
     public function __construct(
         Context $context,
@@ -38,7 +44,6 @@ class MassAction extends Action
      * Execute action.
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
-     *
      * @throws \Magento\Framework\Exception\LocalizedException|\Exception
      */
     public function execute()

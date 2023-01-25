@@ -4,6 +4,8 @@ namespace Auraine\LoyaltyPoint\Test\Unit\Observer;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Sales\Model\ResourceModel\Order\Collection;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 
 /**
  * @covers \Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation
@@ -72,15 +74,15 @@ class LoyaltyPointCreationTest extends TestCase
     public function setUp() : void
     {
         $this->objectManager = new ObjectManager($this);
-        $this->orderCollectionFactoryInstance = $this->createMock(\Magento\Sales\Model\ResourceModel\Order\Collection::class);
-        $this->orderCollectionFactory = $this->createMock(\Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class);
+        $this->orderCollectionFactoryInstance = $this->createMock(Collection::class);
+        $this->orderCollectionFactory = $this->createMock(CollectionFactory::class);
         $this->orderCollectionFactory->method('create')->willReturn($this->orderCollectionFactoryInstance);
         $this->rewardsProvider = $this->createMock(\Amasty\Rewards\Api\RewardsProviderInterface::class);
         $this->rule = $this->createMock(\Amasty\Rewards\Model\Rule::class);
         $this->customerRepository = $this->createMock(\Magento\Customer\Api\CustomerRepositoryInterface::class);
         $this->helperData = $this->createMock(\Auraine\LoyaltyPoint\Helper\Data::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation::class,
+            \Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation::class,
             [
                 'orderCollectionFactory' => $this->orderCollectionFactory,
                 'rewardsProvider' => $this->rewardsProvider,
