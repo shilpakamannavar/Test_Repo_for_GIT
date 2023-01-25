@@ -48,7 +48,7 @@ class Slider
         
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
-        } 
+        }
 
         if (!empty($sliderType)) {
             $collection->addFieldToFilter('slider_type', $sliderType);
@@ -59,8 +59,8 @@ class Slider
         }
         
         if ($collection->getSize() > 0) {
-            $collection->setOrder('sort_order','ASC');
-            foreach($collection as $slider) {
+            $collection->setOrder('sort_order', 'ASC');
+            foreach ($collection as $slider) {
                 $data = $this->extractData($slider, [
                     'slider_id' => 'entity_id',
                     'title',
@@ -69,7 +69,6 @@ class Slider
                     'additional_information',
                     'link',
                     'product_ids',
-                    'additional_information',
                     'discover',
                     'product_banner',
                     'identifier',
@@ -78,11 +77,11 @@ class Slider
                     'target_type',
                     'sort_order'
                 ]);
-                $data['banners'] = $this->getBanners($slider); 
-                $result[] = $data;      
+                $data['banners'] = $this->getBanners($slider);
+                $result[] = $data;
             }
         }
-        return $result;   
+        return $result;
     }
 
     /**
@@ -103,6 +102,7 @@ class Slider
                 'title',
                 'alt_text',
                 'link',
+                'additional_information',
                 'sort_order'
             ]);
             $bannerData['resource_map'] = $this->getResourceMap($banner);
@@ -140,8 +140,8 @@ class Slider
                 $key = $field;
             }
 
-            if($key=== 'resource_path') {
-              $data[$key] = $this->videoCheck($object->getData($field));
+            if ($key=== 'resource_path') {
+                $data[$key] = $this->videoCheck($object->getData($field));
             } else {
                 $data[$key] = $object->getData($field);
             }
@@ -156,13 +156,14 @@ class Slider
      * @param string $url
      * @return void
      */
-    protected function videoCheck($url){
+    protected function videoCheck($url)
+    {
         $currentStore = $this->storeManager->getStore();
         $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
        
         if (strpos($url, 'youtube.com') > 0) {
             return $url;
-        }  else {
+        } else {
             return $mediaUrl.$url;
         }
     }
