@@ -60,11 +60,15 @@ class MassActionTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->filter = $this->createMock(\Magento\Ui\Component\MassAction\Filter::class);
-        $this->collectionFactoryInstance = $this->createMock(\Auraine\ZipCode\Model\ResourceModel\Pincode\Collection::class);
-        $this->collectionFactory = $this->createMock(\Auraine\ZipCode\Model\ResourceModel\Pincode\CollectionFactory::class);
+        $this->collectionFactoryInstance = $this->createMock(
+            \Auraine\ZipCode\Model\ResourceModel\Pincode\Collection::class
+        );
+        $this->collectionFactory = $this->createMock(
+            \Auraine\ZipCode\Model\ResourceModel\Pincode\CollectionFactory::class
+        );
         $this->collectionFactory->method('create')->willReturn($this->collectionFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Index\MassAction::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Index\MassAction::class,
             [
                 'context' => $this->context,
                 'filter' => $this->filter,
@@ -118,7 +122,7 @@ class MassActionTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -129,9 +133,9 @@ class MassActionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

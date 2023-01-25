@@ -82,7 +82,7 @@ class ZipcodeTest extends TestCase
         $this->regionFactory = $this->createMock(\Magento\Directory\Model\RegionFactory::class);
         $this->regionFactory->method('create')->willReturn($this->regionFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode::class,
+            \Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode::class,
             [
                 'pincodeFactory' => $this->pincodeFactory,
                 'countryFactory' => $this->countryFactory,

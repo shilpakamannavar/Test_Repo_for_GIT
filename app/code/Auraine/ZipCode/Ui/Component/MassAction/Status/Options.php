@@ -77,7 +77,7 @@ class Options implements \JsonSerializable
             // Prepares additional settings passed using XML
             $this->prepareData();
 
-            // Applies URL and param name for each sub-action, and any other additional data 
+            // Applies URL and param name for each sub-action, and any other additional data
             foreach ($options as $optionCode) {
                 $this->options[$optionCode['value']] = [
                     'type' => 'mass_massaction+' . $optionCode['value'],

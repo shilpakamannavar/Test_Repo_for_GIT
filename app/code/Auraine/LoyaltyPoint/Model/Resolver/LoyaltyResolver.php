@@ -58,6 +58,4 @@ class LoyaltyResolver implements ResolverInterface
 
         return $this->_helperData->getSlabValueOrName($grandTotal, true);
     }
-    
 }
-

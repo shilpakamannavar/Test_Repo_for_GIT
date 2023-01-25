@@ -47,7 +47,7 @@ class SaveTest extends TestCase
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->dataPersistor = $this->createMock(\Magento\Framework\App\Request\DataPersistorInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Pincode\Save::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Pincode\Save::class,
             [
                 'context' => $this->context,
                 'dataPersistor' => $this->dataPersistor,
@@ -100,7 +100,7 @@ class SaveTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -111,9 +111,9 @@ class SaveTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

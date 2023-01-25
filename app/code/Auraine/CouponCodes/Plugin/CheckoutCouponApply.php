@@ -12,14 +12,11 @@ class CheckoutCouponApply
     private $_helperData;
 
     /**
-     * @param \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory $collectionFactory
-     * @param \Magento\Framework\ObjectManagerInterface $objectManger
      * @param \Auraine\CouponCodes\Helper\Data $helperData
      */
     public function __construct(
         \Auraine\CouponCodes\Helper\Data $helperData
-    )
-    {
+    ) {
         $this->_helperData = $helperData;
     }
 
@@ -30,6 +27,7 @@ class CheckoutCouponApply
      * @param int $cartId
      * @param string $couponCode
      * @return void
+     * @throws GraphQlInputException
      */
     public function beforeSet(\Magento\Quote\Model\CouponManagement $subject, $cartId, $couponCode)
     {

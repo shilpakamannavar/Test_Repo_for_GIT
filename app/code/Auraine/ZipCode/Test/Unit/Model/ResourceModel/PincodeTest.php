@@ -39,7 +39,7 @@ class PincodeTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->context = $this->createMock(\Magento\Framework\Model\ResourceModel\Db\Context::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Model\ResourceModel\Pincode::class,
+            \Auraine\ZipCode\Model\ResourceModel\Pincode::class,
             [
                 'context' => $this->context,
             ]

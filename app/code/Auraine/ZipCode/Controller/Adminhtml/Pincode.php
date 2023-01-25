@@ -6,8 +6,13 @@ namespace Auraine\ZipCode\Controller\Adminhtml;
 abstract class Pincode extends \Magento\Backend\App\Action
 {
 
+    /**
+     *
+     * @var \Magento\Framework\Registry
+     */
     protected $_coreRegistry;
-    const ADMIN_RESOURCE = 'Auraine_ZipCode::top_level';
+
+    public const ADMIN_RESOURCE = 'Auraine_ZipCode::top_level';
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -17,8 +22,8 @@ abstract class Pincode extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry
     ) {
-        $this->_coreRegistry = $coreRegistry;
         parent::__construct($context);
+        $this->_coreRegistry = $coreRegistry;
     }
 
     /**
@@ -35,4 +40,3 @@ abstract class Pincode extends \Magento\Backend\App\Action
         return $resultPage;
     }
 }
-

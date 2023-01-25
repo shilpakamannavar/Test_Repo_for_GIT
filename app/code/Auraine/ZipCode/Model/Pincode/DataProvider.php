@@ -20,7 +20,7 @@ class DataProvider extends AbstractDataProvider
      */
     protected $loadedData;
     /**
-     * @inheritDoc
+     * @var CollectionFactory
      */
     protected $collection;
 
@@ -71,4 +71,3 @@ class DataProvider extends AbstractDataProvider
         return $this->loadedData;
     }
 }
-
