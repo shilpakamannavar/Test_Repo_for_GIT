@@ -63,7 +63,7 @@ class CouponsTest extends TestCase
         $this->maskedQuoteIdToQuoteId = $this->createMock(\Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface::class);
         $this->objectManger = $this->createMock(\Magento\Framework\ObjectManagerInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CouponCodes\Model\Resolver\Coupons::class,
+            \Auraine\CouponCodes\Model\Resolver\Coupons::class,
             [
                 'quoteIdMaskFactory' => $this->quoteIdMaskFactory,
                 'ruleCollection' => $this->ruleCollection,
@@ -74,6 +74,8 @@ class CouponsTest extends TestCase
     }
 
     /**
+     * Data Provider
+     *
      * @return array
      */
     public function dataProviderForTestResolve()
@@ -87,6 +89,11 @@ class CouponsTest extends TestCase
     }
 
     /**
+     * Test resolver
+     *
+     * @param array $prerequisites
+     * @param array $expectedResult
+     *
      * @dataProvider dataProviderForTestResolve
      */
     public function testResolve(array $prerequisites, array $expectedResult)

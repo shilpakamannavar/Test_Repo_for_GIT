@@ -39,7 +39,7 @@ class BackButtonTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->context = $this->createMock(\Magento\Backend\Block\Widget\Context::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\BackButton::class,
+            \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\BackButton::class,
             [
                 'context' => $this->context,
             ]

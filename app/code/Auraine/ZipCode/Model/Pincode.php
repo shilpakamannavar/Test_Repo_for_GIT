@@ -97,8 +97,8 @@ class Pincode extends AbstractModel implements PincodeInterface
         return $this->setData(self::STATUS, $status);
     }
      /**
-     * @inheritDoc
-     */
+      * @inheritDoc
+      */
     public function getState()
     {
         return $this->getData(self::STATE);
@@ -112,4 +112,3 @@ class Pincode extends AbstractModel implements PincodeInterface
         return $this->setData(self::STATE, $state);
     }
 }
-

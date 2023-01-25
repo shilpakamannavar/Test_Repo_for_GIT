@@ -16,4 +16,3 @@ class Pincode extends AbstractDb
         $this->_init('pincode', 'pincode_id');
     }
 }
-

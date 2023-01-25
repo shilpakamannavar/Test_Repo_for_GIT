@@ -10,7 +10,7 @@ class PincodeActions extends \Magento\Ui\Component\Listing\Columns\Column
      * * Edit Url path
      * @var string const
      */
-    const URL_PATH_EDIT = 'auraine_zipcode/pincode/edit';
+    public const URL_PATH_EDIT = 'auraine_zipcode/pincode/edit';
 
     /**
      * @var \Magento\Framework\UrlInterface
@@ -64,4 +64,3 @@ class PincodeActions extends \Magento\Ui\Component\Listing\Columns\Column
         return $dataSource;
     }
 }
-

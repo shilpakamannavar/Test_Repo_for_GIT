@@ -67,12 +67,16 @@ class CollectionTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->helperData = $this->createMock(\Auraine\CouponCodes\Helper\Data::class);
         $this->utility = $this->createMock(\Magento\SalesRule\Model\Utility::class);
-        $this->collectionFactoryInstance = $this->createMock(\Magento\SalesRule\Model\ResourceModel\Rule\Collection::class);
-        $this->collectionFactory = $this->createMock(\Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory::class);
+        $this->collectionFactoryInstance = $this->createMock(
+            \Magento\SalesRule\Model\ResourceModel\Rule\Collection::class
+        );
+        $this->collectionFactory = $this->createMock(
+            \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory::class
+        );
         $this->collectionFactory->method('create')->willReturn($this->collectionFactoryInstance);
         $this->serializer = $this->createMock(\Magento\Framework\Serialize\SerializerInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CouponCodes\Model\DataProvider\Collection::class,
+            \Auraine\CouponCodes\Model\DataProvider\Collection::class,
             [
                 'helperData' => $this->helperData,
                 'utility' => $this->utility,

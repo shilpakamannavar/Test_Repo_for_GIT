@@ -17,14 +17,13 @@ class CheckoutCouponRemove
     private $quoteRepository;
 
     /**
-     * @param \Auraine\CouponCodes\Helper\Data $helperData
      * @param \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
+     * @param \Auraine\CouponCodes\Helper\Data $helperData
      */
     public function __construct(
         \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
         \Auraine\CouponCodes\Helper\Data $helperData
-    )
-    {
+    ) {
         $this->quoteRepository = $quoteRepository;
         $this->_helperData = $helperData;
     }
@@ -34,8 +33,8 @@ class CheckoutCouponRemove
      *
      * @param \Magento\Quote\Model\CouponManagement $subject
      * @param int $cartId
-     * @param string $couponCode
      * @return void
+     * @throws GraphQlInputException
      */
     public function beforeRemove(\Magento\Quote\Model\CouponManagement $subject, $cartId)
     {
@@ -43,7 +42,7 @@ class CheckoutCouponRemove
         $quote = $this->quoteRepository->getActive($cartId);
         $couponCode = $quote->getCouponCode();
 
-        if (!is_null($couponCode)) {            
+        if ($couponCode !== null) {
 
             $collection = $this->_helperData->getCurrentCouponRule()->addFieldToFilter('code', ['eq' => $couponCode]);
 
@@ -51,10 +50,11 @@ class CheckoutCouponRemove
 
             if (!empty($collection->getData())) {
                 if (!$headerStatus && $collection->getData()[0]['is_mobile_specific'] == 1) {
-                    throw new GraphQlInputException(__("Can't remove this coupon, the applied coupon is Mobile specific"));
+                    throw new GraphQlInputException(
+                        __("Can't remove this coupon, the applied coupon is Mobile specific")
+                    );
                 }
             }
         }
-
     }
 }

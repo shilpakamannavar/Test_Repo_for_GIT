@@ -64,7 +64,7 @@ class NewActionTest extends TestCase
         $this->resultForwardFactory = $this->createMock(\Magento\Backend\Model\View\Result\ForwardFactory::class);
         $this->resultForwardFactory->method('create')->willReturn($this->resultForwardFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Pincode\NewAction::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Pincode\NewAction::class,
             [
                 'context' => $this->context,
                 'coreRegistry' => $this->coreRegistry,
@@ -139,7 +139,7 @@ class NewActionTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -150,9 +150,9 @@ class NewActionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

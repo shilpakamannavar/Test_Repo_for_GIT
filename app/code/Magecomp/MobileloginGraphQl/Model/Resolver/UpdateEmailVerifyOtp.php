@@ -91,7 +91,7 @@ class UpdateEmailVerifyOtp implements ResolverInterface
 
             if (count($collection) > 0) {
                 $output = $this->_helperData->verifyUpdateEmailOTP(
-                    ["mobile"=> $args['new_email'], "verifyotp"=> $args['otp']],
+                    ["email"=> $args['new_email'], "verifyotp"=> $args['otp']],
                     $args['websiteId']
                 );
                 if ($output['status'] == 1) {

@@ -40,4 +40,3 @@ class Delete extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
         return $resultRedirect->setPath('*/*/');
     }
 }
-

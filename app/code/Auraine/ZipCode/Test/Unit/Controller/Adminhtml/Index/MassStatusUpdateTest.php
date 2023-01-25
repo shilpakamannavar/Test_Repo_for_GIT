@@ -4,6 +4,8 @@ namespace Auraine\ZipCode\Test\Unit\Controller\Adminhtml\Index;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Auraine\Zipcode\Model\ResourceModel\Pincode\Collection;
+use Auraine\Zipcode\Model\ResourceModel\Pincode\CollectionFactory;
 
 /**
  * @covers \Auraine\ZipCode\Controller\Adminhtml\Index\MassStatusUpdate
@@ -60,11 +62,11 @@ class MassStatusUpdateTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->filter = $this->createMock(\Magento\Ui\Component\MassAction\Filter::class);
-        $this->collectionFactoryInstance = $this->createMock(\Auraine\Zipcode\Model\ResourceModel\Pincode\Collection::class);
-        $this->collectionFactory = $this->createMock(\Auraine\Zipcode\Model\ResourceModel\Pincode\CollectionFactory::class);
+        $this->collectionFactoryInstance = $this->createMock(Collection::class);
+        $this->collectionFactory = $this->createMock(CollectionFactory::class);
         $this->collectionFactory->method('create')->willReturn($this->collectionFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Index\MassStatusUpdate::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Index\MassStatusUpdate::class,
             [
                 'context' => $this->context,
                 'filter' => $this->filter,
@@ -116,9 +118,11 @@ class MassStatusUpdateTest extends TestCase
     }
 
     /**
+     * Data provider
+     *
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -129,9 +133,9 @@ class MassStatusUpdateTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
