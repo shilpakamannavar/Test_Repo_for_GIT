@@ -8,15 +8,16 @@ interface PincodeSearchResultsInterface extends \Magento\Framework\Api\SearchRes
 
     /**
      * Get pincode list.
+     *
      * @return \Auraine\ZipCode\Api\Data\PincodeInterface[]
      */
     public function getItems();
 
     /**
      * Set code list.
+     *
      * @param \Auraine\ZipCode\Api\Data\PincodeInterface[] $items
      * @return $this
      */
     public function setItems(array $items);
 }
-

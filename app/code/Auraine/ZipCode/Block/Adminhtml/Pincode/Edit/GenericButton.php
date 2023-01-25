@@ -8,6 +8,10 @@ use Magento\Backend\Block\Widget\Context;
 abstract class GenericButton
 {
 
+    /**
+     *
+     * @var \Magento\Backend\Block\Widget\Context
+     */
     protected $context;
 
     /**
@@ -40,4 +44,3 @@ abstract class GenericButton
         return $this->context->getUrlBuilder()->getUrl($route, $params);
     }
 }
-

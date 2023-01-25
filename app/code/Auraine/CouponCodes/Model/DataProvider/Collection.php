@@ -25,7 +25,11 @@ class Collection
 
     /**
      * Filter Sales rules with condition and return valid coupons only.
-     *CouponManagementInterface $couponManagement
+     *
+     * @param \Auraine\CouponCodes\Helper\Data $helperData
+     * @param \Magento\SalesRule\Model\Utility $utility
+     * @param \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory $collectionFactory
+     * @param \Magento\Framework\Serialize\SerializerInterface $serializer
      */
     public function __construct(
         \Auraine\CouponCodes\Helper\Data $helperData,
@@ -49,7 +53,7 @@ class Collection
     {
         $collection = $this->_helperData->getCurrentCouponRule();
 
-         return !$isMobile ? $collection->addFieldToFilter('is_mobile_specific',['neq' => '1']) : $collection;
+        return !$isMobile ? $collection->addFieldToFilter('is_mobile_specific', ['neq' => '1']) : $collection;
     }
 
     /**
@@ -73,13 +77,11 @@ class Collection
     /**
      * Response of Filter Sales rules with condition and return valid coupons only.
      *
+     * @param \Magento\SalesRule\Model\ResourceModel\Rule\Collection $rule
      * @return string[] couponCodeArray
      */
     private function generateResponse($rule)
     {
-
-        // rule array element is commented if it is needed plz uncomment and also uncomment the methods it is been called for.
-
         return [
             'name' => $rule->getName(),
             'description' => $rule->getDescription(),
@@ -96,70 +98,6 @@ class Collection
             'uses_per_coupon' => $rule->getUsesPerCoupon(),
             'times_used' => $rule->getTimesUsed(),
             'product_ids' => $rule->getProductIds(),
-            // 'rule' => $this->couponRules($rule)
         ];
-
     }
-
-     /**
-     * The rules array element from the response array is been commented since it is not useful for the mobile and web.
-     * If in future if it is needed please uncomment the codes you can get the from when you start to uncomment from the schema.graphqls file.
-     */
-
-    /**
-     * Filter Sales rules conditions collection for individual coupons.
-     *
-     * @return string[] conditionsArray
-     */
-    // private function couponRules($rule)
-    // {
-    //     $ruleConditions = [];
-
-    //     $ruleDataArray = $this->serializer->unserialize($rule->getData('conditions_serialized'));
-            
-    //     if (isset($ruleDataArray['conditions'])) {
-    //         foreach ($ruleDataArray['conditions'] as $condition) {
-                
-    //             if (isset($condition['conditions'])) {
-                    
-    //                 foreach ($condition['conditions'] as $productCondition) {
-    //                     if (isset($productCondition['value'])) {
-    //                         if (isset($productCondition['conditions'])) {
-    //                             foreach($productCondition['conditions'] as $prodRule) {
-    //                                 $ruleConditions['rules'][] = $this->generateRule($prodRule);
-    //                             }
-    //                         } else {
-    //                             $ruleConditions['rules'][] = $this->generateRule($productCondition);
-    //                         }
-    //                     }
-    //                 }
-    //             } 
-    //             else {
-    //                 $ruleConditions['rules'][] = $this->generateRule($condition);
-    //             }
-    //         }
-    //     }
-        
-    //     return isset($ruleConditions['rules']) ? $ruleConditions['rules'] : $ruleConditions;
-    // }
-
-    /**
-     * Coupon rules.
-     *
-     * @param array $rule 
-     * @param boolean $isProduct
-     * @return string[] couponCodeArray
-     */
-    // private function generateRule($rule, $isProduct = false): array
-    // {
-    //     return [
-    //         'attribute' => $rule['attribute'],
-    //         'operator' => $rule['operator'],
-    //         'value' => $rule['value'] 
-
-    //         // Use the below line if any requirement comes for SKU array.
-    //         // $isProduct ? explode(',', $rule['value']) : $rule['value'],
-    //     ];
-    // }
-
 }

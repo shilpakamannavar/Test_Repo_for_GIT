@@ -39,7 +39,7 @@ class DataTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->scopeConfig = $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\LoyaltyPoint\Helper\Data::class,
+            \Auraine\LoyaltyPoint\Helper\Data::class,
             [
                 'scopeConfig' => $this->scopeConfig,
             ]

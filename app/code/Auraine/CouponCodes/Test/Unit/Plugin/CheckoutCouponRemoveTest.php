@@ -47,7 +47,7 @@ class CheckoutCouponRemoveTest extends TestCase
         $this->quoteRepository = $this->createMock(\Magento\Quote\Api\CartRepositoryInterface::class);
         $this->helperData = $this->createMock(\Auraine\CouponCodes\Helper\Data::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CouponCodes\Plugin\CheckoutCouponRemove::class,
+            \Auraine\CouponCodes\Plugin\CheckoutCouponRemove::class,
             [
                 'quoteRepository' => $this->quoteRepository,
                 'helperData' => $this->helperData,

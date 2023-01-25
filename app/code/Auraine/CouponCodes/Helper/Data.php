@@ -10,12 +10,12 @@ class Data extends AbstractHelper
     /**
      * Custom header name constant.
      */
-    const CUSTOM_MOBILE_HEADER_NAME = "X-REQUESTED-WITH";
+    public const CUSTOM_MOBILE_HEADER_NAME = "X-REQUESTED-WITH";
 
     /**
      * Custom header content constant.
      */
-    const CUSTOM_MOBILE_HEADER_CONTENT = "Application/Mobile";
+    public const CUSTOM_MOBILE_HEADER_CONTENT = "Application/Mobile";
 
     /**
      * @var \Magento\Customer\Model\Session
@@ -37,6 +37,13 @@ class Data extends AbstractHelper
      */
     protected $_collectionFactory;
 
+    /**
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory $collectionFactory
+     * @param \Magento\Framework\ObjectManagerInterface $objectManger
+     */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -56,7 +63,7 @@ class Data extends AbstractHelper
      *
      * @return int customerGroupId
      */
-    public function getCustomerGroupId()
+    private function getCustomerGroupId()
     {
         if ($this->_customerSession->isLoggedIn()) {
             return $this->_customerSession->getCustomer()->getGroupId();
@@ -70,7 +77,7 @@ class Data extends AbstractHelper
      *
      * @return int websiteId
      */
-    public function getWebsiteId()
+    private function getWebsiteId()
     {
         return $this->_storeManager->getStore()->getWebsiteId();
     }
@@ -78,7 +85,7 @@ class Data extends AbstractHelper
     /**
      * Gets the cart pricing rule applied to the given coupon code.
      *
-     * @return \Magento\SalesRule\Model\ResourceModel\Rule\Collection 
+     * @return \Magento\SalesRule\Model\ResourceModel\Rule\Collection
      */
     public function getCurrentCouponRule()
     {
@@ -99,7 +106,7 @@ class Data extends AbstractHelper
      */
     public function getMobileHeaderStatus()
     {
-        $request = $this->_objectManager->create("Magento\Framework\App\RequestInterface");
+        $request = $this->_objectManager->create(\Magento\Framework\App\RequestInterface::class);
         $mobileHeader = $request->getHeader(self::CUSTOM_MOBILE_HEADER_NAME);
         
         return  $mobileHeader == self::CUSTOM_MOBILE_HEADER_CONTENT;
