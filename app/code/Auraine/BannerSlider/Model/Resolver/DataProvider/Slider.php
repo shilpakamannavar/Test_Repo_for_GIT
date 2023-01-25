@@ -22,6 +22,7 @@ class Slider
 
     /**
      * Slider constructor.
+     *
      * @param SliderRepositoryInterface $sliderRepository
      */
     public function __construct(
@@ -70,6 +71,7 @@ class Slider
                     'link',
                     'product_ids',
                     'discover',
+                    'category_id',
                     'product_banner',
                     'identifier',
                     'slider_type',
