@@ -16,11 +16,16 @@ use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
 class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, PatchRevertableInterface
 {
-    const CATEGORY_OUR_EXCLUSIVES_SLIDER = 'category_our_exclusives_slider_id';
+    /**
+     * CATEGORY_OUR_EXCLUSIVES_SLIDER
+     */
+    public const CATEGORY_OUR_EXCLUSIVES_SLIDER = 'category_our_exclusives_slider_id';
+
     /**
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
+    
     /**
      * @var EavSetupFactory
      */
@@ -42,16 +47,15 @@ class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, Pat
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        if(!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_SLIDER)) {
-            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_SLIDER);                                                        
-     }
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_SLIDER)) {
+            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_SLIDER);
+        }
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_SLIDER);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Category::ENTITY,
@@ -78,16 +82,16 @@ class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, Pat
                 'unique' => false,
                 'option' => ''
             ]
-    
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
-
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_SLIDER);
 
@@ -95,7 +99,7 @@ class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, Pat
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -103,7 +107,7 @@ class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, Pat
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -112,4 +116,3 @@ class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, Pat
         ];
     }
 }
-

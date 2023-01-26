@@ -41,12 +41,11 @@ class AddDiscountProduct implements DataPatchInterface, PatchRevertableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
@@ -75,17 +74,29 @@ class AddDiscountProduct implements DataPatchInterface, PatchRevertableInterface
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => false,
                 'is_filterable_in_grid' => false,
-                'option' => array('values' => array("10% And Above","20% And Above","30% And Above","40% And Above","50% And Above","60% And Above","70% And Above","80% And Above"))
+                'option' => ['values' => [
+                    "10% And Above",
+                    "20% And Above",
+                    "30% And Above",
+                    "40% And Above",
+                    "50% And Above",
+                    "60% And Above",
+                    "70% And Above",
+                    "80% And Above"
+                ]
+                ]
             ]
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Product::ENTITY, 'discount');
 
@@ -93,7 +104,7 @@ class AddDiscountProduct implements DataPatchInterface, PatchRevertableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -101,7 +112,7 @@ class AddDiscountProduct implements DataPatchInterface, PatchRevertableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -110,4 +121,3 @@ class AddDiscountProduct implements DataPatchInterface, PatchRevertableInterface
         ];
     }
 }
-
