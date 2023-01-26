@@ -9,14 +9,22 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
     private $_helperData;
 
     /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    private $_scopeConfig;
+
+    /**
      * Constructor to get object of MageComp Mobilelogin helper.
      *
      * @param \Magecomp\Mobilelogin\Helper\Data $helperData
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface
      */
     public function __construct(
-        \Magecomp\Mobilelogin\Helper\Data $helperData
+        \Magecomp\Mobilelogin\Helper\Data $helperData,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
     ) {
         $this->_helperData = $helperData;
+        $this->_scopeConfig = $scopeConfig;
     }
 
     /**
@@ -46,9 +54,9 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
 
         $message = $this->generateMessage($name, $order->getIncrementId());
 
-        if (strlen($mobile) == 12) {
+        if (strlen($mobile) == 12 && $this->_scopeConfig->getValue("place_order/place_otp/enable_otp", \Magento\Store\Model\ScopeInterface::SCOPE_STORE)) {
             $this->_helperData->callApiUrl($message, $mobile, 1);
-        } elseif (strlen($mobile) == 10) {
+        } elseif (strlen($mobile) == 10 && $this->_scopeConfig->getValue("place_order/place_otp/enable_otp", \Magento\Store\Model\ScopeInterface::SCOPE_STORE)) {
             $this->_helperData->callApiUrl($message, "91".$mobile, 1);
         }
     }
