@@ -1,0 +1,58 @@
+type Query {
+getBrandsList (
+ entity_id: Int @doc(description: "The id of the brand"),
+ filter_label: String @doc(description: "Is featured or not")
+ url_key: String @doc(description: "filter by url key")
+
+ )
+: [BrandsList] @resolver (class:"\\Auraine\\Brands\\Model\\Resolver\\BrandsList") @doc(description:"List of Brands")
+}
+
+type BrandsList {
+entity_id: Int @doc(description: "Brand Id")
+title: String @doc(description: "Brand Name")
+description: String @doc(description: "Brand description")
+status: String @doc(description: "Status")
+image: String @doc(description: "Brand Logo")
+stores: String @doc(description: "Store Id")
+is_popular: String @doc(description: "Is featured or not")
+is_exclusive: String @doc(description: "Is exclusive or not")
+is_justin: String @doc(description: "Is justin or not")
+is_featured: String @doc(description: "Is featured or not")
+url_key: String @doc(description: "URL key")
+meta_key: String @doc(description: "Meta key")
+meta_description: String @doc(description: "Meta description")
+}
+
+interface ProductInterface {
+    brand_name: String @doc(description: "Product Brand Attribute Show")
+    @resolver(
+        class: "Auraine\\Brands\\Model\\Resolver\\Product\\AddBrandAttribute"
+    )
+}
+
+input ProductAttributeFilterInput {
+    brand_name: FilterEqualTypeInput @doc(description: "Product Data filter with Brand Value")
+}
+
+input ProductAttributeSortInput {
+    brand_name: SortEnum @doc(description: "Sort by the Product Brand Attribute.")
+}
+
+type Aggregation @doc(description: "Contains information for each filterable option (such as price, category `UID`, and custom attributes).") {
+    count: Int @doc(description: "The number of options in the aggregation group.")
+    label: String @doc(description: "The aggregation display name.")
+    attribute_code: String! @doc(description: "Attribute code of the aggregation group.")
+    options: [AggregationOption] @doc(description: "Array of options for the aggregation.")
+    position: Int @doc(description: "The relative position of the attribute in a layered navigation block.")
+}
+
+type Products @doc(description: "Contains the results of a `products` query.") {
+     aggregations (filter: AggregationsFilterInput): [Aggregation] @doc(description: "A bucket that contains the attribute code and label for each filterable option.")@resolver(class: "Auraine\\Brands\\Model\\Resolver\\Aggregations")
+   }
+
+interface OrderItemInterface @doc(description: "Order item details.") @resolver(class:"Auraine\\Brands\\Model\\Resolver\\OrderItem\\DataProvider") {
+    brand_name: Int @doc(description: "Returns the product brand id.")
+    image_url: String @doc(description: "Returns Product thumbnail.")
+    order_status_cancel: Boolean @doc(description: "The current status of the order can be cancel or not.") 
+}
