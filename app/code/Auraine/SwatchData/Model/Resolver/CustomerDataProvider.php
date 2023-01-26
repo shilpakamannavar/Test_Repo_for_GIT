@@ -27,13 +27,14 @@ class CustomerDataProvider implements ResolverInterface
 
     /**
      *
-     * @param ScopeConfigInterface $scopeConfig
+     * @var $_scopeConfig
      */
     private $_scopeConfig;
 
     /**
      *
      * @param Data $swatchHelper
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Data $swatchHelper,
@@ -44,6 +45,7 @@ class CustomerDataProvider implements ResolverInterface
     }
 
     /**
+     * Fetch and format configurable variants.
      *
      * @param Field $field
      * @param [type] $context
@@ -54,14 +56,17 @@ class CustomerDataProvider implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if($value['label'] == 'Color'){
+        if ($value['label'] == 'Color') {
             
             $hexcodeData = $this->swatchHelper->getSwatchesByOptionsId([$value['value']]);
             $typeName = $this->getswatchType($hexcodeData[$value['value']]['type']);
             $hexCode =  $hexcodeData[$value['value']]['value'];
             
-            if($typeName == 'ImageSwatchData') {
-                $url = $this->_scopeConfig->getValue('swatch_data/general/swatch_data_base_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            if ($typeName == 'ImageSwatchData') {
+                $url = $this->_scopeConfig->getValue(
+                    'swatch_data/general/swatch_data_base_url',
+                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                );
                 $hexCode = $url.$hexCode;
             }
             
@@ -71,11 +76,11 @@ class CustomerDataProvider implements ResolverInterface
                 ];
         }
 
-       return null;
+                    return null;
     }
 
     /**
-     *This will return type of swatch by id
+     * This will return type of swatch by id
      *
      * @param id $valueType
      * @return string
@@ -89,7 +94,6 @@ class CustomerDataProvider implements ResolverInterface
                 return 'ColorSwatchData';
             case 2:
                 return 'ImageSwatchData';
-            break;
         }
     }
 }

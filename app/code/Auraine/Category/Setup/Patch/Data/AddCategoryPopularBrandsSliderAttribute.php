@@ -16,7 +16,7 @@ use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
 class AddCategoryPopularBrandsSliderAttribute implements DataPatchInterface, PatchRevertableInterface
 {
-    const CATEGORY_POPULAR_BRANDS_SLIDER = 'category_popular_brands_slider_id';
+    public const CATEGORY_POPULAR_BRANDS_SLIDER = 'category_popular_brands_slider_id';
     /**
      * @var ModuleDataSetupInterface
      */
@@ -42,16 +42,15 @@ class AddCategoryPopularBrandsSliderAttribute implements DataPatchInterface, Pat
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        if(!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_POPULAR_BRANDS_SLIDER)) {
-            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_POPULAR_BRANDS_SLIDER);                                                        
-     }
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_POPULAR_BRANDS_SLIDER)) {
+            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_POPULAR_BRANDS_SLIDER);
+        }
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_POPULAR_BRANDS_SLIDER);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Category::ENTITY,
@@ -78,16 +77,17 @@ class AddCategoryPopularBrandsSliderAttribute implements DataPatchInterface, Pat
                 'unique' => false,
                 'option' => ''
             ]
-    
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_POPULAR_BRANDS_SLIDER);
 
@@ -95,7 +95,7 @@ class AddCategoryPopularBrandsSliderAttribute implements DataPatchInterface, Pat
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -103,7 +103,7 @@ class AddCategoryPopularBrandsSliderAttribute implements DataPatchInterface, Pat
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -112,4 +112,3 @@ class AddCategoryPopularBrandsSliderAttribute implements DataPatchInterface, Pat
         ];
     }
 }
-

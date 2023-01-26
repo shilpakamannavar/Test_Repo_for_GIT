@@ -10,14 +10,22 @@ use Magento\Framework\App\Request\Http;
 class Data extends AbstractHelper
 {
     /**
-     * @var Http
+     * @var $http
      */
     private $http;
+
     /**
-     * @var Resolver
+     * @var $resolver
      */
     private $resolver;
 
+    /**
+     * Constructor
+     *
+     * @param Context $context
+     * @param Http $http
+     * @param Resolver $resolver
+     */
     public function __construct(
         Context $context,
         Http $http,
@@ -28,6 +36,11 @@ class Data extends AbstractHelper
         $this->resolver = $resolver;
     }
 
+    /**
+     * Get Current Page Category
+     *
+     * @return boolean
+     */
     public function isCurrentPageCategoryPage()
     {
         if ($this->http->getFullActionName() === 'catalog_category_view') {
@@ -36,24 +49,41 @@ class Data extends AbstractHelper
         return false;
     }
 
+    /**
+     * Get Current Category Name
+     *
+     * @return void
+     */
     public function getCurrentCategoryName()
     {
         return $this->getCurrentCategory()->getName();
     }
 
+    /**
+     * Get Sub Categories
+     *
+     * @return void
+     */
     public function getSubCategories()
     {
         return $this->getCurrentCategory()->getChildrenCategories();
     }
 
+    /**
+     * Get Current Category
+     *
+     * @return void
+     */
     public function getCurrentCategory()
     {
         return $this->resolver->get()->getCurrentCategory();
     }
 
     /**
-     * @param $discountPercentage
-     * @return string
+     * Get Discount Variable
+     *
+     * @param [type] $discountPercentage
+     * @return void
      */
     public function getDiscountVar($discountPercentage)
     {

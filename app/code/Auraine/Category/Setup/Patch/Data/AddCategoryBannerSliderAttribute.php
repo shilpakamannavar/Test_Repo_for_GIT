@@ -16,11 +16,13 @@ use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
 class AddCategoryBannerSliderAttribute implements DataPatchInterface, PatchRevertableInterface
 {
-    const CATEGORY_BANNER_SLIDER = 'category_banner_slider_id';
+    public const CATEGORY_BANNER_SLIDER = 'category_banner_slider_id';
+
     /**
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
+    
     /**
      * @var EavSetupFactory
      */
@@ -42,16 +44,15 @@ class AddCategoryBannerSliderAttribute implements DataPatchInterface, PatchRever
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        if(!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_BANNER_SLIDER)) {
-            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_BANNER_SLIDER);                                                        
-     }
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_BANNER_SLIDER)) {
+            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_BANNER_SLIDER);
+        }
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_BANNER_SLIDER);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Category::ENTITY,
@@ -78,16 +79,17 @@ class AddCategoryBannerSliderAttribute implements DataPatchInterface, PatchRever
                 'unique' => false,
                 'option' => ''
             ]
-    
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_BANNER_SLIDER);
 
@@ -95,7 +97,7 @@ class AddCategoryBannerSliderAttribute implements DataPatchInterface, PatchRever
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -103,7 +105,7 @@ class AddCategoryBannerSliderAttribute implements DataPatchInterface, PatchRever
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -112,4 +114,3 @@ class AddCategoryBannerSliderAttribute implements DataPatchInterface, PatchRever
         ];
     }
 }
-

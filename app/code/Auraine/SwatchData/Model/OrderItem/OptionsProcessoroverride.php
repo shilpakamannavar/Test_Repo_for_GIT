@@ -15,15 +15,17 @@ use Magento\SalesGraphQl\Model\OrderItem\OptionsProcessor;
  */
 class OptionsProcessoroverride extends OptionsProcessor
 {
-   /**
+    /**
      * Get Order item options.
      *
-     * @param OrderItemInterface $orderItem
+     * @param  OrderItemInterface $orderItem
      * @return array
      */
     public function getItemOptions(OrderItemInterface $orderItem): array
     {
-       $optionsTypes = ['selected_options' => [], 'entered_options' => []];
+        $optionsTypes = [
+            'selected_options' => [],'entered_options' => []
+        ];
         $options = $orderItem->getProductOptions();
         if ($options) {
             if (isset($options['options'])) {
@@ -74,12 +76,14 @@ class OptionsProcessoroverride extends OptionsProcessor
     }
 
     /**
-     * return array option
+     * Return Array Option
      *
      * @param array $option
+     * @param string $value
      * @return array
      */
-    private function optionArray($option, $value='value') {
+    private function optionArray($option, $value = 'value')
+    {
         return [
             'label' => $option['label'],
             'value' => $option['print_value'] ?? $option[$value],
