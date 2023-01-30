@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\Config\Source;
 
-
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaBuilderFactory;
@@ -27,8 +26,7 @@ class ResourceMap implements OptionSourceInterface
     public function __construct(
         ResourceMapRepositoryInterface $resourceMapRepository,
         SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory
-    )
-    {
+    ) {
         $this->resourceMapRepository = $resourceMapRepository;
         $this->searchCriteriaBuilderFactory = $searchCriteriaBuilderFactory;
     }
@@ -52,6 +50,8 @@ class ResourceMap implements OptionSourceInterface
     }
 
     /**
+     * Create Search Factory
+     *
      * @return SearchCriteriaBuilder
      */
     protected function getSearchCriteriaBuilder()

@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model;
 
-
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Auraine\BannerSlider\Api\Data\SliderInterfaceFactory as ModelFactory;
 use Auraine\BannerSlider\Model\ResourceModel\Slider as ResourceModel;
@@ -14,6 +13,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Auraine\BannerSlider\Api\Data\SliderSearchResultInterfaceFactory;
 use Psr\Log\LoggerInterface;
+use Auraine\BannerSlider\Api\Data\SliderInterface;
 
 class SliderRepository implements SliderRepositoryInterface
 {
@@ -65,8 +65,7 @@ class SliderRepository implements SliderRepositoryInterface
         SliderSearchResultInterfaceFactory $sliderSearchResultFactory,
         LoggerInterface $logger,
         array $objectCache = []
-    )
-    {
+    ) {
         $this->modelFactory = $modelFactory;
         $this->resourceModel = $resourceModel;
         $this->collectionFactory = $collectionFactory;
@@ -77,6 +76,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Load By Id
+     *
      * @param int $id
      * @param bool $loadFromCache
      * @return \Auraine\BannerSlider\Api\Data\SliderInterface
@@ -99,6 +100,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Create Factory
+     *
      * @return \Auraine\BannerSlider\Api\Data\SliderInterface
      */
     public function create(): \Auraine\BannerSlider\Api\Data\SliderInterface
@@ -107,11 +110,13 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Saving Slider Interface
+     *
      * @param \Auraine\BannerSlider\Api\Data\SliderInterface $slider
      * @return \Auraine\BannerSlider\Api\Data\SliderInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(\Auraine\BannerSlider\Api\Data\SliderInterface $slider): \Auraine\BannerSlider\Api\Data\SliderInterface
+    public function save(SliderInterface $slider): \Auraine\BannerSlider\Api\Data\SliderInterface
     {
         try {
             $this->resourceModel->save($slider);
@@ -125,6 +130,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Deleting Slider Interface
+     *
      * @param \Auraine\BannerSlider\Api\Data\SliderInterface $slider
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -142,6 +149,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Delete By Id
+     *
      * @param int $id
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -153,6 +162,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Get Slider List
+     *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Auraine\BannerSlider\Api\Data\SliderSearchResultInterface
      */
@@ -172,6 +183,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Get Collection
+     *
      * @return \Auraine\BannerSlider\Model\ResourceModel\Slider\Collection
      */
     public function getCollection(): \Auraine\BannerSlider\Model\ResourceModel\Slider\Collection
@@ -180,6 +193,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Cache Object
+     *
      * @param string $type
      * @param string $identifier
      * @param \Auraine\BannerSlider\Api\Data\SliderInterface|null $object
@@ -191,6 +206,8 @@ class SliderRepository implements SliderRepositoryInterface
     }
 
     /**
+     * Get Cache Object
+     *
      * @param string $type
      * @param string $identifier
      * @return bool|\Auraine\BannerSlider\Api\Data\SliderInterface
@@ -201,6 +218,13 @@ class SliderRepository implements SliderRepositoryInterface
         return $this->objectCache[$cacheKey] ?? false;
     }
 
+    /**
+     * Get Cache Key
+     *
+     * @param string $type
+     * @param string $identifier
+     * @return bool|\Auraine\BannerSlider\Api\Data\SliderInterface
+     */
     protected function getCacheKey($type, $identifier)
     {
         return $type . '_' . $identifier;

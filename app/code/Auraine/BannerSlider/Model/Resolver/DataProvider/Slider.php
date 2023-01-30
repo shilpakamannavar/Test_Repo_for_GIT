@@ -19,11 +19,11 @@ class Slider
      */
     private $storeManager;
 
-
     /**
      * Slider constructor.
      *
      * @param SliderRepositoryInterface $sliderRepository
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         SliderRepositoryInterface $sliderRepository,
@@ -34,9 +34,10 @@ class Slider
     }
 
     /**
-     * @param $sliderId
-     * @return array
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * Get Data
+     *
+     * @param [type] $args
+     * @return void
      */
     public function getData($args)
     {
@@ -115,6 +116,7 @@ class Slider
 
     /**
      * Get Resource Map Data
+     *
      * @param BannerInterface $banner
      * @return array
      */
@@ -129,6 +131,8 @@ class Slider
     }
 
     /**
+     * Extract Data
+     *
      * @param \Magento\Framework\DataObject $object
      * @param string[] $fields
      * @return array
@@ -153,7 +157,7 @@ class Slider
     }
 
     /**
-     * checking for youtube video
+     * Checking for youtube video
      *
      * @param string $url
      * @return void

@@ -9,13 +9,12 @@
 
 namespace Auraine\BannerSlider\Model\ResourceModel;
 
-
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class Banner extends AbstractDb
 {
-    const MAIN_TABLE = 'auraine_bannerslider_banner';
-    const ID_FIELD_NAME = 'entity_id';
+    public const MAIN_TABLE = 'auraine_bannerslider_banner';
+    public const ID_FIELD_NAME = 'entity_id';
 
     /**
      * Resource initialization

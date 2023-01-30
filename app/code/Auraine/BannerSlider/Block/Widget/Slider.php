@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Widget;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Auraine\BannerSlider\Block\Widget\Slider\Banner\RendererPool;
@@ -11,6 +10,9 @@ use Magento\Framework\View\Element\Template;
 
 class Slider extends Template implements \Magento\Widget\Block\BlockInterface
 {
+    /**
+     * @var string
+     */
     protected $_template = 'Auraine_BannerSlider::widget/slider.phtml';
 
     /**
@@ -45,8 +47,7 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
         RendererPool $rendererPool,
         array $suffixBlocks = [],
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->sliderRepository = $sliderRepository;
         $this->rendererPool = $rendererPool;
@@ -55,6 +56,8 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
     }
 
     /**
+     * Get Slider
+     *
      * @return \Auraine\BannerSlider\Api\Data\SliderInterface|null
      */
     public function getSlider(): ?\Auraine\BannerSlider\Api\Data\SliderInterface
@@ -65,13 +68,19 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
             return null;
         }
     }
-
+    /**
+     * Return Class
+     *
+     * @return void
+     */
     public function getClassName()
     {
         return 'Auraine-bannerslider';
     }
 
     /**
+     * Render Function
+     *
      * @param BannerInterface $banner
      * @param string $widgetClassName
      * @return string
@@ -83,6 +92,8 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
     }
 
     /**
+     * Get Widget
+     *
      * @return string
      */
     public function getWidgetUniqId(): string
@@ -91,6 +102,8 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
     }
 
     /**
+     * Get Slider Option
+     *
      * @return array
      */
     public function getSliderOptions()
@@ -109,6 +122,8 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
     }
 
     /**
+     * Get Blocks
+     *
      * @return Template[]
      */
     public function getSuffixBlocks(): array

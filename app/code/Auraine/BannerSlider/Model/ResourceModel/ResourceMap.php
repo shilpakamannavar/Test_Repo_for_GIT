@@ -2,13 +2,12 @@
 
 namespace Auraine\BannerSlider\Model\ResourceModel;
 
-
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class ResourceMap extends AbstractDb
 {
-    const MAIN_TABLE = 'auraine_bannerslider_resource_map';
-    const ID_FIELD_NAME = 'entity_id';
+    public const MAIN_TABLE = 'auraine_bannerslider_resource_map';
+    public const ID_FIELD_NAME = 'entity_id';
 
     /**
      * Resource initialization

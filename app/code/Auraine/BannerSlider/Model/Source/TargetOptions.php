@@ -4,8 +4,8 @@ namespace Auraine\BannerSlider\Model\Source;
 use Magento\Framework\Data\OptionSourceInterface;
 
 /**
-* Class Status
-*/
+ * Class Status
+ */
 class TargetOptions implements OptionSourceInterface
 {
 /**
@@ -13,9 +13,9 @@ class TargetOptions implements OptionSourceInterface
  *
  * @return array
  */
-public function toOptionArray()
-{
-    return [
+    public function toOptionArray()
+    {
+        return [
         ['label' => __('Select Type (this is for app only)'), 'value' => ''],
         ['label' => __('PLP'), 'value' => 'plp'],
         ['label' => __('PDP'), 'value' => 'pdp'],
@@ -23,6 +23,6 @@ public function toOptionArray()
         ['label' => __('Home'), 'value' => 'home'],
         ['label' => __('Brand'), 'value' => 'brand'],
         ['label' => __('others '), 'value' => 'others']
-    ];
-}
+        ];
+    }
 }

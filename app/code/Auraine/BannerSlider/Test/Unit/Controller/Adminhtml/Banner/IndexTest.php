@@ -91,7 +91,7 @@ class IndexTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -104,7 +104,7 @@ class IndexTest extends TestCase
     /**
      * @dataProvider dataProviderForTest_processUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

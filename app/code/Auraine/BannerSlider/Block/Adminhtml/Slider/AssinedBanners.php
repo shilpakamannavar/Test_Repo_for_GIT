@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\Slider;
 
-
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath as ResourcePathBuilder;
@@ -10,7 +9,11 @@ use Magento\Backend\Block\Template;
 
 class AssinedBanners extends Template
 {
+    /**
+     * @var Banner
+     */
     protected $_template = 'Auraine_BannerSlider::slider/assigned_banners.phtml';
+    
     /**
      * @var BannerRepositoryInterface
      */
@@ -22,6 +25,7 @@ class AssinedBanners extends Template
 
     /**
      * AssinedBanners constructor.
+     *
      * @param Template\Context $context
      * @param BannerRepositoryInterface $bannerRepository
      * @param ResourcePathBuilder $resourcePathBuilder
@@ -32,18 +36,26 @@ class AssinedBanners extends Template
         BannerRepositoryInterface $bannerRepository,
         ResourcePathBuilder $resourcePathBuilder,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->bannerRepository = $bannerRepository;
         $this->resourcePathBuilder = $resourcePathBuilder;
     }
-
+    
+    /**
+     * Banner Inteface Item.
+     *
+     * @param Template\Context $context
+     * @param BannerRepositoryInterface $bannerRepository
+     * @param ResourcePathBuilder $resourcePathBuilder
+     * @param array $data
+     */
     protected function getBanners()
     {
         $items = [];
-        $collection = $this->bannerRepository->getCollection()->addFieldToFilter('slider_id', $this->getRequest()->getParam('entity_id'));
-        /** @var BannerInterface $item */
+        $collection = $this->bannerRepository
+                    ->getCollection()
+                    ->addFieldToFilter('slider_id', $this->getRequest()->getParam('entity_id'));
         foreach ($collection as $item) {
             $itemData = $item->getData();
             $itemData['resource_map_title'] = $item->getResourceMap()->getTitle();
@@ -58,6 +70,14 @@ class AssinedBanners extends Template
         return $dataSource['data']['items'] ?? [];
     }
 
+    /**
+     * Get Banner Data.
+     *
+     * @param Template\Context $context
+     * @param BannerRepositoryInterface $bannerRepository
+     * @param ResourcePathBuilder $resourcePathBuilder
+     * @param array $data
+     */
     public function getFormattedBanners()
     {
         $data = [];
@@ -75,6 +95,8 @@ class AssinedBanners extends Template
     }
 
     /**
+     * Get Resource Map
+     *
      * @param int $id
      * @return string
      */
@@ -82,5 +104,4 @@ class AssinedBanners extends Template
     {
         return $this->getUrl('*/resmap/edit', ['entity_id' => $id]);
     }
-
 }

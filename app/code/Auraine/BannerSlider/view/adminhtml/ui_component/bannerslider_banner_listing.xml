@@ -151,7 +151,7 @@
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Resource</label>
             </settings>
-        </column>
+            </column>      
         <column name="alt_text">
             <settings>
                 <filter>text</filter>

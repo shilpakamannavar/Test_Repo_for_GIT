@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Slider;
 
-
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Forward;
@@ -10,7 +9,7 @@ use Magento\Framework\Controller\ResultFactory;
 
 class NewAction extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
 
     /**
      * Execute action based on request and return result

@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\ResourceMap\Edit;
 
-
 class BackButton extends GenericButton
 {
 
