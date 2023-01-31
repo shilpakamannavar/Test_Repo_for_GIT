@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Slider;
 
-
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -12,7 +11,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
 
     /**
      * @var SliderRepositoryInterface
@@ -34,8 +33,7 @@ class Save extends Action
         Action\Context $context,
         SliderRepositoryInterface $sliderRepository,
         DataPersistorInterface $dataPersistor
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->sliderRepository = $sliderRepository;
         $this->dataPersistor = $dataPersistor;
@@ -102,6 +100,8 @@ class Save extends Action
     }
 
     /**
+     * Get Model Data
+     *
      * @param \Magento\Framework\DataObject $model
      * @param string[] $fields
      */

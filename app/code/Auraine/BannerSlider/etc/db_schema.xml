@@ -37,6 +37,8 @@
                 comment="Entity ID"/>
         <column xsi:type="int" name="slider_id" padding="10" unsigned="true" nullable="false" identity="false"
                 comment="Slider ID"/>
+        <column xsi:type="int" name="slider_community_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Slider Community ID"/>
         <column xsi:type="varchar" name="title" nullable="false" comment="Slider Title"/>
         <column xsi:type="int" name="resource_map_id" padding="10" unsigned="true" nullable="false" identity="false"
                 comment="Image Map ID"/>

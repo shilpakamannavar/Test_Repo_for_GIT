@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Banner\Image;
 
-
 use Auraine\BannerSlider\Model\ImageUploader;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\HttpPostActionInterface;
@@ -13,7 +12,7 @@ use Magento\Framework\Controller\ResultFactory;
 class Upload extends Action implements HttpPostActionInterface
 {
 
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
     /**
      * @var ImageUploader
      */
@@ -27,8 +26,7 @@ class Upload extends Action implements HttpPostActionInterface
     public function __construct(
         Action\Context $context,
         ImageUploader $imageUploader
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->imageUploader = $imageUploader;
     }

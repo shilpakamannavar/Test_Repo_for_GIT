@@ -2,32 +2,32 @@
 
 namespace Auraine\BannerSlider\Model\Config\Source;
 
-use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
+use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaBuilderFactory;
 use Magento\Framework\Data\OptionSourceInterface;
 
-class ResourceMap implements OptionSourceInterface
+class CommunitySlider implements OptionSourceInterface
 {
-    /**
-     * @var ResourceMapRepositoryInterface
-     */
-    private $resourceMapRepository;
     /**
      * @var SearchCriteriaBuilderFactory
      */
     private $searchCriteriaBuilderFactory;
+    /**
+     * @var SliderRepositoryInterface
+     */
+    private $sliderRepository;
 
     /**
      * ResourceMap constructor.
-     * @param ResourceMapRepositoryInterface $resourceMapRepository
+     * @param SliderRepositoryInterface $sliderRepository
      * @param SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory
      */
     public function __construct(
-        ResourceMapRepositoryInterface $resourceMapRepository,
+        SliderRepositoryInterface $sliderRepository,
         SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory
     ) {
-        $this->resourceMapRepository = $resourceMapRepository;
+        $this->sliderRepository = $sliderRepository;
         $this->searchCriteriaBuilderFactory = $searchCriteriaBuilderFactory;
     }
 
@@ -38,20 +38,21 @@ class ResourceMap implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $items = $this->resourceMapRepository->getList($this->getSearchCriteriaBuilder()->create())->getItems();
+        $items = $this->sliderRepository->getList($this->getSearchCriteriaBuilder()->create())->getItems();
         $result = [];
+        $default_res= [
+            ['value' => '', 'label' => 'Select Slider'],
+            ];
         foreach ($items as $item) {
             $result[] = [
                 'label' => $item->getTitle(),
                 'value' => $item->getEntityId()
             ];
         }
-        return $result;
+        return array_merge($default_res, $result);
     }
 
     /**
-     * Create Search Factory
-     *
      * @return SearchCriteriaBuilder
      */
     protected function getSearchCriteriaBuilder()

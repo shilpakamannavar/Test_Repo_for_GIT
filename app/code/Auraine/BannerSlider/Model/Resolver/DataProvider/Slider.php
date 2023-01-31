@@ -19,11 +19,11 @@ class Slider
      */
     private $storeManager;
 
-
     /**
      * Slider constructor.
      *
      * @param SliderRepositoryInterface $sliderRepository
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         SliderRepositoryInterface $sliderRepository,
@@ -34,9 +34,10 @@ class Slider
     }
 
     /**
-     * @param $sliderId
-     * @return array
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * Get Data
+     *
+     * @param [type] $args
+     * @return void
      */
     public function getData($args)
     {
@@ -45,17 +46,13 @@ class Slider
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
         $sortOrder = $args['sort_order'] ?? null;
-        $category_id = $args['category_id'] ?? null;
+        $categoryId = $args['category_id'] ?? null;
         $category_uid = $args['category_uid'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
         $decode = "base64_decode";
         
         if (!empty($category_uid)) {
             $collection->addFieldToFilter('category_id', $decode($category_uid));
-        }
-
-        if (!empty($category_id)) {
-            $collection->addFieldToFilter('category_id', $category_id);
         }
         
         if (!empty($sliderId)) {
@@ -69,7 +66,10 @@ class Slider
         if (!empty($pageType)) {
             $collection->addFieldToFilter('page_type', $pageType);
         }
-        
+        if (!empty($categoryId)) {
+            $collection->addFieldToFilter('category_id', $categoryId);
+        }
+
         if ($collection->getSize() > 0) {
             $collection->setOrder('sort_order', 'ASC');
             foreach ($collection as $slider) {
@@ -88,7 +88,8 @@ class Slider
                     'slider_type',
                     'page_type',
                     'target_type',
-                    'sort_order'
+                    'target_id',
+                    'sort_order',
                 ]);
                 $encode = "base64_encode";
                 $data['category_uid'] = $encode($data['category_id']);
@@ -118,7 +119,8 @@ class Slider
                 'alt_text',
                 'link',
                 'additional_information',
-                'sort_order'
+                'sort_order',
+                'slider_community_id'
             ]);
             $bannerData['resource_map'] = $this->getResourceMap($banner);
             $banners[] = $bannerData;
@@ -128,6 +130,7 @@ class Slider
 
     /**
      * Get Resource Map Data
+     *
      * @param BannerInterface $banner
      * @return array
      */
@@ -142,6 +145,8 @@ class Slider
     }
 
     /**
+     * Extract Data
+     *
      * @param \Magento\Framework\DataObject $object
      * @param string[] $fields
      * @return array
@@ -166,7 +171,7 @@ class Slider
     }
 
     /**
-     * checking for youtube video
+     * Checking for youtube video
      *
      * @param string $url
      * @return void

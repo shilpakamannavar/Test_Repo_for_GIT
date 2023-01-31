@@ -13,7 +13,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
 
     /**
      * @var DataPersistorInterface
@@ -73,12 +73,16 @@ class Save extends Action
                 'link',
                 'sort_order',
                 'additional_information',
-                'is_enabled'
+                'is_enabled',
+                'slider_community_id'
+                
             ]);
             $resourcePathProcessors = $this->processorPool->getProcessors();
             if (isset($resourcePathProcessors[$model->getResourceType()])) {
                 try {
-                    $model->setResourcePath($resourcePathProcessors[$model->getResourceType()]->process($this->getRequest()));
+                    $model->setResourcePath($resourcePathProcessors[
+                        $model->getResourceType()
+                        ]->process($this->getRequest()));
                 } catch (LocalizedException $e) {
                     $this->dataPersistor->set('bannerslider_banner', $model->getData());
                     throw new CouldNotSaveException(__($e->getMessage()));
@@ -109,6 +113,8 @@ class Save extends Action
     }
 
     /**
+     * Get Model Data
+     *
      * @param \Magento\Framework\DataObject $model
      * @param string[] $fields
      */

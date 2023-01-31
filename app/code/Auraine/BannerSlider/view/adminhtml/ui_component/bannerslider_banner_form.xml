@@ -128,7 +128,29 @@
                 </select>
             </formElements>
         </field>
-        <field name="resource_map_id" sortOrder="50" formElement="select">
+         <field name="slider_community_id" sortOrder="70" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Slider community</label>
+                <dataScope>slider_community_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\CommunitySlider"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="resource_map_id" sortOrder="60" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -150,7 +172,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="resource_type" sortOrder="70" formElement="select">
+        <field name="resource_type" sortOrder="80" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -172,7 +194,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="resource_path_external_image" sortOrder="70" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+        <field name="resource_path_external_image" sortOrder="80" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -190,7 +212,7 @@
                 <visible>false</visible>
             </settings>
         </field>
-        <field name="resource_path_local_image" sortOrder="80" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+        <field name="resource_path_local_image" sortOrder="90" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -225,7 +247,7 @@
                 </imageUploader>
             </formElements>
         </field>
-        <field name="resource_path_youtube_video" sortOrder="70" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+        <field name="resource_path_youtube_video" sortOrder="80" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -271,7 +293,7 @@
             </wysiwyg>
         </formElements>
     </field>
-        <field name="alt_text" sortOrder="110" formElement="input">
+        <field name="alt_text" sortOrder="120" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -283,7 +305,7 @@
                 <dataScope>alt_text</dataScope>
             </settings>
         </field>
-        <field name="link" sortOrder="120" formElement="input">
+        <field name="link" sortOrder="130" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>

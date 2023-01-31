@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\Config\Source;
 
-
 use Magento\Framework\Data\OptionSourceInterface;
 
 class ResourceType implements OptionSourceInterface
@@ -14,12 +13,12 @@ class ResourceType implements OptionSourceInterface
 
     /**
      * ResourceType constructor.
+     *
      * @param array $resources
      */
     public function __construct(
         array $resources = []
-    )
-    {
+    ) {
         $this->resources = $resources;
     }
 

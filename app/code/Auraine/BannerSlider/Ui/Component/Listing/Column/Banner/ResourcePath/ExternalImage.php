@@ -2,11 +2,12 @@
 
 namespace Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath;
 
-
 class ExternalImage implements ProcessorInterface
 {
 
     /**
+     * External Image Resource Path
+     *
      * @param array $item
      * @return string
      */

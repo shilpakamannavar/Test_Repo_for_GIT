@@ -2,13 +2,14 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Banner;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 
 class MassEnable extends AbstractMassAction
 {
     /**
+     * Process Collection
+     *
      * @param \Auraine\BannerSlider\Model\ResourceModel\Banner\Collection $collection
      * @return void
      */
@@ -24,7 +25,8 @@ class MassEnable extends AbstractMassAction
                     $itemsSaved++;
                 }
             } catch (CouldNotSaveException $e) {
-                $this->messageManager->addErrorMessage(__('Error saving %1: %2', $item->getEntityId(), $e->getMessage()));
+                $this->messageManager
+                    ->addErrorMessage(__('Error saving %1: %2', $item->getEntityId(), $e->getMessage()));
             }
         }
         $this->messageManager->addSuccessMessage(__('%1 Banner(s) enabled', $itemsSaved));

@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Block\Widget\Slider\Banner\RendererInterface;
 use Magento\Framework\View\Element\Template;
@@ -14,10 +13,15 @@ class AbstractRenderer extends Template implements RendererInterface
      * @var BannerInterface
      */
     private $banner;
-
+   
+    /**
+     * @var widgetClassName
+     */
     private $widgetClassName;
 
     /**
+     * Get Banner
+     *
      * @return BannerInterface|null
      */
     public function getBanner(): ?BannerInterface
@@ -26,6 +30,8 @@ class AbstractRenderer extends Template implements RendererInterface
     }
 
     /**
+     * Get Widget Class
+     *
      * @return null|string
      */
     public function getWidgetClassName(): ?string
@@ -34,6 +40,8 @@ class AbstractRenderer extends Template implements RendererInterface
     }
 
     /**
+     * Render Function
+     *
      * @param BannerInterface $banner
      * @param string $widgetClassName
      * @return string

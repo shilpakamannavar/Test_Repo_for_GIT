@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Resmap;
 
-
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
@@ -11,7 +10,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Delete extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
     /**
      * @var ResourceMapRepositoryInterface
      */
@@ -25,8 +24,7 @@ class Delete extends Action
     public function __construct(
         Action\Context $context,
         ResourceMapRepositoryInterface $resourceMapRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resourceMapRepository = $resourceMapRepository;
     }

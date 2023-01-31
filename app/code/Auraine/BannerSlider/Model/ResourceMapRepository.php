@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model;
 
-
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Auraine\BannerSlider\Api\Data\ResourceMapInterfaceFactory as ModelFactory;
 use Auraine\BannerSlider\Model\ResourceModel\ResourceMap as ResourceModel;
@@ -14,6 +13,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Auraine\BannerSlider\Api\Data\ResourceMapSearchResultInterfaceFactory;
 use Psr\Log\LoggerInterface;
+use Auraine\BannerSlider\Api\Data\ResourceMapInterface;
 
 class ResourceMapRepository implements ResourceMapRepositoryInterface
 {
@@ -65,8 +65,7 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
         ResourceMapSearchResultInterfaceFactory $resourceMapSearchResultFactory,
         LoggerInterface $logger,
         array $objectCache = []
-    )
-    {
+    ) {
         $this->modelFactory = $modelFactory;
         $this->resourceModel = $resourceModel;
         $this->collectionFactory = $collectionFactory;
@@ -77,6 +76,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Resource Map Load
+     *
      * @param int $id
      * @param bool $loadFromCache
      * @return \Auraine\BannerSlider\Api\Data\ResourceMapInterface
@@ -99,6 +100,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Create Model Factory
+     *
      * @return \Auraine\BannerSlider\Api\Data\ResourceMapInterface
      */
     public function create(): \Auraine\BannerSlider\Api\Data\ResourceMapInterface
@@ -107,11 +110,13 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Save Resource Map
+     *
      * @param \Auraine\BannerSlider\Api\Data\ResourceMapInterface $resourceMap
      * @return \Auraine\BannerSlider\Api\Data\ResourceMapInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(\Auraine\BannerSlider\Api\Data\ResourceMapInterface $resourceMap): \Auraine\BannerSlider\Api\Data\ResourceMapInterface
+    public function save(ResourceMapInterface $resourceMap): ResourceMapInterface
     {
         try {
             $this->resourceModel->save($resourceMap);
@@ -125,6 +130,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Delete Resource Map
+     *
      * @param \Auraine\BannerSlider\Api\Data\ResourceMapInterface $resourceMap
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -142,6 +149,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Delete Resource Map By id
+     *
      * @param int $id
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -153,6 +162,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Get List
+     *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Auraine\BannerSlider\Api\Data\ResourceMapSearchResultInterface
      */
@@ -172,6 +183,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Get Collection
+     *
      * @return \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection
      */
     public function getCollection(): \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection
@@ -180,6 +193,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Cache object
+     *
      * @param string $type
      * @param string $identifier
      * @param \Auraine\BannerSlider\Api\Data\ResourceMapInterface|null $object
@@ -191,6 +206,8 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
     }
 
     /**
+     * Get Chache Object
+     *
      * @param string $type
      * @param string $identifier
      * @return bool|\Auraine\BannerSlider\Api\Data\ResourceMapInterface
@@ -200,7 +217,14 @@ class ResourceMapRepository implements ResourceMapRepositoryInterface
         $cacheKey = $this->getCacheKey($type, $identifier);
         return $this->objectCache[$cacheKey] ?? false;
     }
-
+    
+     /**
+      * Get Chache Key
+      *
+      * @param string $type
+      * @param string $identifier
+      * @return bool|\Auraine\BannerSlider\Api\Data\ResourceMapInterface
+      */
     protected function getCacheKey($type, $identifier)
     {
         return $type . '_' . $identifier;
