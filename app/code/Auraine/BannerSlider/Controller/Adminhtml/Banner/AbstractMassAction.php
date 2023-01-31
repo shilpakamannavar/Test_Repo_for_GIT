@@ -7,10 +7,11 @@ use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
+use Auraine\BannerSlider\Model\ResourceModel\Banner\Collection;
 
 abstract class AbstractMassAction extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
 
     /**
      * @var Filter
@@ -31,8 +32,7 @@ abstract class AbstractMassAction extends Action
         Action\Context $context,
         BannerRepositoryInterface $bannerRepository,
         Filter $filter
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->filter = $filter;
         $this->bannerRepository = $bannerRepository;
@@ -59,8 +59,10 @@ abstract class AbstractMassAction extends Action
     }
 
     /**
+     * Process Collection
+     *
      * @param \Auraine\BannerSlider\Model\ResourceModel\Banner\Collection $collection
      * @return void
      */
-    abstract protected function processCollection(\Auraine\BannerSlider\Model\ResourceModel\Banner\Collection $collection): void;
+    abstract protected function processCollection(Collection $collection): void;
 }

@@ -7,30 +7,22 @@ use Magento\Framework\File\Uploader;
 class ImageUploader
 {
     /**
-     * Core file storage database
-     *
-     * @var \Magento\MediaStorage\Helper\File\Storage\Database
+     * @var $coreFileStorageDatabase
      */
     protected $coreFileStorageDatabase;
 
     /**
-     * Media directory object (writable).
-     *
-     * @var \Magento\Framework\Filesystem\Directory\WriteInterface
+     * @var $mediaDirectory
      */
     protected $mediaDirectory;
 
     /**
-     * Uploader factory
-     *
-     * @var \Magento\MediaStorage\Model\File\UploaderFactory
+     * @var $uploaderFactory
      */
     private $uploaderFactory;
-
+    
     /**
-     * Store manager
-     *
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var $storeManager
      */
     protected $storeManager;
 
@@ -39,24 +31,18 @@ class ImageUploader
      */
     protected $logger;
 
-    /**
-     * Base tmp path
-     *
-     * @var string
-     */
+     /**
+      * @var $baseTmpPath
+      */
     protected $baseTmpPath;
 
     /**
-     * Base path
-     *
-     * @var string
+     * @var $basePath
      */
     protected $basePath;
 
     /**
-     * Allowed extensions
-     *
-     * @var string
+     * @var $allowedExtensions
      */
     protected $allowedExtensions;
 

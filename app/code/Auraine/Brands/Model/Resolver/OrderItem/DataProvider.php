@@ -70,7 +70,8 @@ class DataProvider extends CoreDataProvider
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param OptionsProcessor $optionsProcessor
      */
-    public function __construct( StoreManagerInterface $storeManager,
+    public function __construct(
+        StoreManagerInterface $storeManager,
         OrderItemRepositoryInterface $orderItemRepository,
         ProductRepositoryInterface $productRepository,
         OrderRepositoryInterface $orderRepository,
@@ -82,7 +83,7 @@ class DataProvider extends CoreDataProvider
         $this->orderRepository = $orderRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->optionsProcessor = $optionsProcessor;
-        $this->_storeManager=$storeManager; 
+        $this->_storeManager=$storeManager;
     }
 
     /**
@@ -136,7 +137,7 @@ class DataProvider extends CoreDataProvider
 
             /** @var ProductInterface $associatedProduct */
             $associatedProduct = $productList[$orderItem->getProductId()] ?? null;
-            $ImageUrl= $associatedProduct->getData('image') ?? '';  
+            $ImageUrl= $associatedProduct->getData('image') ?? '';
             /** @var OrderInterface $associatedOrder */
             $associatedOrder = $orderList[$orderItem->getOrderId()];
             $itemOptions = $this->optionsProcessor->getItemOptions($orderItem);

@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\Resolver\DataProvider\Banner;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 
 class ResourcePath implements ResourcePathDataProviderInterface
@@ -14,16 +13,18 @@ class ResourcePath implements ResourcePathDataProviderInterface
 
     /**
      * ResourcePath constructor.
+     *
      * @param array $resolvers
      */
     public function __construct(
         array $resolvers = []
-    )
-    {
+    ) {
         $this->resolvers = $resolvers;
     }
 
     /**
+     * Resolve Banner
+     *
      * @param BannerInterface $banner
      * @return string
      */

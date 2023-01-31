@@ -2,16 +2,16 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Resmap;
 
-
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
+use Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection;
 
 abstract class AbstractMassAction extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
 
     /**
      * @var Filter
@@ -24,6 +24,7 @@ abstract class AbstractMassAction extends Action
 
     /**
      * AbstractMassAction constructor.
+     *
      * @param Action\Context $context
      * @param ResourceMapRepositoryInterface $resourceMapRepository
      * @param Filter $filter
@@ -32,8 +33,7 @@ abstract class AbstractMassAction extends Action
         Action\Context $context,
         ResourceMapRepositoryInterface $resourceMapRepository,
         Filter $filter
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->filter = $filter;
         $this->resourceMapRepository = $resourceMapRepository;
@@ -50,18 +50,22 @@ abstract class AbstractMassAction extends Action
     public function execute()
     {
         $collection = $this->resourceMapRepository->getCollection();
+
         try {
             $this->filter->getCollection($collection);
             $this->processCollection($collection);
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage(__($e->getMessage()));
         }
+
         return $this->resultRedirectFactory->create()->setPath('*/*');
     }
 
     /**
+     * Process collection method.
+     *
      * @param \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection $collection
      * @return void
      */
-    abstract protected function processCollection(\Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection $collection): void;
+    abstract protected function processCollection(Collection $collection): void;
 }

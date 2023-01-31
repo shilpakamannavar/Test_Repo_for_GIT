@@ -9,6 +9,8 @@ class CustomHtml implements ModifierInterface
 {
 
     /**
+     * Modify Data
+     *
      * @param array $data
      * @return array
      * @since 100.1.0
@@ -27,6 +29,8 @@ class CustomHtml implements ModifierInterface
     }
 
     /**
+     * Modify Meta
+     *
      * @param array $meta
      * @return array
      * @since 100.1.0

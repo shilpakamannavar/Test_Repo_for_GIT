@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath;
 
-
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
@@ -19,12 +18,13 @@ class LocalImage implements ProcessorInterface
      */
     public function __construct(
         StoreManagerInterface $storeManager
-    )
-    {
+    ) {
         $this->storeManager = $storeManager;
     }
 
     /**
+     * Process method
+     *
      * @param array $item
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException

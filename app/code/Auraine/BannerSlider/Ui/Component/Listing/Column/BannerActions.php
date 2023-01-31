@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Ui\Component\Listing\Column;
 
-
 use Magento\Framework\Escaper;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -12,11 +11,13 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class BannerActions extends Column
 {
 
-    const ENTITY_ID = 'entity_id';
+    public const ENTITY_ID = 'entity_id';
+
     /**
      * @var Escaper
      */
     private $escaper;
+    
     /**
      * @var UrlInterface
      */
@@ -38,8 +39,7 @@ class BannerActions extends Column
         UrlInterface $url,
         array $components = [],
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->escaper = $escaper;
         $this->url = $url;
@@ -55,13 +55,19 @@ class BannerActions extends Column
                 $name = $this->getData('name');
                 if (isset($item[self::ENTITY_ID])) {
                     $item[$name]['edit'] = [
-                        'href' => $this->url->getUrl('codbansli/banner/edit', [self::ENTITY_ID => $item[self::ENTITY_ID]]),
+                        'href' => $this->url->getUrl(
+                            'codbansli/banner/edit',
+                            [self::ENTITY_ID => $item[self::ENTITY_ID]]
+                        ),
                         'label' => __('Edit'),
                         '__disableTmpl' => true,
                     ];
                     $title = $this->escaper->escapeHtml($item['title']);
                     $item[$name]['delete'] = [
-                        'href' => $this->url->getUrl('codbansli/banner/delete', [self::ENTITY_ID => $item[self::ENTITY_ID]]),
+                        'href' => $this->url->getUrl(
+                            'codbansli/banner/delete',
+                            [self::ENTITY_ID => $item[self::ENTITY_ID]]
+                        ),
                         'label' => __('Delete'),
                         'confirm' => [
                             'title' => __('Delete %1', $title),

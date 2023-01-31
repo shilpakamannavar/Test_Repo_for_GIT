@@ -10,7 +10,7 @@ use Magento\Framework\UrlInterface;
 class Action extends Column
 {
     /** Url path */
-    const ROW_EDIT_URL = 'brands/brands/addrow';
+    public const ROW_EDIT_URL = 'brands/brands/addrow';
     /** @var UrlInterface */
     protected $_urlBuilder;
 
@@ -49,21 +49,18 @@ class Action extends Column
      */
     public function prepareDataSource(array $dataSource)
     {
-       // if (isset($dataSource['data']['items'])) {
-            foreach ($dataSource['data']['items'] as &$item) {
-                $name = $this->getData('name');
-                if (isset($item['entity_id'])) {
-                    $item[$name]['edit'] = [
-                        'href' => $this->_urlBuilder->getUrl(
-                            $this->_editUrl,
-                            ['id' => $item['entity_id']]
-                        ),
-                        'label' => __('Edit'),
-                    ];
-                }
+        foreach ($dataSource['data']['items'] as &$item) {
+            $name = $this->getData('name');
+            if (isset($item['entity_id'])) {
+                $item[$name]['edit'] = [
+                    'href' => $this->_urlBuilder->getUrl(
+                        $this->_editUrl,
+                        ['id' => $item['entity_id']]
+                    ),
+                    'label' => __('Edit'),
+                ];
             }
-       // }
-
+        }
         return $dataSource;
     }
 }

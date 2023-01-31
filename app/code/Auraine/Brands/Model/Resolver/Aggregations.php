@@ -23,12 +23,15 @@ class Aggregations implements ResolverInterface
      * @var LayerBuilder
      */
     private $layerBuilder;
-
+    /**
+     * @var BrandsFactory
+     */
     private $_brandsFactory;
 
     /**
      * @param LayerBuilder $layerBuilder
-     * @param \Auraine\Brands\Model\Product\Attribute\Source\BrandAttrProd
+     *
+     * @param brandsFactory $brandsFactory
      */
     public function __construct(
         LayerBuilder $layerBuilder,
@@ -37,8 +40,6 @@ class Aggregations implements ResolverInterface
         $this->layerBuilder = $layerBuilder;
         $this->_brandsFactory  = $brandsFactory;
     }
-    
-
     /**
      * @inheritdoc
      */
@@ -70,7 +71,7 @@ class Aggregations implements ResolverInterface
                     $id = (int)$value['value'];
 
                     $result = $this->_brandsFactory->getAllBrandDataById($id);
-                    if (!empty($result)){
+                    if (!empty($result)) {
                         $value['label'] = $result[0]['label'];
                         $value['value'] = $result[0]['value'];
                     }
@@ -79,7 +80,7 @@ class Aggregations implements ResolverInterface
             }
 
             return $results;
-        } 
+        }
 
         return [];
     }
