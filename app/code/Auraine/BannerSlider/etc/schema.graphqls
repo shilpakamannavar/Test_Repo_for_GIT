@@ -5,6 +5,7 @@ type Query {
         page_type: String @doc(description: "filter by page type")
         sort_order: Int @doc(description: "filter by sort order")
         category_id: Int @doc(description: "filter by category id")
+        category_uid: String @doc(description: "filter by category uid")
         ): [BannerSlider] @resolver(class: "Auraine\\BannerSlider\\Model\\Resolver\\BannerSlider") @doc(description: "Get banner slider bu slider ID")
     getSliderList : [SliderList] @resolver (class:"\\Auraine\\BannerSlider\\Model\\Resolver\\SliderList") @doc(description:"List of Slider")
     
@@ -17,6 +18,7 @@ type BannerSlider {
     slider_type: String @doc(description: "slider type")
     page_type: String @doc(description: "page type")
     category_id: String @doc(description: "category id")
+    category_uid: String @doc(description: "category uid")
     target_id: String @doc(description: "target id")
     target_type: String @doc(description: "target type")
     is_show_title: Int @doc(description: "is show title")

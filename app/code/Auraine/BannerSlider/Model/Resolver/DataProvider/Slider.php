@@ -45,7 +45,18 @@ class Slider
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
         $sortOrder = $args['sort_order'] ?? null;
+        $category_id = $args['category_id'] ?? null;
+        $category_uid = $args['category_uid'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
+        $decode = "base64_decode";
+        
+        if (!empty($category_uid)) {
+            $collection->addFieldToFilter('category_id', $decode($category_uid));
+        }
+
+        if (!empty($category_id)) {
+            $collection->addFieldToFilter('category_id', $category_id);
+        }
         
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
@@ -79,6 +90,8 @@ class Slider
                     'target_type',
                     'sort_order'
                 ]);
+                $encode = "base64_encode";
+                $data['category_uid'] = $encode($data['category_id']);
                 $data['banners'] = $this->getBanners($slider);
                 $result[] = $data;
             }
