@@ -1,0 +1,8 @@
+input CategoryFilterInput {
+    category_banner_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_banner_slider_id Value")
+    category_offers_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_offers_slider_id Value")
+    category_popular_brands_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_popular_brands_slider_id Value")
+    category_our_exclusives_top_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_our_exclusives_top_slider_id Value")
+    category_our_exclusives_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_our_exclusives_slider_id Value")
+    category_blogs_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_blogs_slider_id Value")
+}

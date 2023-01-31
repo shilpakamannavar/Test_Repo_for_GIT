@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">auraine_staticcontent_content_form.content_form_data_source</item>
+		</item>
+		<item name="label" xsi:type="string" translate="true">General Information</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+	</argument>
+	<settings>
+		<buttons>
+			<button name="back" class="Auraine\Staticcontent\Block\Adminhtml\Content\Edit\BackButton"/>
+			<button name="delete" class="Auraine\Staticcontent\Block\Adminhtml\Content\Edit\DeleteButton"/>
+			<button name="save" class="Auraine\Staticcontent\Block\Adminhtml\Content\Edit\SaveButton"/>
+			<button name="save_and_continue" class="Auraine\Staticcontent\Block\Adminhtml\Content\Edit\SaveAndContinueButton"/>
+		</buttons>
+		<namespace>auraine_staticcontent_content_form</namespace>
+		<dataScope>data</dataScope>
+		<deps>
+			<dep>auraine_staticcontent_content_form.content_form_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="content_form_data_source">
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+		<settings>
+			<submitUrl path="*/*/save"/>
+		</settings>
+		<dataProvider name="content_form_data_source" class="Auraine\Staticcontent\Model\Content\DataProvider">
+			<settings>
+				<requestFieldName>content_id</requestFieldName>
+				<primaryFieldName>content_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<fieldset name="general">
+		<settings>
+			<label>General</label>
+		</settings>
+		<field name="type" sortOrder="40" formElement="select">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">type</label>
+			</settings>
+			<formElements>
+				<select>
+					<settings>
+						<options class="Auraine\Staticcontent\Model\Config\Source\TypeName"/>
+					</settings>
+				</select>
+			</formElements>
+		</field>
+		<field name="label" formElement="textarea" sortOrder="20">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Content</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">label</label>
+				<dataScope>label</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="value" formElement="textarea" sortOrder="30">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Content</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">value</label>
+				<dataScope>value</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="sortorder" formElement="input" sortOrder="50">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Content</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>number</dataType>
+				<label translate="true">sortorder</label>
+				<dataScope>sortorder</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="validate-number" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="enable" formElement="checkbox" sortOrder="60">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Content</item>
+					 <item name="default" xsi:type="number">1</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>boolean</dataType>
+				<label translate="true">enable</label>
+				<dataScope>enable</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+			 <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+		</field>
+	</fieldset>
+</form>

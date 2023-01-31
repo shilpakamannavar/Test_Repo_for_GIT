@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Auraine::top_level" title="Auraine" module="Auraine_ZipCode" sortOrder="9999" resource="Magento_Backend::content"/>
+		<add id="Auraine_ZipCode::auraine_zipcode_pincode" title="Pincode" module="Auraine_ZipCode" sortOrder="9999" resource="Magento_Backend::content" parent="Auraine::top_level" action="auraine_zipcode/pincode/index"/>
+	</menu>
+</config>

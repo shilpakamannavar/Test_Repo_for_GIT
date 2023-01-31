@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <auraine>
+            <tire_one>
+                <tire_one_name>Elite</tire_one_name>
+                <tire_one_amount>50000</tire_one_amount>
+                <tire_one_value>5</tire_one_value>
+            </tire_one>
+
+            <tire_two>
+                <tire_two_name>Prime</tire_two_name>
+                <tire_two_amount>25000</tire_two_amount>
+                <tire_two_value>4</tire_two_value>
+            </tire_two>
+
+            <tire_three>
+                <tire_three_name>Gold</tire_three_name>
+                <tire_three_amount>10000</tire_three_amount>
+                <tire_three_value>3</tire_three_value>
+            </tire_three>
+
+            <tire_four>
+                <tire_four_name>Normal</tire_four_name>
+                <tire_four_amount>1</tire_four_amount>
+                <tire_four_value>1.5</tire_four_value>
+            </tire_four>
+        </auraine>
+    </default>
+</config>
