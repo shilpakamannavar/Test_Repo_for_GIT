@@ -83,7 +83,7 @@ class Slider
                     'page_type',
                     'target_type',
                     'target_id',
-                    'sort_order'
+                    'sort_order',
                 ]);
                 $data['banners'] = $this->getBanners($slider);
                 $result[] = $data;
@@ -111,7 +111,8 @@ class Slider
                 'alt_text',
                 'link',
                 'additional_information',
-                'sort_order'
+                'sort_order',
+                'slider_community_id'
             ]);
             $bannerData['resource_map'] = $this->getResourceMap($banner);
             $banners[] = $bannerData;
