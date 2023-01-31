@@ -73,7 +73,9 @@ class Save extends Action
                 'link',
                 'sort_order',
                 'additional_information',
-                'is_enabled'
+                'is_enabled',
+                'slider_community_id'
+                
             ]);
             $resourcePathProcessors = $this->processorPool->getProcessors();
             if (isset($resourcePathProcessors[$model->getResourceType()])) {
