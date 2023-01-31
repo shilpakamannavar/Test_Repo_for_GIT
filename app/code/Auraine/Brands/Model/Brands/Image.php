@@ -4,16 +4,17 @@ namespace Auraine\Brands\Model\Brands;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\Filesystem;
 use Magento\Framework\App\Filesystem\DirectoryList;
+
 class Image
 {
     /**
      * media sub folder
      * @var string
      */
-    protected $subDir = 'pub/media/'; //actual path is pub/media/webkul/image 
+    protected $subDir = 'pub/media/'; //actual path is pub/media/webkul/image
     
     /**
-     * url builder
+     * Url builder for the image
      *
      * @var \Magento\Framework\UrlInterface
      */
@@ -29,13 +30,12 @@ class Image
     public function __construct(
         UrlInterface $urlBuilder,
         Filesystem $fileSystem
-    )
-    {
+    ) {
         $this->urlBuilder = $urlBuilder;
         $this->fileSystem = $fileSystem;
     }
     /**
-     * get images base url
+     * Get images base url
      *
      * @return string
      */

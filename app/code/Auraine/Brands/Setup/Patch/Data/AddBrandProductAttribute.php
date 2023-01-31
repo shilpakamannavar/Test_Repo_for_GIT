@@ -41,16 +41,19 @@ class AddBrandProductAttribute implements DataPatchInterface, PatchRevertableInt
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
+        /** EAV setup
+         *
+         * @var EavSetup $eavSetup
+         * */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        if(!$eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, 'brand_name')) {
-            $eavSetup->removeAttribute(\Magento\Catalog\Model\Product::ENTITY, 'brand_name');                                                        
-     }
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, 'brand_name')) {
+            $eavSetup->removeAttribute(\Magento\Catalog\Model\Product::ENTITY, 'brand_name');
+        }
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Product::ENTITY, 'brand_name');
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
@@ -85,7 +88,9 @@ class AddBrandProductAttribute implements DataPatchInterface, PatchRevertableInt
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
-
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
@@ -97,7 +102,7 @@ class AddBrandProductAttribute implements DataPatchInterface, PatchRevertableInt
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -105,7 +110,7 @@ class AddBrandProductAttribute implements DataPatchInterface, PatchRevertableInt
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -114,4 +119,3 @@ class AddBrandProductAttribute implements DataPatchInterface, PatchRevertableInt
         ];
     }
 }
-
