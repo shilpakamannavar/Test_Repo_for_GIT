@@ -8,6 +8,8 @@ class ExternalImage implements ModifierInterface
 {
 
     /**
+     * Modify Data
+     *
      * @param array $data
      * @return array
      * @since 100.1.0
@@ -26,6 +28,8 @@ class ExternalImage implements ModifierInterface
     }
 
     /**
+     * Meta Data
+     *
      * @param array $meta
      * @return array
      * @since 100.1.0

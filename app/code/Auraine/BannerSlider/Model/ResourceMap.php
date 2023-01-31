@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model;
 
-
 use Auraine\BannerSlider\Api\Data\ResourceMapInterface;
 use Magento\Framework\Model\AbstractModel;
 use Auraine\BannerSlider\Model\ResourceModel\ResourceMap as ResourceModel;
@@ -25,12 +24,19 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
      */
     protected $_cacheTag = 'auraine_bannerslider_resource_map';
 
+   /**
+    * BannerRepository Constructor
+    *
+    * @return void
+    */
     protected function _construct()
     {
         $this->_init(ResourceModel::class);
     }
 
     /**
+     * Get Title
+     *
      * @return string
      */
     public function getTitle(): string
@@ -39,6 +45,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Set Title
+     *
      * @param string $title
      * @return ResourceMapInterface
      */
@@ -48,6 +56,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Get Min Width
+     *
      * @return int|null
      */
     public function getMinWidth(): ?int
@@ -56,6 +66,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Set Min Width
+     *
      * @param int|null $minWidth
      * @return ResourceMapInterface
      */
@@ -65,6 +77,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Get Max Width
+     *
      * @return int
      */
     public function getMaxWidth(): ?int
@@ -73,6 +87,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Set Max Width
+     *
      * @param int|null $maxWidth
      * @return ResourceMapInterface
      */
@@ -82,6 +98,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Get Created At
+     *
      * @return string
      */
     public function getCreatedAt(): string
@@ -90,6 +108,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Set Created At
+     *
      * @param string $createdAt
      * @return ResourceMapInterface
      */
@@ -99,6 +119,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Get Updated At
+     *
      * @return string
      */
     public function getUpdatedAt(): string
@@ -107,6 +129,8 @@ class ResourceMap extends AbstractModel implements ResourceMapInterface
     }
 
     /**
+     * Set Updated At
+     *
      * @param string $updatedAt
      * @return ResourceMapInterface
      */

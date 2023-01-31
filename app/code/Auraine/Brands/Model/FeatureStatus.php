@@ -8,6 +8,7 @@ class FeatureStatus implements OptionSourceInterface
 {
     /**
      * Get Grid row status type labels array.
+     *
      * @return array
      */
     public function getOptionArray()
@@ -15,13 +16,21 @@ class FeatureStatus implements OptionSourceInterface
         $options = ['1' => __('Yes'),'0' => __('No')];
         return $options;
     }
-
-
+    /**
+     * Get get Option Array Yes or No.
+     *
+     * @return array
+     */
     public function getOptionArrayYesNo()
     {
         $options = ['1' => __('Yes'),'0' => __('No')];
         return $options;
     }
+    /**
+     * Get get Option Array Yes or No.
+     *
+     * @return array
+     */
     public function getOptionsForYesNo()
     {
         $res = [];
@@ -30,7 +39,6 @@ class FeatureStatus implements OptionSourceInterface
         }
         return $res;
     }
-
     /**
      * Get Grid row status labels array with empty value for option element.
      *
@@ -42,9 +50,9 @@ class FeatureStatus implements OptionSourceInterface
         array_unshift($res, ['value' => '', 'label' => '']);
         return $res;
     }
-
     /**
      * Get Grid row type array for option element.
+     *
      * @return array
      */
     public function getOptions()
@@ -57,7 +65,7 @@ class FeatureStatus implements OptionSourceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {

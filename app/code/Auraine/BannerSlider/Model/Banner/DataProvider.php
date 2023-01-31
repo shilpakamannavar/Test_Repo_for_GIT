@@ -11,8 +11,11 @@ use Magento\Ui\DataProvider\ModifierPoolDataProvider;
 
 class DataProvider extends ModifierPoolDataProvider
 {
-
+    /**
+     * @var $loadedData
+     */
     protected $loadedData;
+
     /**
      * @var DataPersistorInterface
      */
@@ -42,8 +45,7 @@ class DataProvider extends ModifierPoolDataProvider
         array $meta = [],
         array $data = [],
         ?PoolInterface $pool = null
-    )
-    {
+    ) {
         $this->dataPersistor = $dataPersistor;
         $this->collection = $bannerRepository->getCollection();
         $this->pool = $pool;

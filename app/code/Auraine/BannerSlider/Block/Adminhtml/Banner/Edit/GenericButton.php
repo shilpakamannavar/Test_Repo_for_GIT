@@ -3,7 +3,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\Banner\Edit;
 
-
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
@@ -28,19 +27,22 @@ abstract class GenericButton implements ButtonProviderInterface
     public function __construct(
         Context $context,
         BannerRepositoryInterface $bannerRepository
-    )
-    {
+    ) {
         $this->context = $context;
         $this->bannerRepository = $bannerRepository;
     }
 
     /**
+     * Get Banner Id
+     *
      * @return int|null
      */
     protected function getBannerId()
     {
         try {
-            return $this->bannerRepository->loadById((int)$this->context->getRequest()->getParam('entity_id'))->getEntityId();
+            return $this->bannerRepository
+                        ->loadById((int)$this->context->getRequest()->getParam('entity_id'))
+                        ->getEntityId();
         } catch (NoSuchEntityException $e) {
             return null;
         }

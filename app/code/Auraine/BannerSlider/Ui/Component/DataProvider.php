@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Ui\Component;
 
-
 use Magento\Cms\Ui\Component\AddFilterInterface;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\ReportingInterface;
@@ -18,6 +17,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
 
     /**
      * DataProvider constructor.
+     *
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
@@ -40,9 +40,18 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         array $meta = [],
         array $data = [],
         array $filterProcessors = []
-    )
-    {
-        parent::__construct($name, $primaryFieldName, $requestFieldName, $reporting, $searchCriteriaBuilder, $request, $filterBuilder, $meta, $data);
+    ) {
+        parent::__construct(
+            $name,
+            $primaryFieldName,
+            $requestFieldName,
+            $reporting,
+            $searchCriteriaBuilder,
+            $request,
+            $filterBuilder,
+            $meta,
+            $data
+        );
         $this->filterProcessors = $filterProcessors;
     }
 

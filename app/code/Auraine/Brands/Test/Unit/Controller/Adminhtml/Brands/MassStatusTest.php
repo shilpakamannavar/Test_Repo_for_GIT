@@ -64,7 +64,7 @@ class MassStatusTest extends TestCase
         $this->collectionFactory = $this->createMock(\Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory::class);
         $this->collectionFactory->method('create')->willReturn($this->collectionFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\Brands\Controller\Adminhtml\Brands\MassStatus::class,
+            \Auraine\Brands\Controller\Adminhtml\Brands\MassStatus::class,
             [
                 'context' => $this->context,
                 'filter' => $this->filter,
@@ -118,7 +118,7 @@ class MassStatusTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -131,7 +131,7 @@ class MassStatusTest extends TestCase
     /**
      * @dataProvider dataProviderForTest_processUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

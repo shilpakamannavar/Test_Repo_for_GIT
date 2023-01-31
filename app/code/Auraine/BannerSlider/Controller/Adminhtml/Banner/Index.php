@@ -9,7 +9,7 @@ use Magento\Framework\Controller\ResultFactory;
 class Index extends Action
 {
 
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
 
     /**
      * Execute action based on request and return result

@@ -12,7 +12,7 @@ use Magento\Framework\View\Result\Page;
 
 class Edit extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
     /**
      * @var BannerRepositoryInterface
      */
@@ -26,8 +26,7 @@ class Edit extends Action
     public function __construct(
         Action\Context $context,
         BannerRepositoryInterface $bannerRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->bannerRepository = $bannerRepository;
     }
@@ -48,7 +47,9 @@ class Edit extends Action
             $id = $this->getRequest()->getParam('entity_id');
             if ($id) {
                 $banner = $this->bannerRepository->loadById($id);
-                $page->getConfig()->getTitle()->set(__('Edit Banner "%1" (%2)', $banner->getTitle(), $banner->getEntityId()));
+                $page->getConfig()
+                      ->getTitle()
+                      ->set(__('Edit Banner "%1" (%2)', $banner->getTitle(), $banner->getEntityId()));
             } else {
                 $page->getConfig()->getTitle()->set(__('Create New Banner'));
             }

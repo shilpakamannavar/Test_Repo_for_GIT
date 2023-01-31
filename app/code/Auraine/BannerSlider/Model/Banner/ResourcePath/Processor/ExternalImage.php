@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\Banner\ResourcePath\Processor;
 
-
 use Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorInterface;
 use Magento\Framework\App\RequestInterface;
 
@@ -10,6 +9,8 @@ class ExternalImage implements ProcessorInterface
 {
 
     /**
+     * Process Request
+     *
      * @param RequestInterface $request
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException

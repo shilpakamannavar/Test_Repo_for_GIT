@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\ResourceMap\Edit;
 
-
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
@@ -27,19 +26,22 @@ abstract class GenericButton implements ButtonProviderInterface
     public function __construct(
         Context $context,
         ResourceMapRepositoryInterface $resourceMapRepository
-    )
-    {
+    ) {
         $this->context = $context;
         $this->resourceMapRepository = $resourceMapRepository;
     }
 
     /**
+     * Get Resource Map ID
+     *
      * @return int|null
      */
     protected function getResourceMapId()
     {
         try {
-            return $this->resourceMapRepository->loadById((int)$this->context->getRequest()->getParam('entity_id'))->getEntityId();
+            return $this->resourceMapRepository
+                        ->loadById((int)$this->context->getRequest()->getParam('entity_id'))
+                        ->getEntityId();
         } catch (NoSuchEntityException $e) {
             return null;
         }

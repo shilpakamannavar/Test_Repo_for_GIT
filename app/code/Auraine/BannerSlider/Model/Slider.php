@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model;
 
-
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 use Auraine\BannerSlider\Api\Data\SliderInterface;
 use Magento\Framework\Api\SearchCriteriaBuilderFactory;
@@ -74,6 +73,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Get Slider Title
+     *
      * @return string
      */
     public function getTitle(): string
@@ -82,6 +83,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Set Slider Ttitle
+     *
      * @param string $title
      * @return SliderInterface
      */
@@ -91,6 +94,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Get Is Show Title
+     *
      * @return int
      */
     public function getIsShowTitle(): int
@@ -99,6 +104,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Set Is show Ttitle
+     *
      * @param int $isShowTitle
      * @return \Auraine\BannerSlider\Api\Data\SliderInterface
      */
@@ -108,6 +115,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Get Is Enabled
+     *
      * @return int
      */
     public function getIsEnabled(): int
@@ -116,6 +125,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Set Is Enabled
+     *
      * @param int $isEnabled
      * @return SliderInterface
      */
@@ -125,6 +136,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Get Created At
+     *
      * @return string
      */
     public function getCreatedAt(): string
@@ -133,6 +146,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Set Created At
+     *
      * @param string $createdAt
      * @return SliderInterface
      */
@@ -142,6 +157,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Get Updated At
+     *
      * @return string
      */
     public function getUpdatedAt(): string
@@ -150,6 +167,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Set Updated At
+     *
      * @param string $updatedAt
      * @return SliderInterface
      */
@@ -159,6 +178,8 @@ class Slider extends AbstractModel implements SliderInterface
     }
 
     /**
+     * Get Banner List
+     *
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface[]
      */
     public function getBanners(): array

@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Widget\Slider\Banner;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 
 class RendererPool
@@ -18,12 +17,13 @@ class RendererPool
      */
     public function __construct(
         array $renderers = []
-    )
-    {
+    ) {
         $this->renderers = $renderers;
     }
 
     /**
+     * Return Renderer
+     *
      * @return RendererInterface[]
      */
     public function getRenderers(): array
@@ -32,6 +32,8 @@ class RendererPool
     }
 
     /**
+     * Checking Banner Interface
+     *
      * @param BannerInterface $banner
      * @return RendererInterface|null
      */

@@ -2,16 +2,16 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Slider;
 
-
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
+use Auraine\BannerSlider\Model\ResourceModel\Slider\Collection;
 
 abstract class AbstractMassAction extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
 
     /**
      * @var SliderRepositoryInterface
@@ -32,8 +32,7 @@ abstract class AbstractMassAction extends Action
         Action\Context $context,
         SliderRepositoryInterface $sliderRepository,
         Filter $filter
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->sliderRepository = $sliderRepository;
         $this->filter = $filter;
@@ -60,8 +59,10 @@ abstract class AbstractMassAction extends Action
     }
 
     /**
+     * Process Collection
+     *
      * @param \Auraine\BannerSlider\Model\ResourceModel\Slider\Collection $collection
      * @return void
      */
-    abstract protected function processCollection(\Auraine\BannerSlider\Model\ResourceModel\Slider\Collection $collection): void;
+    abstract protected function processCollection(Collection $collection): void;
 }

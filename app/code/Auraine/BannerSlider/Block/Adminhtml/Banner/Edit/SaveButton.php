@@ -3,7 +3,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\Banner\Edit;
 
-
 class SaveButton extends GenericButton
 {
     /**

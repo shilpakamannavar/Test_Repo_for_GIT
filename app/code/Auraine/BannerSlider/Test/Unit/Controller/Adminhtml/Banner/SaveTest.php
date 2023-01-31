@@ -118,7 +118,7 @@ class SaveTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -131,7 +131,7 @@ class SaveTest extends TestCase
     /**
      * @dataProvider dataProviderForTest_processUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
@@ -226,13 +226,11 @@ class SaveTest extends TestCase
         $this->assertEquals($data['link'], "link");
         $this->assertEquals($data['sort_order'], "sort_order");
         $this->assertEquals($data['is_enabled'], 1);
-        //$this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
     
-
     protected function getBannerData()
-      {
-       $data = [
+    {
+        $data = [
         'slider_id' =>'slider_id',
         'title' =>'title',
         'resource_map_id'=>'resource_map_id',
@@ -242,7 +240,6 @@ class SaveTest extends TestCase
         'sort_order'=>'sort_order',
         'is_enabled'=> 1
         ];
-       return $data;
+        return $data;
     }
 }
-    

@@ -2,6 +2,7 @@
 namespace Auraine\Brands\Block\Adminhtml\Brands\Edit;
 
 use Magento\Store\Model\System\Store;
+
 /**
  * Adminhtml Add New Row Form.
  */
@@ -11,7 +12,14 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      * @var \Magento\Store\Model\System\Store
      */
     protected $_systemStore;
-
+    /**
+     * Constructor function
+     *
+     * @param Context $context,Registry $registry,FormFactory $formFactory,Config $wysiwygConfig
+     *
+     * @param Status $options,FeatureStatus $feature_options,Store $systemStore,array $data
+     *
+     */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
@@ -61,8 +69,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 ['legend' => __('Add New Brands'), 'class' => 'fieldset-wide']
             );
         }
-      
-
         $fieldset->addField(
             'title',
             'text',
@@ -75,37 +81,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'required' => true,
             ]
         );
-
-
-        // $fieldset->addType(
-        //     'categories',
-        //     '\Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Category'
-        //    );
-
-        //    $fieldset->addField(
-        //     'categories_id',
-        //     'categories',
-        //     [
-        //         'name' => 'categories_id',
-        //         'label' => __('Categories'),
-        //         'title' => __('Categories'),
-        //         'class' => 'required-entry admin__action-multiselect-wrap action-select-wrap admin__action-multiselect-tree',
-        //     ]
-        // );
-        
-        // $fieldset->addField(
-        //     'urlkey',
-        //     'text',
-        //     [
-        //         'name' => 'urlkey',
-        //         'label' => __('URL Key'),
-        //         'id' => 'urlkey',
-        //         'title' => __('URL Key'),
-        //         'class' => 'required-entry',
-        //         'required' => true,
-        //     ]
-        // );
-
       
         $field = $fieldset->addField(
             'stores',
@@ -116,8 +91,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'name' => 'stores',
                 'value' => $model->getStoreId(),
                 'values' => $this->systemStore->getStoreValuesForForm(false, true)
-//                set first argument true and second to false to add blank option which value is blank
-//                set second argument true to add "All Store Views" option which value is 0
+            //                set first argument true and second to false to add blank option which value is blank
+            //                set second argument true to add "All Store Views" option which value is 0
             ]
         );
 
@@ -146,8 +121,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'required' => true,
             ]
         );
-
-
         $fieldset->addField(
             'is_popular',
             'select',
@@ -161,7 +134,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                
             ]
         );
-
         $fieldset->addField(
             'is_featured',
             'select',
@@ -203,8 +175,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
               
             ]
         );
-
-
         $fieldset->addField(
             'status',
             'select',
@@ -261,7 +231,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         $form->setValues($model->getData());
         $form->setUseContainer(true);
         $this->setForm($form);
-
         return parent::_prepareForm();
     }
 }

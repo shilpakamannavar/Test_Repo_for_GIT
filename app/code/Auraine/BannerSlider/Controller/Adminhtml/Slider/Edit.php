@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Slider;
 
-
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
@@ -12,7 +11,7 @@ use Magento\Framework\View\Result\Page;
 
 class Edit extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
     /**
      * @var SliderRepositoryInterface
      */
@@ -26,8 +25,7 @@ class Edit extends Action
     public function __construct(
         Action\Context $context,
         SliderRepositoryInterface $sliderRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->sliderRepository = $sliderRepository;
     }
@@ -48,7 +46,9 @@ class Edit extends Action
             $id = $this->getRequest()->getParam('entity_id');
             if ($id) {
                 $slider = $this->sliderRepository->loadById($id);
-                $page->getConfig()->getTitle()->set(__('Edit Slider "%1" (%2)', $slider->getTitle(), $slider->getEntityId()));
+                $page->getConfig()
+                      ->getTitle()
+                      ->set(__('Edit Slider "%1" (%2)', $slider->getTitle(), $slider->getEntityId()));
             } else {
                 $page->getConfig()->getTitle()->set(__('Create New Slider'));
             }
