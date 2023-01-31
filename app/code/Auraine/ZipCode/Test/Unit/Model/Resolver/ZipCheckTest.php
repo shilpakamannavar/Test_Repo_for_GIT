@@ -39,7 +39,7 @@ class ZipCheckTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->zipcodeDataProvider = $this->createMock(\Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Model\Resolver\ZipCheck::class,
+            \Auraine\ZipCode\Model\Resolver\ZipCheck::class,
             [
                 'zipcodeDataProvider' => $this->zipcodeDataProvider,
             ]

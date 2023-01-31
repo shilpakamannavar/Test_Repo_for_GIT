@@ -47,7 +47,7 @@ class LoyaltyResolverTest extends TestCase
         $this->customerGetter = $this->createMock(\Magento\CustomerGraphQl\Model\Customer\GetCustomer::class);
         $this->helperNameById = $this->createMock(\Auraine\LoyaltyPoint\Helper\GetTireNameByid::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\LoyaltyPoint\Model\Resolver\LoyaltyResolver::class,
+            \Auraine\LoyaltyPoint\Model\Resolver\LoyaltyResolver::class,
             [
                 'customerGetter' => $this->customerGetter,
                 'helperNameById' => $this->helperNameById,

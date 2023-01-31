@@ -56,7 +56,7 @@ class IndexTest extends TestCase
         $this->resultPageFactory = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
         $this->resultPageFactory->method('create')->willReturn($this->resultPageFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Pincode\Index::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Pincode\Index::class,
             [
                 'context' => $this->context,
                 'resultPageFactory' => $this->resultPageFactory,
@@ -109,7 +109,7 @@ class IndexTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -120,9 +120,9 @@ class IndexTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

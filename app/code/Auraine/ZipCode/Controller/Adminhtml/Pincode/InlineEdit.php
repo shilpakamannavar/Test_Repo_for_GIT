@@ -6,6 +6,9 @@ namespace Auraine\ZipCode\Controller\Adminhtml\Pincode;
 class InlineEdit extends \Magento\Backend\App\Action
 {
 
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
     protected $jsonFactory;
 
     /**
@@ -42,7 +45,7 @@ class InlineEdit extends \Magento\Backend\App\Action
                     /** @var \Auraine\ZipCode\Model\Pincode $model */
                     $model = $this->_objectManager->create(\Auraine\ZipCode\Model\Pincode::class)->load($modelid);
                     try {
-                        $model->setData(array_merge($model->getData(), $postItems[$modelid]));
+                        $model->setData([...$model->getData(), ...$postItems[$modelid]]);
                         $model->save();
                     } catch (\Exception $e) {
                         $messages[] = "[Pincode ID: {$modelid}]  {$e->getMessage()}";
@@ -58,4 +61,3 @@ class InlineEdit extends \Magento\Backend\App\Action
         ]);
     }
 }
-

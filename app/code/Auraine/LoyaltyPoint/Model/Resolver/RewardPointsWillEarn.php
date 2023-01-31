@@ -20,21 +20,20 @@ class RewardPointsWillEarn implements ResolverInterface
 
     /**
      * Constructs rewards points will earn from the current cart items.
-     * 
+     *
      * @param \Auraine\LoyaltyPoint\Helper\Data $helperData
      * @param \Magento\Customer\Model\Session $customerSession
      */
     public function __construct(
         Data $helperData,
         \Magento\Customer\Model\Session $customerSession
-    )
-    {
+    ) {
         $this->_helperData = $helperData;
         $this->_customerSession = $customerSession;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function resolve(Field $field, $context, ResolveInfo $info, ?array $value = null, ?array $args = null)
     {
@@ -50,6 +49,5 @@ class RewardPointsWillEarn implements ResolverInterface
         $amount = $value['model']->getGrandTotal() * ($slabValue / 100);
 
         return $amount;
-
     }
 }

@@ -6,33 +6,33 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Countries implements OptionSourceInterface
 {
     /**
-     * @var CollectionFactory
+     * @var \Magento\Directory\Model\ResourceModel\Country\CollectionFactory
      */
-    protected $_countryCollectionFactory;  
+    protected $_countryCollectionFactory;
 
     /**
-     * @var CountryFactory
+     * @var \Magento\Directory\Model\CountryFactory
      */
     protected $_countryFactory;
 
     /**
-     * @param Context $context
-     * @param CollectionFactory $countryCollectionFactory
-     * @param CountryFactory $countryFactory
+     * @param \Magento\Backend\Block\Template\Context $context
+     * @param \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory
+     * @param \Magento\Directory\Model\CountryFactory $countryFactory
      * @param array $data
      */
     public function __construct(
-    \Magento\Backend\Block\Template\Context $context,
-    \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
-    \Magento\Directory\Model\CountryFactory $countryFactory,
-    array $data = []
+        \Magento\Backend\Block\Template\Context $context,
+        \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
+        \Magento\Directory\Model\CountryFactory $countryFactory,
+        array $data = []
     ) {
         $this->_countryFactory = $countryFactory;
         $this->_countryCollectionFactory = $countryCollectionFactory;
     }
-    
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {
@@ -62,8 +62,8 @@ class Countries implements OptionSourceInterface
         foreach ($this->_countryCollectionFactory->create()->loadByStore()->getData() as $value => $label) {
             $country = $countryModel->loadByCode($label['country_id']);
 
-            if (!is_null($country)) {
-                $result[$label['country_id']] = $country->getName();             
+            if ($country !== null) {
+                $result[$label['country_id']] = $country->getName();
             }
         }
 

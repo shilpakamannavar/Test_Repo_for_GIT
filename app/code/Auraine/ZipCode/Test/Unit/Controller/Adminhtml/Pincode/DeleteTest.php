@@ -47,7 +47,7 @@ class DeleteTest extends TestCase
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->coreRegistry = $this->createMock(\Magento\Framework\Registry::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ZipCode\Controller\Adminhtml\Pincode\Delete::class,
+            \Auraine\ZipCode\Controller\Adminhtml\Pincode\Delete::class,
             [
                 'context' => $this->context,
                 'coreRegistry' => $this->coreRegistry,
@@ -121,7 +121,7 @@ class DeleteTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -132,9 +132,9 @@ class DeleteTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

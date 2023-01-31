@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Auraine\SwatchData\Model\Resolver;
 
-
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
@@ -21,20 +20,20 @@ use Magento\Swatches\Helper\Data;
 
 class DataProvider implements ResolverInterface
 {
-     /**
-     * swatchHelper is the helper libraray for swatch data
-     *
-     * @var $swatchHelper
+    /**
+     * @var swatchHelper
      */
     private $swatchHelper;
 
     /**
-     *
+     * @var $_scopeConfig
+     */
+    private $_scopeConfig;
+    /**
+     * Constructor
+     * @param Data $swatchHelper
      * @param ScopeConfigInterface $scopeConfig
      */
-
-    private $_scopeConfig;
-
     public function __construct(
         Data $swatchHelper,
         ScopeConfigInterface $scopeConfig,
@@ -58,13 +57,15 @@ class DataProvider implements ResolverInterface
 
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if($value['option_label'] == 'Color'){
-
+        if ($value['option_label'] == 'Color') {
             $hexCodeData = $this->swatchHelper->getSwatchesByOptionsId([$value['value_id']]);
             $typeName = $this->getswatchType($hexCodeData[$value['value_id']]['type']);
             $hexCode =  $hexCodeData[$value['value_id']]['value'];
-            if($typeName == 'ImageSwatchData') {
-                $url = $this->_scopeConfig->getValue('swatch_data/general/swatch_data_base_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            if ($typeName == 'ImageSwatchData') {
+                $url = $this->_scopeConfig->getValue(
+                    'swatch_data/general/swatch_data_base_url',
+                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                );
                 $hexCode = $url.$hexCode;
             }
             return  [
@@ -72,12 +73,11 @@ class DataProvider implements ResolverInterface
             'value' =>  $hexCode,
             ];
         }
-        
-       return null;
+            return null;
     }
     
-     /**
-     *This will return type of swatch by id
+    /**
+     * This will return type of swatch by id
      *
      * @param id $valueType
      * @return string
@@ -91,7 +91,6 @@ class DataProvider implements ResolverInterface
                 return 'ColorSwatchData';
             case 2:
                 return 'ImageSwatchData';
-            break;
         }
     }
 }

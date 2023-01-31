@@ -16,7 +16,7 @@ use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
 class AddCategoryOurExclusivesTopSliderAttribute implements DataPatchInterface, PatchRevertableInterface
 {
-    const CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER = 'category_our_exclusives_top_slider_id';
+    public const CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER = 'category_our_exclusives_top_slider_id';
     /**
      * @var ModuleDataSetupInterface
      */
@@ -42,16 +42,22 @@ class AddCategoryOurExclusivesTopSliderAttribute implements DataPatchInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        if(!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER)) {
-            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER);                                                        
-     }
+        if (!$eavSetup->getAttributeId(
+            \Magento\Catalog\Model\Category::ENTITY,
+            self::CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER
+        )) {
+            $eavSetup->removeAttribute(
+                \Magento\Catalog\Model\Category::ENTITY,
+                self::CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER
+            );
+        }
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_OUR_EXCLUSIVES_TOP_SLIDER);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Category::ENTITY,
@@ -78,12 +84,14 @@ class AddCategoryOurExclusivesTopSliderAttribute implements DataPatchInterface, 
                 'unique' => false,
                 'option' => ''
             ]
-    
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
@@ -95,7 +103,7 @@ class AddCategoryOurExclusivesTopSliderAttribute implements DataPatchInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -103,7 +111,7 @@ class AddCategoryOurExclusivesTopSliderAttribute implements DataPatchInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -112,4 +120,3 @@ class AddCategoryOurExclusivesTopSliderAttribute implements DataPatchInterface, 
         ];
     }
 }
-

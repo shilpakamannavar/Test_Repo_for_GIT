@@ -9,24 +9,32 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
     private $_helperData;
 
     /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    private $_scopeConfig;
+
+    /**
      * Constructor to get object of MageComp Mobilelogin helper.
-     * 
+     *
      * @param \Magecomp\Mobilelogin\Helper\Data $helperData
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface
      */
     public function __construct(
-        \Magecomp\Mobilelogin\Helper\Data $helperData)
-    {
+        \Magecomp\Mobilelogin\Helper\Data $helperData,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+    ) {
         $this->_helperData = $helperData;
+        $this->_scopeConfig = $scopeConfig;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
 
-        if (!is_null($order->getShippingAddress()->getTelephone())) {
+        if ($order->getShippingAddress()->getTelephone() !== null) {
             $this->sendSMS($order);
         }
 
@@ -35,7 +43,7 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
 
     /**
      * Send SMS method to validate the incoming mobile number and perform the action else it won't send.
-     * 
+     *
      * @param \Magento\Sales\Model\Order $order
      * @return void
      */
@@ -46,22 +54,22 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
 
         $message = $this->generateMessage($name, $order->getIncrementId());
 
-        if (strlen($mobile) == 12) {
+        if (strlen($mobile) == 12 && $this->_scopeConfig->getValue("place_order/place_otp/enable_otp", \Magento\Store\Model\ScopeInterface::SCOPE_STORE)) {
             $this->_helperData->callApiUrl($message, $mobile, 1);
-        } else if (strlen($mobile) == 10) {
+        } elseif (strlen($mobile) == 10 && $this->_scopeConfig->getValue("place_order/place_otp/enable_otp", \Magento\Store\Model\ScopeInterface::SCOPE_STORE)) {
             $this->_helperData->callApiUrl($message, "91".$mobile, 1);
         }
     }
 
     /**
      * Generate message string.
-     * 
-     * @param string $order
-     * @param string $order
+     *
+     * @param string $name
+     * @param string $orderId
      * @return boolean
      */
-    private function generateMessage($name, $orderId) {
+    private function generateMessage($name, $orderId)
+    {
         return __("$name, Thanks placing order. \nYour order number: $orderId will be processed soon...");
     }
-
 }

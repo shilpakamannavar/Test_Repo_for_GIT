@@ -9,6 +9,8 @@ class BackButton extends GenericButton implements ButtonProviderInterface
 {
 
     /**
+     * Get Back button
+     *
      * @return array
      */
     public function getButtonData()
@@ -31,4 +33,3 @@ class BackButton extends GenericButton implements ButtonProviderInterface
         return $this->getUrl('*/*/');
     }
 }
-
