@@ -1,0 +1,11 @@
+type Query {
+  getImageById(
+    image_id: Int @doc(description: "The id of the Image"),
+  ): ImageDetails @resolver (class:"\\Auraine\\ImageUploader\\Model\\Resolver\\ImageByNameResolver") @doc(description:"Image Details")
+}
+
+type ImageDetails {
+  image_id: Int @doc(description: "Image Id")
+  name: String @doc(description: "Image Name")
+  path: String @doc(description: "Image Link ")
+}
