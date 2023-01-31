@@ -22,7 +22,8 @@ class PageOptions implements OptionSourceInterface
         ['label' => __('Brand Page'), 'value' => 'brand_page'],
         ['label' => __('Gift Page'), 'value' => 'gift_page'],
         ['label' => __('Offer Page'), 'value' => 'offer_page'],
-        ['label' => __('Community Page'), 'value' => 'community_page']
+        ['label' => __('Community Page'), 'value' => 'community_page'],
+        ['label' => __('Community Detail Page'), 'value' => 'community_detail_page']
         ];
     }
 }
