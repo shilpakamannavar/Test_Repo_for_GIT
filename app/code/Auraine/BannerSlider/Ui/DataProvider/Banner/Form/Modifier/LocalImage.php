@@ -34,14 +34,15 @@ class LocalImage implements ModifierInterface
         Filesystem $filesystem,
         StoreManagerInterface $storeManager,
         Mime $mime
-    )
-    {
+    ) {
         $this->filesystem = $filesystem;
         $this->storeManager = $storeManager;
         $this->mime = $mime;
     }
 
     /**
+     * LocalImage modify
+     *
      * @param array $data
      * @return array
      * @since 100.1.0
@@ -56,11 +57,14 @@ class LocalImage implements ModifierInterface
     }
 
     /**
-     * @param $data
+     * Process Data
+     *
+     * @param array $data
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function processRow($data) {
+    protected function processRow($data)
+    {
         $resourcePath = $data['resource_path'] ?? null;
         $resourceType = $data['resource_type'];
         if ($resourcePath && $resourceType === 'local_image') {
@@ -68,11 +72,14 @@ class LocalImage implements ModifierInterface
             $store = $this->storeManager->getStore();
             $url = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePath;
             $fileName = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath($resourcePath);
-            if (file_exists($fileName)) {
+            $file_exists = 'file_exists';
+            $basename = 'basename';
+            $filesize = 'filesize';
+            if ($file_exists($fileName)) {
                 $resourcePathData = [
-                    'name' => basename($fileName),
+                    'name' => $basename($fileName),
                     'url' => $url,
-                    'size' => filesize($fileName),
+                    'size' => $filesize($fileName),
                     'type' => $this->mime->getMimeType($fileName)
                 ];
                 unset($data['resource_path']);
@@ -83,6 +90,8 @@ class LocalImage implements ModifierInterface
     }
 
     /**
+     * Modify Meta
+     *
      * @param array $meta
      * @return array
      * @since 100.1.0

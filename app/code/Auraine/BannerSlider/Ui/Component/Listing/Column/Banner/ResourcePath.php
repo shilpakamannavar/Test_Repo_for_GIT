@@ -3,7 +3,6 @@
 
 namespace Auraine\BannerSlider\Ui\Component\Listing\Column\Banner;
 
-
 use Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\ProcessorInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
@@ -30,8 +29,7 @@ class ResourcePath extends Column
         array $components = [],
         array $data = [],
         array $processors = []
-    )
-    {
+    ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->processors = $processors;
     }
@@ -45,6 +43,7 @@ class ResourcePath extends Column
             foreach ($dataSource['data']['items'] as &$item) {
                 if (isset($this->processors[$item['resource_type']])) {
                     $item['resource_path'] = $this->processors[$item['resource_type']]->process($item);
+                    
                 }
             }
         }

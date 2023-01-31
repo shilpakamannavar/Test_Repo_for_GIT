@@ -8,6 +8,8 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 class MassDelete extends AbstractMassAction
 {
     /**
+     * Process Collection
+     *
      * @param \Auraine\BannerSlider\Model\ResourceModel\Banner\Collection $collection
      * @return void
      */
@@ -20,7 +22,8 @@ class MassDelete extends AbstractMassAction
                 $this->bannerRepository->delete($item);
                 $itemsDeleted++;
             } catch (CouldNotDeleteException $e) {
-                $this->messageManager->addErrorMessage(__('Error Deleting %1: %2', $item->getEntityId(), $e->getMessage()));
+                $this->messageManager
+                     ->addErrorMessage(__('Error Deleting %1: %2', $item->getEntityId(), $e->getMessage()));
             }
         }
         $this->messageManager->addSuccessMessage(__('%1 Banner(s) deleted', $itemsDeleted));

@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\Banner\ResourcePath\Processor;
 
-
 use Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -11,6 +10,8 @@ class CustomHtml implements ProcessorInterface
 {
 
     /**
+     * Process Request
+     *
      * @param RequestInterface $request
      * @return string
      * @throws LocalizedException

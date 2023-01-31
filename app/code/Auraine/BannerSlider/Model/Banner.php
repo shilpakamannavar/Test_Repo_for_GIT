@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -48,12 +47,14 @@ class Banner extends AbstractModel implements BannerInterface
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-       parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
         $this->resourceMapRepository = $resourceMapRepository;
         $this->_init(ResourceModel::class);
     }
 
     /**
+     * Get Slider Id
+     *
      * @return string
      */
     public function getSliderId(): int
@@ -62,6 +63,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Slider Id
+     *
      * @param int $sliderId
      * @return BannerInterface
      */
@@ -71,6 +74,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Resource Map Id
+     *
      * @return int
      */
     public function getResourceMapId(): int
@@ -79,6 +84,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Resource Map Id
+     *
      * @param int $resourceMapId
      * @return BannerInterface
      */
@@ -88,6 +95,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Resource Type
+     *
      * @return string|null
      */
     public function getResourceType(): ?string
@@ -96,6 +105,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Resource Type
+     *
      * @param string|null $resourceType
      * @return BannerInterface
      */
@@ -105,6 +116,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Resource Path
+     *
      * @return string|null
      */
     public function getResourcePath(): ?string
@@ -113,6 +126,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Resource Path
+     *
      * @param string|null $resourcePath
      * @return BannerInterface
      */
@@ -122,6 +137,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Is Enabled
+     *
      * @return int
      */
     public function getIsEnabled(): int
@@ -130,6 +147,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Is Enabled
+     *
      * @param int $isEnabled
      * @return BannerInterface
      */
@@ -139,6 +158,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Created At
+     *
      * @return string
      */
     public function getCreatedAt(): string
@@ -147,6 +168,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Created At
+     *
      * @param string $createdAt
      * @return BannerInterface
      */
@@ -156,6 +179,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Updated At
+     *
      * @return string
      */
     public function getUpdatedAt(): string
@@ -164,6 +189,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Updated At
+     *
      * @param string $updatedAt
      * @return BannerInterface
      */
@@ -173,6 +200,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner GetTitle
+     *
      * @return string
      */
     public function getTitle(): string
@@ -181,6 +210,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner SetcTitle
+     *
      * @param string $title
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
@@ -190,6 +221,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Get Alt Text
+     *
      * @return string
      */
     public function getAltText(): string
@@ -198,6 +231,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Set Alt Text
+     *
      * @param string $altText
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
@@ -207,6 +242,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner Get Link
+     *
      * @return string
      */
     public function getLink(): string
@@ -215,6 +252,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner Set Link
+     *
      * @param string $link
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
@@ -224,6 +263,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner Set Order
+     *
      * @return int
      */
     public function getSortOrder(): int
@@ -232,6 +273,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner Sort Order
+     *
      * @param int $sortOrder
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
@@ -241,6 +284,8 @@ class Banner extends AbstractModel implements BannerInterface
     }
 
     /**
+     * Banner Resource Map
+     *
      * @return \Auraine\BannerSlider\Api\Data\ResourceMapInterface|null
      */
     public function getResourceMap(): ?\Auraine\BannerSlider\Api\Data\ResourceMapInterface

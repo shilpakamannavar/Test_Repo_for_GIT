@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\Banner\ResourcePath\Processor;
 
-
 use Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorInterface;
 use Auraine\BannerSlider\Model\ImageUploader;
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -43,8 +42,7 @@ class LocalImage implements ProcessorInterface
         WysiwygImageHelper $wysiwygImageHelper,
         Filesystem $filesystem,
         StoreManagerInterface $storeManager
-    )
-    {
+    ) {
         $this->imageUploader = $imageUploader;
         $this->wysiwygImageHelper = $wysiwygImageHelper;
         $this->filesystem = $filesystem;
@@ -52,6 +50,8 @@ class LocalImage implements ProcessorInterface
     }
 
     /**
+     * Process Request
+     *
      * @param RequestInterface $request
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
@@ -62,9 +62,10 @@ class LocalImage implements ProcessorInterface
         $tmpFile = $resourcePathLocal[0]['tmp_name'] ?? null;
         $imageName = $resourcePathLocal[0]['name'] ?? null;
         $imageUrl = $resourcePathLocal[0]['url'] ?? null;
+        
         if ($tmpFile && $imageName) {
             return $this->imageUploader->getBasePath() . '/' . $this->imageUploader->moveFileFromTmp($imageName);
-        } else if ($imageUrl) {
+        } elseif ($imageUrl) {
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $ds = DIRECTORY_SEPARATOR;
@@ -86,6 +87,8 @@ class LocalImage implements ProcessorInterface
     }
 
     /**
+     * Return Process Request
+     *
      * @param string $pattern
      * @param string $subject
      * @param string $replacement

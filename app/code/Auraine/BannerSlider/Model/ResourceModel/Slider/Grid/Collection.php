@@ -2,13 +2,16 @@
 
 namespace Auraine\BannerSlider\Model\ResourceModel\Slider\Grid;
 
-
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 
 class Collection extends \Auraine\BannerSlider\Model\ResourceModel\Slider\Collection implements SearchResultInterface
 {
-
+    /**
+     * Create Constructor
+     *
+     * @return void
+     */
     protected function _construct()
     {
         parent::_construct();
@@ -32,7 +35,9 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\Slider\Collec
     }
 
     /**
-     * @return \Magento\Framework\Api\Search\AggregationInterface
+     * Get Aggregations
+     *
+     * @return void
      */
     public function getAggregations()
     {
@@ -40,6 +45,8 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\Slider\Collec
     }
 
     /**
+     * Set Aggregations
+     *
      * @param \Magento\Framework\Api\Search\AggregationInterface $aggregations
      * @return $this
      */

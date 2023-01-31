@@ -11,7 +11,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
 
     /**
      * @var DataPersistorInterface
@@ -32,8 +32,7 @@ class Save extends Action
         Action\Context $context,
         ResourceMapRepositoryInterface $resourceMapRepository,
         DataPersistorInterface $dataPersistor
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resourceMapRepository = $resourceMapRepository;
         $this->dataPersistor = $dataPersistor;
@@ -86,6 +85,8 @@ class Save extends Action
     }
 
     /**
+     * Get Model Data
+     *
      * @param \Magento\Framework\DataObject $model
      * @param string[] $fields
      */

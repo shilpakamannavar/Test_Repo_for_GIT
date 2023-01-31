@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Slider;
 
-
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
@@ -11,7 +10,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Delete extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::slider';
 
     /**
      * @var SliderRepositoryInterface
@@ -26,8 +25,7 @@ class Delete extends Action
     public function __construct(
         Action\Context $context,
         SliderRepositoryInterface $sliderRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->sliderRepository = $sliderRepository;
     }

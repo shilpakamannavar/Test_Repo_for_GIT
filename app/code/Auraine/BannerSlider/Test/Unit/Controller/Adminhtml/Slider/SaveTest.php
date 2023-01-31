@@ -109,7 +109,7 @@ class SaveTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -120,9 +120,9 @@ class SaveTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTest_processUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
@@ -220,13 +220,11 @@ class SaveTest extends TestCase
         $this->assertEquals($data['slider_type'], "slider_type");
         $this->assertEquals($data['is_enabled'], 1);
         $this->assertEquals($data['category_id'], "category_id");
-
     }
     
-
     protected function getSliderData()
-      {
-       $data = [
+    {
+        $data = [
         'category_id' =>'category_id',
         'slider_id' =>'slider_id',
         'title' =>'title',
@@ -240,8 +238,6 @@ class SaveTest extends TestCase
         'is_show_title'=> 1,
         'is_enabled'=> 1
         ];
-       return $data;
+        return $data;
     }
-   
 }
-

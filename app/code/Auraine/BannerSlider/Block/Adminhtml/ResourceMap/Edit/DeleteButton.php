@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\ResourceMap\Edit;
 
-
 class DeleteButton extends GenericButton
 {
     /**
@@ -16,8 +15,8 @@ class DeleteButton extends GenericButton
                 'label' => __('Delete Resource Map'),
                 'class' => 'delete',
                 'on_click' => 'deleteConfirm(\'' . __(
-                        'Are you sure you want to do this?'
-                    ) . '\', \'' . $this->getDeleteUrl() . '\', {"data": {}})',
+                    'Are you sure you want to do this?'
+                ) . '\', \'' . $this->getDeleteUrl() . '\', {"data": {}})',
                 'sort_order' => 20,
             ];
         }
