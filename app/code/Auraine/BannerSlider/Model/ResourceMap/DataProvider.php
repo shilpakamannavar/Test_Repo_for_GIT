@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model\ResourceMap;
 
-
 use Auraine\BannerSlider\Api\Data\ResourceMapInterface;
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -12,8 +11,13 @@ use Magento\Ui\DataProvider\ModifierPoolDataProvider;
 
 class DataProvider extends ModifierPoolDataProvider
 {
-
+    /**
+     * hh
+     *
+     * @var Load Data
+     */
     protected $loadedData;
+
     /**
      * @var DataPersistorInterface
      */
@@ -39,8 +43,7 @@ class DataProvider extends ModifierPoolDataProvider
         array $meta = [],
         array $data = [],
         ?PoolInterface $pool = null
-    )
-    {
+    ) {
         $this->dataPersistor = $dataPersistor;
         $this->collection = $resourceMapRepository->getCollection();
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data, $pool);

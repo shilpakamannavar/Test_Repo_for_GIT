@@ -11,7 +11,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class Delete extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::banner';
     /**
      * @var BannerRepositoryInterface
      */
@@ -25,8 +25,7 @@ class Delete extends Action
     public function __construct(
         Action\Context $context,
         BannerRepositoryInterface $bannerRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->bannerRepository = $bannerRepository;
     }

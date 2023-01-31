@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Model;
 
-
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 use Auraine\BannerSlider\Api\Data\BannerInterfaceFactory as ModelFactory;
 use Auraine\BannerSlider\Model\ResourceModel\Banner as ResourceModel;
@@ -14,6 +13,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Auraine\BannerSlider\Api\Data\BannerSearchResultInterfaceFactory;
 use Psr\Log\LoggerInterface;
+use Auraine\BannerSlider\Api\Data\BannerInterface;
 
 class BannerRepository implements BannerRepositoryInterface
 {
@@ -65,8 +65,7 @@ class BannerRepository implements BannerRepositoryInterface
         BannerSearchResultInterfaceFactory $bannerSearchResultFactory,
         LoggerInterface $logger,
         array $objectCache = []
-    )
-    {
+    ) {
         $this->modelFactory = $modelFactory;
         $this->resourceModel = $resourceModel;
         $this->collectionFactory = $collectionFactory;
@@ -77,6 +76,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Load BY Id
+     *
      * @param int $id
      * @param bool $loadFromCache
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
@@ -99,6 +100,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Create Factory
+     *
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
     public function create(): \Auraine\BannerSlider\Api\Data\BannerInterface
@@ -107,11 +110,13 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Save
+     *
      * @param \Auraine\BannerSlider\Api\Data\BannerInterface $banner
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(\Auraine\BannerSlider\Api\Data\BannerInterface $banner): \Auraine\BannerSlider\Api\Data\BannerInterface
+    public function save(BannerInterface $banner): \Auraine\BannerSlider\Api\Data\BannerInterface
     {
         try {
             $this->resourceModel->save($banner);
@@ -125,6 +130,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Delete Banner
+     *
      * @param \Auraine\BannerSlider\Api\Data\BannerInterface $banner
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -142,6 +149,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Delete By Id
+     *
      * @param int $id
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -153,6 +162,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Get List
+     *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Auraine\BannerSlider\Api\Data\BannerSearchResultInterface
      */
@@ -172,6 +183,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Create Factory
+     *
      * @return \Auraine\BannerSlider\Model\ResourceModel\Banner\Collection
      */
     public function getCollection(): \Auraine\BannerSlider\Model\ResourceModel\Banner\Collection
@@ -180,6 +193,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Cache Object
+     *
      * @param string $type
      * @param string $identifier
      * @param \Auraine\BannerSlider\Api\Data\BannerInterface|null $object
@@ -191,6 +206,8 @@ class BannerRepository implements BannerRepositoryInterface
     }
 
     /**
+     * Get Cache object
+     *
      * @param string $type
      * @param string $identifier
      * @return bool|\Auraine\BannerSlider\Api\Data\BannerInterface
@@ -201,6 +218,13 @@ class BannerRepository implements BannerRepositoryInterface
         return $this->objectCache[$cacheKey] ?? false;
     }
 
+    /**
+     * Get Cache Key
+     *
+     * @param string $type
+     * @param string $identifier
+     * @return bool|\Auraine\BannerSlider\Api\Data\BannerInterface
+     */
     protected function getCacheKey($type, $identifier)
     {
         return $type . '_' . $identifier;

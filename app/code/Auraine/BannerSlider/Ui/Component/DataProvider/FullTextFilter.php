@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Ui\Component\DataProvider;
 
-
 use Magento\Cms\Ui\Component\AddFilterInterface;
 use Magento\Framework\Api\Filter;
 use Magento\Framework\Api\FilterBuilder;
@@ -17,12 +16,12 @@ class FullTextFilter implements AddFilterInterface
 
     /**
      * FullTextFilter constructor.
+     *
      * @param FilterBuilder $filterBuilder
      */
     public function __construct(
         FilterBuilder $filterBuilder
-    )
-    {
+    ) {
         $this->filterBuilder = $filterBuilder;
     }
 
@@ -35,6 +34,6 @@ class FullTextFilter implements AddFilterInterface
      */
     public function addFilter(SearchCriteriaBuilder $searchCriteriaBuilder, Filter $filter)
     {
-        return;
+        return true;
     }
 }

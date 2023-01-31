@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer;
 
-
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Block\Widget\Slider\Banner\RendererInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -11,10 +10,14 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class LocalImage extends AbstractRenderer
 {
-
+   /**
+    * @var string
+    */
     protected $_template = 'Auraine_BannerSlider::widget/banner/renderer/local_image.phtml';
 
     /**
+     * Get Media Url
+     *
      * @return string
      */
     public function getMediaUrl()

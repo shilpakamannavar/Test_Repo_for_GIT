@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Controller\Adminhtml\Resmap;
 
-
 use Auraine\BannerSlider\Api\ResourceMapRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
@@ -12,7 +11,8 @@ use Magento\Framework\View\Result\Page;
 
 class Edit extends Action
 {
-    const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
+    public const ADMIN_RESOURCE = 'Auraine_BannerSlider::resource_map';
+
     /**
      * @var ResourceMapRepositoryInterface
      */
@@ -20,14 +20,14 @@ class Edit extends Action
 
     /**
      * Edit constructor.
+     *
      * @param Action\Context $context
      * @param ResourceMapRepositoryInterface $resourceMapRepository
      */
     public function __construct(
         Action\Context $context,
         ResourceMapRepositoryInterface $resourceMapRepository
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resourceMapRepository = $resourceMapRepository;
     }
@@ -48,7 +48,9 @@ class Edit extends Action
             $id = $this->getRequest()->getParam('entity_id');
             if ($id) {
                 $resourceMap = $this->resourceMapRepository->loadById($id);
-                $page->getConfig()->getTitle()->set(__('Edit Resource Map "%1" (%2)', $resourceMap->getTitle(), $resourceMap->getEntityId()));
+                $page->getConfig()->getTitle()->set(
+                    __('Edit Resource Map "%1" (%2)', $resourceMap->getTitle(), $resourceMap->getEntityId())
+                );
             } else {
                 $page->getConfig()->getTitle()->set(__('Create New Resource Map'));
             }

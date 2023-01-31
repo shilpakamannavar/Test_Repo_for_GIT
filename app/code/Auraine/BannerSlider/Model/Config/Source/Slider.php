@@ -26,8 +26,7 @@ class Slider implements OptionSourceInterface
     public function __construct(
         SliderRepositoryInterface $sliderRepository,
         SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory
-    )
-    {
+    ) {
         $this->sliderRepository = $sliderRepository;
         $this->searchCriteriaBuilderFactory = $searchCriteriaBuilderFactory;
     }
@@ -50,10 +49,12 @@ class Slider implements OptionSourceInterface
                 'value' => $item->getEntityId()
             ];
         }
-        return array_merge($default_res ,$result);
+        return array_merge($default_res, $result);
     }
 
     /**
+     * Create Search Criteria factory
+     *
      * @return SearchCriteriaBuilder
      */
     protected function getSearchCriteriaBuilder()

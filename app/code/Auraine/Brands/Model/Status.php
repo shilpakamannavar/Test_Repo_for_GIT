@@ -8,6 +8,7 @@ class Status implements OptionSourceInterface
 {
     /**
      * Get Grid row status type labels array.
+     *
      * @return array
      */
     public function getOptionArray()
@@ -15,7 +16,6 @@ class Status implements OptionSourceInterface
         $options = ['1' => __('Enabled'),'0' => __('Disabled')];
         return $options;
     }
-
     /**
      * Get Grid row status labels array with empty value for option element.
      *
@@ -30,6 +30,7 @@ class Status implements OptionSourceInterface
 
     /**
      * Get Grid row type array for option element.
+     *
      * @return array
      */
     public function getOptions()
@@ -42,7 +43,7 @@ class Status implements OptionSourceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {

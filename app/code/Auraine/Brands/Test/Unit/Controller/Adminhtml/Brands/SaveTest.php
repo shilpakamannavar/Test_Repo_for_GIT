@@ -17,6 +17,11 @@ class SaveTest extends TestCase
      * @var \Magento\Backend\App\Action\Context|PHPUnit\Framework\MockObject\MockObject
      */
     private $context;
+    /**
+     * Mock Grid
+     *
+     * @var Auraine\Brands\Model\Grid
+     */
     protected $Grid;
     /**
      * Mock gridFactoryInstance

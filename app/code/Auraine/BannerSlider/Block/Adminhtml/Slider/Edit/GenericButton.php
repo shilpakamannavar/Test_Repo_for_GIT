@@ -2,7 +2,6 @@
 
 namespace Auraine\BannerSlider\Block\Adminhtml\Slider\Edit;
 
-
 use Auraine\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
@@ -27,19 +26,22 @@ abstract class GenericButton implements ButtonProviderInterface
     public function __construct(
         Context $context,
         SliderRepositoryInterface $sliderRepository
-    )
-    {
+    ) {
         $this->context = $context;
         $this->sliderRepository = $sliderRepository;
     }
 
     /**
+     * Get Slider Id
+     *
      * @return int|null
      */
     protected function getSliderId()
     {
         try {
-            return $this->sliderRepository->loadById((int)$this->context->getRequest()->getParam('entity_id'))->getEntityId();
+            return $this->sliderRepository
+                         ->loadById((int)$this->context->getRequest()->getParam('entity_id'))
+                         ->getEntityId();
         } catch (NoSuchEntityException $e) {
             return null;
         }

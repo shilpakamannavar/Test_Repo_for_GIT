@@ -22,7 +22,7 @@ class BannerSlider implements ResolverInterface
      */
     public function __construct(
         SliderDataProvider $sliderDataResolver
-    ){
+    ) {
         $this->sliderDataResolver = $sliderDataResolver;
     }
 
