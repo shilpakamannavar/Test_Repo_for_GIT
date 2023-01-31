@@ -7,8 +7,22 @@ use Magento\Framework\View\Element\UiComponentFactory;
 
 class DeleteAction extends \Magento\Ui\Component\Listing\Columns\Column
 {
+    /**
+     * Urlbuilder for data
+     *
+     * @var string
+     */
     public $urlBuilder;
-
+    
+    /**
+     * Constructor
+     *
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
+     * @param UrlInterface $urlBuilder
+     * @param array $components
+     * @param array $data
+     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -20,6 +34,12 @@ class DeleteAction extends \Magento\Ui\Component\Listing\Columns\Column
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
+    /**
+     * PrepareDataSource
+     *
+     * @param array $dataSource
+     * @return void
+     */
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {

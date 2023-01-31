@@ -7,8 +7,18 @@ use Auraine\ImageUploader\Model\ResourceModel\Image\CollectionFactory ;
 
 class Delete extends Action
 {
+    /**
+     * Imagefactory
+     *
+     */
     public $imageFactory;
     
+    /**
+     * Constructer function
+     *
+     * @param Context $context
+     * @param CollectionFactory $imageFactory
+     */
     public function __construct(
         Context $context,
         CollectionFactory $imageFactory

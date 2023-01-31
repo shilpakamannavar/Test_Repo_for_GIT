@@ -9,7 +9,7 @@ use Auraine\ImageUploader\Model\ResourceModel\Image as ResourceModelImage;
 class Image extends AbstractModel implements ImageInterface, IdentityInterface
 {
     
-    const CACHE_TAG = 'Auraine_images';
+    public const CACHE_TAG = 'Auraine_images';
     
     /**
      * Get identites
