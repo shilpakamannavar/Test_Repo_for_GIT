@@ -128,27 +128,20 @@
                 </select>
             </formElements>
         </field>
-         <field name="slider_community_id" sortOrder="70" formElement="select">
+      <field name="slider_target_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Multi Target Slider </item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
                     <item name="source" xsi:type="string">banner</item>
+                    <item name="dataScope" xsi:type="string">slider_target_id</item>
                 </item>
+                <item name="options" xsi:type="object">Auraine\BannerSlider\Model\Config\Source\CommunitySlider</item>
             </argument>
-            <settings>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">false</rule>
-                </validation>
-                <dataType>int</dataType>
-                <label translate="true">Slider community</label>
-                <dataScope>slider_community_id</dataScope>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options class="Auraine\BannerSlider\Model\Config\Source\CommunitySlider"/>
-                    </settings>
-                </select>
-            </formElements>
         </field>
         <field name="resource_map_id" sortOrder="60" formElement="select">
             <argument name="data" xsi:type="array">
