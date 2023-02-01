@@ -81,6 +81,9 @@ class Save extends \Magento\Backend\App\Action
                 $info = $fileUploader->save($this->mediaDirectory->getAbsolutePath('imageUploader/images'));
               /** @var \Auraine\ImageUploader\Model\Image */
                 $image = $this->imageFactory->create();
+                // if (isset($data['id'])) {
+                //     $image->setId($data['id']);
+                // }
                 $image->setPath($this->mediaDirectory->getRelativePath('imageUploader/images') . '/' . $info['file']);
                 $image->setName($params['name']);
                 $image->save();

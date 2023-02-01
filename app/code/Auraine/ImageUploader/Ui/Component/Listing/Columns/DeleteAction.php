@@ -56,6 +56,10 @@ class DeleteAction extends \Magento\Ui\Component\Listing\Columns\Column
                                 ]
                             ),
                             'label' => __('Delete'),
+                            'confirm' => [
+                                'title' => __('Delete Record '),
+                                'message' => __('Are you sure?')
+                            ]
                         ],
                     ];
                 }
