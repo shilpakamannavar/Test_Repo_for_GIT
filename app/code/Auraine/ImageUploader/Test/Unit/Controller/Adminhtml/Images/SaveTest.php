@@ -81,7 +81,7 @@ class SaveTest extends TestCase
         $this->imageFactory = $this->createMock(\Auraine\ImageUploader\Model\ImageFactory::class);
         $this->imageFactory->method('create')->willReturn($this->imageFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Controller\Adminhtml\Images\Save::class,
+            \Auraine\ImageUploader\Controller\Adminhtml\Images\Save::class,
             [
                 'context' => $this->context,
                 'uploaderFactory' => $this->uploaderFactory,

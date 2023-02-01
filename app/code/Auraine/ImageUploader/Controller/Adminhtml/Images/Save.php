@@ -53,7 +53,11 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         try {
-            if ($this->getRequest()->getMethod() !== 'POST' || !$this->_formKeyValidator->validate($this->getRequest())) {
+            if ($this->getRequest()
+                    ->getMethod() !== 'POST' ||
+                    !$this->_formKeyValidator->validate(
+                        $this->getRequest()
+                    )) {
                 throw new LocalizedException(__('Invalid Request'));
             }
 
