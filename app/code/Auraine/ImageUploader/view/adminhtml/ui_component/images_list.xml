@@ -54,7 +54,7 @@
               <sortable>false</sortable>
           </settings>
         </column>
-        <!-- <actionsColumn name="delete_action" class="Auraine\ImageUploader\Ui\Component\Listing\Columns\DeleteAction">
+        <actionsColumn name="delete_action" class="Auraine\ImageUploader\Ui\Component\Listing\Columns\DeleteAction">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="indexField" xsi:type="string">image_id</item>
@@ -66,6 +66,6 @@
             <settings>
                 <label translate="true">Delete</label>
             </settings>
-        </actionsColumn> -->
+        </actionsColumn>
     </columns>
 </listing>

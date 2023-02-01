@@ -56,7 +56,7 @@ class DeleteTest extends TestCase
         $this->imageFactory = $this->createMock(\Auraine\ImageUploader\Model\ResourceModel\Image\CollectionFactory::class);
         $this->imageFactory->method('create')->willReturn($this->imageFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Controller\Adminhtml\Images\Delete::class,
+            \Auraine\ImageUploader\Controller\Adminhtml\Images\Delete::class,
             [
                 'context' => $this->context,
                 'imageFactory' => $this->imageFactory,

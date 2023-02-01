@@ -39,7 +39,7 @@ class BackButtonTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->urlInterface = $this->createMock(\Magento\Backend\Model\UrlInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Block\Adminhtml\Form\BackButton::class,
+            \Auraine\ImageUploader\Block\Adminhtml\Form\BackButton::class,
             [
                 'urlInterface' => $this->urlInterface,
             ]

@@ -5,6 +5,17 @@ use Magento\Framework\Registry;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
+    /**
+     * Constructor function
+     *
+     * @param string $name
+     * @param string $primaryFieldName
+     * @param string $requestFieldName
+     * @param Registry $registry
+     * @param \Auraine\ImageUploader\Model\ResourceModel\Image\CollectionFactory $imageCollectionFactory
+     * @param array $meta
+     * @param array $data
+     */
     public function __construct(
         string $name,
         string $primaryFieldName,
@@ -19,6 +30,11 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $this->collection = $imageCollectionFactory->create();
     }
 
+    /**
+     * Get data
+     *
+     * @return array
+     */
     public function getData()
     {
         return [];
