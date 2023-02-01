@@ -43,6 +43,7 @@ class Slider
     {
         $data = $result = [];
         $sliderId = $args['sliderId'] ?? null;
+        $sliderIds = $args['sliderIds'] ?? null;
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
         $sortOrder = $args['sort_order'] ?? null;
@@ -58,7 +59,12 @@ class Slider
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
         }
-
+        if (!empty($sliderIds)) {
+            $collection->addFieldToFilter('entity_id', array(
+                'in' => array($sliderIds))
+            );
+        }
+       
         if (!empty($sliderType)) {
             $collection->addFieldToFilter('slider_type', $sliderType);
         }
@@ -120,8 +126,12 @@ class Slider
                 'link',
                 'additional_information',
                 'sort_order',
-                'slider_community_id'
+                'slider_target_id'
             ]);
+            $communityId = explode(',', $bannerData['slider_target_id']);
+            $communityId=str_replace('"',"", json_encode($communityId));
+            $communityId = json_decode($communityId, true);
+            $bannerData['slider_target_id'] = $communityId;
             $bannerData['resource_map'] = $this->getResourceMap($banner);
             $banners[] = $bannerData;
         }
