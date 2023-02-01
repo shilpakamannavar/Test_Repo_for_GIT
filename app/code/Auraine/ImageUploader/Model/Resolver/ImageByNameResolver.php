@@ -25,7 +25,6 @@ class ImageByNameResolver implements ResolverInterface
      */
     protected $storeManager;
     
-
     /**
      * @param CollectionFactory $imageCollectionFactory
      * @param StoreManagerInterface $storeManager
@@ -54,10 +53,15 @@ class ImageByNameResolver implements ResolverInterface
         
         $data =[];
 
-        if ($result){
+        if ($result) {
             $data = [
                 'image_id' => $result[0]['image_id'],
-                'path'     => $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA).$result[0]['path'],
+                'path'     => $this->storeManager
+                                ->getStore()
+                                ->getBaseUrl(
+                                    UrlInterface::URL_TYPE_MEDIA
+                                )
+                                .$result[0]['path'],
                 'name'     => $result[0]['name']
             ];
         }

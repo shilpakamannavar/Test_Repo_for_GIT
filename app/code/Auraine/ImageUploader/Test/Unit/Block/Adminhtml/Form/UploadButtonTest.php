@@ -32,7 +32,7 @@ class UploadButtonTest extends TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Block\Adminhtml\Form\UploadButton::class,
+            \Auraine\ImageUploader\Block\Adminhtml\Form\UploadButton::class,
             [
 
             ]
