@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76931078471ac7475f25f92d72c67de6",
+    "content-hash": "6cdf610dab81188b598b485ae70cba3a",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -13440,6 +13440,40 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-inventory-data-exporter",
+            "version": "101.3.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-inventory-data-exporter/magento-module-inventory-data-exporter-101.3.14.0.zip",
+                "shasum": "a0ed2acfc8fecc99b9607095f3108c3e5bb6d3e6"
+            },
+            "require": {
+                "magento/framework": ">=102.0.2",
+                "magento/module-catalog": ">=103.0.2",
+                "magento/module-catalog-inventory": ">=100.3.2",
+                "magento/module-data-exporter": "self.version",
+                "magento/module-inventory": ">=1.1.0",
+                "magento/module-inventory-api": ">=1.1.0",
+                "magento/module-inventory-catalog-api": ">=1.1.0",
+                "magento/module-query-xml": "self.version",
+                "php": "~7.1.3||~7.2.0||~7.3.0||~7.4.0||~8.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\InventoryDataExporter\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Inventory data exporter"
+        },
+        {
             "name": "magento/module-inventory-distance-based-source-selection",
             "version": "1.2.2",
             "dist": {
@@ -17812,6 +17846,37 @@
             "description": "Product Recommendations sync status interface"
         },
         {
+            "name": "magento/module-product-variant-data-exporter",
+            "version": "101.3.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-product-variant-data-exporter/magento-module-product-variant-data-exporter-101.3.14.0.zip",
+                "shasum": "2401b14e9f93be74526fdf48a293cbb080409a71"
+            },
+            "require": {
+                "magento/framework": ">=102.0.2",
+                "magento/module-catalog": ">=103.0.2",
+                "magento/module-configurable-product": ">=100.3.2",
+                "magento/module-data-exporter": "self.version",
+                "magento/module-eav": ">=102.0.2",
+                "php": "~7.1.3||~7.2.0||~7.3.0||~7.4.0||~8.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ProductVariantDataExporter\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Product Variant Data Exporter"
+        },
+        {
             "name": "magento/module-product-video",
             "version": "100.4.5",
             "dist": {
@@ -19752,6 +19817,39 @@
             "description": "Magento 2 SaaS Catalog module exports necessary catalog data to Magento cloud services that rely on it"
         },
         {
+            "name": "magento/module-saas-category",
+            "version": "101.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-saas-category/magento-module-saas-category-101.4.0.0.zip",
+                "shasum": "1603f21858f0f901c68e881cfeac2c328506a039"
+            },
+            "require": {
+                "magento/framework": ">=102.0.2",
+                "magento/module-catalog-data-exporter": "101.*",
+                "magento/module-data-exporter": "101.*",
+                "magento/module-saas-common": "self.version",
+                "php": "~7.3.0||~7.4.0||~8.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.5.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SaaSCategory\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento_SaaSCategory"
+        },
+        {
             "name": "magento/module-saas-common",
             "version": "101.4.0",
             "dist": {
@@ -19788,6 +19886,39 @@
             "description": "Magento 2 SaaS Common module for shared saas export functionality"
         },
         {
+            "name": "magento/module-saas-inventory",
+            "version": "101.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-saas-inventory/magento-module-saas-inventory-101.4.0.0.zip",
+                "shasum": "e00c1f614f568cf0e9959ea2fb0d53195b096d5f"
+            },
+            "require": {
+                "magento/framework": ">=102.0.2",
+                "magento/module-data-exporter": "101.*",
+                "magento/module-inventory-data-exporter": "101.*",
+                "magento/module-saas-common": "self.version",
+                "php": "~7.1.3||~7.2.0||~7.3.0||~7.4.0||~8.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.5.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SaaSInventory\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento 2 SaaS Inventory module exports necessary inventory data to Magento cloud services that rely on it"
+        },
+        {
             "name": "magento/module-saas-product-override",
             "version": "101.4.0",
             "dist": {
@@ -19819,6 +19950,72 @@
                 "AFL-3.0"
             ],
             "description": "Magento_SaaSProductOverride"
+        },
+        {
+            "name": "magento/module-saas-product-variant",
+            "version": "101.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-saas-product-variant/magento-module-saas-product-variant-101.4.0.0.zip",
+                "shasum": "8b143c16914f9e814ba7d6ea9b420302bf098fb5"
+            },
+            "require": {
+                "magento/framework": ">=102.0.2",
+                "magento/module-data-exporter": "101.*",
+                "magento/module-product-variant-data-exporter": "101.*",
+                "magento/module-saas-common": "self.version",
+                "php": "~7.3.0||~7.4.0||~8.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.5.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SaaSProductVariant\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento_SaaSProductVariant"
+        },
+        {
+            "name": "magento/module-saas-sales",
+            "version": "101.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-saas-sales/magento-module-saas-sales-101.4.0.0.zip",
+                "shasum": "30d2cc070cd476d17785a62667da4a0dce0b4c42"
+            },
+            "require": {
+                "magento/framework": ">=102.0.2",
+                "magento/module-data-exporter": "*",
+                "magento/module-saas-common": "self.version",
+                "magento/module-sales-orders-data-exporter": "*",
+                "php": "~7.1.3||~7.2.0||~7.3.0||~7.4.0||~8.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.5.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SaaSSales\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento 2 SaaS Sales module exports necessary orders data to Magento cloud services that rely on it"
         },
         {
             "name": "magento/module-sales",
@@ -19999,6 +20196,36 @@
                 "AFL-3.0"
             ],
             "description": "N/A"
+        },
+        {
+            "name": "magento/module-sales-orders-data-exporter",
+            "version": "101.3.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-sales-orders-data-exporter/magento-module-sales-orders-data-exporter-101.3.14.0.zip",
+                "shasum": "715852f97b626b17e17805007f56d36a45a98dcb"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-data-exporter": "101.3.*",
+                "magento/module-query-xml": "101.3.*",
+                "magento/module-sales": "*",
+                "php": "~7.3.0||~7.4.0||~8.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SalesOrdersDataExporter\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Sales data exporter"
         },
         {
             "name": "magento/module-sales-rule",
@@ -22945,6 +23172,31 @@
                 "proprietary"
             ],
             "description": "Provides quality patches for AdobeCommerce & Magento OpenSource"
+        },
+        {
+            "name": "magento/saas-export",
+            "version": "101.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/saas-export/magento-saas-export-101.4.0.0.zip",
+                "shasum": "7bab3937b907c7765be72a2f4769539cb31f0f2f"
+            },
+            "require": {
+                "magento/module-saas-catalog": "self.version",
+                "magento/module-saas-category": "self.version",
+                "magento/module-saas-common": "self.version",
+                "magento/module-saas-inventory": "self.version",
+                "magento/module-saas-product-override": "self.version",
+                "magento/module-saas-product-variant": "self.version",
+                "magento/module-saas-sales": "self.version",
+                "php": "~7.3.0||~7.4.0||~8.1.0"
+            },
+            "type": "metapackage",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Magento 2 SaaS Export module exports necessary data to Magento cloud services that rely on it"
         },
         {
             "name": "magento/security-package",
@@ -28702,5 +28954,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
