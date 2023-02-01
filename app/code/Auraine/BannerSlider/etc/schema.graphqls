@@ -1,6 +1,7 @@
 type Query {
     BannerSlider(
         sliderId: Int @doc(description: "filter by slider id")
+        sliderIds: [Int] @doc(description: "filter by slider ids")
         slider_type: String @doc(description: "filter by slider type")
         page_type: String @doc(description: "filter by page type")
         sort_order: Int @doc(description: "filter by sort order")
@@ -33,7 +34,7 @@ type BannerSlider {
 
 type BannerSliderBanner {
     slider_id: Int @doc(description: "Slider Id")
-    slider_community_id: Int @doc(description: "Slider Community Id")
+    slider_target_id: [Int] @doc(description: "Slider Target Id")
     resource_type: String @doc(description: "resource type")
     resource_path: String @doc(description: "resource path")
     is_enabled: Int @doc(description: "is enabled")
