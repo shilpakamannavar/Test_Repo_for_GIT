@@ -62,7 +62,6 @@ class TempUpload extends \Magento\Backend\App\Action
             $fileUploader->setAllowRenameFiles(true);
             $fileUploader->setAllowCreateFolders(true);
             $fileUploader->setFilesDispersion(false);
-            // $fileUploader->validate();
             $result = $fileUploader->save($this->mediaDirectory->getAbsolutePath('tmp/imageUploader/images'));
             $result['url'] = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
             . 'tmp/imageUploader/images/' . ltrim(str_replace('\\', '/', $result['file']), '/');
@@ -72,7 +71,13 @@ class TempUpload extends \Magento\Backend\App\Action
         } catch (\Exception $e) {
             error_log($e->getMessage());
             error_log($e->getTraceAsString());
-            return $jsonResult->setData(['errorcode' => 0, 'error' => __('An error occurred, please try again later.')]);
+            return $jsonResult
+            ->setData(
+                [
+                    'errorcode' => 0,
+                    'error' => __('An error occurred, please try again later.')
+                ]
+            );
         }
     }
 }

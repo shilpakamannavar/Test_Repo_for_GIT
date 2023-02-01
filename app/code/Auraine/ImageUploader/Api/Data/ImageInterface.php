@@ -36,4 +36,19 @@ interface ImageInterface
      * @return void
      */
     public function setName($value);
+
+     /**
+     * Getid
+     *
+     * @return void
+     */
+    public function getId();
+
+    /**
+     * Setid
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setId($value);
 }

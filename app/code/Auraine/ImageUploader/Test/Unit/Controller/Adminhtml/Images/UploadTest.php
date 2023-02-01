@@ -56,7 +56,7 @@ class UploadTest extends TestCase
         $this->resultPageFactory = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
         $this->resultPageFactory->method('create')->willReturn($this->resultPageFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Controller\Adminhtml\Images\Upload::class,
+            \Auraine\ImageUploader\Controller\Adminhtml\Images\Upload::class,
             [
                 'context' => $this->context,
                 'resultPageFactory' => $this->resultPageFactory,

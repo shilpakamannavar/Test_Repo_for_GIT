@@ -16,6 +16,15 @@ class Thumbnail extends Column
    */
     protected $storeManagerInterface;
 
+    /**
+     * Constructor function
+     *
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
+     * @param StoreManagerInterface $storeManagerInterface
+     * @param array $components
+     * @param array $data
+     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -37,7 +46,12 @@ class Thumbnail extends Column
     {
         foreach ($dataSource["data"]["items"] as &$item) {
             if (isset($item['path'])) {
-                $url = $this->storeManagerInterface->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $item['path'];
+                $url = $this->storeManagerInterface
+                    ->getStore()
+                    ->getBaseUrl(
+                        UrlInterface::URL_TYPE_MEDIA
+                    )
+                        . $item['path'];
                 $item['path_src'] = $url;
                 $item['path_alt'] = $item['image_id'];
                 $item['path_link'] = $url;
