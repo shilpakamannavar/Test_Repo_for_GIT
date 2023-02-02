@@ -4,7 +4,7 @@
         <section id="swatch_data" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Swatch Data Base URL</label>
-            <tab>loyalty_point</tab>
+            <tab>auraine_system_config</tab>
             <resource>Auraine_SwatchData::swatch_data_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">              
                 <field id="swatch_data_base_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
