@@ -3,11 +3,11 @@
     <system>
         <section id="offerlabel_id" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Coupen Offer Label</label>
+            <label>Offer Label</label>
             <tab>loyalty_point</tab>
             <resource>Auraine_Offerlabel::module_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Coupen Configuration</label>
+                <label>Offer Label</label>
                 <field id="coupen_display_text" translate="label" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Display Text</label>
                     <comment>This Offer text will display on the frontend. For multiple offers use || to separate </comment>
