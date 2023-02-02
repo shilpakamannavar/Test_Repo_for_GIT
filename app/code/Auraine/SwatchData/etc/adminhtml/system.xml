@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="swatchdata" translate="label" sortOrder="10">
-            <label>Swatch Data</label>
-        </tab>
         <section id="swatch_data" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Swatch Data Base URL</label>
-            <tab>swatchdata</tab>
+            <tab>loyalty_point</tab>
             <resource>Auraine_SwatchData::swatch_data_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">              
                 <field id="swatch_data_base_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">

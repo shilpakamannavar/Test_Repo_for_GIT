@@ -151,7 +151,7 @@
             </argument>
             <settings>
                 <validation>
-                    <rule xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>int</dataType>
                 <label translate="true">Resource Map</label>

@@ -58,7 +58,6 @@ class Save extends Action
     public function execute()
     {
         $id = $this->getRequest()->getParam('entity_id');
-        $slider_community_id = $this->getRequest()->getParam('slider_community_id');
         $sliderData = $this->getRequest()->getPostValue();
         try {
             if ($id) {
@@ -79,7 +78,7 @@ class Save extends Action
                 'slider_target_id'
                 
             ]);
-            $model['slider_target_id'] = implode(",",$sliderData['slider_target_id']);
+            $model['slider_target_id'] = ($sliderData['slider_target_id']) ? implode(",",$sliderData['slider_target_id']) : '';
             $resourcePathProcessors = $this->processorPool->getProcessors();
             if (isset($resourcePathProcessors[$model->getResourceType()])) {
                 try {
