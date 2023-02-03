@@ -25,7 +25,7 @@ class AddBrandAttribute implements ResolverInterface
      */
     public function resolve(
         \Magento\Framework\GraphQl\Config\Element\Field $field,
-                                                        $context,
+        $context,
         \Magento\Framework\GraphQl\Schema\Type\ResolveInfo $info,
         array $value = null,
         array $args = null

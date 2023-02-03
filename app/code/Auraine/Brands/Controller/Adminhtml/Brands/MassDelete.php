@@ -9,18 +9,14 @@ use Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
-    /**
-     * Massactions filter.
+    /** Massactions filter.
      * @var Filter
      */
     protected $_filter;
-
-    /**
-     * @var CollectionFactory
+    /**@var CollectionFactory
      */
     protected $_collectionFactory;
-
-    /**
+    /** Adding context,filter and collectionFactory
      * @param Context           $context
      * @param Filter            $filter
      * @param CollectionFactory $collectionFactory
@@ -35,8 +31,9 @@ class MassDelete extends \Magento\Backend\App\Action
         $this->_collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
-
     /**
+     * MassDelete function for brands list by selecting the ids
+     *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
     public function execute()
@@ -53,9 +50,7 @@ class MassDelete extends \Magento\Backend\App\Action
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('*/*/index');
     }
     /**
-     * Check Category Map recode delete Permission.
-     * @return bool
-     */
+     * Check Category Map recode delete Permission. @return bool*/
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Auraine_Brands::row_data_delete');

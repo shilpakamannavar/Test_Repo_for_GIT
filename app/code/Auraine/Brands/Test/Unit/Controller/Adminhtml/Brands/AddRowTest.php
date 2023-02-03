@@ -64,7 +64,7 @@ class AddRowTest extends TestCase
         $this->gridFactory = $this->createMock(\Auraine\Brands\Model\GridFactory::class);
         $this->gridFactory->method('create')->willReturn($this->gridFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\Brands\Controller\Adminhtml\Brands\AddRow::class,
+            \Auraine\Brands\Controller\Adminhtml\Brands\AddRow::class,
             [
                 'context' => $this->context,
                 'coreRegistry' => $this->coreRegistry,
@@ -118,7 +118,7 @@ class AddRowTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTest_processUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
             'Testcase 1' => [
@@ -131,7 +131,7 @@ class AddRowTest extends TestCase
     /**
      * @dataProvider dataProviderForTest_processUrlKeys
      */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }

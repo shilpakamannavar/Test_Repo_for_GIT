@@ -43,16 +43,28 @@ class Slider
     {
         $data = $result = [];
         $sliderId = $args['sliderId'] ?? null;
+        $sliderIds = $args['sliderIds'] ?? null;
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
         $sortOrder = $args['sort_order'] ?? null;
         $categoryId = $args['category_id'] ?? null;
+        $category_uid = $args['category_uid'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
+        $decode = "base64_decode";
+        
+        if (!empty($category_uid)) {
+            $collection->addFieldToFilter('category_id', $decode($category_uid));
+        }
         
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
         }
-
+        if (!empty($sliderIds)) {
+            $collection->addFieldToFilter('entity_id', array(
+                'in' => array($sliderIds))
+            );
+        }
+       
         if (!empty($sliderType)) {
             $collection->addFieldToFilter('slider_type', $sliderType);
         }
@@ -85,6 +97,8 @@ class Slider
                     'target_id',
                     'sort_order',
                 ]);
+                $encode = "base64_encode";
+                $data['category_uid'] = $encode($data['category_id']);
                 $data['banners'] = $this->getBanners($slider);
                 $result[] = $data;
             }
@@ -112,8 +126,12 @@ class Slider
                 'link',
                 'additional_information',
                 'sort_order',
-                'slider_community_id'
+                'slider_target_id'
             ]);
+            $communityId = explode(',', $bannerData['slider_target_id']);
+            $communityId=str_replace('"',"", json_encode($communityId));
+            $communityId = json_decode($communityId, true);
+            $bannerData['slider_target_id'] = $communityId;
             $bannerData['resource_map'] = $this->getResourceMap($banner);
             $banners[] = $bannerData;
         }

@@ -10,9 +10,19 @@ class AddRow extends \Magento\Backend\App\Action
      * @var \Magento\Framework\Registry
      */
     private $coreRegistry;
-
+    /**
+     * @var gridFactory
+     */
     private $gridFactory;
-
+    /**
+     * @param construct $context
+     *
+     * @param coreRegistry $coreRegistry
+     *
+     * @param gridFactory $gridFactory
+     *
+     * @return string $construct
+     */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
@@ -22,9 +32,9 @@ class AddRow extends \Magento\Backend\App\Action
         $this->coreRegistry = $coreRegistry;
         $this->gridFactory = $gridFactory;
     }
-
     /**
      * Mapped Grid List page.
+     *
      * @return \Magento\Backend\Model\View\Result\Page
      */
     public function execute()
@@ -41,7 +51,6 @@ class AddRow extends \Magento\Backend\App\Action
                 return;
             }
         }
-
         $this->coreRegistry->register('row_data', $rowData);
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         $resultPage->setActiveMenu('Auraine_Brands::manager');
@@ -49,7 +58,11 @@ class AddRow extends \Magento\Backend\App\Action
         $resultPage->getConfig()->getTitle()->prepend($title);
         return $resultPage;
     }
-
+    /**
+     * Is allowed
+     *
+     * @return authorizationisallowed
+     */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Auraine_Brands::add_row');

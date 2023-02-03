@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Auraine\Brands\Model\Resolver;
 
-
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
@@ -14,28 +13,42 @@ use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 class BrandsList implements ResolverInterface
 {
    /**
-    * @param Field $field
-    * @param \Magento\Framework\GraphQl\Query\Resolver\ContextInterface $context
-    * @param ResolveInfo $info
-    * @param array|null $value
-    * @param array|null $args
+    * Brand list
+    *
+    * @param Field $field , \Magento\Framework\GraphQl\Query\Resolver\ContextInterface $context,
+    * ResolveInfo $info,array|null $value,array|null $args
+    *
     * @return array|\Magento\Framework\GraphQl\Query\Resolver\Value|mixed
+    *
     * @throws GraphQlInputException
     */
+    /** Data provider for the
+     *
+     * @var dataProvider
+     */
     private $dataProvider;
-    
+     /** Constructor function
+      *
+      * @param String $dataProvider
+      */
     public function __construct(
         \Auraine\Brands\Model\Resolver\DataProvider\BrandsList $dataProvider
     ) {
         $this->dataProvider = $dataProvider;
     }
-
+    /**
+     * Resolver function for the list
+     *
+     * @param Field $field, $context, ResolveInfo $info, array $value , array $args
+     *
+     * @return dataProvider
+     */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
          $filter_entity_id = $args['entity_id'] ?? null;
-         $filter_label = $args['filter_label'] ?? null; 
-         $filter_url = $args['url_key'] ?? null; 
+         $filter_label = $args['filter_label'] ?? null;
+         $filter_url = $args['url_key'] ?? null;
                  
-        return $this->dataProvider->getBrandsList($filter_entity_id,$filter_label, $filter_url);
+        return $this->dataProvider->getBrandsList($filter_entity_id, $filter_label, $filter_url);
     }
 }
