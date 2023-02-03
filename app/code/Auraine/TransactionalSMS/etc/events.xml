@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_register_success">
+        <observer name="Auraine_TransactionalSMS_registration_success" instance="Auraine\TransactionalSMS\Observer\RegistrationSuccess" />
+    </event>
+
+    <event name="sales_order_place_after">
+        <observer name="Auraine_TransactionalSMS_Observer" instance="Auraine\TransactionalSMS\Observer\SendSMSOnOrderSuccess" />
+    </event>
+
+    <event name="sales_order_save_after">
+        <observer name="Auraine_TransactionalSMS_sales_order_save_after" instance="Auraine\TransactionalSMS\Observer\SendSMSOnOrderStatusChange" />
+    </event>
+</config>

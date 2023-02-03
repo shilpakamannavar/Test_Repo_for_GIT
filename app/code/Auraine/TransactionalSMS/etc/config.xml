@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <transaction_sms_control>
+            <transaction_sms>
+                <enable_sms>0</enable_sms>
+            </transaction_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <registration_sms>
+                <message>Hi {{customer_name}}, welcome to https://gbook.com, happy shopping.</message>
+            </registration_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <order_confirm_sms>
+                <message>{{customer_name}}, Thanks placing order. Your order number: {{order_id}} will be processed soon...</message>
+            </order_confirm_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <shipped_sms>
+                <message>Greate news! Your order {{order_id}} is on the way. Track your shipment to see delivery status {{shipment}}</message>
+            </shipped_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <delivered_sms>
+                <message>Hi {{customer_name}}, Your order {{order_id}} has been successfully delivered. On the scale from 1-5, how exited are you?</message>
+            </delivered_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <cancelled_sms>
+                <message>{{customer_name}}, Sorry to say your order {{order_id}} is cancelled. For more info. contact customer care. Track your shipment here {{shipment}}</message>
+            </cancelled_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <not_delivered_sms>
+                <message>Dear {{customer_name}}, order {{order_id}} is not able to deliver. To know more please contact customer care. Track your shipment here {{shipment}}</message>
+            </not_delivered_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <return_inititated_sms>
+                <message>Dear {{customer_name}}, Your return product request for order {{order_id}} is inititated, very soon it will be picked up.</message>
+            </return_inititated_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <return_picked_sms>
+                <message>Dear {{customer_name}}, Your return requested for order {{order_id}} is been picked up, refund is initiated.</message>
+            </return_picked_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <refund_success>
+                <message>Dear {{customer_name}}, Refund for order {{order_id}} is processed, happy shopping.</message>
+            </refund_success>
+        </transaction_sms_control>
+
+    </default>
+</config>
