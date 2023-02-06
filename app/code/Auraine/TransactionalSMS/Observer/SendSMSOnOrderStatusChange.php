@@ -101,51 +101,43 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
                 // Order Processing (Shipped)
                 $this->_helperData->shipmentShippedSMS(
                     self::SHIPPED_CONFIG,
-                    $mobile,
-                    $orderId,
-                    self::SHIPMENT_ID
+                    $order
                 );
                 break;
 
             case Order::STATE_COMPLETE:
                 // Order completed (Delivered)
-                $this->_helperData->transactionSMS(
+                $this->_helperData->orderDeliveredSMS(
                     self::DELIVERED_CONFIG,
                     $mobile,
-                    $name,
-                    $orderId
+                    $order
                 );
                 break;
             
             case Order::STATE_HOLDED:
                 // Order cancelled
-                $this->_helperData->shipmentCancelledOrNotDeliveredGenericSMS(
+                $this->_helperData->shipmentCancelledSMS(
                     self::CANCELLED_CONFIG,
                     $mobile,
-                    $name,
-                    $orderId,
-                    self::SHIPMENT_ID
+                    $order
                 );
                 break;
             
             case Order::STATE_CANCELED:
                  // Order Not Delivered
-                 $this->_helperData->shipmentCancelledOrNotDeliveredGenericSMS(
+                 $this->_helperData->shipmentNotDelivered(
                      self::NOT_DELIVERED_CONFIG,
                      $mobile,
-                     $name,
-                     $orderId,
-                     self::SHIPMENT_ID
+                     $orderId
                  );
                 break;
             
             case "return":
                 // Return initiated
-                $this->_helperData->transactionSMS(
+                $this->_helperData->returnInitiatedSMS(
                     self::RETURN_INITITATED_CONFIG,
                     $mobile,
-                    $name,
-                    $orderId
+                    $order
                 );
                 break;
 
@@ -164,7 +156,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
                 $this->_helperData->transactionSMS(
                     self::REFUND_SUCCESS_CONFIG,
                     $mobile,
-                    $name,
+                    $order->getGrandTotal(),
                     $orderId
                 );
                 break;

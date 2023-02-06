@@ -9,55 +9,55 @@
 
         <transaction_sms_control>
             <registration_sms>
-                <message>Hi {{customer_name}}, welcome to https://gbook.com, happy shopping.</message>
+                <message>Welcome to Glamourbook India. Visit us: www.glamourbook.com for exciting offers and wide range of products.</message>
             </registration_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <order_confirm_sms>
-                <message>{{customer_name}}, Thanks placing order. Your order number: {{order_id}} will be processed soon...</message>
+                <message>Order Placed: Your Glamourbook Order ID {{order_id}} is successfully placed and will reach you by {{delivery_date}}.</message>
             </order_confirm_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <shipped_sms>
-                <message>Greate news! Your order {{order_id}} is on the way. Track your shipment to see delivery status {{shipment}}</message>
+                <message>Shipped: Your Glamourbook order ID {{order_id}} of {{description}} + {{quantity}} items is shipped and will reach you by {{delivery_date}}. Track at {{link}}</message>
             </shipped_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <delivered_sms>
-                <message>Hi {{customer_name}}, Your order {{order_id}} has been successfully delivered. On the scale from 1-5, how exited are you?</message>
+                <message>Delivered: Your Glamourbook order ID {{order_id}} of {{desciption}} + {{quantity}} items is delivered.</message>
             </delivered_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <cancelled_sms>
-                <message>{{customer_name}}, Sorry to say your order {{order_id}} is cancelled. For more info. contact customer care. Track your shipment here {{shipment}}</message>
+                <message>Cancelled: Your Glamourbook order ID {{order_id}} of {{description}} + {{quantity}} items is cancelled.</message>
             </cancelled_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <not_delivered_sms>
-                <message>Dear {{customer_name}}, order {{order_id}} is not able to deliver. To know more please contact customer care. Track your shipment here {{shipment}}</message>
+                <message>Your Glamourbook order ID {{order_id}} could not be delivered.</message>
             </not_delivered_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <return_inititated_sms>
-                <message>Dear {{customer_name}}, Your return product request for order {{order_id}} is inititated, very soon it will be picked up.</message>
+                <message>Return initiated: Return request initiated against your order ID {{order_id}} of {{description}} and will be picked up within {{no_of_days}} business days.</message>
             </return_inititated_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <return_picked_sms>
-                <message>Dear {{customer_name}}, Your return requested for order {{order_id}} is been picked up, refund is initiated.</message>
+                <message>Return picked: Return is picked up against your order ID {{order_id}} of {{description}}.</message>
             </return_picked_sms>
         </transaction_sms_control>
 
         <transaction_sms_control>
             <refund_success>
-                <message>Dear {{customer_name}}, Refund for order {{order_id}} is processed, happy shopping.</message>
+                <message>Refund: Refund is initiated against your order id {{order_id}} of amount Rs {{amount}}.</message>
             </refund_success>
         </transaction_sms_control>
 

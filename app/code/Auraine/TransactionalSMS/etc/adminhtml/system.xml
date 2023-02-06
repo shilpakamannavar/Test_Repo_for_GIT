@@ -21,7 +21,6 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -32,7 +31,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{delivery_date}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -43,7 +42,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{shipment}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}}, {{quantity}}, {{delivery_date}}, {{link}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -54,7 +53,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{desciption}}, {{quantity}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -65,7 +64,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}}, {{shipment}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}}, {{quantity}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -76,7 +75,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}}, {{shipment}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -87,7 +86,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}}, {{no_of_days}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -98,7 +97,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}} variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}} variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>
@@ -109,7 +108,7 @@
                 <field id="message" translate="label" type="textarea"
                     sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Text</label>
-                    <comment><![CDATA[You can make use of {{customer_name}}, {{order_id}}    variables in your SMS notification text]]></comment>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{amount}}    variables in your SMS notification text]]></comment>
                     <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
                 </field>
             </group>

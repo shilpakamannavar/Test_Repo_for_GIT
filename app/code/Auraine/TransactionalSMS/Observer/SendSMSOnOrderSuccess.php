@@ -4,6 +4,10 @@ namespace Auraine\TransactionalSMS\Observer;
 class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterface
 {
 
+    /**
+     * Order confirmed SMS config path
+     * @var string const
+     */
     private const CONFIG_PATH = "transaction_sms_control/order_confirm_sms/message";
 
     /**
@@ -12,22 +16,14 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
     private $_helperData;
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $_scopeConfig;
-
-    /**
      * Constructor to get object of MageComp Mobilelogin helper.
      *
      * @param \Auraine\TransactionalSMS\Helper\Data $helperData
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         \Auraine\TransactionalSMS\Helper\Data $helperData,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
     ) {
         $this->_helperData = $helperData;
-        $this->_scopeConfig = $scopeConfig;
     }
 
     /**
@@ -37,14 +33,14 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
     {
         $order = $observer->getEvent()->getOrder();
 
-        $name = $order->getCustomerFirstName() . ' ' . $order->getCustomerLastName();
         $mobile = $order->getShippingAddress()->getTelephone();
+        $deliveryDate = date("d-m-Y", strtotime(date("d-m-Y"). "+4 days"));
 
         if ($mobile !== null) {
             $this->_helperData->orderSuccessSMS(
                 self::CONFIG_PATH,
                 $mobile,
-                $name,
+                $deliveryDate,
                 $order->getIncrementId()
             );
         }
