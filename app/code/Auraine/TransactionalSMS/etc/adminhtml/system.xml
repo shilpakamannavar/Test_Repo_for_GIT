@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="transaction_sms_control" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Transactional SMS &amp; OTP configuration</label>
+            <tab>auraine_system_config</tab>
+            <resource>Auraine_Auraine_TransactionalSMS::module_config</resource>
+            <group id="transaction_sms" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Configuration</label>
+                
+                <field id="enable_sms" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+                    <label>Transaction SMS Control</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="registration_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Registration SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="order_confirm_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Order confirmation SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{delivery_date}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="shipped_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shipment shipped SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}}, {{quantity}}, {{delivery_date}}, {{link}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="delivered_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shipment delivered SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{desciption}}, {{quantity}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="cancelled_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shipment cancelled SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}}, {{quantity}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="not_delivered_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shipment not delivered SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="return_inititated_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Product return initiated SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}}, {{no_of_days}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="return_picked_sms" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Product return picked SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{description}} variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+            <group id="refund_success" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Refunded Successfully SMS</label>
+                <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                <field id="message" translate="label" type="textarea"
+                    sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Text</label>
+                    <comment><![CDATA[You can make use of {{order_id}}, {{amount}}    variables in your SMS notification text]]></comment>
+                    <depends><field id="transaction_sms_control/transaction_sms/enable_sms">1</field></depends>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>
