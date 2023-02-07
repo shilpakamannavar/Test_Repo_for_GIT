@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Auraine\SellerPanel\Ui\DataProvider\Product\Form\Modifier;
 
 use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier;
