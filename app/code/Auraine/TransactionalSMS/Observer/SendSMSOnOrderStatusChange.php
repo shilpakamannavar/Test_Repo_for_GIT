@@ -47,8 +47,6 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
      */
     private const REFUND_SUCCESS_CONFIG = "transaction_sms_control/refund_success/message";
 
-    private const SHIPMENT_ID = 1234567;
-
     /**
      * @var \Auraine\TransactionalSMS\Helper\Data
      */
