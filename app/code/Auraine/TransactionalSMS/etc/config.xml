@@ -60,6 +60,5 @@
                 <message>Refund: Refund is initiated against your order id {{order_id}} of amount Rs {{amount}}.</message>
             </refund_success>
         </transaction_sms_control>
-
     </default>
 </config>
