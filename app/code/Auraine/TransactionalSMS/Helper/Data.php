@@ -41,8 +41,11 @@ class Data
      * @param string $customerName
      * @return void
      */
-    public function customerRegisterSuccessSMS($configPath, $mobile, $customerName)
-    {
+    public function customerRegisterSuccessSMS(
+        $configPath,
+        $mobile,
+        $customerName
+    ) {
         $codes = ['{{customer_name}}'];
         $accurate = [$customerName];
 
@@ -60,8 +63,12 @@ class Data
      * @param string $orderId
      * @return void
      */
-    public function orderSuccessSMS($configPath, $mobile, $deliveryDate, $orderId)
-    {
+    public function orderSuccessSMS(
+        $configPath,
+        $mobile,
+        $deliveryDate,
+        $orderId
+    ) {
         $codes = ['{{delivery_date}}', '{{order_id}}'];
         $accurate = [$deliveryDate, $orderId];
 
@@ -77,13 +84,15 @@ class Data
      * @param \Magento\Sales\Model\Order $order
      * @return void
      */
-    public function shipmentShippedSMS($configPath, $order)
-    {
+    public function shipmentShippedSMS(
+        $configPath,
+        $order
+    ) {
         $orderId = $order->getIncrementId();
         $deliveryDate = date("d-m-Y", strtotime(date("d-m-Y"). "+4 days"));
         $mobile = $order->getShippingAddress()->getTelephone();
         $link = "https://www.glamourbook.com/";
-        $quantity = $order->getTotalItemCount() < 2 ? '' : '+ '.$order->getTotalItemCount() - 1;
+        $quantity = $order->getTotalItemCount() < 2 ? '' : '+ ' . ($order->getTotalItemCount() - 1);
         
         $description = $this->getFirstFourWords($order->getAllItems()[0]->getName());
 
@@ -100,12 +109,16 @@ class Data
      *
      * @param string $configPath
      * @param string $mobile
-     * @param string $customerName
+     * @param string $grandTotal
      * @param string $orderId
      * @return void
      */
-    public function transactionSMS($configPath, $mobile, $grandTotal, $orderId)
-    {
+    public function transactionSMS(
+        $configPath,
+        $mobile,
+        $grandTotal,
+        $orderId
+    ) {
         $codes = ['{{amount}}', '{{order_id}}'];
         $accurate = [$grandTotal, $orderId];
 
@@ -115,17 +128,20 @@ class Data
     }
 
      /**
-     * Send SMS on Cancelling the order.
-     *
-     * @param string $configPath
-     * @param string $mobile
-     * @param \Magento\Sales\Model\Order $order
-     * @return void
-     */
-    public function orderDeliveredSMS($configPath, $mobile, $order)
-    {
+      * Send SMS on Cancelling the order.
+      *
+      * @param string $configPath
+      * @param string $mobile
+      * @param \Magento\Sales\Model\Order $order
+      * @return void
+      */
+    public function orderDeliveredSMS(
+        $configPath,
+        $mobile,
+        $order
+    ) {
         $orderId = $order->getIncrementId();
-        $quantity = $order->getTotalItemCount() < 2 ? '' : '+ '.$order->getTotalItemCount() - 1;
+        $quantity = $order->getTotalItemCount() < 2 ? '' : '+ ' . ($order->getTotalItemCount() - 1);
         $description = $this->getFirstFourWords($order->getAllItems()[0]->getName());
 
         $codes = ['{{order_id}}', '{{description}}', '{{quantity}}'];
@@ -141,12 +157,14 @@ class Data
      *
      * @param string $configPath
      * @param string $mobile
-     * @param string $customerName
-     * @param string $orderId
+     * @param \Magento\Sales\Model\Order $order
      * @return void
      */
-    public function returnInitiatedSMS($configPath, $mobile, $order)
-    {
+    public function returnInitiatedSMS(
+        $configPath,
+        $mobile,
+        $order
+    ) {
         $codes = ['{{order_id}}', '{{description}}', '{{no_of_days}}'];
 
         $accurate = [
@@ -203,7 +221,7 @@ class Data
         $message = $this->generateMessage($codes, $accurate, $configPath);
 
         $this->dispachSMS($message, $mobile);
-    }    
+    }
 
     /**
      * Generate message string.
