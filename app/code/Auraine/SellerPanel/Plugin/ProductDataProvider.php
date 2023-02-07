@@ -59,6 +59,7 @@ class ProductDataProvider extends RelatedProductDataProvider
         $roleName = $userData->getRoleName();
         $userName = $userData->getUserName();
         $selectOptions = $this->prodAttribute->get('seller_list')->getOptions();
+        $sellerAttributeValueFinal = '';
         foreach ($selectOptions as $selectOption) {
             $sellerAttributeValue = $selectOption['value'];
             $sellerAttributeLabel = $selectOption['label'];
@@ -69,9 +70,11 @@ class ProductDataProvider extends RelatedProductDataProvider
         }
         if ($roleName == 'supplier' || $roleName == 'Supplier') {
             $subject->getCollection()->clear();
-            $items = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load();
-            $items = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->toArray();
-            $totalRecords = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load()->getSize();
+            if ($sellerAttributeValueFinal && ($sellerAttributeValueFinal!="")){
+              $items = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load();
+              $items = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->toArray();
+              $totalRecords = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load()->getSize();
+          }
         }
         return $proceed();
     }
