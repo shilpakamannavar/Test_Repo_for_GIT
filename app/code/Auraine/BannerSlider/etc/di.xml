@@ -31,7 +31,6 @@
         <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePathMobile\Processor\LocalImage</item>
-                <item name="custom_html" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePathMobile\Processor\CustomHtml</item>
             </argument>
         </arguments>
     </type>
@@ -150,7 +149,6 @@
         <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathMobile\LocalImage</item>
-                <item name="custom_html" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathMobile\CustomHtml</item>
             </argument>
         </arguments>
     </type>
