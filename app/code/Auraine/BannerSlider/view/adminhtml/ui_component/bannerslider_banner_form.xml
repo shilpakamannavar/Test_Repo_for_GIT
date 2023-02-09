@@ -240,6 +240,41 @@
                 </imageUploader>
             </formElements>
         </field>
+        <field name="resource_path_local_image_mobile" sortOrder="91" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                        <item name="resource_type" xsi:type="array">
+                            <item name="field" xsi:type="string">resource_type</item>
+                            <item name="value" xsi:type="string">local_image</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Banner Resource Mobile</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="codbansli/banner_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Auraine_BannerSlider/image-preview</previewTmpl>
+                        <openDialogTitle>Resource</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>auraine/banner/images</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
         <field name="resource_path_youtube_video" sortOrder="80" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
