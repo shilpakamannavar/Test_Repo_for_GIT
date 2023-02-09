@@ -1,6 +1,6 @@
 <?php
 
-namespace EmizenTech\SalesEmail\Block;
+namespace Auraine\SalesEmail\Block;
 
 use Magento\Framework\View\Element\Template;
 
