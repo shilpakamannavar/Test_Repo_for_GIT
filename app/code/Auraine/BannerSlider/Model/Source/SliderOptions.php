@@ -30,6 +30,7 @@ class SliderOptions implements OptionSourceInterface
         ['label' => __('Image and Description'), 'value' => 'image_with_description'],
         ['label' => __('Image,Title and Description'), 'value' => 'image_top_description'],
         ['label' => __('Slider with Title and Description'), 'value' => 'slider_with_title_description'],
+        ['label' => __('Slider with Offer'), 'value' => 'slider_with_offer'],
         ['label' => __('Other'), 'value' => 'other']
         ];
     }
