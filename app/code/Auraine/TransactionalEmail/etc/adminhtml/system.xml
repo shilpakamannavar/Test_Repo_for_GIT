@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="email" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>email</label>
+			<tab>auraine_system_config</tab>
+			<resource>Auraine_TransactionalEmail::config_auraine_transactionalemail</resource>
+			<group id="general" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>general</label>
+				<field id="shipping" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>shipping</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+				</field>
+				<field id="order" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>order</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+				</field>
+				<field id="return" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>return</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>
