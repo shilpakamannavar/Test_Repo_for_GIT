@@ -120,6 +120,7 @@ class Slider
                 'slider_id',
                 'resource_type',
                 'resource_path',
+                'resource_path_mobile',
                 'is_enabled',
                 'title',
                 'alt_text',
@@ -170,7 +171,7 @@ class Slider
                 $key = $field;
             }
 
-            if ($key=== 'resource_path') {
+            if ($key=== 'resource_path' || $key=== 'resource_path_mobile') {
                 $data[$key] = $this->videoCheck($object->getData($field));
             } else {
                 $data[$key] = $object->getData($field);
@@ -194,7 +195,7 @@ class Slider
         if (strpos($url, 'youtube.com') > 0) {
             return $url;
         } else {
-            return $mediaUrl.$url;
+            return ($url) ? $mediaUrl.$url: '';
         }
     }
 }
