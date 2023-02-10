@@ -27,6 +27,13 @@
             </argument>
         </arguments>
     </type>
+    <type name="Auraine\BannerSlider\Model\Banner\ResourcePathMobile\ProcessorPoolMobile">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="local_image" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePathMobile\Processor\LocalImage</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorPool">
         <arguments>
             <argument name="processors" xsi:type="array">
@@ -96,6 +103,11 @@
             <argument name="imageUploader" xsi:type="object">Auraine\BannerSlider\Model\Banner\ImageUploader</argument>
         </arguments>
     </type>
+    <type name="Auraine\BannerSlider\Model\Banner\ResourcePathMobile\Processor\LocalImage">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Auraine\BannerSlider\Model\Banner\ImageUploader</argument>
+        </arguments>
+    </type>
     <virtualType name="Auraine\BannerSlider\Banner\DataProvider\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
         <arguments>
             <argument name="modifiers" xsi:type="array">
@@ -130,6 +142,13 @@
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\ExternalImage</item>
                 <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\YoutubeVideo</item>
                 <item name="custom_html" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\CustomHtml</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathMobile">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="local_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathMobile\LocalImage</item>
             </argument>
         </arguments>
     </type>
