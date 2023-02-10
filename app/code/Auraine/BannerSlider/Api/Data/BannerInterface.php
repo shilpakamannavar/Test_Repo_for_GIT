@@ -80,6 +80,21 @@ interface BannerInterface
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
     public function setResourcePath(?string $resourcePath): \Auraine\BannerSlider\Api\Data\BannerInterface;
+
+    /**
+     * Get Resource Path Mobile
+     *
+     * @return string|null
+     */
+    public function getResourcePathMobile(): ?string;
+
+    /**
+     * Set Resource Path
+     *
+     * @param string|null $resourcePathMobile
+     * @return \Auraine\BannerSlider\Api\Data\BannerInterface
+     */
+    public function setResourcePathMobile(?string $resourcePathMobile): \Auraine\BannerSlider\Api\Data\BannerInterface;
     
     /**
      * Get Is Enabled

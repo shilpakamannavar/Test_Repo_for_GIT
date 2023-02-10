@@ -29,6 +29,26 @@ class CustomHtml implements ModifierInterface
     }
 
     /**
+     * Modify Mobile Data
+     *
+     * @param array $data
+     * @return array
+     * @since 100.1.0
+     */
+    public function modifyDataMobile(array $data)
+    {
+        foreach ($data as &$item) {
+            $resourcePathMobile = $item['resource_path_mobile'] ?? null;
+            $resourceTypeMobile = $item['resource_type'];
+            if ($resourcePathMobile && $resourceTypeMobile === 'custom_html') {
+                unset($item['resource_path_mobile']);
+                $item['resource_path_mobile_custom_html'] = $resourcePathMobile;
+            }
+        }
+        return $data;
+    }
+
+    /**
      * Modify Meta
      *
      * @param array $meta
