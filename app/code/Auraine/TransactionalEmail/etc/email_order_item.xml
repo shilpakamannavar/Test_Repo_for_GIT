@@ -1,7 +1,0 @@
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-  <template id="sales_email_order_item" label="Order Item List" file="Auraine_TransactionalEmail::email/order/items.phtml" type="text">
-    <action method="setTemplate">
-      <template>Auraine_TransactionalEmail::email/order/items.phtml</template>
-    </action>
-  </template>
-</config>

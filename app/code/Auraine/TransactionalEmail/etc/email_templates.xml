@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-	<template id="email_general_shipping" label="shipping" file="shipping.html" type="html" module="Auraine_TransactionalEmail" area="frontend"/>
-	<template id="email_general_order" label="order" file="order.html" type="html" module="Auraine_TransactionalEmail" area="frontend"/>
-	<template id="email_general_return" label="return" file="return.html" type="html" module="Auraine_TransactionalEmail" area="frontend"/>
-</config>
