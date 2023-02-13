@@ -317,7 +317,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         $city = $rowData['city'] ?? '';
         $state = (int) $rowData['state'] ?? 0;
         $country_id = $rowData['country_id'] ?? '';
-        $status = $rowData['status'] ?? '';
+        $status = (int) $rowData['status'] ?? 0;
 
         if (!$code) {
             $this->addRowError('CodeIsRequired', $rowNum);
@@ -342,10 +342,13 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if (!$country_id) {
             $this->addRowError('CountryIsRequired', $rowNum);
         }
-        if (!$status) {
-            $this->addRowError('StatusIsRequired', $rowNum);
+        if ($country_id!='IN') {
+            $this->addRowError('CountryIsIndia', $rowNum);
         }
         if (!$status) {
+            $rowData['status']=0;
+        }
+        if ($status) {
             if (!preg_match('/^[0-1]{1}$/', $status)) {
                 $this->addRowError('InvalidStatus', $rowNum);
             }
@@ -382,7 +385,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         );
         $this->addMessageTemplate(
             'StatusIsRequired',
-            __('The Status should be 0 or 1.')
+            __('The Status cannot be empty.')
         );
         $this->addMessageTemplate(
             'CodeNotValid',
@@ -390,11 +393,15 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         );
         $this->addMessageTemplate(
             'InvalidStatus',
-            __('Invalid Status.')
+            __('The Status should be 0 or 1.')
         );
         $this->addMessageTemplate(
             'InvalidState',
             __('Invalid State Code.')
+        );
+        $this->addMessageTemplate(
+            'CountryIsIndia',
+            __('Country should be India.')
         );
     }
 }

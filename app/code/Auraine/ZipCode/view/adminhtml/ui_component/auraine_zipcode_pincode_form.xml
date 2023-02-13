@@ -48,10 +48,12 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">Code</label>
+				<label translate="true">PinCode</label>
 				<dataScope>code</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
+					<rule name="validate-digits" xsi:type="boolean">true</rule>
+					<rule name="validate-digits-range" xsi:type="string">100000-999999</rule>
 				</validation>
 			</settings>
 		</field>
@@ -66,7 +68,9 @@
 				<label translate="true">City</label>
 				<dataScope>city</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
+					<rule name="validate-alphanum-with-spaces" xsi:type="boolean">true</rule>
+					<rule name="validate-length maximum-length-50" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
