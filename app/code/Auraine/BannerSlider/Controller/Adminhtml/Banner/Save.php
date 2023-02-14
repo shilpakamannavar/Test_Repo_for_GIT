@@ -4,6 +4,7 @@ namespace Auraine\BannerSlider\Controller\Adminhtml\Banner;
 
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 use Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorPool;
+use Auraine\BannerSlider\Model\Banner\ResourcePathMobile\ProcessorPoolMobile;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\ResponseInterface;
@@ -27,6 +28,10 @@ class Save extends Action
      * @var ProcessorPool
      */
     private $processorPool;
+    /**
+     * @var ProcessorPoolMobile
+     */
+    private $processorPoolMobile;
 
     /**
      * Save constructor.
@@ -34,17 +39,20 @@ class Save extends Action
      * @param BannerRepositoryInterface $bannerRepository
      * @param DataPersistorInterface $dataPersistor
      * @param ProcessorPool $processorPool
+     * @param ProcessorPoolMobile $processorPoolMobile
      */
     public function __construct(
         Action\Context $context,
         BannerRepositoryInterface $bannerRepository,
         DataPersistorInterface $dataPersistor,
-        ProcessorPool $processorPool
+        ProcessorPool $processorPool,
+        ProcessorPoolMobile $processorPoolMobile
     ) {
         parent::__construct($context);
         $this->dataPersistor = $dataPersistor;
         $this->bannerRepository = $bannerRepository;
         $this->processorPool = $processorPool;
+        $this->processorPoolMobile = $processorPoolMobile;
     }
 
     /**
@@ -90,6 +98,19 @@ class Save extends Action
                     throw new CouldNotSaveException(__($e->getMessage()));
                 }
             }
+
+            $resourcePathProcessorsMobile = $this->processorPoolMobile->getProcessors();
+            if (isset($resourcePathProcessorsMobile[$model->getResourceType()])) {
+                try {
+                    $model->setResourcePathMobile($resourcePathProcessorsMobile[
+                        $model->getResourceType()
+                        ]->process($this->getRequest()));
+                } catch (LocalizedException $e) {
+                    $this->dataPersistor->set('bannerslider_banner', $model->getData());
+                    throw new CouldNotSaveException(__($e->getMessage()));
+                }
+            }
+
             $this->dataPersistor->set('bannerslider_banner', $model->getData());
             $model = $this->bannerRepository->save($model);
             $this->dataPersistor->clear('bannerslider_banner');

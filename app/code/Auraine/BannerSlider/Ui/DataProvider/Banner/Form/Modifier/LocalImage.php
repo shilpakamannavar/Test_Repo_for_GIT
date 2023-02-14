@@ -57,6 +57,22 @@ class LocalImage implements ModifierInterface
     }
 
     /**
+     * LocalImageMobile modify
+     *
+     * @param array $data
+     * @return array
+     * @since 100.1.0
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function modifyDataMobile(array $data)
+    {
+        foreach ($data as &$item) {
+            $item = $this->processRowMobile($item);
+        }
+        return $data;
+    }
+
+    /**
      * Process Data
      *
      * @param array $data
@@ -84,6 +100,39 @@ class LocalImage implements ModifierInterface
                 ];
                 unset($data['resource_path']);
                 $data['resource_path_local_image'][0] = $resourcePathData;
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Process Data Mobile
+     *
+     * @param array $data
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    protected function processRowMobile($data)
+    {
+        $resourcePathMobile = $data['resource_path_mobile'] ?? null;
+        $resourceTypeMobile = $data['resource_type'];
+        if ($resourcePathMobile && $resourceTypeMobile === 'local_image') {
+            /** @var \Magento\Store\Model\Store $store */
+            $store = $this->storeManager->getStore();
+            $urlMobile = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathMobile;
+            $fileNameMobile = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath($resourcePathMobile);
+            $file_exists_mobile = 'file_exists';
+            $basename = 'basename';
+            $filesize = 'filesize';
+            if ($file_exists_mobile($fileNameMobile)) {
+                $resourcePathDataMobile = [
+                    'name' => $basename($fileNameMobile),
+                    'url' => $urlMobile,
+                    'size' => $filesize($fileNameMobile),
+                    'type' => $this->mime->getMimeType($fileNameMobile)
+                ];
+                unset($data['resource_path_mobile']);
+                $data['resource_path_local_image_mobile'][0] = $resourcePathDataMobile;
             }
         }
         return $data;
