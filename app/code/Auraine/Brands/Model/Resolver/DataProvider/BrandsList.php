@@ -96,4 +96,21 @@ class BrandsList
             return $brandData ;
         }
     }
+    /**
+     * Get brand name form brand id
+     *
+     * @param int $id
+     * @return string 
+     */
+    public function getBrandFromId($id)
+    {
+        $brandData = null ;
+        try {
+            $collection = $this->_brandsFactory->create()->addFieldToSelect('title')->addFieldToFilter('entity_id', $id);
+            $brandData = $collection->getData();
+        } catch (NoSuchEntityException $e) {
+            throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
+        }
+       return $brandData[0]['title'];
+    }
 }
