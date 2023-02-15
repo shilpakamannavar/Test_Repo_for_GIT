@@ -76,10 +76,94 @@
 				<label translate="true">ID</label>
 			</settings>
 		</column>
+		<column name="token">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Token</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="browser">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Browser Name</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="ip_address">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Ip Address</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="created_date">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Created Date</label>
+				<editor>
+					<editorType>date</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>		
 		<column name="customer_id">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">customer_id</label>
+				<label translate="true">Customer Id</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>		
+		<column name="date_of_birth">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Date Of Birth</label>
+				<editor>
+					<editorType>date</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="gender">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Gender</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="device_type">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Device Type</label>
 				<editor>
 					<editorType>text</editorType>
 					<validation>
@@ -95,113 +179,5 @@
 				<resizeDefaultWidth>107</resizeDefaultWidth>
 			</settings>
 		</actionsColumn>
-		<column name="date_of_birth">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">date_of_birth</label>
-				<editor>
-					<editorType>date</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="gender">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">gender</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="device_type">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">device_type</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="token">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">token</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="browser">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">browser</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="created_date">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">created_date</label>
-				<editor>
-					<editorType>date</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="ip_address">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">ip_address</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="entity_id">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">entity_id</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="notification_type">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">notification_type</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
 	</columns>
 </listing>
