@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Auraine_PushNotification::auraine_pushnotification_subscriber" title="Subscriber" module="Auraine_PushNotification" sortOrder="9999" resource="Magento_Backend::content" parent="Auraine::top_level" action="auraine_pushnotification/subscriber/index"/>
+		<add id="Auraine_PushNotification::auraine_pushnotification_template" title="Template" module="Auraine_PushNotification" sortOrder="9999" resource="Magento_Backend::content" parent="Auraine::top_level" action="auraine_pushnotification/template/index"/>
+	</menu>
+</config>

@@ -1,0 +1,42 @@
+type Query {
+getTemplateList (
+ template_id: Int @doc(description: "The id of the template")
+ )
+: [TemplateList] @resolver (class:"\\Auraine\\PushNotification\\Model\\Resolver\\TemplateList") @doc(description:"List of Templates")
+}
+
+type TemplateList {
+template_id: Int @doc(description: "template Id")
+identifier: String @doc(description: "template Name")
+subject: String @doc(description: "template description")
+status: String @doc(description: "Status")
+content: String @doc(description: "Is featured or not")
+destination_url: String @doc(description: "Is exclusive or not")
+notification_type: String @doc(description: "Is justin or not")
+
+}
+
+type Mutation {
+  createPushNotificationSubscriber(input: CreatePushNotificationSubscriberInput @doc(description: "create push notification")): PushNotificationSubscriber @resolver(class: "Auraine\\PushNotification\\Model\\Resolver\\SubscriberInput") @doc(description: "push notification subscriber")
+}
+
+input CreatePushNotificationSubscriberInput @doc(description: "create push notification input") {
+  token: String @doc(description: "token")
+  browser: String @doc(description: "browser")
+  customer_id: String @doc(description: "customer_id")
+  date_of_birth: String @doc(description: "date_of_birth")
+  gender: String @doc(description: "gender")
+  device_type: String @doc(description: "device_type")
+  ip_address: String @doc(description: "ip_address")
+}
+
+type PushNotificationSubscriber {
+    token: String @doc(description: "token")
+    browser: String @doc(description: "browser")
+    customer_id: String @doc(description: "customer_id")
+    date_of_birth: String @doc(description: "date_of_birth")
+    gender: String @doc(description: "gender")
+    device_type: String @doc(description: "device_type")
+    ip_address: String @doc(description: "ip_address")
+    created_date : String @doc(description: "created_date")
+}
