@@ -11,6 +11,9 @@
         </arguments>
     </virtualType>
   <type name="Magento\Catalog\Ui\DataProvider\Product\ProductDataProvider">
-      <plugin name="product-collection-sorting" type="Auraine\SellerPanel\Plugin\ProductDataProvider" sortOrder="999"/>
-    </type>-->
+      <plugin name="product-collection-sorting" type="Auraine\SellerPanel\Plugin\ProductDataProvider" sortOrder="2"/>
+  </type>
+  <type name="Magento\Catalog\Ui\Component\Product\MassAction">
+        <plugin name="restrict_delete_product_plugin" type="Auraine\SellerPanel\Plugin\MassAction" sortOrder="1" disabled="false"/>
+    </type>
 </config>

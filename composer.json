@@ -36,7 +36,7 @@
         "magento/magento-cloud-metapackage": ">=2.4.5 <2.4.6",
         "magento/product-recommendations": "^4.0",
         "magento/saas-export": "^101.4",
-        "razorpay/magento": "^4.0",
+        "razorpay/razorpay": "^2.8",
         "twilio/sdk": "^6.44"
     },
     "suggest": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cdf610dab81188b598b485ae70cba3a",
+    "content-hash": "4d78437c2c544495c21e0adcb3e890dc",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -25092,66 +25092,6 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
-        },
-        {
-            "name": "razorpay/magento",
-            "version": "4.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/razorpay/razorpay-magento.git",
-                "reference": "9a003d2f6896e9d2ef3b5a0a8c1314baddd07237"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/razorpay/razorpay-magento/zipball/9a003d2f6896e9d2ef3b5a0a8c1314baddd07237",
-                "reference": "9a003d2f6896e9d2ef3b5a0a8c1314baddd07237",
-                "shasum": ""
-            },
-            "require": {
-                "php": "7.*|^8.1",
-                "razorpay/razorpay": "2.*"
-            },
-            "suggest": {
-                "magento/module-checkout-agreements": "100.0.*"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Razorpay\\Magento\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Team Razorpay",
-                    "homepage": "https://razorpay.com/about/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Razorpay Magento 2.0 plugin for accepting payments.",
-            "homepage": "https://razorpay.com",
-            "keywords": [
-                "india",
-                "magento",
-                "netbanking",
-                "payment gateway",
-                "payments",
-                "razorpay",
-                "wallets"
-            ],
-            "support": {
-                "docs": "https://docs.razorpay.com/v1/page/integrating-your-magento-store-with-razorpay",
-                "issues": "https://razorpay.com/support/",
-                "rss": "https://github.com/razorpay/razorpay-magento/releases.atom",
-                "source": "https://github.com/razorpay/razorpay-magento"
-            },
-            "time": "2022-12-12T11:40:31+00:00"
         },
         {
             "name": "razorpay/razorpay",
