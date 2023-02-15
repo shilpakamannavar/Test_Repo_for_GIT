@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="razorpay_sales_order" resource="default" engine="innodb" comment="Razorpay Sales Order">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+    <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Quote ID"/>
+    <column xsi:type="int" name="order_id" nullable="true" comment="Order ID"/>
+    <column xsi:type="varchar" name="increment_order_id" nullable="true" comment="Increment Order ID"/>
+
+    <column xsi:type="varchar" name="rzp_order_id" nullable="true" comment="RZP Order Id"/>
+    <column xsi:type="varchar" name="rzp_payment_id" nullable="true" comment="RZP Payment Id"/>
+    <column xsi:type="varchar" name="rzp_signature" nullable="true" comment="RZP Signature"/>
+    <column xsi:type="int" name="rzp_order_amount" nullable="true" comment="RZP order amount"/>
+    <column xsi:type="boolean" name="by_webhook" nullable="false" comment="By Webhook"/>
+    <column xsi:type="boolean" name="by_frontend" nullable="false" comment="By Webhook"/>
+   <column xsi:type="int" name="webhook_count" nullable="false" comment="Webhook Count"/>
+    <column xsi:type="boolean" name="order_placed" nullable="false" comment="Order Placed"/>
+    <column xsi:type="int" name="webhook_first_notified_at" nullable="true" comment="Webhook First Notified"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="entity_id"/>
+    </constraint>
+       <index referenceId="INDEX_QUOTE_ID" indexType="btree">
+          <column name="quote_id"/>
+      </index>
+      <index referenceId="INDEX_INCREMENT_ORDER_ID" indexType="btree">
+          <column name="increment_order_id"/>
+      </index>
+  </table>
+</schema>
