@@ -14,6 +14,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     public const COUNTRY = 'country_id';
     public const STATUS = 'status';
     public const TABLE_ENTITY = 'pincode';
+    public const DEFAULT_GBOOK_COUNTRY = 'IN';
 
     /** * Validation failure message template definitions *
      * @var string
@@ -132,14 +133,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
      * @param int $rowNum
      * @return bool
      */
-    // public function validateRow(array $rowData, $rowNum)
-    // {
-    //     if (isset($this->_validatedRows[$rowNum])) {
-    //         return !$this->getErrorAggregator()->isRowInvalid($rowNum);
-    //     }
-    //     $this->_validatedRows[$rowNum] = true;
-    //     return !$this->getErrorAggregator()->isRowInvalid($rowNum);
-    // }
  
    /**
     * Create Advanced message data from raw data.
@@ -342,7 +335,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if (!$country_id) {
             $this->addRowError('CountryIsRequired', $rowNum);
         }
-        if ($country_id!='IN') {
+        if ($country_id!=self::DEFAULT_GBOOK_COUNTRY) {
             $this->addRowError('CountryIsIndia', $rowNum);
         }
         if (!$status) {
@@ -401,7 +394,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         );
         $this->addMessageTemplate(
             'CountryIsIndia',
-            __('Country should be India.')
+            __('Country id should be IN for India.')
         );
     }
 }
