@@ -44,7 +44,7 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addErrorMessage(__('This Subscriber no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
-        
+            $data['created_date'] = date('Y-m-d');
             $model->setData($data);
         
             try {

@@ -48,10 +48,10 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">customer_id</label>
+				<label translate="true">Customer Id</label>
 				<dataScope>customer_id</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
@@ -63,43 +63,57 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">date_of_birth</label>
+				<label translate="true">Date Of Birth</label>
 				<dataScope>date_of_birth</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="gender" formElement="input" sortOrder="30">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Subscriber</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">gender</label>
-				<dataScope>gender</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field>
-		<field name="device_type" formElement="input" sortOrder="40">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Subscriber</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">device_type</label>
-				<dataScope>device_type</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field>
+		<field name="gender" sortOrder="30" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Subscriber</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Gender</label>
+                <dataScope>gender</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\PushNotification\Model\Source\GenderOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+		<field name="device_type" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Subscriber</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Device Type</label>
+                <dataScope>device_type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\PushNotification\Model\Source\DeviceOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
 		<field name="token" formElement="textarea" sortOrder="50">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
@@ -108,14 +122,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">token</label>
+				<label translate="true">Device Token</label>
 				<dataScope>token</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="browser" formElement="textarea" sortOrder="60">
+		<field name="browser" formElement="input" sortOrder="60">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Subscriber</item>
@@ -123,14 +137,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">browser</label>
+				<label translate="true">Browser</label>
 				<dataScope>browser</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="created_date" formElement="date" sortOrder="70">
+		<field name="ip_address" formElement="input" sortOrder="80">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Subscriber</item>
@@ -138,55 +152,10 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">created_date</label>
-				<dataScope>created_date</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field>
-		<field name="ip_address" formElement="textarea" sortOrder="80">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Subscriber</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">ip_address</label>
+				<label translate="true">Ip Address</label>
 				<dataScope>ip_address</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field>
-		<field name="entity_id" formElement="input" sortOrder="90">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Subscriber</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">entity_id</label>
-				<dataScope>entity_id</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field>
-		<field name="notification_type" formElement="textarea" sortOrder="170">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Subscriber</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">notification_type</label>
-				<dataScope>notification_type</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>

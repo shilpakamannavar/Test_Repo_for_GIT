@@ -10,9 +10,9 @@
 		<column name="gender" nullable="true" xsi:type="varchar" comment="gender" length="255"/>
 		<column name="device_type" nullable="true" xsi:type="varchar" comment="device_type" length="255"/>
 		<column name="token" nullable="true" xsi:type="text" comment="token"/>
-		<column name="browser" nullable="true" xsi:type="text" comment="browser"/>
+		<column name="browser" nullable="true" xsi:type="varchar" comment="browser" length="255"/>
 		<column name="created_date" nullable="true" xsi:type="date" comment="created_date"/>
-		<column name="ip_address" nullable="true" xsi:type="text" comment="ip_address"/>
+		<column name="ip_address" nullable="true" xsi:type="varchar" comment="ip_address" length="255"/>
 	</table>
 	<table name="auraine_pushnotification_template" resource="default" engine="innodb" comment="auraine_pushnotification_template Table">
 		<column xsi:type="int" name="template_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
