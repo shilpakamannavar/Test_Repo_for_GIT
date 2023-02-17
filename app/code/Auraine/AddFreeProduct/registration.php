@@ -3,5 +3,3 @@
     'Auraine_AddFreeProduct',
     __DIR__
 );
-
-// Magento\\QuoteGraphQl\\Model\\Resolver\\RemoveItemFromCart

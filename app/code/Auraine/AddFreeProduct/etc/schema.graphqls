@@ -1,7 +1,7 @@
 
 
 type Mutation {
-    addFreeProductToCart(cartId: String! @doc(description: "The cart ID of the shopper."), cartItems: [CartFreeItemInput!]! @doc(description: "An array that defines the products to add to the cart.")): AddFreeProductToCartOutput @resolver(class: "Auraine\\AddFreeProduct\\Model\\Resolver\\AddFreeProductResolver") @doc(description:"Contact us form")
+    addFreeProductToCart(cartId: String! @doc(description: "The cart ID of the shopper."), cartItems: [CartFreeItemInput!]! @doc(description: "An array that defines the free product to add to the cart.")): AddFreeProductToCartOutput @resolver(class: "Auraine\\AddFreeProduct\\Model\\Resolver\\AddFreeProductResolver") @doc(description:"Add free product to cart output.")
 }
 
 type Cart {
@@ -23,11 +23,5 @@ input CartFreeItemInput {
 }
 
 type AddFreeProductToCartOutput {
-   status: String! @doc(description: "The cart after products have been added.")
+   status: String! @doc(description: "The cart status after products have been added.")
 }
-
-
-
-
-
-

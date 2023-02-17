@@ -6,7 +6,7 @@ use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
 class PromoValidator
 {
     /**
-     * Item qty
+     * Key quantity item prefix.
      * @var string const
      */
     public const KEY_QTY_ITEM_PREFIX = 'ampromo_qty_select_';
