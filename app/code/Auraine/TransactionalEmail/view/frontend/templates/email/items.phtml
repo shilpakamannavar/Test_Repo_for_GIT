@@ -7,49 +7,71 @@
 // phpcs:disable Magento2.Templates.ThisInTemplate
 
 /** @var $block \Magento\Sales\Block\Order\Email\Items */
-?>
-
-<?php
+?> <?php
 
 
-?>
-
-
-<?php $_order = $block->getOrder() ?>
-<?php if ($_order) : ?>
-    <?php $_items = $_order->getAllItems(); ?>
-
-        <?php foreach ($_items as $_item) : ?>
-                    <?php if (!$_item->getParentItem()) : ?>
-                       
-
-                            <?= $block->getItemHtml($_item) ?>
-                       
-                    <?php endif; ?>
-                <?php endforeach; ?>
-
-       
-
-
-    <?php if ($this->helper(\Magento\GiftMessage\Helper\Message::class)
+?> <?php $_order = $block->getOrder() ?> <?php if ($_order) : ?> <?php $_items = $_order->getAllItems(); ?> <?php foreach ($_items as $_item) : ?> <?php if (!$_item->getParentItem()) : ?> <?= $block->getItemHtml($_item) ?> <?php endif; ?> <?php endforeach; ?> <div style="
+        border-width: 1px 0px 0px 0px;
+        border-style: solid;
+        margin-bottom: 10px;
+      ">
+  <div style="
+          padding: 20px;
+          display: inline-block;
+          width: 35%;
+          vertical-align: top;
+        ">
+    <div style="
+            font-family: Helvetica;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0em;
+            padding-bottom: 20px;
+          "> Delivery Address: </div>
+    <div style="
+            font-family: Helvetica;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 19px;
+            letter-spacing: 0em;
+          ">
+      {{var formattedShippingAddress|raw}}
+    </div>
+  </div>
+  <div style="
+          padding: 20px;
+          display: inline-block;
+          width: 35%;
+          border-width: 0px 0px 0px 1px;
+          border-style: solid;
+        ">
+    <div style="
+            font-family: Helvetica;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0em;
+          "> Billing Details </div>
+    <div>
+      <table>
+        <tr> <?= $block->getChildHtml('order_totals') ?> </tr>
+      </table>
+    </div>
+  </div>
+</div> <?php if ($this->helper(\Magento\GiftMessage\Helper\Message::class)
             ->isMessagesAllowed('order', $_order, $_order->getStore())
         && $_order->getGiftMessageId()
-    ) : ?>
-        <?php $_giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)
-            ->getGiftMessage($_order->getGiftMessageId()); ?>
-        <?php if ($_giftMessage) : ?>
-            <br />
-            <table class="message-gift">
-                <tr>
-                    <td>
-                        <h3><?= $block->escapeHtml(__('Gift Message for this Order')) ?></h3>
-                        <strong><?= $block->escapeHtml(__('From:')) ?></strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?>
-                        <br /><strong><?= $block->escapeHtml(__('To:')) ?></strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?>
-                        <br /><strong><?= $block->escapeHtml(__('Message:')) ?></strong>
-                        <br /><?= $block->escapeHtml($_giftMessage->getMessage()) ?>
-                    </td>
-                </tr>
-            </table>
-        <?php endif; ?>
-    <?php endif; ?>
-<?php endif; ?>
+    ) : ?> <?php $_giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)
+            ->getGiftMessage($_order->getGiftMessageId()); ?> <?php if ($_giftMessage) : ?> <br />
+<table class="message-gift">
+  <tr>
+    <td>
+      <h3> <?= $block->escapeHtml(__('Gift Message for this Order')) ?> </h3>
+      <strong> <?= $block->escapeHtml(__('From:')) ?> </strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?> <br />
+      <strong> <?= $block->escapeHtml(__('To:')) ?> </strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?> <br />
+      <strong> <?= $block->escapeHtml(__('Message:')) ?> </strong>
+      <br /> <?= $block->escapeHtml($_giftMessage->getMessage()) ?>
+    </td>
+  </tr>
+</table> <?php endif; ?> <?php endif; ?> <?php endif; ?>
