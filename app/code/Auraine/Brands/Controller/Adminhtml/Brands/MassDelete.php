@@ -53,6 +53,6 @@ class MassDelete extends \Magento\Backend\App\Action
      * Check Category Map recode delete Permission. @return bool*/
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Auraine_Brands::row_data_delete');
+        return $this->_authorization->isAllowed('Auraine_Brands::brands_massdelete');
     }
 }
