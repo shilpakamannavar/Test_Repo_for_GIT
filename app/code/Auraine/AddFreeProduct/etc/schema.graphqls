@@ -13,6 +13,7 @@ type FreeProduct {
     sku: String @doc(description: "Product SKU")
     title: String @doc(description: "Product title")
     image: String @doc(description: "Product image")
+    isPromoItems: Boolean @doc(description: "Is Promo Items.")
 
 }
 

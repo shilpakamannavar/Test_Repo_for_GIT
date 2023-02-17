@@ -63,6 +63,7 @@ class GetFreeProductForCart implements ResolverInterface
                     'id' => $product->getId(),
                     'sku' => $item->getSku(),
                     'title' => $product->getName(),
+                    'isPromoItems' => true,
                     'image' => $this->_storeManager
                         ->getStore()
                         ->getBaseUrl() . 'media/catalog/product'.$ImageUrl
