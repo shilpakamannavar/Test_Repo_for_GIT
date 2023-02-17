@@ -1,0 +1,60 @@
+<!--@subject Refunded the Products successfully Order id: {{trans "%increment_id," increment_id=$order.getIncrementId()}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var order_data.email_customer_note|escape|nl2br":"Email Order Note",
+"var order.increment_id":"Order Id",
+"layout handle=\"sales_email_order_items\" order=$order area=\"frontend\"":"Order Items Grid",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.shipping_description":"Shipping Description",
+"var shipping_msg":"Shipping message",
+"var created_at_formatted":"Order Created At (datetime)",
+"var store.frontend_name":"Store Frontend Name",
+"var store_phone":"Store Phone",
+"var store_email":"Store Email",
+"var store_hours":"Store Hours",
+"var this.getUrl($store,'customer/account/',[_nosid:1])":"Customer Account URL",
+"var order_data.is_not_virtual":"Order Type",
+"var order":"Order",
+"var order_id": "Order DB Id",
+"var order_data.customer_name":"Customer Name"
+} @-->
+
+
+{{template config_path="design/email/header_template"}}
+<div style="background-color:black; height:45px;">
+    <h3 style="color:white; text-align:center; line-height:40px;">
+        <b> RETURN PROCESSED</b>
+    </h3>
+</div>
+<br>
+<br>
+<div>
+    <strong>Dear {{trans "%customer_name," customer_name=$order_data.customer_name}}</strong>
+    <p>Your refund has been processed and will be credited in 7 business days. We hope you shop again with us and thank you for choosing Glamourbook.</p>
+    <br>
+    <p>To view your order history and personal details, please <a href="{{var this.getUrl($store, customer/account)}}">
+            <b>Click here.</b>
+        </a>
+    </p>
+</div>
+<br>
+<br>
+<p align="left"> The Glamourbook Team </p>
+<br>
+<div>
+    <div style="background-color:black">
+        <p style="color:white"> Return Order details:</p>
+    </div>
+    <h5>Order id: {{trans "%increment_id," increment_id=$order.getIncrementId()}}</h5>
+    <h5>Return mode: Online</h5>
+    <h5>Refund Amount:{{var creditmemo.grand_total}}</h5>
+</div>
+<br />
+<div style="background-color:black">
+    <p style="color:white"> Your Order details:</p>
+</div>
+{{layout handle="magento_rma_email_rma_items" rma_id=$rma_id}}
+</table>
+{{template config_path="design/email/footer_template"}}
+

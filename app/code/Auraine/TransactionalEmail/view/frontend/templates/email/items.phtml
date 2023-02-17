@@ -8,36 +8,17 @@
 
 /** @var $block \Magento\Sales\Block\Order\Email\Items */
 ?>
+
+<?php
+
+
+?>
+
+
 <?php $_order = $block->getOrder() ?>
 <?php if ($_order) : ?>
     <?php $_items = $_order->getAllItems(); ?>
-    <!-- <table class="email-items">
-        <thead>
-            <tr>
-                <th class="item-info">
-                    <?= $block->escapeHtml(__('Items')).'gfhtyhtyhythy' ?>
-                </th>
-                <th class="item-qty">
-                    <?= $block->escapeHtml(__('Qty')) ?>
-                </th>
-                <th class="item-price">
-                    <?= $block->escapeHtml(__('Price')) ?>
-                </th>
-            </tr>
-        </thead>
-        <?php foreach ($_items as $_item) : ?>
-            <?php if (!$_item->getParentItem()) : ?>
-                <tbody>
-                    <?= $block->getItemHtml($_item) ?>
-                </tbody>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        <tfoot class="order-totals">
-            <?= $block->getChildHtml('order_totals') ?>
-        </tfoot>
-    </table> -->
 
-   
         <?php foreach ($_items as $_item) : ?>
                     <?php if (!$_item->getParentItem()) : ?>
                        
