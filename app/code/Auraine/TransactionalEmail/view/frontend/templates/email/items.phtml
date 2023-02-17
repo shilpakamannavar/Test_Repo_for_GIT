@@ -13,7 +13,49 @@
 ?> <?php $_order = $block->getOrder() ?> <?php if ($_order) : ?> <?php $_items = $_order->getAllItems(); ?> <?php foreach ($_items as $_item) : ?> <?php if (!$_item->getParentItem()) : ?> <?= $block->getItemHtml($_item) ?> <?php endif; ?> <?php endforeach; ?> 
 <?php
 $shipping_address = $_order->getShippingAddress();
-
+$countryName = '';
+$countryId = $shipping_address->getData("country_id");
+if (!empty($countryId)) {
+    $countryModel = \Magento\Framework\App\ObjectManager::getInstance()->create('Magento\Directory\Model\Country')->load($countryId);
+    if ($countryModel) {
+        $countryName = $countryModel->getName();
+    }
+}
+$firstname = $shipping_address->getData("firstname");
+$lastname = $shipping_address->getData("lastname");
+$company = $shipping_address->getData("company");
+$street = $shipping_address->getData("street");
+$city = $shipping_address->getData("city");
+$region = $shipping_address->getData("region");
+$postcode = $shipping_address->getData("postcode");
+$telephone = $shipping_address->getData("telephone");
+$output = '';
+if (!empty($firstname) && !empty($lastname)) {
+    $output .= $firstname . ' ' . $lastname . "<br/>";
+}
+if (!empty($company)) {
+    $output .= $company . "<br/>";
+}
+if (!empty($street)) {
+    $output .= $street . "<br/>";
+}
+if (!empty($city)) {
+    $output .= $city . "<br/>";
+}
+if (!empty($region)) {
+    $output .= $region . "<br/>";
+}
+if (!empty($countryname)) {
+    $output .= $countryname . "<br/>";
+} elseif (!empty($countryId)) {
+    $output .= $countryId . "<br/>";
+}
+if (!empty($postcode)) {
+    $output .= $postcode . "<br/>";
+}
+if (!empty($telephone)) {
+    $output .= "Tel: " . $telephone;
+}
 ?>
 <div style="
         border-width: 1px 0px 0px 0px;
@@ -41,14 +83,7 @@ $shipping_address = $_order->getShippingAddress();
             line-height: 19px;
             letter-spacing: 0em;
           ">
-     <?php echo $shipping_address->getData("firstname").' '.$shipping_address->getData("lastname")."<br/>".
-$shipping_address->getData("company")."<br/>".
-$shipping_address->getData("street")."<br/>".
-$shipping_address->getData("city")."<br/>".
-$shipping_address->getData("region")."<br/>".
-$shipping_address->getData("country_id")."<br/>".
-$shipping_address->getData("postcode")."<br/>".
-"Tel: ".$shipping_address->getData("telephone");?></br>
+     <?php echo $output;?>
     </div>
   </div>
   <div style="
