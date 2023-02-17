@@ -40,12 +40,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
     
     public function sendTransactionalEmail( Order $order, $templateIdentifier)
     {
-        $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
-          $orderData = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($order->getIncrementId());
-          echo "<pre>";print_r($orderData->getData()); die;
-         //echo $orderData->getData('shipping_description'); //shipping_description
-    
-       $templateVars = [
+        $templateVars = [
             'order' => $order,
             'layout' => [
                 'area' => 'frontend',

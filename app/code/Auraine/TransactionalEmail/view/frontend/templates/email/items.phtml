@@ -16,12 +16,6 @@
 
 
 <?php $_order = $block->getOrder() ?>
-<?php $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
-          $orderData = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($block->getOrderId());
-          echo "<pre>";print_r($orderData->getData());
-         //echo $orderData->getData('shipping_description'); //shipping_description
-    ?>
-<?php var_dump($_order);die; ?>
 <?php if ($_order) : ?>
     <?php $_items = $_order->getAllItems(); ?>
 
