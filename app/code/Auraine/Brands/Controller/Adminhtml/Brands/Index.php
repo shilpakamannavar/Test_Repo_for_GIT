@@ -33,14 +33,4 @@ class Index extends \Magento\Backend\App\Action
         $resultPage->getConfig()->getTitle()->prepend(__('Brands List'));
         return $resultPage;
     }
-
-    /**
-     * Check Order Import Permission.
-     *
-     * @return bool
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Auraine_Brands::grid_list');
-    }
 }

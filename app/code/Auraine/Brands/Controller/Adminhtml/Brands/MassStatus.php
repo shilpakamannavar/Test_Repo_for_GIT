@@ -50,4 +50,10 @@ class MassStatus extends \Magento\Backend\App\Action
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been updated.', $recordUpdated));
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('*/*/index');
     }
+    /**
+     * Check Category Map recode delete Permission. @return bool*/
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Auraine_Brands::brands_massstatus');
+    }
 }
