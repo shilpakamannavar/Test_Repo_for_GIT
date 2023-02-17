@@ -38,14 +38,9 @@ class Countries implements OptionSourceInterface
     {
         $result = [];
 
-        foreach ($this->getOptions() as $value => $label) {
-            $result[] = [
-                 'value' => $value,
-                 'label' => $label,
-             ];
-        }
-
-        return $result;
+        /** Displaying only India and not using country model as of now*/
+        return [
+            ['label' => __('India'), 'value' => 'IN']];
     }
 
     /**
