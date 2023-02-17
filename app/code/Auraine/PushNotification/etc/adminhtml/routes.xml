@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
-	<router id="admin">
-		<route frontName="auraine_pushnotification" id="auraine_pushnotification">
-			<module before="Magento_Backend" name="Auraine_PushNotification"/>
-		</route>
-	</router>
-</config>
