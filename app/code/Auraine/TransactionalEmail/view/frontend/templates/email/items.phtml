@@ -10,7 +10,12 @@
 ?> <?php
 
 
-?> <?php $_order = $block->getOrder() ?> <?php if ($_order) : ?> <?php $_items = $_order->getAllItems(); ?> <?php foreach ($_items as $_item) : ?> <?php if (!$_item->getParentItem()) : ?> <?= $block->getItemHtml($_item) ?> <?php endif; ?> <?php endforeach; ?> <div style="
+?> <?php $_order = $block->getOrder() ?> <?php if ($_order) : ?> <?php $_items = $_order->getAllItems(); ?> <?php foreach ($_items as $_item) : ?> <?php if (!$_item->getParentItem()) : ?> <?= $block->getItemHtml($_item) ?> <?php endif; ?> <?php endforeach; ?> 
+<?php
+$shipping_address = $_order->getShippingAddress();
+
+?>
+<div style="
         border-width: 1px 0px 0px 0px;
         border-style: solid;
         margin-bottom: 10px;
@@ -36,7 +41,14 @@
             line-height: 19px;
             letter-spacing: 0em;
           ">
-      {{var formattedShippingAddress|raw}}
+     <?php echo $shipping_address->getData("firstname").' '.$shipping_address->getData("lastname")."<br/>".
+$shipping_address->getData("company")."<br/>".
+$shipping_address->getData("street")."<br/>".
+$shipping_address->getData("city")."<br/>".
+$shipping_address->getData("region")."<br/>".
+$shipping_address->getData("country_id")."<br/>".
+$shipping_address->getData("postcode")."<br/>".
+"Tel: ".$shipping_address->getData("telephone");?></br>
     </div>
   </div>
   <div style="
