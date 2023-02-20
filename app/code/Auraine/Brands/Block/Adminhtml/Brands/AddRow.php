@@ -34,7 +34,7 @@ class AddRow extends \Magento\Backend\Block\Widget\Form\Container
         $this->_blockGroup = 'Auraine_Brands';
         $this->_controller = 'adminhtml_Brands';
         parent::_construct();
-        if ($this->_isAllowedAction('Auraine_Brands::add_row')) {
+        if ($this->_isAllowedAction('Auraine_Brands::brands_addrow')) {
             $this->buttonList->update('save', 'label', __('Save'));
         } else {
             $this->buttonList->remove('save');

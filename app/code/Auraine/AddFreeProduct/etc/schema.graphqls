@@ -1,0 +1,27 @@
+
+
+type Mutation {
+    addFreeProductToCart(cartId: String! @doc(description: "The cart ID of the shopper."), cartItems: [CartFreeItemInput!]! @doc(description: "An array that defines the free product to add to the cart.")): AddFreeProductToCartOutput @resolver(class: "Auraine\\AddFreeProduct\\Model\\Resolver\\AddFreeProductResolver") @doc(description:"Add free product to cart output.")
+}
+
+type Cart {
+    freeProduct: [FreeProduct] @doc(description: "Free product details.") @resolver(class: "Auraine\\AddFreeProduct\\Model\\Resolver\\GetFreeProductForCart")
+}
+
+type FreeProduct {
+    id: Int @doc(description: "Product id")
+    sku: String @doc(description: "Product SKU")
+    title: String @doc(description: "Product title")
+    image: String @doc(description: "Product image")
+    isPromoItems: Boolean @doc(description: "Is Promo Items.")
+
+}
+
+input CartFreeItemInput {
+    sku: String! @doc(description: "The SKU of the product.")
+    isPromoItems: Boolean @doc(description: "Is Promo Items.")
+}
+
+type AddFreeProductToCartOutput {
+   status: String! @doc(description: "The cart status after products have been added.")
+}

@@ -1,0 +1,94 @@
+<!--@subject {{trans "Your %store_name order has shipped" store_name=$store.frontend_name}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var order_data.email_customer_note|escape|nl2br":"Email Order Note",
+"var order.increment_id":"Order Id",
+"layout handle=\"sales_email_order_items\" order=$order area=\"frontend\"":"Order Items Grid",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.shipping_description":"Shipping Description",
+"var shipping_msg":"Shipping message",
+"var created_at_formatted":"Order Created At (datetime)",
+"var store.frontend_name":"Store Frontend Name",
+"var store_phone":"Store Phone",
+"var store_email":"Store Email",
+"var store_hours":"Store Hours",
+"var this.getUrl($store,'customer/account/',[_nosid:1])":"Customer Account URL",
+"var order_data.is_not_virtual":"Order Type",
+"var order":"Order",
+"var order_id": "Order DB Id",
+"var order_data.customer_name":"Customer Name"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<div  style="background-color:black; height:45px;">
+<h3 style="color:white; text-align:center; line-height:40px;">Your Order is on its way</h3>
+</div>
+<table>
+    <tr class="email-intro">
+        <td><br>
+            <p class="greeting"><strong>{{trans "Dear %customer_name," customer_name=$order_data.customer_name}}</strong></p>
+<p>We are pleased to inform you that your order has been successfully dispatched. The details of your order are shown below.</p>
+
+ <p>You can follow the progress of your order by clicking on the ' Track your delivery ' link below.</p>
+                {{trans 'To view your order <a href="%account_url"><strong>Track your delivery</strong></a>.' account_url=$this.getUrl($store,'customer/account/',[_nosid:1]) |raw}}
+            </p>      
+<br>
+<br>
+<p align="left">
+               The Glamourbook Team
+            </p>
+
+        </td>
+    </tr>
+  <tr class="email-summary">
+        <td>
+         <div  style="background-color:black; height:45px;">
+    <h3 style="color:white; line-height:40px;">Order Summary</h3>
+    </div><br>
+   <p> {{trans 'Order ID: <span class="no-link">#%increment_id</span>' increment_id=$order.increment_id |raw}}</p>
+ <p> Order Status: Confirmed </p>
+<p>{{trans 'Expected Delivery: <span class="no-link">#%increment_id</span>' increment_id=$order.increment_id |raw}}</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend order_data.email_customer_note}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var order_data.email_customer_note|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            <table class="order-details">
+   <tr>
+                    <td class="order-details">
+                        <div  style="background-color:black; height:45px;">
+    <h3 style="color:white; text-align:left; line-height:40px;"> Order Details</h3>
+    </div>
+<p>{{layout handle="sales_email_order_items" order=$order area="frontend"}}</p>
+                     
+                    </td>
+                    {{depend order_data.is_not_virtual}}
+                
+                    {{/depend}}
+                </tr>
+               
+               
+            </table>
+            {{layout handle="sales_email_order_items" order_id=$order_id area="frontend"}}
+        </td>
+    </tr>
+ <tr>
+                  
+                    <td class="address-details">
+                         <h3>{{trans "Delivery Address"}}</h3>
+                        <p>{{var formattedShippingAddress|raw}}</p>
+                    </td>
+                  
+                </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}
