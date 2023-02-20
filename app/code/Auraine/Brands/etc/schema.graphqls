@@ -54,5 +54,6 @@ type Products @doc(description: "Contains the results of a `products` query.") {
 interface OrderItemInterface @doc(description: "Order item details.") @resolver(class:"Auraine\\Brands\\Model\\Resolver\\OrderItem\\DataProvider") {
     brand_name: Int @doc(description: "Returns the product brand id.")
     image_url: String @doc(description: "Returns Product thumbnail.")
-    order_status_cancel: Boolean @doc(description: "The current status of the order can be cancel or not.") 
+    order_status_cancel: Boolean @doc(description: "The current status of the order can be cancel or not.")
+    product_original_price: Money! @doc(description: "The original price of the base product.")
 }
