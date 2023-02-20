@@ -1,0 +1,5 @@
+<config>
+    <type name="Magento\Catalog\Ui\DataProvider\Category\CategoryDataProvider">
+        <plugin name="Auraine_Category::add_custom_category_image" type="Auraine\Category\Plugin\CategoryDataProvider" sortOrder="1"/>
+    </type>
+</config>
