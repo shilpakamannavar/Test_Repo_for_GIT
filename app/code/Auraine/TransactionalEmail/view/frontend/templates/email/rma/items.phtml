@@ -14,7 +14,6 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
    ?>
     <?php
    $product = $objectManager->create('Magento\Catalog\Model\Product')->loadByAttribute('sku', $item->getProductSku());
-//    print_r($product);die;
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
     $brandsList = $objectManager->create(BrandsList::class);
     $brand = (int)$product->getData('brand_name');
@@ -36,8 +35,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
     } else {
       $discountAmount = 0;
     }
-?>
-<?php  $imagewidth=200;
+  $imagewidth=200;
 	$imageheight=200;
 	$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
 	$image_url = $imageHelper->init($product, 'small_image')->setImageFile($product->getSmallImage())->resize($imagewidth, $imageheight)->getUrl();
@@ -193,8 +191,3 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
       </div>
       </div>
 <?php endforeach; ?>
-
-
-
-
-
