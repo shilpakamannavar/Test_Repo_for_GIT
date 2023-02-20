@@ -1,0 +1,200 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+//phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+//phpcs:disable Magento2.Files.LineLength.MaxExceeded
+/** @var $block \Magento\Rma\Block\Email\Items */
+use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
+?>
+<?php foreach ($block->getCollection() as $item) : ?>
+    <?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+   $quantity =  $this->helper(Magento\Rma\Helper\Data::class)->parseQuantity($item->getQtyRequested(), $item);
+   ?>
+    <?php
+   $product = $objectManager->create('Magento\Catalog\Model\Product')->loadByAttribute('sku', $item->getProductSku());
+//    print_r($product);die;
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $brandsList = $objectManager->create(BrandsList::class);
+    $brand = (int)$product->getData('brand_name');
+    $productAttributeOptions = $objectManager->get(\Magento\Eav\Model\Config::class)->getAttribute('catalog_product', 'color');
+    $options = $productAttributeOptions->getSource()->getAllOptions();
+    foreach ($options as $option) {
+        if ($option['value'] == $product->getData('color')) {
+            $color = $option['label'];
+            break;
+        }
+    }
+    $brandName = $brandsList->getBrandFromId($brand);
+    $qtyOrdered = $quantity;
+    $actualPrice = $qtyOrdered * $product->getPrice();
+    $specialPrice = $qtyOrdered * $product->getSpecialPrice();
+// Calculate the discount amount
+    if($specialPrice != 0){
+      $discountAmount = $actualPrice - $specialPrice;
+    } else {
+      $discountAmount = 0;
+    }
+?>
+<?php  $imagewidth=200;
+	$imageheight=200;
+	$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+	$image_url = $imageHelper->init($product, 'small_image')->setImageFile($product->getSmallImage())->resize($imagewidth, $imageheight)->getUrl();
+	 ?>
+<div style="padding: 20px">
+<div style="
+                            background-color: #f5f5f5;
+                            padding-top: 7px;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                        ">
+<div style="
+          width: 74px;
+          height: 82px;
+          background-color: white;
+          display: inline-block;
+          vertical-align: top;
+        ">
+        <img style="width: 72px; height: 80px" src="<?php echo $image_url;?>" alt="">
+      </div>
+      <div style="padding-left: 20px; display: inline-block; width: 70%">
+        <div style="
+            font-family: Helvetica;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 12px;
+            letter-spacing: 0em;
+            color: #787878;
+            padding-bottom: 10px;
+          ">
+          <?php echo  $brandName ; ?>
+        </div>
+        <div style="
+            font-family: Helvetica;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 12px;
+            letter-spacing: 0em;
+            padding-bottom: 22px;
+          ">
+        <?= $block->escapeHtml($item->getProductName()) ?>
+        </div>
+        <div>
+          <div style="
+              display: inline-block;
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 8px;
+              letter-spacing: 0em;
+            ">
+            QTY:    <?php echo $quantity ?>
+          </div>
+          <div style="
+              display: inline-block;
+              padding-left: 20px;
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 8px;
+              letter-spacing: 0em;
+            ">
+            Color: <?php echo $color; ?>
+          </div>
+        </div>
+        <div>
+          <div style="
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              letter-spacing: 0em;
+              padding-top: 25px;
+              text-align: left;
+              width: 48%;
+              display: inline-block;
+            ">
+            Total
+          </div>
+          <div style="
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              letter-spacing: 0em;
+              text-align: right;
+              width: 50%;
+              display: inline-block;
+            ">
+            
+            <?php echo (float)$actualPrice; ?>
+          </div>
+        </div>
+        <?php  if($discountAmount != 0){ ?>
+        <div>
+          <div style="
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              letter-spacing: 0em;
+              padding-top: 10px;
+              text-align: left;
+              width: 48%;
+              display: inline-block;
+            ">
+            Discount
+          </div>
+          <div style="
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              letter-spacing: 0em;
+              text-align: right;
+              width: 50%;
+              display: inline-block;
+            ">
+            <?php echo (float)$discountAmount;?>
+          </div>
+        </div>
+        <?php }?>
+        <hr style="border: 1px solid #d9d9d9">
+        <div>
+          <div style="
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              letter-spacing: 0em;
+              padding-top: 10px;
+              text-align: left;
+              width: 48%;
+              display: inline-block;
+            ">
+            Total
+          </div>
+          <div style="
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              letter-spacing: 0em;
+              text-align: right;
+              width: 50%;
+              display: inline-block;
+              padding-bottom: 20px;
+            ">
+            <?php  if($discountAmount == 0){echo $actualPrice;}else {echo $discountAmount ;} ?>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+<?php endforeach; ?>
+
+
+
+
+
