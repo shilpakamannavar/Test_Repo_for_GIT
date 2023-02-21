@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Auraine_Brands::brands" title="Brands" sortOrder="20000">
+                    <resource id="Auraine_Brands::brands_addrow" title="Manage Brands" sortOrder="10"/>
+                    <resource id="Auraine_Brands::brands_index" title="Brands Index" sortOrder="10"/>
+                    <resource id="Auraine_Brands::brands_massdelete" title="Brands Mass Delete" sortOrder="10"/>
+                    <resource id="Auraine_Brands::brands_massstatus" title="Brands Mass Status" sortOrder="10"/>
+                    <resource id="Auraine_Brands::brands_save" title="Brands Save" sortOrder="10"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
