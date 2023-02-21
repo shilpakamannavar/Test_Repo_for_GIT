@@ -32,14 +32,11 @@ class CategoryResolver implements ResolverInterface
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
         $category = $value['model'];
-        $image = $category->getData('category_image_2');
+        $imageUrl = null;
 
-        if ($image) {
-            $imageUrl = $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . 'catalog/category/' . $image;
-        } else {
-            $imageUrl = null;
-        }
-
+        if ($category->getData('category_image_2')) {
+            $imageUrl = $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . 'catalog/category/' . $category->getData('category_image_2');
+        } 
         return $imageUrl;
     }
 }

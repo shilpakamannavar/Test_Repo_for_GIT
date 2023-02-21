@@ -8,9 +8,9 @@ input CategoryFilterInput {
 }
 
 interface CategoryInterface {
-  
   category_image_2: String @doc(description: "An optional Image of the category.") @resolver(class: "\\Auraine\\Category\\Model\\Resolver\\CategoryResolver")
    }
+   
 type Category {
     category_image_2: String @resolver(class: "Auraine\\Category\\Model\\Resolver\\CategoryImageResolver") @doc(description: "Custom category image attribute with full URL")
 }
