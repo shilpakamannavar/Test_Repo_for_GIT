@@ -17,12 +17,44 @@ class PromoValidator
     private $promoItemRegistry;
 
     /**
+     * @var \Magento\Checkout\Model\Session
+     */
+    private $checkoutSession;
+
+    /**
+     * @var \Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface
+     */
+    private $maskedQuoteInterface;
+
+    /**
+     * @var \Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface
+     */
+    private $quoteFactory;
+
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
+    private $customerSession;
+
+    /**
      * @param PromoItemRegistry $promoItemRegistry
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface $maskedQuoteInterface
+     * @param \Magento\Quote\Model\QuoteFactory $quoteFactory
+     * @param \Magento\Customer\Model\Session $customerSession
      */
     public function __construct(
         PromoItemRegistry $promoItemRegistry,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface $maskedQuoteInterface,
+        \Magento\Quote\Model\QuoteFactory $quoteFactory,
+        \Magento\Customer\Model\Session $customerSession
     ) {
         $this->promoItemRegistry = $promoItemRegistry;
+        $this->checkoutSession = $checkoutSession;
+        $this->maskedQuoteInterface = $maskedQuoteInterface;
+        $this->quoteFactory = $quoteFactory;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -69,7 +101,6 @@ class PromoValidator
                 }
             }
         }
-
         return null;
     }
 
@@ -92,5 +123,27 @@ class PromoValidator
         }
 
         return (float)$qty;
+    }
+
+    /**
+     * Get Current cart quote.
+     *
+     * @param array $args
+     *
+     * @return \Magento\Quote\Model\Quote | null
+     */
+    public function getQuote($args)
+    {
+        $quoteId = $this->maskedQuoteInterface->execute($args['cartId']);
+
+        $quote = null;
+
+        if ($this->customerSession->isLoggedIn()) {
+            $quote = $this->checkoutSession->getQuote();
+        } else {
+            $quote = $this->quoteFactory->create()->load($quoteId);
+        }
+        
+        return $quote;
     }
 }
