@@ -1,0 +1,164 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">auraine_schedule_schedule_form.schedule_form_data_source</item>
+		</item>
+		<item name="label" xsi:type="string" translate="true">General Information</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+	</argument>
+	<settings>
+		<buttons>
+			<button name="back" class="Auraine\Schedule\Block\Adminhtml\Schedule\Edit\BackButton"/>
+			<button name="delete" class="Auraine\Schedule\Block\Adminhtml\Schedule\Edit\DeleteButton"/>
+			<button name="save" class="Auraine\Schedule\Block\Adminhtml\Schedule\Edit\SaveButton"/>
+			<button name="save_and_continue" class="Auraine\Schedule\Block\Adminhtml\Schedule\Edit\SaveAndContinueButton"/>
+		</buttons>
+		<namespace>auraine_schedule_schedule_form</namespace>
+		<dataScope>data</dataScope>
+		<deps>
+			<dep>auraine_schedule_schedule_form.schedule_form_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="schedule_form_data_source">
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+		<settings>
+			<submitUrl path="*/*/save"/>
+		</settings>
+		<dataProvider name="schedule_form_data_source" class="Auraine\Schedule\Model\Schedule\DataProvider">
+			<settings>
+				<requestFieldName>schedule_id</requestFieldName>
+				<primaryFieldName>schedule_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<fieldset name="general">
+		<settings>
+			<label>General</label>
+		</settings>
+		<field name="old_banner_id" formElement="select" sortOrder="20">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">schedule</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">Old Banner Id</label>
+				<dataScope>old_banner_id</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+			<formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\Schedule\Model\Config\Source\Banner"/>
+                    </settings>
+                </select>
+            </formElements>
+		</field>
+		<field name="new_banner_id" formElement="select" sortOrder="30">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">schedule</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">New Banner Id</label>
+				<dataScope>new_banner_id</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+			<formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\Schedule\Model\Config\Source\Banner"/>
+                    </settings>
+                </select>
+            </formElements>
+		</field>
+		<field name="start_date" formElement="date" sortOrder="40">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">schedule</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">Start Date</label>
+				<dataScope>start_date</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="end_date" formElement="date" sortOrder="50">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">schedule</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">End Date</label>
+				<dataScope>end_date</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="is_active" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">slider</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Is Active</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+		<field name="status" formElement="select" sortOrder="70">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">schedule</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">status</label>
+				<dataScope>status</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+			<formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\Schedule\Model\Config\Source\StatusDropdownValues"/>
+                    </settings>
+                </select>
+            </formElements>
+		</field>
+	</fieldset>
+</form>
