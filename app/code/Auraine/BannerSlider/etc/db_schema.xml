@@ -36,6 +36,10 @@
                 comment="Entity ID"/>
         <column xsi:type="int" name="slider_id" padding="10" unsigned="true" nullable="false" identity="false"
                 comment="Slider ID"/>
+         <column xsi:type="int" name="target_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="1" comment="Target ID"/>
+        <column xsi:type="varchar" name="category_id" nullable="false" default="1" comment="Category ID"/>
+        <column xsi:type="varchar" name="target_type" nullable="false" comment="Target Type"/>
         <column xsi:type="varchar" name="slider_target_id" nullable="false" comment="Slider Target ID"/>
         <column xsi:type="varchar" name="title" nullable="false" comment="Slider Title"/>
         <column xsi:type="int" name="resource_map_id" padding="10" unsigned="true" nullable="false" identity="false"

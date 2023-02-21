@@ -45,6 +45,10 @@ type BannerSliderBanner {
     sort_order: Int @doc(description: "sort order")
     additional_information: String @doc(description: "Addtional information")
     resource_map: BannerSliderResourceMap @doc(description: "banner slider resource map")
+    category_id: String @doc(description: "category id")
+    category_uid: String @doc(description: "category uid")
+    target_id: String @doc(description: "target id")
+    target_type: String @doc(description: "target type")
 }
 
 type BannerSliderResourceMap {
