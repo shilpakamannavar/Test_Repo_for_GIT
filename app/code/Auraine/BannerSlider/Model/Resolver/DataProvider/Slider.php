@@ -95,6 +95,7 @@ class Slider
                     'target_type',
                     'target_id',
                     'sort_order',
+                    'display_type'
                 ]);
                 $encode = "base64_encode";
                 $data['category_uid'] = $encode($data['category_id']);

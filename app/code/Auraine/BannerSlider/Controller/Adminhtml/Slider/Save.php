@@ -70,7 +70,8 @@ class Save extends Action
                 'sort_order',
                 'target_type',
                 'target_id',
-                'category_id'
+                'category_id',
+                'display_type'
                 
             ]);
             $this->dataPersistor->set('bannerslider_slider', $model->getData());

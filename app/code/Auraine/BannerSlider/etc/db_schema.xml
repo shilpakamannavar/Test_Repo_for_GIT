@@ -13,6 +13,7 @@
                 default="1" comment="Target ID"/>
         <column xsi:type="varchar" name="category_id" nullable="false" default="1" comment="Category ID"/>
         <column xsi:type="varchar" name="page_type" nullable="false" comment="Page Type"/>
+        <column xsi:type="varchar" name="display_type" nullable="false" comment="Display Type"/>
          <column xsi:type="varchar" name="target_type" nullable="false" comment="Target Type"/>
         <column xsi:type="longtext" name="additional_information" nullable="false" comment="additional_information"/>
         <column xsi:type="text" name="product_ids" nullable="false" comment="product_id"/>

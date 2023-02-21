@@ -18,6 +18,7 @@ type BannerSlider {
     identifier: String @doc(description: "identifier")
     slider_type: String @doc(description: "slider type")
     page_type: String @doc(description: "page type")
+    display_type: String @doc(description: "display type")
     category_id: String @doc(description: "category id")
     category_uid: String @doc(description: "category uid")
     target_id: String @doc(description: "target id")
