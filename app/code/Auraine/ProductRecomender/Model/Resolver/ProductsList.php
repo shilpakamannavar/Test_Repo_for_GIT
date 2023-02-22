@@ -70,7 +70,7 @@ class ProductsList implements ResolverInterface
         foreach ($orders as $order) {
             $order_id = $order['entity_id'];
             $order = $this->orderRepository->get($order_id);
-            //if ($this->hasItemInOrder($id, $order)) {
+            if ($this->hasItemInOrder($id, $order)) {
             foreach ($order->getAllItems() as $item) {
 
                 if ($id === (int) $item->getProductId()) {
@@ -80,7 +80,7 @@ class ProductsList implements ResolverInterface
                     (int) $orderItems[$item->getProductId()] + (int) $item->getQtyOrdered() :
                     (int) $item->getQtyOrdered();
             }
-            //}
+          }
         }
 
         // sord the most bought items
@@ -88,5 +88,19 @@ class ProductsList implements ResolverInterface
         // get only id in array index
         $orderItems = array_keys($orderItems);
         return $orderItems;
+    }
+
+    /**
+     * Has item in these orders.
+     */
+    private function hasItemInOrder(int $id, $order): bool
+    {
+        foreach ($order->getAllItems() as $item) {
+            if ($id === (int) $item->getProductId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
