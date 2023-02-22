@@ -328,7 +328,7 @@
                 </imageUploader>
             </formElements>
         </field>
-        <field name="resource_path_youtube_video" sortOrder="90" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+        <field name="resource_path_youtube_video" sortOrder="105" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -345,7 +345,56 @@
                 <label translate="true">Youtube Embed Link (only the URL)</label>
                 <visible>false</visible>
             </settings>
+        </field> 
+       <field name="resource_path_poster_image" sortOrder="90" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Poster Image(Youtube and S3 videos)</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="codbansli/banner_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Auraine_BannerSlider/image-preview</previewTmpl>
+                        <openDialogTitle>Resource</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>auraine/banner/images</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
         </field>
+         <field name="resource_path_video" sortOrder="100" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                        <item name="resource_type" xsi:type="array">
+                            <item name="field" xsi:type="string">resource_type</item>
+                            <item name="value" xsi:type="string">video</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">S3 Video Link</label>
+                <visible>false</visible>
+            </settings>
+        </field> 
         <field name="additional_information" sortOrder="140" formElement="wysiwyg" template="ui/form/field">
          <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">

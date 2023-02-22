@@ -39,6 +39,7 @@ type BannerSliderBanner {
     resource_type: String @doc(description: "resource type")
     resource_path: String @doc(description: "resource path")
     resource_path_mobile: String @doc(description: "resource path mobile")
+    resource_path_poster: String @doc(description: "resource path mobile")
     is_enabled: Int @doc(description: "is enabled")
     title: String @doc(description: "title")
     alt_text: String @doc(description: "alt text")
