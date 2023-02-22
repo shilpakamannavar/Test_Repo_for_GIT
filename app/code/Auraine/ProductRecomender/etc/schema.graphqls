@@ -1,0 +1,8 @@
+type Query {
+    getFrequentProducts
+    (
+        id: Int @doc(description: "Id of the product")
+
+    )
+    : [Int] @resolver( class: "Auraine\\ProductRecomender\\Model\\Resolver\\ProductsList") @doc(description: "List of Frequent Products")
+}
