@@ -100,7 +100,6 @@ class AddFreeProductResolver implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-
         if (empty($args['cartId'])) {
             throw new GraphQlInputException(__('Required parameter "cartId" is missing'));
         }
@@ -109,11 +108,11 @@ class AddFreeProductResolver implements ResolverInterface
             throw new GraphQlInputException(__('Required parameter "cartItems" is missing'));
         }
 
-        $quote = $this->checkoutSession->getQuote();
+        $quote = $this->promoValidator->getQuote($args);
         $cartItems = $args['cartItems'];
-        
+
         try {
-            
+
             $itemsForAdd = [];
             $updateTotalQty = false;
 
@@ -121,10 +120,9 @@ class AddFreeProductResolver implements ResolverInterface
                 if (empty($params)) {
                     continue;
                 }
+
                 $product = $this->productRepository->get($cartItems[0]['sku']);
-
                 $productId = (int)$product->getId();
-
                 $promoDataItem = $this->promoValidator->getPromoDataItem($params['sku'], $params);
 
                 if ($promoDataItem) {
