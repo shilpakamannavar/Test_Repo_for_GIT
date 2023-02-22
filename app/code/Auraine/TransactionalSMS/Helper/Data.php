@@ -231,7 +231,7 @@ class Data
      * @param string $configPath
      * @return string
      */
-    private function generateMessage($codes, $accurate, $configPath)
+    public function generateMessage($codes, $accurate, $configPath)
     {
         $message = $this->getConfigValue($configPath);
 
@@ -249,7 +249,7 @@ class Data
      * @param string $mobile
      * @return void
      */
-    private function dispachSMS($message, $mobile)
+    public function dispachSMS($message, $mobile)
     {
         $otpStatus = $this->getConfigValue(self::OTP_STATUS_PATH);
 
@@ -261,12 +261,12 @@ class Data
     }
 
     /**
-     * Fetch OTP config status
+     * Fetch store config value
      *
      * @param string $path
      * @return string
      */
-    private function getConfigValue($path)
+    public function getConfigValue($path)
     {
         return $this->_scopeConfig
             ->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
