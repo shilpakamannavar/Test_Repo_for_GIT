@@ -116,31 +116,33 @@ class Slider
     {
         $banners = [];
         foreach ($slider->getBanners() as $banner) {
-            $bannerData = $this->extractData($banner, [
-                'slider_id',
-                'resource_type',
-                'resource_path',
-                'resource_path_mobile',
-                'resource_path_poster',
-                'is_enabled',
-                'title',
-                'alt_text',
-                'link',
-                'additional_information',
-                'sort_order',
-                'slider_target_id',
-                'category_id',
-                'target_type',
-                'target_id'
-            ]);
-            $encode = "base64_encode";
-            $bannerData['category_uid'] = $encode($bannerData['category_id']);
-            $communityId = explode(',', $bannerData['slider_target_id']);
-            $communityId=str_replace('"', "", json_encode($communityId));
-            $communityId = json_decode($communityId, true);
-            $bannerData['slider_target_id'] = $communityId;
-            $bannerData['resource_map'] = $this->getResourceMap($banner);
-            $banners[] = $bannerData;
+            if ($banner->getIsEnabled()== 1) {
+                $bannerData = $this->extractData($banner, [
+                    'slider_id',
+                    'resource_type',
+                    'resource_path',
+                    'resource_path_mobile',
+                    'resource_path_poster',
+                    'is_enabled',
+                    'title',
+                    'alt_text',
+                    'link',
+                    'additional_information',
+                    'sort_order',
+                    'slider_target_id',
+                    'category_id',
+                    'target_type',
+                    'target_id'
+                ]);
+                $encode = "base64_encode";
+                $bannerData['category_uid'] = $encode($bannerData['category_id']);
+                $communityId = explode(',', $bannerData['slider_target_id']);
+                $communityId=str_replace('"', "", json_encode($communityId));
+                $communityId = json_decode($communityId, true);
+                $bannerData['slider_target_id'] = $communityId;
+                $bannerData['resource_map'] = $this->getResourceMap($banner);
+                $banners[] = $bannerData;
+            }
         }
         return $banners;
     }
@@ -177,7 +179,7 @@ class Slider
                 $key = $field;
             }
 
-            if ($key=== 'resource_path' || $key=== 'resource_path_mobile') {
+            if ($key=== 'resource_path' || $key=== 'resource_path_mobile' || $key== 'resource_path_poster') {
                 $data[$key] = $this->videoCheck($object->getData($field));
             } else {
                 $data[$key] = $object->getData($field);
