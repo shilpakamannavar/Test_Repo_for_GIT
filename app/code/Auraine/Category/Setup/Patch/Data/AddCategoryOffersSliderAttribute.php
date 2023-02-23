@@ -109,8 +109,6 @@ class AddCategoryOffersSliderAttribute implements DataPatchInterface, PatchRever
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }

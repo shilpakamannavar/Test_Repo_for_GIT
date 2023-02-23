@@ -111,8 +111,6 @@ class AddCategoryOurExclusivesSliderAttribute implements DataPatchInterface, Pat
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
