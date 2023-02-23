@@ -2,6 +2,5 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
 		<add id="Auraine_Staticcontent::auraine_staticcontent_content" title="Content" module="Auraine_Staticcontent" sortOrder="9999" resource="Magento_Backend::content" parent="Auraine::top_level" action="auraine_staticcontent/content/index"/>
-		<!-- <add id="Auraine_Staticcontent::auraine_staticcontent_type" title="Type" module="Auraine_Staticcontent" sortOrder="9999" resource="Magento_Backend::content" parent="Auraine::top_level" action="auraine_staticcontent/type/index"/> -->
 	</menu>
 </config>

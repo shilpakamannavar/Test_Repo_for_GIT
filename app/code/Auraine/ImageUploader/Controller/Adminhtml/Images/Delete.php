@@ -48,7 +48,7 @@ class Delete extends Action
         $url = $this->imageCollectionFactory
                     ->create()
                     ->addFieldToSelect('path')
-                    ->addFieldToFilter('image_id', $id )
+                    ->addFieldToFilter('image_id', $id)
                     ->getData();
         try {
             $imageModel = $this->imageFactory->create();

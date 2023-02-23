@@ -7,16 +7,21 @@
 // phpcs:disable Magento2.Templates.ThisInTemplate
 
 /** @var $block \Magento\Sales\Block\Order\Email\Items */
-?> <?php
-
-
-?> <?php $_order = $block->getOrder() ?> <?php if ($_order) : ?> <?php $_items = $_order->getAllItems(); ?> <?php foreach ($_items as $_item) : ?> <?php if (!$_item->getParentItem()) : ?> <?= $block->getItemHtml($_item) ?> <?php endif; ?> <?php endforeach; ?> 
-<?php
+$_order = $block->getOrder() ;
+ if ($_order):
+$_items = $_order->getAllItems();
+   foreach ($_items as $_item) :
+    if (!$_item->getParentItem()) {
+    ?>
+    <?= $block->getItemHtml($_item) ?>
+    <?php }
+     endforeach;
 $shipping_address = $_order->getShippingAddress();
 $countryName = '';
 $countryId = $shipping_address->getData("country_id");
 if (!empty($countryId)) {
-    $countryModel = \Magento\Framework\App\ObjectManager::getInstance()->create('Magento\Directory\Model\Country')->load($countryId);
+    $countryModel = \Magento\Framework\App\ObjectManager::getInstance()
+    ->create('Magento\Directory\Model\Country')->load($countryId);
     if ($countryModel) {
         $countryName = $countryModel->getName();
     }
@@ -30,28 +35,29 @@ $region = $shipping_address->getData("region");
 $postcode = $shipping_address->getData("postcode");
 $telephone = $shipping_address->getData("telephone");
 $output = '';
+$br = "<br/>";
 if (!empty($firstname) && !empty($lastname)) {
-    $output .= $firstname . ' ' . $lastname . "<br/>";
+    $output .= $firstname . ' ' . $lastname .$br;
 }
 if (!empty($company)) {
-    $output .= $company . "<br/>";
+    $output .= $company .$br;
 }
 if (!empty($street)) {
-    $output .= $street . "<br/>";
+    $output .= $street . $br;
 }
 if (!empty($city)) {
-    $output .= $city . "<br/>";
+    $output .= $city . $br;
 }
 if (!empty($region)) {
-    $output .= $region . "<br/>";
+    $output .= $region . $br;
 }
 if (!empty($countryname)) {
-    $output .= $countryname . "<br/>";
+    $output .= $countryname . $br;
 } elseif (!empty($countryId)) {
-    $output .= $countryId . "<br/>";
+    $output .= $countryId . $br;
 }
 if (!empty($postcode)) {
-    $output .= $postcode . "<br/>";
+    $output .= $postcode . $br;
 }
 if (!empty($telephone)) {
     $output .= "Tel: " . $telephone;
@@ -101,24 +107,9 @@ if (!empty($telephone)) {
             letter-spacing: 0em;
           "> Billing Details </div>
     <div>
-      <table>
+      <th>
         <tr> <?= $block->getChildHtml('order_totals') ?> </tr>
-      </table>
+      </th>
     </div>
   </div>
-</div> <?php if ($this->helper(\Magento\GiftMessage\Helper\Message::class)
-            ->isMessagesAllowed('order', $_order, $_order->getStore())
-        && $_order->getGiftMessageId()
-    ) : ?> <?php $_giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)
-            ->getGiftMessage($_order->getGiftMessageId()); ?> <?php if ($_giftMessage) : ?> <br />
-<table class="message-gift">
-  <tr>
-    <td>
-      <h3> <?= $block->escapeHtml(__('Gift Message for this Order')) ?> </h3>
-      <strong> <?= $block->escapeHtml(__('From:')) ?> </strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?> <br />
-      <strong> <?= $block->escapeHtml(__('To:')) ?> </strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?> <br />
-      <strong> <?= $block->escapeHtml(__('Message:')) ?> </strong>
-      <br /> <?= $block->escapeHtml($_giftMessage->getMessage()) ?>
-    </td>
-  </tr>
-</table> <?php endif; ?> <?php endif; ?> <?php endif; ?>
+</div><?php endif; ?>

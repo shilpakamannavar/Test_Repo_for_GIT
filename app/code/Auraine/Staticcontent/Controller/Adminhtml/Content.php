@@ -10,7 +10,7 @@ namespace Auraine\Staticcontent\Controller\Adminhtml;
 abstract class Content extends \Magento\Backend\App\Action
 {
 
-    protected $_coreRegistry;
+    protected $coreRegistry;
     const ADMIN_RESOURCE = 'Auraine_Staticcontent::top_level';
 
     /**
@@ -21,7 +21,7 @@ abstract class Content extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry
     ) {
-        $this->_coreRegistry = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 
