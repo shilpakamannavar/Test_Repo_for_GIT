@@ -10,8 +10,8 @@ namespace Auraine\Schedule\Controller\Adminhtml\Schedule;
 use Magento\Framework\Exception\LocalizedException;
 use Auraine\Schedule\Api\ScheduleRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\Api\FilterBuilder; 
-use Magento\Framework\Api\Search\FilterGroupBuilder; 
+use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\Api\Search\FilterGroupBuilder;
 
 class Save extends \Magento\Backend\App\Action
 {
@@ -58,8 +58,9 @@ class Save extends \Magento\Backend\App\Action
         if ($data) {
             $id = $this->getRequest()->getParam('schedule_id');
             
-            foreach($schedules->getItems() as $schedule){
-               if ($schedule->getOldBannerId() == $data['old_banner_id'] && $schedule->getNewBannerId() == $data['new_banner_id'] && empty($id)){
+            foreach ($schedules->getItems() as $schedule){
+               if ($schedule->getOldBannerId() == $data['old_banner_id'] &&
+                $schedule->getNewBannerId() == $data['new_banner_id'] && empty($id)){
                     $this->messageManager->addErrorMessage(__('This Schedule  exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
@@ -70,10 +71,10 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addErrorMessage(__('This Schedule no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
-            if ($data['old_banner_id'] == $data['new_banner_id']){
+            if ($data['old_banner_id'] == $data['new_banner_id']) {
                 $this->messageManager->addErrorMessage('Banners should not be same choose different banners');
             } else {
-                $model->setData($data);            
+                $model->setData($data);
             
                 try {
                     $model->save();
@@ -87,12 +88,17 @@ class Save extends \Magento\Backend\App\Action
                 } catch (LocalizedException $e) {
                     $this->messageManager->addErrorMessage($e->getMessage());
                 } catch (\Exception $e) {
-                    $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Schedule.'));
+                    $this->messageManager->addExceptionMessage(
+                        $e,
+                        ('Something went wrong while saving the Schedule.'));
                 }
             }
         
             $this->dataPersistor->set('auraine_schedule_schedule', $data);
-            return $resultRedirect->setPath('*/*/edit', ['schedule_id' => $this->getRequest()->getParam('schedule_id')]);
+            return $resultRedirect->setPath('*/*/edit', [
+                        'schedule_id' => $this->getRequest()->getParam('schedule_id')
+                    ]
+                );
         }
         return $resultRedirect->setPath('*/*/');
     }

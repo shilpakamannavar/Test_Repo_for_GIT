@@ -105,9 +105,7 @@ class AddSkinConcernProductAttribute implements DataPatchInterface, PatchReverta
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

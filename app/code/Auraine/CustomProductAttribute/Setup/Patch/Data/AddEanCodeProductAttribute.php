@@ -105,9 +105,7 @@ class AddEanCodeProductAttribute implements DataPatchInterface, PatchRevertableI
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 
