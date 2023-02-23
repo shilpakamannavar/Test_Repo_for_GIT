@@ -145,6 +145,28 @@ class Banner extends AbstractModel implements BannerInterface
     {
         return $this->getData('resource_path_mobile');
     }
+    
+    /**
+     * Set Resource Path
+     *
+     * @param string|null $resourcePathMobile
+     * @return BannerInterface
+     */
+    public function setResourcePathPoster(?string $resourcePathPoster): BannerInterface
+    {
+        return $this->setData('resource_path_poster', $resourcePathPoster);
+    }
+
+    /**
+     * Get Resource Path
+     *
+     * @return string|null
+     */
+    public function getResourcePathPoster(): ?string
+    {
+        return $this->getData('resource_path_poster');
+    }
+
 
     /**
      * Set Resource Path

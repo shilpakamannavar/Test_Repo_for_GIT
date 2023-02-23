@@ -5,6 +5,7 @@ namespace Auraine\BannerSlider\Controller\Adminhtml\Banner;
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 use Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorPool;
 use Auraine\BannerSlider\Model\Banner\ResourcePathMobile\ProcessorPoolMobile;
+use Auraine\BannerSlider\Model\Banner\ResourcePathPoster\ProcessorPoolPoster;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\ResponseInterface;
@@ -46,13 +47,15 @@ class Save extends Action
         BannerRepositoryInterface $bannerRepository,
         DataPersistorInterface $dataPersistor,
         ProcessorPool $processorPool,
-        ProcessorPoolMobile $processorPoolMobile
+        ProcessorPoolMobile $processorPoolMobile,
+        ProcessorPoolposter $processorPoolPoster
     ) {
         parent::__construct($context);
         $this->dataPersistor = $dataPersistor;
         $this->bannerRepository = $bannerRepository;
         $this->processorPool = $processorPool;
         $this->processorPoolMobile = $processorPoolMobile;
+        $this->processorPoolPoster = $processorPoolPoster;
     }
 
     /**
@@ -113,6 +116,17 @@ class Save extends Action
                 }
             }
 
+            $resourcePathProcessorsPoster = $this->processorPoolPoster->getProcessors();
+            if (isset($resourcePathProcessorsPoster[$model->getResourceType()])) {
+                try {
+                    $model->setResourcePathPoster($resourcePathProcessorsPoster[
+                        $model->getResourceType()
+                        ]->process($this->getRequest()));
+                } catch (LocalizedException $e) {
+                    $this->dataPersistor->set('bannerslider_banner', $model->getData());
+                    throw new CouldNotSaveException(__($e->getMessage()));
+                }
+            }
             $this->dataPersistor->set('bannerslider_banner', $model->getData());
             $model = $this->bannerRepository->save($model);
             $this->dataPersistor->clear('bannerslider_banner');
