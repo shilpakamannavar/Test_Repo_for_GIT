@@ -59,8 +59,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function sendMail($mail, $items)
     {
+
         $this->inlineTranslation->suspend();
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         $transport = $this->transportBuilder
             ->setTemplateIdentifier(
                 'abandoned_cart_notifications_attributes_emailtemplate'
