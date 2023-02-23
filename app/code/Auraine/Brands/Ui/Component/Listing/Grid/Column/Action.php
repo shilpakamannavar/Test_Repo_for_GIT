@@ -12,12 +12,12 @@ class Action extends Column
     /** Url path */
     public const ROW_EDIT_URL = 'brands/brands/addrow';
     /** @var UrlInterface */
-    protected $_urlBuilder;
+    protected $urlBuilder;
 
     /**
      * @var string
      */
-    private $_editUrl;
+    private $editUrl;
 
     /**
      * @param ContextInterface   $context
@@ -35,8 +35,8 @@ class Action extends Column
         array $data = [],
         $editUrl = self::ROW_EDIT_URL
     ) {
-        $this->_urlBuilder = $urlBuilder;
-        $this->_editUrl = $editUrl;
+        $this->urlBuilder = $urlBuilder;
+        $this->editUrl = $editUrl;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -53,8 +53,8 @@ class Action extends Column
             $name = $this->getData('name');
             if (isset($item['entity_id'])) {
                 $item[$name]['edit'] = [
-                    'href' => $this->_urlBuilder->getUrl(
-                        $this->_editUrl,
+                    'href' => $this->urlBuilder->getUrl(
+                        $this->editUrl,
                         ['id' => $item['entity_id']]
                     ),
                     'label' => __('Edit'),

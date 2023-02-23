@@ -100,7 +100,7 @@ class AddRowTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 2' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -121,7 +121,7 @@ class AddRowTest extends TestCase
     public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 3' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -142,7 +142,7 @@ class AddRowTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 4' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -163,7 +163,7 @@ class AddRowTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 5' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -184,7 +184,7 @@ class AddRowTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 6' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -205,7 +205,7 @@ class AddRowTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 7' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
