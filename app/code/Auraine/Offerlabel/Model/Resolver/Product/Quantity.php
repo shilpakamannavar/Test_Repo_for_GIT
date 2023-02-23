@@ -54,9 +54,7 @@ class Quantity implements ResolverInterface
 
         /* @var $product ProductInterface */
         $product = $value['model'];
-        $onlyXLeftQty = $this->getOnlyXLeftQty($product);
-
-        return $onlyXLeftQty;
+        return $this->getOnlyXLeftQty($product);
     }
 
     /**
@@ -76,14 +74,10 @@ class Quantity implements ResolverInterface
             return null;
         }
 
-        $stockItem = $this->stockRegistry->getStockItem($product->getId());
-
         $stockCurrentQty = $this->stockRegistry->getStockStatus(
             $product->getId(),
             $product->getStore()->getWebsiteId()
         )->getQty();
-
-        $stockLeft = $stockCurrentQty - $stockItem->getMinQty();
 
         if ($stockCurrentQty >= 0) {
             return (float)$stockCurrentQty;
