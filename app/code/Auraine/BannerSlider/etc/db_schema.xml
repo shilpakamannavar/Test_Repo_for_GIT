@@ -48,6 +48,7 @@
         <column xsi:type="varchar" name="resource_type" length="255" default="0" nullable="false"
                 comment="Resouce Type"/>
         <column xsi:type="text" name="resource_path" nullable="false" comment="Resource Path/URL"/>
+        <column xsi:type="text" name="resource_path_poster" nullable="false" comment="Resource Path/URL"/>
         <column xsi:type="text" name="resource_path_mobile" nullable="false" comment="Resource Path/URL Mobile"/>
         <column xsi:type="varchar" name="alt_text" nullable="false" comment="Alt Text"/>
         <column xsi:type="longtext" name="additional_information" nullable="false" comment="additional_information"/>
