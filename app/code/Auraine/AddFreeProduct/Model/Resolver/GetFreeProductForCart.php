@@ -2,17 +2,8 @@
 namespace Auraine\AddFreeProduct\Model\Resolver;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
-use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\GraphQl\Model\Query\ContextInterface;
-use Magento\Quote\Model\Cart\AddProductsToCart as AddProductsToCartService;
-use Magento\Quote\Model\Cart\Data\AddProductsToCartOutput;
-use Magento\Quote\Model\Cart\Data\CartItemFactory;
-use Magento\Quote\Model\QuoteMutexInterface;
-use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
-use Magento\Quote\Model\Cart\Data\Error;
-use Magento\QuoteGraphQl\Model\CartItem\DataProvider\Processor\ItemDataProcessorInterface;
 
 class GetFreeProductForCart implements ResolverInterface
 {
