@@ -105,9 +105,7 @@ class AddSideEffectsSafetyWarningCaProductAttribute implements DataPatchInterfac
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

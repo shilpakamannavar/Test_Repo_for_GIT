@@ -105,9 +105,7 @@ class AddRefundableProductAttribute implements DataPatchInterface, PatchRevertab
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

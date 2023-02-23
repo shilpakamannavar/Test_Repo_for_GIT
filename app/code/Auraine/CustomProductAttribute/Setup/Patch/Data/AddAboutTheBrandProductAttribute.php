@@ -105,9 +105,7 @@ class AddAboutTheBrandProductAttribute implements DataPatchInterface, PatchRever
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 
