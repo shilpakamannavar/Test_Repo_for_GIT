@@ -28,7 +28,7 @@ class DataProvider implements ResolverInterface
     /**
      * @var $_scopeConfig
      */
-    private $_scopeConfig;
+    private $scopeConfig;
     /**
      * Constructor
      * @param Data $swatchHelper
@@ -39,7 +39,7 @@ class DataProvider implements ResolverInterface
         ScopeConfigInterface $scopeConfig,
     ) {
         $this->swatchHelper = $swatchHelper;
-        $this->_scopeConfig = $scopeConfig;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -62,7 +62,7 @@ class DataProvider implements ResolverInterface
             $typeName = $this->getswatchType($hexCodeData[$value['value_id']]['type']);
             $hexCode =  $hexCodeData[$value['value_id']]['value'];
             if ($typeName == 'ImageSwatchData') {
-                $url = $this->_scopeConfig->getValue(
+                $url = $this->scopeConfig->getValue(
                     'swatch_data/general/swatch_data_base_url',
                     \Magento\Store\Model\ScopeInterface::SCOPE_STORE
                 );
@@ -84,13 +84,20 @@ class DataProvider implements ResolverInterface
      */
     private function getswatchType($valueType)
     {
+        $value = null ;
         switch ($valueType) {
             case 0:
-                return 'TextSwatchData';
+                $value = 'TextSwatchData';
+                break;
             case 1:
-                return 'ColorSwatchData';
+                $value = 'ColorSwatchData';
+                break;
             case 2:
-                return 'ImageSwatchData';
+                $value = 'ImageSwatchData';
+                break;
+            default:
+                break;
         }
+        return $value ;
     }
 }
