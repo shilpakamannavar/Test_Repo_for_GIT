@@ -15,7 +15,7 @@ class AddData implements DataPatchInterface
     /**
      * @var RegionFactory
      */
-    protected $_regionFactory;
+    protected $regionFactory;
       /**
        * @param ModuleDataSetupInterface $moduleDataSetup
        * @param RegionFactory $regionFactory
@@ -25,7 +25,7 @@ class AddData implements DataPatchInterface
         RegionFactory $regionFactory
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
-        $this->_regionFactory = $regionFactory;
+        $this->regionFactory = $regionFactory;
     }
 
     /**
@@ -41,13 +41,15 @@ class AddData implements DataPatchInterface
 
             $binds = ['country_id'   => 'IN', 'code' => $code, 'default_name' => $name];
             $this->moduleDataSetup->getConnection()->insert($this->moduleDataSetup->
-                getTable('directory_country_region'), $binds);
+                getTable('directory_country_region'), $binds
+            );
             $regionId = $this->moduleDataSetup->getConnection()->
                 lastInsertId($this->moduleDataSetup->getTable('directory_country_region'));
 
             $binds = ['locale'=> 'en_US', 'region_id' => $regionId, 'name'=> $name];
             $this->moduleDataSetup->getConnection()->insert($this->moduleDataSetup->
-                getTable('directory_country_region_name'), $binds);
+                getTable('directory_country_region_name'), $binds
+            );
         }
     }
 
