@@ -9,9 +9,9 @@ class TypeName implements OptionSourceInterface
     /**
      * colletionfactory of value
      *
-     * @var $_typeName
+     * @var $typeName
      */
-    protected $_typeName;
+    protected $typeName;
 
     /**
      * @param Context $context
@@ -22,7 +22,7 @@ class TypeName implements OptionSourceInterface
     public function __construct(
         Content $typeName,
        ) {
-        $this->_typeName = $typeName;
+        $this->typeName = $typeName;
     }
     
     /**
@@ -31,7 +31,7 @@ class TypeName implements OptionSourceInterface
     public function toOptionArray()
     {
         $result = [];
-        $typeModel = $this->_typeName->create();
+        $typeModel = $this->typeName->create();
 
         foreach ($typeModel as $value) {
             $result[] = [

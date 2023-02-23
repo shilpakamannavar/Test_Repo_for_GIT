@@ -36,13 +36,14 @@ class Save extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $returnPath = $resultRedirect->setPath('*/*/');
         if ($data) {
             $id = $this->getRequest()->getParam('type_id');
         
             $model = $this->_objectManager->create(\Auraine\Staticcontent\Model\Type::class)->load($id);
             if (!$model->getId() && $id) {
                 $this->messageManager->addErrorMessage(__('This Type no longer exists.'));
-                return $resultRedirect->setPath('*/*/');
+                $returnPath = $resultRedirect->setPath('*/*/');
             }
         
             $model->setData($data);
@@ -53,9 +54,9 @@ class Save extends \Magento\Backend\App\Action
                 $this->dataPersistor->clear('auraine_staticcontent_type');
         
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['type_id' => $model->getId()]);
+                    $returnPath = $resultRedirect->setPath('*/*/edit', ['type_id' => $model->getId()]);
                 }
-                return $resultRedirect->setPath('*/*/');
+                $returnPath = $resultRedirect->setPath('*/*/');
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {
@@ -63,8 +64,8 @@ class Save extends \Magento\Backend\App\Action
             }
         
             $this->dataPersistor->set('auraine_staticcontent_type', $data);
-            return $resultRedirect->setPath('*/*/edit', ['type_id' => $this->getRequest()->getParam('type_id')]);
+            $returnPath = $resultRedirect->setPath('*/*/edit', ['type_id' => $this->getRequest()->getParam('type_id')]);
         }
-        return $resultRedirect->setPath('*/*/');
+        return $returnPath;
     }
 }
