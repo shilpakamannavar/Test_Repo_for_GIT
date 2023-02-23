@@ -24,7 +24,7 @@ interface GridInterface
       */
     public const DESCRIPTION = 'description';
      /**
-      * @var is_popular
+      * @var isPopular
       */
     public const POPULAR = 'is_popular';
      /**
@@ -104,9 +104,9 @@ interface GridInterface
     /**
      * Set popualr.
      *
-     * @param int $is_popular
+     * @param int $isPopular
      */
-    public function setPopular($is_popular);
+    public function setPopular($isPopular);
     /**
      * Get featured.
      */
@@ -114,9 +114,9 @@ interface GridInterface
     /**
      * Set featured.
      *
-     * @param int $is_featured
+     * @param int $isFeatured
      */
-    public function setFeatured($is_featured);
+    public function setFeatured($isFeatured);
     /**
      * Get justin.
      */
@@ -124,9 +124,9 @@ interface GridInterface
     /**
      * Set justin.
      *
-     * @param int $is_justin
+     * @param int $isJustin
      */
-    public function setJustin($is_justin);
+    public function setJustin($isJustin);
     /**
      * Get exclusive.
      */
@@ -134,7 +134,7 @@ interface GridInterface
     /**
      * Set exclusive.
      *
-     * @param int $is_exclusive
+     * @param int $isExclusive
      */
-    public function setExclusive($is_exclusive);
+    public function setExclusive($isExclusive);
 }

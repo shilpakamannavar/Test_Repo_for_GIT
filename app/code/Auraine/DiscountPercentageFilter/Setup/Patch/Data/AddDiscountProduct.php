@@ -116,8 +116,6 @@ class AddDiscountProduct implements DataPatchInterface, PatchRevertableInterface
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }

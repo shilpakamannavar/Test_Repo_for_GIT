@@ -105,9 +105,7 @@ class AddExchangeableProductAttribute implements DataPatchInterface, PatchRevert
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

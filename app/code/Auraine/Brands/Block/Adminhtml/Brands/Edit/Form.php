@@ -11,13 +11,25 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
     /**
      * @var \Magento\Store\Model\System\Store
      */
-    protected $_systemStore;
+    protected $systemStore;
+    /**
+     * @var \Magento\Store\Model\System\Store
+     */
+    protected $options;
+    /**
+     * @var \Magento\Store\Model\System\Store
+     */
+    protected $featureOptions;
+     /**
+     * @var \Magento\Store\Model\System\Store
+     */
+    protected $wysiwygConfig;
     /**
      * Constructor function
      *
      * @param Context $context,Registry $registry,FormFactory $formFactory,Config $wysiwygConfig
      *
-     * @param Status $options,FeatureStatus $feature_options,Store $systemStore,array $data
+     * @param Status $options,FeatureStatus $featureOptions,Store $systemStore,array $data
      *
      */
     public function __construct(
@@ -26,13 +38,13 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Auraine\Brands\Model\Status $options,
-        \Auraine\Brands\Model\FeatureStatus $feature_options,
+        \Auraine\Brands\Model\FeatureStatus $featureOptions,
         Store $systemStore,
         array $data = []
     ) {
-        $this->_options = $options;
-        $this->_feature_options = $feature_options;
-        $this->_wysiwygConfig = $wysiwygConfig;
+        $this->options = $options;
+        $this->featureOptions = $featureOptions;
+        $this->wysiwygConfig = $wysiwygConfig;
         parent::__construct($context, $registry, $formFactory, $data);
         $this->systemStore = $systemStore;
     }
@@ -44,7 +56,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      */
     protected function _prepareForm()
     {
-        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
         $model = $this->_coreRegistry->registry('row_data');
         $form = $this->_formFactory->create(
             ['data' => [
@@ -55,7 +66,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                         ]
             ]
         );
-
         $form->setHtmlIdPrefix('wkgrid_');
         if ($model->getId()) {
             $fieldset = $form->addFieldset(
@@ -82,7 +92,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
       
-        $field = $fieldset->addField(
+        $fieldset->addField(
             'stores',
             'select',
             [
@@ -96,7 +106,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
 
-        $wysiwygConfig = $this->_wysiwygConfig->getConfig(['tab_id' => $this->getTabId()]);
+        $wysiwygConfig = $this->wysiwygConfig->getConfig(['tab_id' => $this->getTabId()]);
 
         $fieldset->addField(
             'description',
@@ -129,7 +139,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Popular'),
                 'id' => 'is_popular',
                 'title' => __('Is Popular'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
               
                
             ]
@@ -142,7 +152,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Featured'),
                 'id' => 'is_featured',
                 'title' => __('Is Featured'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
                 'class' => 'switch-checkbox',
                
             ]
@@ -156,7 +166,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Exclusive'),
                 'id' => 'is_exclusive',
                 'title' => __('Is Exclusive'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
                 'class' => 'switch-checkbox',
                
             ]
@@ -170,7 +180,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Just Launched'),
                 'id' => 'is_justin',
                 'title' => __('Is Just Launched'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
                 'class' => 'toggle',
               
             ]
@@ -183,7 +193,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Status'),
                 'id' => 'status',
                 'title' => __('Status'),
-                'values' => $this->_options->getOptionArray(),
+                'values' => $this->options->getOptionArray(),
                 'class' => 'required-entry',
                 'required' => true,
               

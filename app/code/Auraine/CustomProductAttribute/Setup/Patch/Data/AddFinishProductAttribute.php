@@ -105,9 +105,7 @@ class AddFinishProductAttribute implements DataPatchInterface, PatchRevertableIn
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

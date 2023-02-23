@@ -105,9 +105,7 @@ class AddLengthProductAttribute implements DataPatchInterface, PatchRevertableIn
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

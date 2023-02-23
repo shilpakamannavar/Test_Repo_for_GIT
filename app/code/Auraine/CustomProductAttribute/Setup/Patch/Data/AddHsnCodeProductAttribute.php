@@ -105,9 +105,7 @@ class AddHsnCodeProductAttribute implements DataPatchInterface, PatchRevertableI
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 
