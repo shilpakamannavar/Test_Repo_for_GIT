@@ -16,7 +16,7 @@ class DisplayOptions implements OptionSourceInterface
     public function toOptionArray()
     {
         return [
-        ['label' => __('Both'), 'value' => ''],
+        ['label' => __('Both'), 'value' => 'both'],
         ['label' => __('Web'), 'value' => 'web'],
         ['label' => __('Mobile'), 'value' => 'mobile'],
         ];

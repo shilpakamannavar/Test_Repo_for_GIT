@@ -121,6 +121,7 @@ class Slider
                 'resource_type',
                 'resource_path',
                 'resource_path_mobile',
+                'resource_path_poster',
                 'is_enabled',
                 'title',
                 'alt_text',

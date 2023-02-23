@@ -18,12 +18,19 @@
     <preference for="Auraine\BannerSlider\Api\Data\BannerSearchResultInterface" type="Magento\Framework\Api\SearchResults" />
     <preference for="Auraine\BannerSlider\Api\ResourceMapRepositoryInterface" type="Auraine\BannerSlider\Model\ResourceMapRepository" />
     <preference for="Auraine\BannerSlider\Api\Data\ResourceMapSearchResultInterface" type="Magento\Framework\Api\SearchResults" />
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+			</argument>
+		</arguments>
+	</type>
     <type name="Auraine\BannerSlider\Model\Config\Source\ResourceType">
         <arguments>
             <argument name="resources" xsi:type="array">
                 <item name="local_image" xsi:type="string">Local Image</item>
                 <item name="external_image" xsi:type="string">External Image</item>
                 <item name="youtube_video" xsi:type="string">Youtube Video</item>
+                <item name="video" xsi:type="string">Video</item>
             </argument>
         </arguments>
     </type>
@@ -34,13 +41,20 @@
             </argument>
         </arguments>
     </type>
+    <type name="Auraine\BannerSlider\Model\Banner\ResourcePathPoster\ProcessorPoolPoster">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="video" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePathPoster\Processor\Video</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Auraine\BannerSlider\Model\Banner\ResourcePath\ProcessorPool">
         <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\LocalImage</item>
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\ExternalImage</item>
                 <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\YoutubeVideo</item>
-                <item name="custom_html" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\CustomHtml</item>
+                <item name="video" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\Video</item>
             </argument>
         </arguments>
     </type>
@@ -108,6 +122,11 @@
             <argument name="imageUploader" xsi:type="object">Auraine\BannerSlider\Model\Banner\ImageUploader</argument>
         </arguments>
     </type>
+    <type name="Auraine\BannerSlider\Model\Banner\ResourcePathPoster\Processor\Video">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Auraine\BannerSlider\Model\Banner\ImageUploader</argument>
+        </arguments>
+    </type>
     <virtualType name="Auraine\BannerSlider\Banner\DataProvider\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
         <arguments>
             <argument name="modifiers" xsi:type="array">
@@ -123,8 +142,8 @@
                     <item name="class" xsi:type="string">Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\YoutubeVideo</item>
                     <item name="sortOrder" xsi:type="number">30</item>
                 </item>
-                <item name="custom_html" xsi:type="array">
-                    <item name="class" xsi:type="string">Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\CustomHtml</item>
+                <item name="video" xsi:type="array">
+                    <item name="class" xsi:type="string">Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\Video</item>
                     <item name="sortOrder" xsi:type="number">40</item>
                 </item>
             </argument>
@@ -141,7 +160,7 @@
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\LocalImage</item>
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\ExternalImage</item>
                 <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\YoutubeVideo</item>
-                <item name="custom_html" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\CustomHtml</item>
+                <item name="video" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\Video</item>
             </argument>
         </arguments>
     </type>
@@ -152,13 +171,20 @@
             </argument>
         </arguments>
     </type>
+      <type name="Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathPoster">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="video" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathPoster\Video</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Auraine\BannerSlider\Block\Widget\Slider\Banner\RendererPool">
         <arguments>
             <argument name="renderers" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\LocalImage</item>
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\ExternalImage</item>
                 <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\YoutubeVideo</item>
-                <item name="custom_html" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\CustomHtml</item>
+                 <item name="video" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\Video</item>
             </argument>
         </arguments>
     </type>
