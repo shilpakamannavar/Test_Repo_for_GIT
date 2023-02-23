@@ -2,10 +2,14 @@
 
 namespace Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Grid;
 
+use Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection as SliderCollection;
 use Magento\Framework\Api\Search\AggregationInterface;
+use Magento\Framework\Api\Search\DocumentInterface;
+use Magento\Framework\Api\Search\SearchCriteriaInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
 
-class Collection extends \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\Collection implements SearchResultInterface
+class Collection extends SliderCollection implements SearchResultInterface
 {
     /**
      * Create Constructor
@@ -15,7 +19,7 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\C
     protected function _construct()
     {
         parent::_construct();
-        $this->setModel(\Magento\Framework\View\Element\UiComponent\DataProvider\Document::class);
+        $this->setModel(Document::class);
     }
 
     /**
@@ -26,7 +30,7 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\C
     /**
      * Set items list.
      *
-     * @param \Magento\Framework\Api\Search\DocumentInterface[] $items
+     * @param DocumentInterface[] $items
      * @return $this
      */
     public function setItems(array $items = null)
@@ -37,7 +41,7 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\C
     /**
      * Get Aggregation
      *
-     * @return \Magento\Framework\Api\Search\AggregationInterface
+     * @return AggregationInterface
      */
     public function getAggregations()
     {
@@ -47,7 +51,7 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\C
     /**
      * Set Aggregation
      *
-     * @param \Magento\Framework\Api\Search\AggregationInterface $aggregations
+     * @param AggregationInterface $aggregations
      * @return $this
      */
     public function setAggregations($aggregations)
@@ -59,7 +63,7 @@ class Collection extends \Auraine\BannerSlider\Model\ResourceModel\ResourceMap\C
     /**
      * Get search criteria.
      *
-     * @return \Magento\Framework\Api\Search\SearchCriteriaInterface
+     * @return SearchCriteriaInterface
      */
     public function getSearchCriteria()
     {
