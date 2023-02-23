@@ -8,18 +8,9 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
 {
     public const NAME = 'thumbnail';
     public const ALT_FIELD = 'name';
-     /**
-      * @var string
-      */
-    private $_getModel;
-    /**
-     * @var string
-     */
-    private $editUrl;
-     /**
-      * @var string
-      */
-    private $_objectManager = null;
+    private $objectManager;
+    private $imageHelper;
+    private $urlBuilder;
     /**
      * @param ContextInterface $context
      *
@@ -47,8 +38,7 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->imageHelper = $imageHelper;
         $this->urlBuilder = $urlBuilder;
-      //  $this->_getModel = $model;
-        $this->_objectManager = $objectManager;
+        $this->objectManager = $objectManager;
     }
     /**
      * Prepare Data Source

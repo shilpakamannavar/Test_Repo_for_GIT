@@ -22,7 +22,7 @@ class SaveTest extends TestCase
      *
      * @var Auraine\Brands\Model\Grid
      */
-    protected $Grid;
+    protected $grid;
     /**
      * Mock gridFactoryInstance
      *
@@ -115,7 +115,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 2' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -136,7 +136,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestprocessUrlKeys()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 3' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -157,7 +157,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 4' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -178,7 +178,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 5' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -199,7 +199,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 6' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -228,7 +228,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            'Testcase 1' => [
+            'Testcase 7' => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -256,7 +256,7 @@ class SaveTest extends TestCase
       */
     protected function getBrandData()
     {
-        $data = [
+        return  [
             'title' => 'test title',
             'description' => 'test description',
             'status' => 1,
@@ -267,6 +267,6 @@ class SaveTest extends TestCase
             'is_justin' => 1,
               
         ];
-        return $data;
+      
     }
 }
