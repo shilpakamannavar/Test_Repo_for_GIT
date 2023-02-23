@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="abandoned_cart_notifications" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Abandoned cart notications configuration</label>
+            <tab>auraine_system_config</tab>
+            <resource>Auraine_AbandonedCartNotification::module_config</resource>
+
+            <group id="attributes" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Configuration</label>                
+                
+                <field id="abandoned_cart_status" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10">
+                    <label>Enable Abandoned cart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="hours_for_abandoned_cart" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="20">
+                    <label>Hours for abandoned cart</label>        
+                    <source_model>Auraine\AbandonedCartNotification\Model\Config\Source\Hours</source_model>
+                    <comment>After these hours, cart will be abandoned.</comment>
+                 </field>
+
+                 <field id="message" translate="label" type="textarea"
+                sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Abandoned cart SMS</label>
+                    <comment><![CDATA[You can make use of {{item_count}} variables in your SMS notification text]]></comment>
+                </field>
+
+                <field id="cron_schedule" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="40">
+                    <label>Schedule Cron</label>
+                    <comment>Please enter * * * * * fromat.</comment>
+                </field>
+
+            </group>
+
+        </section>
+    </system>
+</config>

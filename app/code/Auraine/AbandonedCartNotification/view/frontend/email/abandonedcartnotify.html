@@ -1,0 +1,17 @@
+<!--@subject {{trans "Abandoned cart notification"}} @-->
+<!--@vars {
+"var storeId":"Store Id",
+"var itemCount":"ItemCount",
+"var name":"Name",
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<table>
+     <tr class="email-intro">
+        <td>Dear, {{var name}}</td>
+    </tr>
+    <tr class="email-intro">
+        <td>Your cart is having {{var itemCount}} items, please checkout to get it.</td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}
