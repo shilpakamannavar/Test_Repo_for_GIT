@@ -108,7 +108,7 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
      */
     public function getSliderOptions()
     {
-        $options = [
+        return [
             'slidesToShow' => $this->getData('items_to_show'),
             'speed' => $this->getData('sliding_speed'),
             'autoplay' => $this->getData('autoplay') === '1',
@@ -118,7 +118,6 @@ class Slider extends Template implements \Magento\Widget\Block\BlockInterface
             'dots' => $this->getData('show_dots') === '1',
             'infinite' => true//$this->getData('infinite_scroll') === '1'
         ];
-        return $options;
     }
 
     /**

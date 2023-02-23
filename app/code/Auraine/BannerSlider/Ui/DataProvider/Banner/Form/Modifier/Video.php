@@ -81,12 +81,13 @@ class Video implements ModifierInterface
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $urlPoster = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathPoster;
-            $fileNamePoster = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath($resourcePathPoster);
-            $file_exists_poster = 'file_exists';
+            $fileNamePoster = $this->filesystem
+                ->getDirectoryRead(DirectoryList::MEDIA)
+                ->getAbsolutePath($resourcePathPoster);
+            $fileExistsPoster = 'file_exists';
             $basename = 'basename';
             $filesize = 'filesize';
-            if ($file_exists_poster($fileNamePoster)) {
-                
+            if ($fileExistsPoster($fileNamePoster)) {
                 $resourcePathDataPoster = [
                     'name' => $basename($fileNamePoster),
                     'url' => $urlPoster,

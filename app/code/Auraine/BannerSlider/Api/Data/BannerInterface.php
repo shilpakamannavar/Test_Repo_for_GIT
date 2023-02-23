@@ -96,11 +96,11 @@ interface BannerInterface
      */
     public function setResourcePathMobile(?string $resourcePathMobile): \Auraine\BannerSlider\Api\Data\BannerInterface;
 
-     /**
-      * Get Resource Path Poster
-      *
-      * @return string|null
-      */
+    /**
+     * Get Resource Path Poster
+     *
+     * @return string|null
+     */
     public function getResourcePathPoster(): ?string;
 
     /**
@@ -110,7 +110,7 @@ interface BannerInterface
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
     public function setResourcePathPoster(?string $resourcePathPoster): \Auraine\BannerSlider\Api\Data\BannerInterface;
-    
+
     /**
      * Get Is Enabled
      *
@@ -147,7 +147,7 @@ interface BannerInterface
      * @return string
      */
     public function getUpdatedAt(): string;
-    
+
     /**
      * Set Updated At
      *

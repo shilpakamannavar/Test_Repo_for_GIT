@@ -22,7 +22,7 @@ interface BannerRepositoryInterface
      * @return \Auraine\BannerSlider\Api\Data\BannerInterface
      */
     public function create(): \Auraine\BannerSlider\Api\Data\BannerInterface;
-    
+
     /**
      * Save Banner
      *
@@ -31,7 +31,7 @@ interface BannerRepositoryInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function save(\Auraine\BannerSlider\Api\Data\BannerInterface $banner):
-     \Auraine\BannerSlider\Api\Data\BannerInterface;
+    \Auraine\BannerSlider\Api\Data\BannerInterface;
 
     /**
      * Delete Banner
