@@ -14,14 +14,14 @@ class ContentList implements ResolverInterface
     /**
      * colletionfactory of value
      *
-     * @var $_value
+     * @var $value
      */
-    protected $_value;
+    protected $value;
 
     public function __construct(
         CollectionFactory $value
     ) {
-            $this->_value = $value;
+            $this->value = $value;
     }
  
    /**
@@ -37,7 +37,7 @@ class ContentList implements ResolverInterface
     {
         $content = $this->getContent($args);
 
-        $collection = $this->_value->create()
+        $collection = $this->value->create()
                         ->addFieldToFilter('type', $content)
                         ->addFieldToFilter('enable', 1)
                         ->setOrder('sortorder', 'ASC');

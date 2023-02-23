@@ -64,28 +64,10 @@
 				</param>
 			</childDefaults>
 		</settings>
-		<!-- <selectionsColumn name="ids">
-			<settings>
-				<indexField>content_id</indexField>
-			</settings>
-		</selectionsColumn>
-		<column name="content_id">
-			<settings>
-				<filter>text</filter>
-				<sorting>asc</sorting>
-				<label translate="true">ID</label>
-			</settings>
-		</column> -->
 		<column name="type">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">Type</label>
-				<!-- <editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor> -->
+				<label translate="true">Type</label>		
 			</settings>
 		</column>
 		<column name="label">
@@ -130,12 +112,6 @@
                 <filter>select</filter>
                 <dataType>select</dataType>
 				<label translate="true">Enable</label>
-				<!-- <editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor> -->
 			</settings>
 		</column>
 		<actionsColumn name="actions" class="Auraine\Staticcontent\Ui\Component\Listing\Column\ContentActions">

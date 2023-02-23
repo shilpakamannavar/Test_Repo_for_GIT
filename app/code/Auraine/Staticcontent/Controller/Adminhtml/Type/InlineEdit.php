@@ -63,7 +63,6 @@ class InlineEdit extends \Magento\Backend\App\Action
             $model->save();
         } catch (\Exception $e) {
             $messages[] = "[Content ID: {$modelid}]  {$e->getMessage()}";
-            $error = true;
-        }
+         }
     }
 }

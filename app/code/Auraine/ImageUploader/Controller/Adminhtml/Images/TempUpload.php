@@ -62,6 +62,7 @@ class TempUpload extends \Magento\Backend\App\Action
             $fileUploader->setAllowRenameFiles(true);
             $fileUploader->setAllowCreateFolders(true);
             $fileUploader->setFilesDispersion(false);
+            
             $result = $fileUploader->save($this->mediaDirectory->getAbsolutePath('tmp/imageUploader/images'));
             $result['url'] = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA)
             . 'tmp/imageUploader/images/' . ltrim(str_replace('\\', '/', $result['file']), '/');

@@ -36,7 +36,7 @@ class CategoryResolver implements ResolverInterface
 
         if ($category->getData('category_image_2')) {
             $imageUrl = rtrim($this->urlBuilder->getBaseUrl(), '/'). $category->getData('category_image_2');
-        } 
+        }
         return $imageUrl;
     }
 }

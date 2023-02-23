@@ -1,58 +1,55 @@
 <?php
-
 /** @var $block \Magento\Sales\Block\Order\Email\Items\DefaultItems */
 
 /** @var $_item \Magento\Sales\Model\Order\Item */
 $_item = $block->getItem();
 $_order = $_item->getOrder();
+$product =  $_item->getProduct();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$brandsList = $objectManager->create(BrandsList::class);
+$brand = (int)$product->getData('brand_name');
+$productAttributeOptions = $objectManager->get(
+  \Magento\Eav\Model\Config::class
+)->getAttribute('catalog_product', 'color');
+$options = $productAttributeOptions->getSource()->getAllOptions();
+foreach ($options as $option) {
+  if ($option['value'] == $product->getData('color')) {
+    $color = $option['label'];
+    break;
+  }
+}
+$brandName = $brandsList->getBrandFromId($brand);
+$actualPrice = (float) $_item->getQtyOrdered()  * (float)$product->getPrice();
+$specialPrice = (float) $_item->getQtyOrdered()  * (float)$product->getSpecialPrice();
+$discountPrice = $actualPrice - $specialPrice;
+$imagewidth = 200;
+$imageheight = 200;
+$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+$image_url = $imageHelper->init($product, 'small_image')
+  ->setImageFile($product->getSmallImage())->resize($imagewidth, $imageheight)->getUrl();
 ?>
-
-	<?php $product =  $_item->getProduct();?>
-	<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();?>
-    <?php
-    use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
-    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-    $brandsList = $objectManager->create(BrandsList::class);
-    $brand = (int)$product->getData('brand_name');
-    $productAttributeOptions = $objectManager->get(\Magento\Eav\Model\Config::class)->getAttribute('catalog_product', 'color');
-    $options = $productAttributeOptions->getSource()->getAllOptions();
-    foreach ($options as $option) {
-        if ($option['value'] == $product->getData('color')) {
-            $color = $option['label'];
-            break;
-        }
-    }
-    $brandName = $brandsList->getBrandFromId($brand);
-    $actualPrice = (float) $_item->getQtyOrdered()  * (float)$product->getPrice();
-    $specialPrice = (float) $_item->getQtyOrdered()  * (float)$product->getSpecialPrice();
-    $discountPrice = $actualPrice - $specialPrice;
-
-    ?>
-	
-   
-	<?php  $imagewidth=200;
-	$imageheight=200;
-	$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
-	$image_url = $imageHelper->init($product, 'small_image')->setImageFile($product->getSmallImage())->resize($imagewidth, $imageheight)->getUrl();
-	 ?>
-    <div style="padding: 20px">
-<div style="
+<div style="padding: 20px">
+  <div style="
                             background-color: #f5f5f5;
                             padding-top: 7px;
                             padding-left: 10px;
                             padding-right: 10px;
                         ">
-<div style="
+    <div style="
           width: 74px;
           height: 82px;
           background-color: white;
           display: inline-block;
           vertical-align: top;
         ">
-        <img style="width: 72px; height: 80px" src="<?php echo $image_url;?>" alt="">
-      </div>
-      <div style="padding-left: 20px; display: inline-block; width: 70%">
-        <div style="
+      <img style="width: 72px; height: 80px" src="<?php echo $image_url; ?>" alt="">
+    </div>
+    <div style="padding-left: 20px; display: inline-block; width: 70%">
+      <div style="
             font-family: Helvetica;
             font-size: 14px;
             font-weight: 400;
@@ -61,9 +58,9 @@ $_order = $_item->getOrder();
             color: #787878;
             padding-bottom: 10px;
           ">
-          <?php echo  $brandName ; ?>
-        </div>
-        <div style="
+        <?php echo  $brandName; ?>
+      </div>
+      <div style="
             font-family: Helvetica;
             font-size: 16px;
             font-weight: 400;
@@ -72,9 +69,9 @@ $_order = $_item->getOrder();
             padding-bottom: 22px;
           ">
         <?= $block->escapeHtml($_item->getName()) ?>
-        </div>
-        <div>
-          <div style="
+      </div>
+      <div>
+        <div style="
               display: inline-block;
               font-family: Helvetica;
               font-size: 14px;
@@ -82,9 +79,9 @@ $_order = $_item->getOrder();
               line-height: 8px;
               letter-spacing: 0em;
             ">
-            QTY:    <?= (float) $_item->getQtyOrdered() ?>
-          </div>
-          <div style="
+          QTY: <?= (float) $_item->getQtyOrdered() ?>
+        </div>
+        <div style="
               display: inline-block;
               padding-left: 20px;
               font-family: Helvetica;
@@ -93,11 +90,11 @@ $_order = $_item->getOrder();
               line-height: 8px;
               letter-spacing: 0em;
             ">
-            Color: <?php echo $color; ?>
-          </div>
+          Color: <?php echo $color; ?>
         </div>
-        <div>
-          <div style="
+      </div>
+      <div>
+        <div style="
               font-family: Helvetica;
               font-size: 14px;
               font-weight: 400;
@@ -108,9 +105,9 @@ $_order = $_item->getOrder();
               width: 48%;
               display: inline-block;
             ">
-            Total
-          </div>
-          <div style="
+          Total
+        </div>
+        <div style="
               font-family: Helvetica;
               font-size: 14px;
               font-weight: 400;
@@ -120,12 +117,12 @@ $_order = $_item->getOrder();
               width: 50%;
               display: inline-block;
             ">
-            
-            <?php echo (float)$actualPrice; ?>
-          </div>
+
+          <?php echo (float)$actualPrice; ?>
         </div>
-        <div>
-          <div style="
+      </div>
+      <div>
+        <div style="
               font-family: Helvetica;
               font-size: 14px;
               font-weight: 400;
@@ -136,9 +133,9 @@ $_order = $_item->getOrder();
               width: 48%;
               display: inline-block;
             ">
-            Discount
-          </div>
-          <div style="
+          Discount
+        </div>
+        <div style="
               font-family: Helvetica;
               font-size: 14px;
               font-weight: 400;
@@ -148,12 +145,12 @@ $_order = $_item->getOrder();
               width: 50%;
               display: inline-block;
             ">
-            <?php echo (float)$discountPrice;?>
-          </div>
+          <?php echo (float)$discountPrice; ?>
         </div>
-        <hr style="border: 1px solid #d9d9d9">
-        <div>
-          <div style="
+      </div>
+      <hr style="border: 1px solid #d9d9d9">
+      <div>
+        <div style="
               font-family: Helvetica;
               font-size: 14px;
               font-weight: 400;
@@ -164,9 +161,9 @@ $_order = $_item->getOrder();
               width: 48%;
               display: inline-block;
             ">
-            Total
-          </div>
-          <div style="
+          Total
+        </div>
+        <div style="
               font-family: Helvetica;
               font-size: 14px;
               font-weight: 400;
@@ -177,9 +174,9 @@ $_order = $_item->getOrder();
               display: inline-block;
               padding-bottom: 20px;
             ">
-            <?= /* @noEscape */ $block->getItemPrice($_item) ?>
-          </div>
+          <?= /* @noEscape */ $block->getItemPrice($_item) ?>
         </div>
       </div>
-      </div>
-      </div>
+    </div>
+  </div>
+</div>
