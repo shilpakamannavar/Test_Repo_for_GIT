@@ -30,13 +30,17 @@ class LocalImage implements ProcessorInterfaceMobile
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function process(array $item): string
-    { 
+    {
         $resourcePathMobile = $item['resource_path_mobile'];
         if ($resourcePathMobile) {
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $imageUrlMobile = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathMobile;
-            return sprintf('<img style="width: 200px; height: auto;" src="%s" alt="%s" />', $imageUrlMobile, $resourcePathMobile);
+            return sprintf(
+                '<img style="width: 200px; height: auto;" src="%s" alt="%s" />',
+                $imageUrlMobile,
+                $resourcePathMobile
+            );
         } else {
             return __('No image found');
         }

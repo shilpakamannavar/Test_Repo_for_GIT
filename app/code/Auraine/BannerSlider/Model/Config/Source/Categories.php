@@ -7,12 +7,12 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
     /**
      * @var array
      */
-    protected $_categories;
+    protected $categories;
 
     /**
      * @var array
      */
-    protected $_storeManager;
+    protected $storeManager;
 
      /**
       * Category constructor.
@@ -24,8 +24,8 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
         \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $collection,
         \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
-        $this->_categories = $collection;
-        $this->_storeManager = $storeManager;
+        $this->categories = $collection;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -36,11 +36,11 @@ class Categories implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
 
-        $categories = $this->_categories->create();
+        $categories = $this->categories->create();
         $collection = $categories
                      ->addAttributeToSelect('*')
                      ->addFieldToFilter('is_active', 1)
-                     ->setStore($this->_storeManager
+                     ->setStore($this->storeManager
                      ->getStore());
         $itemArray = ['value' => '', 'label' => '--Please Select--'];
         //

@@ -36,7 +36,11 @@ class Video implements ProcessorInterfacePoster
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $imageUrlPoster = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathPoster;
-            return sprintf('<img style="width: 200px; height: auto;" src="%s" alt="%s" />', $imageUrlPoster, $resourcePathPoster);
+            return sprintf(
+                '<img style="width: 200px; height: auto;" src="%s" alt="%s" />',
+                $imageUrlPoster,
+                $resourcePathPoster
+            );
         } else {
             return __('No image found');
         }

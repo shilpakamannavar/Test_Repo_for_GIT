@@ -41,8 +41,8 @@ abstract class GenericButton implements ButtonProviderInterface
     {
         try {
             return $this->bannerRepository
-                        ->loadById((int)$this->context->getRequest()->getParam('entity_id'))
-                        ->getEntityId();
+                ->loadById((int)$this->context->getRequest()->getParam('entity_id'))
+                ->getEntityId();
         } catch (NoSuchEntityException $e) {
             return null;
         }

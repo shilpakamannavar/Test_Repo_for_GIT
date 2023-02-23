@@ -46,24 +46,31 @@ class Slider
         $sliderIds = $args['sliderIds'] ?? null;
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
-        $sortOrder = $args['sort_order'] ?? null;
         $categoryId = $args['category_id'] ?? null;
-        $category_uid = $args['category_uid'] ?? null;
+        $categoryUid = $args['category_uid'] ?? null;
+        $type = $args['type'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
         $decode = "base64_decode";
-        
-        if (!empty($category_uid)) {
-            $collection->addFieldToFilter('category_id', $decode($category_uid));
+
+        if (!empty($type) && $type === 'mobile') {
+            $collection->addFieldToFilter('display_type', ['neq' => 'web']);
+        } else {
+            $collection->addFieldToFilter('display_type', ['neq' => 'mobile']);
         }
-        
+
+        if (!empty($categoryUid)) {
+            $collection->addFieldToFilter('category_id', $decode($categoryUid));
+        }
+
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
         }
+
         if (!empty($sliderIds)) {
             $collection->addFieldToFilter('entity_id', [
                 'in' => [$sliderIds]]);
         }
-       
+
         if (!empty($sliderType)) {
             $collection->addFieldToFilter('slider_type', $sliderType);
         }
@@ -174,7 +181,7 @@ class Slider
     {
         $data = [];
         foreach ($fields as $key => $field) {
-            
+
             if (is_numeric($key)) {
                 $key = $field;
             }
@@ -184,7 +191,7 @@ class Slider
             } else {
                 $data[$key] = $object->getData($field);
             }
-            
+
         }
         return $data;
     }
@@ -199,7 +206,7 @@ class Slider
     {
         $currentStore = $this->storeManager->getStore();
         $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-       
+
         if (strpos($url, 'youtube.com') > 0) {
             return $url;
         } else {
