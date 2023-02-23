@@ -43,7 +43,7 @@ class SaveButton extends GenericButton
      */
     private function getOptions()
     {
-        $options = [
+        return [
             [
                 'id_hard' => 'save_and_close',
                 'label' => __('Save & Close'),
@@ -67,7 +67,5 @@ class SaveButton extends GenericButton
                 ]
             ]
         ];
-
-        return $options;
     }
 }

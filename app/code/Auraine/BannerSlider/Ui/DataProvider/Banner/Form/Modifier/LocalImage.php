@@ -72,10 +72,10 @@ class LocalImage implements ModifierInterface
             $store = $this->storeManager->getStore();
             $url = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePath;
             $fileName = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath($resourcePath);
-            $file_exists = 'file_exists';
+            $fileExists = 'file_exists';
             $basename = 'basename';
             $filesize = 'filesize';
-            if ($file_exists($fileName)) {
+            if ($fileExists($fileName)) {
                 $resourcePathData = [
                     'name' => $basename($fileName),
                     'url' => $url,
@@ -92,11 +92,13 @@ class LocalImage implements ModifierInterface
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $urlMobile = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathMobile;
-            $fileNameMobile = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath($resourcePathMobile);
-            $file_exists_mobile = 'file_exists';
+            $fileNameMobile = $this->filesystem
+                ->getDirectoryRead(DirectoryList::MEDIA)
+                ->getAbsolutePath($resourcePathMobile);
+            $fileExistsMobile = 'file_exists';
             $basename = 'basename';
             $filesize = 'filesize';
-            if ($file_exists_mobile($fileNameMobile)) {
+            if ($fileExistsMobile($fileNameMobile)) {
                 $resourcePathDataMobile = [
                     'name' => $basename($fileNameMobile),
                     'url' => $urlMobile,

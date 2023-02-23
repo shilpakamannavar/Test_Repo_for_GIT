@@ -31,7 +31,7 @@ interface SliderRepositoryInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function save(\Auraine\BannerSlider\Api\Data\SliderInterface $slider):
-     \Auraine\BannerSlider\Api\Data\SliderInterface;
+    \Auraine\BannerSlider\Api\Data\SliderInterface;
 
     /**
      * Delete Slider

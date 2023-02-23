@@ -7,9 +7,10 @@ type Query {
         sort_order: Int @doc(description: "filter by sort order")
         category_id: Int @doc(description: "filter by category id")
         category_uid: String @doc(description: "filter by category uid")
+        type: String @doc(description: "filter by display type")
         ): [BannerSlider] @resolver(class: "Auraine\\BannerSlider\\Model\\Resolver\\BannerSlider") @doc(description: "Get banner slider bu slider ID")
     getSliderList : [SliderList] @resolver (class:"\\Auraine\\BannerSlider\\Model\\Resolver\\SliderList") @doc(description:"List of Slider")
-    
+
    }
 
 type BannerSlider {

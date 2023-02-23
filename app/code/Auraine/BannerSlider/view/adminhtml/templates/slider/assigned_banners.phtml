@@ -5,26 +5,28 @@ $bannerData = $block->getFormattedBanners();
 ?>
 <div class="assigned_banners">
     <?php if (count($bannerData)): ?>
-            <?php foreach ($bannerData as $resourceMapId => $banners): ?>
-                <div class="resource-map">
-                    <h3>
-                        <label>
-                            <a href="<?php echo $block->getResourceMapUrl($resourceMapId) ?>" target="_blank">
-                                <?php echo $banners['title'] ?>
-                            </a>
-                        </label>
-                    </h3>
-                    <ul>
-                        <?php foreach ($banners['banners'] as $banner): ?>
+        <?php foreach ($bannerData as $resourceMapId => $banners): ?>
+            <div class="resource-map">
+                <h3>
+                    <label>
+                        <a href="<?php echo $block->getResourceMapUrl($resourceMapId) ?>" target="_blank">
+                            <?php echo $banners['title'] ?>
+                        </a>
+                    </label>
+                </h3>
+                <ul>
+                    <?php foreach ($banners['banners'] as $banner): ?>
                         <li>
-                            <a href="<?php echo $block->getUrl('*/banner/edit', ['entity_id' => $banner['entity_id']]) ?>" target="_blank" title="<?php echo $banner['title'] ?>">
+                            <a href="<?php echo $block->getUrl('*/banner/edit', [
+                                    'entity_id' => $banner['entity_id']
+                                ]) ?>" target="_blank" title="<?php echo $banner['title'] ?>">
                                 <?php echo $banner['resource_path'] ?>
                             </a>
                         </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endforeach; ?>
     <?php else: ?>
         <h2><?php echo __('No banners assigned to slider') ?></h2>
     <?php endif; ?>

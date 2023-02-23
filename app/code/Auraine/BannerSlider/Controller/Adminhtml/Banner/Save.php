@@ -91,13 +91,14 @@ class Save extends Action
                 'target_id',
                 'category_id'
             ]);
-            $model['slider_target_id'] = ($sliderData['slider_target_id']) ? implode(",", $sliderData['slider_target_id']) : '';
+            $model['slider_target_id'] = ($sliderData['slider_target_id']) ?
+                implode(",", $sliderData['slider_target_id']) : '';
             $resourcePathProcessors = $this->processorPool->getProcessors();
             if (isset($resourcePathProcessors[$model->getResourceType()])) {
                 try {
                     $model->setResourcePath($resourcePathProcessors[
-                        $model->getResourceType()
-                        ]->process($this->getRequest()));
+                    $model->getResourceType()
+                    ]->process($this->getRequest()));
                 } catch (LocalizedException $e) {
                     $this->dataPersistor->set('bannerslider_banner', $model->getData());
                     throw new CouldNotSaveException(__($e->getMessage()));
@@ -108,8 +109,8 @@ class Save extends Action
             if (isset($resourcePathProcessorsMobile[$model->getResourceType()])) {
                 try {
                     $model->setResourcePathMobile($resourcePathProcessorsMobile[
-                        $model->getResourceType()
-                        ]->process($this->getRequest()));
+                    $model->getResourceType()
+                    ]->process($this->getRequest()));
                 } catch (LocalizedException $e) {
                     $this->dataPersistor->set('bannerslider_banner', $model->getData());
                     throw new CouldNotSaveException(__($e->getMessage()));
@@ -120,8 +121,8 @@ class Save extends Action
             if (isset($resourcePathProcessorsPoster[$model->getResourceType()])) {
                 try {
                     $model->setResourcePathPoster($resourcePathProcessorsPoster[
-                        $model->getResourceType()
-                        ]->process($this->getRequest()));
+                    $model->getResourceType()
+                    ]->process($this->getRequest()));
                 } catch (LocalizedException $e) {
                     $this->dataPersistor->set('bannerslider_banner', $model->getData());
                     throw new CouldNotSaveException(__($e->getMessage()));
