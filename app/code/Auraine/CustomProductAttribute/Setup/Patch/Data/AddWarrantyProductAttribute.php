@@ -105,9 +105,7 @@ class AddWarrantyProductAttribute implements DataPatchInterface, PatchRevertable
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

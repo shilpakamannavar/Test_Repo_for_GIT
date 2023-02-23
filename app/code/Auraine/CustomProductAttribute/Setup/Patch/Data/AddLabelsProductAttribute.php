@@ -105,9 +105,7 @@ class AddLabelsProductAttribute implements DataPatchInterface, PatchRevertableIn
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

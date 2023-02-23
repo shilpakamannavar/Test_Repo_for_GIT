@@ -105,9 +105,7 @@ class AddWidthProductAttribute implements DataPatchInterface, PatchRevertableInt
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

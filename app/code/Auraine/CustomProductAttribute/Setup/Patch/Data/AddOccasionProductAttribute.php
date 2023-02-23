@@ -105,9 +105,7 @@ class AddOccasionProductAttribute implements DataPatchInterface, PatchRevertable
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

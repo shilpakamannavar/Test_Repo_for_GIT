@@ -75,7 +75,26 @@ class AddSizeProductAttribute implements DataPatchInterface, PatchRevertableInte
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => false,
                 'is_filterable_in_grid' => false,
-                'option' => array('values' => array("30 ml","50 ml","100 ml","150  ml","200 ml","250 ml","500 ml","100gm","55 cm","65 cm","75 cm","6 foot","8 foot","10 foot","100","Onesize"))
+                'option' => array(
+                    'values' => array(
+                        "30 ml",
+                        "50 ml",
+                        "100 ml",
+                        "150  ml",
+                        "200 ml",
+                        "250 ml",
+                        "500 ml",
+                        "100gm",
+                        "55 cm",
+                        "65 cm",
+                        "75 cm",
+                        "6 foot",
+                        "8 foot",
+                        "10 foot",
+                        "100",
+                        "Onesize"
+                        )
+                    )
             ]
         );
 
@@ -105,9 +124,7 @@ class AddSizeProductAttribute implements DataPatchInterface, PatchRevertableInte
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

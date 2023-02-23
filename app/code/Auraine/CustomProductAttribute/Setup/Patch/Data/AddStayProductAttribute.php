@@ -105,9 +105,7 @@ class AddStayProductAttribute implements DataPatchInterface, PatchRevertableInte
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

@@ -46,6 +46,11 @@ class DataTest extends TestCase
     private $testObject;
 
     /**
+     * This should be set explicitly
+     */
+    public const  TESTCASE = "Testcase 1";
+
+    /**
      * Main set up method
      */
     public function setUp() : void
@@ -69,11 +74,11 @@ class DataTest extends TestCase
      */
     public function dataProviderForTestIsCurrentPageCategoryPage()
     {
-        $prerequisites_current_page = 2;
+        $prerequisitesCurrentPage = 2;
         $expectedResult = 2;
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisites_current_page],
+            self::TESTCASE => [
+                'prerequisites' => ['param' => $prerequisitesCurrentPage],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];
@@ -92,12 +97,12 @@ class DataTest extends TestCase
      */
     public function dataProviderForTestGetCurrentCategoryName()
     {
-        $prerequisites_current_category = 3;
+        $prerequisitesCurrentCategory = 3;
         $expectedResult = 3;
         
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisites_current_category],
+            self::TESTCASE => [
+                'prerequisites' => ['param' => $prerequisitesCurrentCategory],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];
@@ -116,12 +121,12 @@ class DataTest extends TestCase
      */
     public function dataProviderForTestGetSubCategories()
     {
-        $prerequisites_current_page = 10;
+        $prerequisitesCurrentPage = 10;
         $expectedResult = 10;
 
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisites_current_page],
+            self::TESTCASE => [
+                'prerequisites' => ['param' => $prerequisitesCurrentPage],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];
@@ -140,12 +145,12 @@ class DataTest extends TestCase
      */
     public function dataProviderForTestGetCurrentCategory()
     {
-        $prerequisites_current_category = 3;
+        $prerequisitesCurrentCategory = 3;
         $expectedResult = 3;
 
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisites_current_category],
+            self::TESTCASE => [
+                'prerequisites' => ['param' => $prerequisitesCurrentCategory],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];
@@ -164,12 +169,12 @@ class DataTest extends TestCase
      */
     public function dataProviderForTestGetDiscountVar()
     {
-        $prerequisites_discount_id = '10% And Above';
+        $prerequisitesDiscountId = '10% And Above';
         $expectedResult = '10% And Above';
 
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisites_discount_id],
+            self::TESTCASE => [
+                'prerequisites' => ['param' => $prerequisitesDiscountId],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];
@@ -188,12 +193,12 @@ class DataTest extends TestCase
      */
     public function dataProviderForTestIsModuleOutputEnabled()
     {
-        $prerequisites_module_enable_status = 'yes';
+        $prerequisitesModuleEnableStatus = 'yes';
         $expectedResult = 'yes';
 
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' =>  $prerequisites_module_enable_status],
+            self::TESTCASE => [
+                'prerequisites' => ['param' =>  $prerequisitesModuleEnableStatus],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];

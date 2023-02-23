@@ -105,9 +105,7 @@ class AddNewProductAttribute implements DataPatchInterface, PatchRevertableInter
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

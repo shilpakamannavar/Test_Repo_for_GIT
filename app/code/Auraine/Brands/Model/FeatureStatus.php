@@ -13,8 +13,8 @@ class FeatureStatus implements OptionSourceInterface
      */
     public function getOptionArray()
     {
-        $options = ['1' => __('Yes'),'0' => __('No')];
-        return $options;
+        return ['1' => __('Yes'),'0' => __('No')];
+       
     }
     /**
      * Get get Option Array Yes or No.
@@ -23,8 +23,8 @@ class FeatureStatus implements OptionSourceInterface
      */
     public function getOptionArrayYesNo()
     {
-        $options = ['1' => __('Yes'),'0' => __('No')];
-        return $options;
+        return ['1' => __('Yes'),'0' => __('No')];
+        
     }
     /**
      * Get get Option Array Yes or No.
