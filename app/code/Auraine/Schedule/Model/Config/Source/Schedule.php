@@ -40,7 +40,7 @@ class Schedule implements OptionSourceInterface
     {
         $items = $this->scheduleRepository->getList($this->getSearchCriteriaBuilder()->create())->getItems();
         $result = [];
-        $default_res= [
+        $defaultRes= [
             ['value' => '', 'label' => 'Select banner'],
             ];
         foreach ($items as $item) {
@@ -49,7 +49,7 @@ class Schedule implements OptionSourceInterface
                 'value' => $item->getEntityId()
             ];
         }
-        return array_merge($default_res, $result);
+        return array_merge($defaultRes, $result);
     }
 
     /**
