@@ -10,7 +10,7 @@ abstract class Pincode extends \Magento\Backend\App\Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    protected $coreRegistry;
 
     public const ADMIN_RESOURCE = 'Auraine_ZipCode::top_level';
 
@@ -23,7 +23,7 @@ abstract class Pincode extends \Magento\Backend\App\Action
         \Magento\Framework\Registry $coreRegistry
     ) {
         parent::__construct($context);
-        $this->_coreRegistry = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
     }
 
     /**
