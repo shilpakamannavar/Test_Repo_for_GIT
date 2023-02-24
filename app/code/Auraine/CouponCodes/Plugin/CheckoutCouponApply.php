@@ -9,7 +9,7 @@ class CheckoutCouponApply
     /**
      * @var \Auraine\CouponCodes\Helper\Data
      */
-    private $_helperData;
+    private $helperData;
 
     /**
      * @param \Auraine\CouponCodes\Helper\Data $helperData
@@ -17,7 +17,7 @@ class CheckoutCouponApply
     public function __construct(
         \Auraine\CouponCodes\Helper\Data $helperData
     ) {
-        $this->_helperData = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -31,14 +31,15 @@ class CheckoutCouponApply
      */
     public function beforeSet(\Magento\Quote\Model\CouponManagement $subject, $cartId, $couponCode)
     {
-        $headerStatus = $this->_helperData->getMobileHeaderStatus();
+        $headerStatus = $this->helperData->getMobileHeaderStatus();
 
-        $collection = $this->_helperData->getCurrentCouponRule()->addFieldToFilter('code', ['eq' => $couponCode]);
+        $collection = $this->helperData->getCurrentCouponRule()->addFieldToFilter('code', ['eq' => $couponCode]);
 
-        if (!empty($collection->getData())) {
-            if (!$headerStatus && $collection->getData()[0]['is_mobile_specific'] == 1) {
-                throw new GraphQlInputException(__("Can't apply this coupon, the applied coupon is Mobile specific"));
-            }
+        if (
+            !empty($collection->getData()) &&
+            (!$headerStatus && $collection->getData()[0]['is_mobile_specific'] == 1)
+        ) {
+            throw new GraphQlInputException(__("Can't apply this coupon, the applied coupon is Mobile specific"));
         }
     }
 }

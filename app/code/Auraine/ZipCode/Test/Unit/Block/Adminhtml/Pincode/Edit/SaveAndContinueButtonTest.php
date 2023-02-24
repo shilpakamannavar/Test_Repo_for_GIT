@@ -3,13 +3,18 @@ namespace Auraine\ZipCode\Test\Unit\Block\Adminhtml\Pincode\Edit;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\SaveAndContinueButton
  */
 class SaveAndContinueButtonTest extends TestCase
 {
+    /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
     /**
      * Mock context
      *
@@ -52,7 +57,7 @@ class SaveAndContinueButtonTest extends TestCase
     public function dataProviderForTestGetButtonData()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -73,7 +78,7 @@ class SaveAndContinueButtonTest extends TestCase
     public function dataProviderForTestGetModelId()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -94,7 +99,7 @@ class SaveAndContinueButtonTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

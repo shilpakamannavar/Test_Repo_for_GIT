@@ -4,5 +4,5 @@ type Query {
         id: Int @doc(description: "Id of the product")
 
     )
-    : [Int] @resolver( class: "Auraine\\ProductRecomender\\Model\\Resolver\\ProductsList") @doc(description: "List of Frequent Products")
+    : [String] @resolver( class: "Auraine\\ProductRecomender\\Model\\Resolver\\ProductsList") @doc(description: "List of Frequent Products")
 }

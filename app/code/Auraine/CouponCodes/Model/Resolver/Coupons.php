@@ -28,7 +28,7 @@ class Coupons implements ResolverInterface
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    private $_objectManager;
+    private $objectManager;
 
     /**
      * Constructs a coupon read service object.
@@ -47,7 +47,7 @@ class Coupons implements ResolverInterface
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
         $this->ruleCollection = $ruleCollection;
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
-        $this->_objectManager = $objectManger;
+        $this->objectManager = $objectManger;
     }
 
     /**
@@ -56,7 +56,7 @@ class Coupons implements ResolverInterface
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
 
-        $request = $this->_objectManager->create(\Magento\Framework\App\RequestInterface::class);
+        $request = $this->objectManager->create(\Magento\Framework\App\RequestInterface::class);
 
         $cartId = $this->getCartId($args);
         $cartId = $this->maskedQuoteIdToQuoteId->execute($cartId);
@@ -64,9 +64,7 @@ class Coupons implements ResolverInterface
         $mobileHeader = $request->getHeader(Data::CUSTOM_MOBILE_HEADER_NAME);
         $headerStatus = $mobileHeader == Data::CUSTOM_MOBILE_HEADER_CONTENT;
 
-        $data = $this->ruleCollection->getValidCouponList($headerStatus);
-
-        return $data;
+        return $this->ruleCollection->getValidCouponList($headerStatus);
     }
 
     /**

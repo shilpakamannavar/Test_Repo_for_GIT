@@ -75,14 +75,21 @@ class DataProviderTest extends TestCase
 
     public function getswatchTypesTest($valueType)
     {
+        $value = null ;
         switch ($valueType) {
             case 0:
-                return 'TextSwatchData';
+                $value = 'TextSwatchData';
+                break;
             case 1:
-                return 'ColorSwatchData';
+                $value = 'ColorSwatchData';
+                break;
             case 2:
-                return 'ImageSwatchData';
+                $value = 'ImageSwatchData';
+                break;
+            default:
+                break;
         }
+        return $value ;
     }
 
     /**
@@ -98,10 +105,10 @@ class DataProviderTest extends TestCase
      */
     public function dataProviderForTestGetswatchType()
     {
-        $swatch_type = 2;
+        $swatchType = 2;
         return [
             'Testcase 1' => [
-                'prerequisites' => ['param' => $swatch_type],
+                'prerequisites' => ['param' => $swatchType],
                 'expectedResult' => ['param' => 2]
             ]
         ];

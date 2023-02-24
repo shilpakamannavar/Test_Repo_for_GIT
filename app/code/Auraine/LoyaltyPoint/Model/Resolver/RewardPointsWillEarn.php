@@ -11,12 +11,12 @@ class RewardPointsWillEarn implements ResolverInterface
     /**
      * @var \Auraine\LoyaltyPoint\Helper\Data
      */
-    private $_helperData;
+    private $helperData;
 
     /**
      * @var \Magento\Customer\Model\Session
      */
-    private $_customerSession;
+    private $customerSession;
 
     /**
      * Constructs rewards points will earn from the current cart items.
@@ -28,8 +28,8 @@ class RewardPointsWillEarn implements ResolverInterface
         Data $helperData,
         \Magento\Customer\Model\Session $customerSession
     ) {
-        $this->_helperData = $helperData;
-        $this->_customerSession = $customerSession;
+        $this->helperData = $helperData;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -37,17 +37,14 @@ class RewardPointsWillEarn implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, ?array $value = null, ?array $args = null)
     {
-
-        if (!$this->_customerSession->isLoggedIn() || empty($value['model'])) {
+        if (!$this->customerSession->isLoggedIn() || empty($value['model'])) {
             return null;
         }
 
-        $grandTotal = $this->_helperData->getYearOldGrandTotal($this->_customerSession->getId());
+        $grandTotal = $this->helperData->getYearOldGrandTotal($this->customerSession->getId());
 
-        $slabValue = $this->_helperData->getSlabValueOrName($grandTotal);
+        $slabValue = $this->helperData->getSlabValueOrName($grandTotal);
 
-        $amount = $value['model']->getGrandTotal() * ($slabValue / 100);
-
-        return $amount;
+        return $value['model']->getGrandTotal() * ($slabValue / 100);
     }
 }

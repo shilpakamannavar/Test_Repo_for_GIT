@@ -11,6 +11,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 class SaveButtonTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
+    /**
      * Mock context
      *
      * @var \Magento\Backend\Block\Widget\Context|PHPUnit\Framework\MockObject\MockObject
@@ -52,7 +58,7 @@ class SaveButtonTest extends TestCase
     public function dataProviderForTestGetButtonData()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -73,7 +79,7 @@ class SaveButtonTest extends TestCase
     public function dataProviderForTestGetModelId()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -94,7 +100,7 @@ class SaveButtonTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

@@ -10,11 +10,6 @@ use Auraine\ZipCode\Model\ResourceModel\Pincode\CollectionFactory;
 class MassAction extends Action
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var Filter
      */
     private $filter;
