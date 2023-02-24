@@ -6,6 +6,8 @@ namespace Auraine\ProductRecomender\Model\Resolver;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\GraphQl\Query\Uid;
+use Magento\Framework\App\ObjectManager;
 
 class ProductsList implements ResolverInterface
 {
@@ -20,17 +22,24 @@ class ProductsList implements ResolverInterface
    */
     protected $orderRepository;
 
+  /** @var Uid */
+    private $uidEncoder;
+
   /** Constructor function
    *
    * @param CollectionFactory $orderCollectionFactory
    * @param OrderRepositoryInterface $orderRepository
+   * @param Uid|null $uidEncoder
    */
     public function __construct(
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        Uid $uidEncoder = null
     ) {
         $this->_orderCollectionFactory = $orderCollectionFactory;
         $this->orderRepository = $orderRepository;
+        $this->uidEncoder = $uidEncoder ?: ObjectManager::getInstance()
+          ->get(Uid::class);
     }
 
     /**
@@ -71,28 +80,30 @@ class ProductsList implements ResolverInterface
             $order_id = $order['entity_id'];
             $order = $this->orderRepository->get($order_id);
             if ($this->hasItemInOrder($id, $order)) {
-            foreach ($order->getAllItems() as $item) {
+                foreach ($order->getAllItems() as $item) {
 
-                if ($id === (int) $item->getProductId()) {
-                    continue;
+                    if ($id === (int) $item->getProductId()) {
+                        continue;
+                    }
+                    $orderItems[$item->getProductId()] = isset($orderItems[$item->getProductId()]) ?
+                       (int) $orderItems[$item->getProductId()] + (int) $item->getQtyOrdered() :
+                       (int) $item->getQtyOrdered();
                 }
-                $orderItems[$item->getProductId()] = isset($orderItems[$item->getProductId()]) ?
-                    (int) $orderItems[$item->getProductId()] + (int) $item->getQtyOrdered() :
-                    (int) $item->getQtyOrdered();
             }
-          }
         }
-
-        // sord the most bought items
         arsort($orderItems);
         // get only id in array index
         $orderItems = array_keys($orderItems);
-        return $orderItems;
+        $orderItemsUid = [];
+        foreach ($orderItems as $item) {
+            $prodUID = $this->uidEncoder->encode((string)$item);
+            array_push($orderItemsUid, $prodUID);
+        }
+        return $orderItemsUid;
     }
-
-    /**
-     * Has item in these orders.
-     */
+   /**
+    * Has item in these orders.
+    */
     private function hasItemInOrder(int $id, $order): bool
     {
         foreach ($order->getAllItems() as $item) {
