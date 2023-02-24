@@ -107,9 +107,11 @@ if (!empty($telephone)) {
             letter-spacing: 0em;
           "> Billing Details </div>
     <div>
-      <th>
+      <table>
+        <caption></caption>
+        <th></th>
         <tr> <?= $block->getChildHtml('order_totals') ?> </tr>
-      </th>
+      </table>
     </div>
   </div>
 </div><?php endif; ?>
