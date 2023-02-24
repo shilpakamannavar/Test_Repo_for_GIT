@@ -19,11 +19,11 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     /** * Validation failure message template definitions *
      * @var string
      */
-    protected $_messageTemplates = [ ValidatorInterface::ERROR_TITLE_IS_EMPTY => 'Code is empty',];
+    protected $messageTemplates = [ ValidatorInterface::ERROR_TITLE_IS_EMPTY => 'Code is empty',];
     /** *Validation for permanent Attributes *
      * @var string
      */
-    protected $_permanentAttributes = [self::CODE];
+    protected $permanentAttributes = [self::CODE];
     /**
      * If we should check column names
      *
@@ -91,7 +91,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         \Magento\ImportExport\Model\ResourceModel\Import\Data $importData,
         \Magento\Framework\App\ResourceConnection $resource,
         \Magento\ImportExport\Model\ResourceModel\Helper $resourceHelper,
-        \Magento\Framework\Stdlib\StringUtils $string,
         ProcessingErrorAggregatorInterface $errorAggregator,
         \Magento\Customer\Model\GroupFactory $groupFactory
     ) {
@@ -228,10 +227,8 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                 ];
             }
             if (\Magento\ImportExport\Model\Import::BEHAVIOR_REPLACE == $behavior) {
-                if ($listTitle) {
-                    if ($this->deleteEntityFinish(array_unique($listTitle), self::TABLE_ENTITY)) {
-                        $this->saveEntityFinish($entityList, self::TABLE_ENTITY);
-                    }
+                if ($this->deleteEntityFinish(array_unique($listTitle), self::TABLE_ENTITY)) {
+                    $this->saveEntityFinish($entityList, self::TABLE_ENTITY);
                 }
             } elseif (\Magento\ImportExport\Model\Import::BEHAVIOR_APPEND == $behavior) {
                 $this->saveEntityFinish($entityList, self::TABLE_ENTITY);
@@ -252,7 +249,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if ($entityData) {
             $tableName = $this->_connection->getTableName($table);
             $entityIn = [];
-            foreach ($entityData as $id => $entityRows) {
+            foreach ($entityData as $entityRows) {
                 foreach ($entityRows as $row) {
                     $entityIn[] = $row;
                 }
@@ -308,18 +305,16 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     {
         $code = $rowData['code'] ?? '';
         $city = $rowData['city'] ?? '';
-        $state = (int) $rowData['state'] ?? 0;
-        $country_id = $rowData['country_id'] ?? '';
+        $state =  $rowData['state'] ?? 0;
+        $countryId = $rowData['country_id'] ?? '';
         $status = (int) $rowData['status'] ?? 0;
 
         if (!$code) {
             $this->addRowError('CodeIsRequired', $rowNum);
         }
-        if ($code) {
             /* Only for India - without space in between */
-            if (!preg_match('/^[1-9]{1}[0-9]{2}[0-9]{3}$/', $code)) {
+        if (!preg_match('/^[1-9]{1}\d{2}\d{3}$/', $code)) {
                 $this->addRowError('CodeNotValid', $rowNum);
-            }
         }
         if (!$city) {
             $this->addRowError('CityIsRequired', $rowNum);
@@ -327,24 +322,21 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if (!$state) {
             $this->addRowError('StateIsRequired', $rowNum);
         }
-        if ($state) {
-            if (!preg_match('/^[0-9]*$/', $state)) {
-                $this->addRowError('InvalidState', $rowNum);
-            }
+        if ($state && !preg_match('/^\d*$/', $state)) {
+            $this->addRowError('InvalidState', $rowNum);
         }
-        if (!$country_id) {
+        
+        if (!$countryId) {
             $this->addRowError('CountryIsRequired', $rowNum);
         }
-        if ($country_id!=self::DEFAULT_GBOOK_COUNTRY) {
+        if ($countryId!=self::DEFAULT_GBOOK_COUNTRY) {
             $this->addRowError('CountryIsIndia', $rowNum);
         }
         if (!$status) {
             $rowData['status']=0;
         }
-        if ($status) {
-            if (!preg_match('/^[0-1]{1}$/', $status)) {
-                $this->addRowError('InvalidStatus', $rowNum);
-            }
+        if (!preg_match('/^[0-1]{1}$/', $status)) {
+            $this->addRowError('InvalidStatus', $rowNum);
         }
         if (isset($this->_validatedRows[$rowNum])) {
             return !$this->getErrorAggregator()->isRowInvalid($rowNum);

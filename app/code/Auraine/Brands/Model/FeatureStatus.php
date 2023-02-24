@@ -7,16 +7,6 @@ use Magento\Framework\Data\OptionSourceInterface;
 class FeatureStatus implements OptionSourceInterface
 {
     /**
-     * Get Grid row status type labels array.
-     *
-     * @return array
-     */
-    public function getOptionArray()
-    {
-        return ['1' => __('Yes'),'0' => __('No')];
-       
-    }
-    /**
      * Get get Option Array Yes or No.
      *
      * @return array
@@ -58,7 +48,7 @@ class FeatureStatus implements OptionSourceInterface
     public function getOptions()
     {
         $res = [];
-        foreach ($this->getOptionArray() as $index => $value) {
+        foreach ($this->getOptionArrayYesNo() as $index => $value) {
             $res[] = ['value' => $index, 'label' => $value];
         }
         return $res;
