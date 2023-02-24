@@ -7,7 +7,7 @@ class StatusDropdownValues extends AbstractSource
 {
     public function getAllOptions()
     {
-        $options = [
+        return [
             [
                 'value' => 'Pending',
                 'label' => __('Pending')
@@ -21,6 +21,5 @@ class StatusDropdownValues extends AbstractSource
                 'label' => __('Inactive')
             ]
         ];
-        return $options;
     }
 }

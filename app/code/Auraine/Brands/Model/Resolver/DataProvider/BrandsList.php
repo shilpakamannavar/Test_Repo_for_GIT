@@ -92,8 +92,7 @@ class BrandsList
     {
         if ($filter_label) {
             $collection = $this->_brandsFactory->create()->addFieldToFilter($filter_label, 1);
-            $brandData = $collection->getData();
-            return $brandData ;
+            return $collection->getData();
         }
     }
     /**
