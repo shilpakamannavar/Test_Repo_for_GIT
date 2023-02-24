@@ -13,30 +13,36 @@ use Auraine\Zipcode\Model\ResourceModel\Pincode\CollectionFactory;
 class MassStatusUpdateTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
+    /**
      * Mock context
      *
-     * @var \Magento\Backend\App\Action\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Backend\App\Action\Context
      */
     private $context;
 
     /**
      * Mock filter
      *
-     * @var \Magento\Ui\Component\MassAction\Filter|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Ui\Component\MassAction\Filter
      */
     private $filter;
 
     /**
      * Mock collectionFactoryInstance
      *
-     * @var \Auraine\Zipcode\Model\ResourceModel\Pincode\Collection|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\Zipcode\Model\ResourceModel\Pincode\Collection
      */
     private $collectionFactoryInstance;
 
     /**
      * Mock collectionFactory
      *
-     * @var \Auraine\Zipcode\Model\ResourceModel\Pincode\CollectionFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\Zipcode\Model\ResourceModel\Pincode\CollectionFactory
      */
     private $collectionFactory;
 
@@ -81,7 +87,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestExecute()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -102,7 +108,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -125,7 +131,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -146,7 +152,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -167,7 +173,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -188,7 +194,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -209,7 +215,7 @@ class MassStatusUpdateTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

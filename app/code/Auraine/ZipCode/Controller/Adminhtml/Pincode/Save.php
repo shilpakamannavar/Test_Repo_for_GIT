@@ -52,10 +52,10 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addSuccessMessage(__('You saved the Pincode.'));
                 $this->dataPersistor->clear('auraine_zipcode_pincode');
         
-                if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['pincode_id' => $model->getId()]);
-                }
-                return $resultRedirect->setPath('*/*/');
+                return $this->getRequest()->getParam('back') ?
+                    $resultRedirect->setPath('*/*/edit', ['pincode_id' => $model->getId()]) :
+                    $resultRedirect->setPath('*/*/');
+
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {

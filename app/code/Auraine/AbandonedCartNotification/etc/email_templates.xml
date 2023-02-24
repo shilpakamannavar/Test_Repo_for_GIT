@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="abandoned_cart_notifications_attributes_emailtemplate" label="Abandoned Cart Notify" file="abandonedcartnotify.html" type="html" area="frontend" module="Auraine_AbandonedCartNotification"/>
-</config>

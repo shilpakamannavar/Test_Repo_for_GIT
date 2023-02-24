@@ -11,9 +11,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 class PincodeTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
+    /**
      * Mock context
      *
-     * @var \Magento\Framework\Model\ResourceModel\Db\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Framework\Model\ResourceModel\Db\Context
      */
     private $context;
 
@@ -52,7 +58,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetIdFieldName()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -73,7 +79,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetMainTable()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -94,7 +100,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetTable()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -115,7 +121,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetConnection()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -136,7 +142,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestLoad()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -157,7 +163,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestSave()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -178,7 +184,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestDelete()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -199,7 +205,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestAddUniqueField()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -220,7 +226,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestResetUniqueField()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -241,7 +247,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestUnserializeFields()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -262,7 +268,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetUniqueFields()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -283,7 +289,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestHasDataChanged()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -304,7 +310,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetChecksum()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -325,7 +331,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestAfterLoad()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -346,7 +352,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestBeforeSave()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -367,7 +373,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestAfterSave()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -388,7 +394,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestBeforeDelete()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -409,7 +415,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestAfterDelete()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -430,7 +436,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestSerializeFields()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -451,7 +457,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestBeginTransaction()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -472,7 +478,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestAddCommitCallback()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -493,7 +499,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestCommit()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -514,7 +520,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestRollBack()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -535,7 +541,7 @@ class PincodeTest extends TestCase
     public function dataProviderForTestGetValidationRulesBeforeSave()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
