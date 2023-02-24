@@ -105,9 +105,7 @@ class AddPreferenceProductAttribute implements DataPatchInterface, PatchRevertab
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

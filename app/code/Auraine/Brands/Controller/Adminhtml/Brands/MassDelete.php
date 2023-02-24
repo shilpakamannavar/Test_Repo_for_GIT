@@ -5,17 +5,17 @@ namespace Auraine\Brands\Controller\Adminhtml\Brands;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
-use Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory;
+use Auraine\Brands\Model\ResourceModel\Brands\Collection;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
     /** Massactions filter.
      * @var Filter
      */
-    protected $_filter;
+    protected $filter;
     /**@var CollectionFactory
      */
-    protected $_collectionFactory;
+    protected $collectionFactory;
     /** Adding context,filter and collectionFactory
      * @param Context           $context
      * @param Filter            $filter
@@ -24,11 +24,11 @@ class MassDelete extends \Magento\Backend\App\Action
     public function __construct(
         Context $context,
         Filter $filter,
-        CollectionFactory $collectionFactory
+        Collection $collectionFactory
     ) {
 
-        $this->_filter = $filter;
-        $this->_collectionFactory = $collectionFactory;
+        $this->filter = $filter;
+        $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
     /**
@@ -38,7 +38,7 @@ class MassDelete extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $collection = $this->_filter->getCollection($this->_collectionFactory->create());
+        $collection = $this->filter->getCollection($this->collectionFactory->create());
         $recordDeleted = 0;
         foreach ($collection->getItems() as $record) {
             $record->setId($record->getEntityId());

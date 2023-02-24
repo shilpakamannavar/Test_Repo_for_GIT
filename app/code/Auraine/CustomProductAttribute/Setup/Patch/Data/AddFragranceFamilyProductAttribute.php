@@ -105,9 +105,7 @@ class AddFragranceFamilyProductAttribute implements DataPatchInterface, PatchRev
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

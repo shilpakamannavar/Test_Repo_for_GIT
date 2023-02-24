@@ -105,9 +105,7 @@ class AddFormulationProductAttribute implements DataPatchInterface, PatchReverta
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

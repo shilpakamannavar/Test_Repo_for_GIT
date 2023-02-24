@@ -24,7 +24,7 @@ class ImageByNameResolverIdentity implements IdentityInterface
         $ids = [];
         $items = $resolvedData['items'] ?? [];
         foreach ($items as $item) {
-            $ids[] = sprintf('%s_%s', $this->cacheTag, $item['content_id']);
+            $ids[] = sprintf('%s_%s', $this->cacheTag, $item['image_id']);
         }
         if (!empty($ids)) {
             $ids[] = $this->cacheTag;

@@ -60,21 +60,21 @@ class UpdateDiscountPercentage implements ObserverInterface
     public function execute(Observer $observer)
     {
         $product = $observer->getProduct();
-        $product_type = $product->getTypeId();
+        $productType = $product->getTypeId();
         if (!empty($product['sku'])) {
             $sku = $product['sku'];
-            $product_price =  $product['price'];
-            $product_sp_price =  $product['special_price'];
+            $productPrice =  $product['price'];
+            $productSpPrice =  $product['special_price'];
             $productData = $this->productRepository->get($sku);
-            if ($product_price !=0 && $product_price != null && $product_type == 'simple') {
-                if ($product_sp_price >= $product_price) {
+            if ($productPrice !=0 && $productPrice != null && $productType == 'simple') {
+                if ($productSpPrice >= $productPrice) {
                     $this->action->updateAttributes([
                         $productData->getEntityId()
                     ], [
                         'discount' => null
                     ], $this->getStoreIds());
                 }
-                $discountPercentage = 100 - round(($product_sp_price / $product_price)*100);
+                $discountPercentage = 100 - round(($productSpPrice / $productPrice)*100);
                 $discountVar = $this->dataHelper->getDiscountVar($discountPercentage);
                 if ($discountVar) {
                     $discountId = $product->getResource()

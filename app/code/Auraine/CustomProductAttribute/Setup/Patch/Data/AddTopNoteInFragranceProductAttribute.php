@@ -105,9 +105,7 @@ class AddTopNoteInFragranceProductAttribute implements DataPatchInterface, Patch
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

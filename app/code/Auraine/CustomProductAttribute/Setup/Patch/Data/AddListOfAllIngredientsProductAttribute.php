@@ -105,9 +105,7 @@ class AddListOfAllIngredientsProductAttribute implements DataPatchInterface, Pat
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

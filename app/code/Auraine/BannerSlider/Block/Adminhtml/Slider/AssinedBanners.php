@@ -13,7 +13,7 @@ class AssinedBanners extends Template
      * @var Banner
      */
     protected $_template = 'Auraine_BannerSlider::slider/assigned_banners.phtml';
-    
+
     /**
      * @var BannerRepositoryInterface
      */
@@ -41,7 +41,7 @@ class AssinedBanners extends Template
         $this->bannerRepository = $bannerRepository;
         $this->resourcePathBuilder = $resourcePathBuilder;
     }
-    
+
     /**
      * Banner Inteface Item.
      *
@@ -54,8 +54,8 @@ class AssinedBanners extends Template
     {
         $items = [];
         $collection = $this->bannerRepository
-                    ->getCollection()
-                    ->addFieldToFilter('slider_id', $this->getRequest()->getParam('entity_id'));
+            ->getCollection()
+            ->addFieldToFilter('slider_id', $this->getRequest()->getParam('entity_id'));
         foreach ($collection as $item) {
             $itemData = $item->getData();
             $itemData['resource_map_title'] = $item->getResourceMap()->getTitle();

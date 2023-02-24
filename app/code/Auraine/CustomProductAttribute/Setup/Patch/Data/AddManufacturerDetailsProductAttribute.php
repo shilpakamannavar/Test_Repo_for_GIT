@@ -105,9 +105,7 @@ class AddManufacturerDetailsProductAttribute implements DataPatchInterface, Patc
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

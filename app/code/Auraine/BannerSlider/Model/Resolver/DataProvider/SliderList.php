@@ -8,14 +8,14 @@ use Magento\Framework\Exception\LocalizedException;
 class SliderList
 {
     /**
-     * @var $_sliderFactory
+     * @var $sliderFactory
      */
-    protected $_sliderFactory;
+    protected $sliderFactory;
 
     /**
-     * @var $_objectManager
+     * @var $objectManager
      */
-    protected $_objectManager;
+    protected $objectManager;
 
   /**
    * Slider constructor.
@@ -27,25 +27,25 @@ class SliderList
         \Auraine\BannerSlider\Model\ResourceModel\Slider\CollectionFactory $sliderFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
-        $this->_sliderFactory  = $sliderFactory;
-        $this->_objectManager = $objectManager;
+        $this->sliderFactory  = $sliderFactory;
+        $this->objectManager = $objectManager;
     }
 
     /**
      * Get Slider List
      *
      * @param [type] $filter_entity_id
-     * @return void
+     * @return array
      */
-    public function getSliderList($filter_entity_id)
+    public function getSliderList($filterEntityId)
     {
         $sliderData = [];
         try {
-            $collection = $this->_sliderFactory->create();
+            $collection = $this->sliderFactory->create();
             $sliderData = $collection->getData();
-            if ($filter_entity_id) {
-                $collection = $this->_sliderFactory->create()->addFieldToFilter('entity_id', $filter_entity_id);
-                $brandData = $collection->getData();
+            if ($filterEntityId) {
+                $collection = $this->sliderFactory->create()->addFieldToFilter('entity_id', $filterEntityId);
+                $sliderData = $collection->getData();
             }
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);

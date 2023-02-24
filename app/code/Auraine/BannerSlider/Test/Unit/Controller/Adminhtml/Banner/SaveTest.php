@@ -217,29 +217,7 @@ class SaveTest extends TestCase
      */
     public function testGetResponse(array $prerequisites, array $expectedResult)
     {
-        $data=$this->getBannerData();
-        $this->assertEquals($data['slider_id'], "slider_id");
-        $this->assertEquals($data['title'], "title");
-        $this->assertEquals($data['resource_map_id'], "resource_map_id");
-        $this->assertEquals($data['resource_type'], "resource_type");
-        $this->assertEquals($data['alt_text'], "alt_text");
-        $this->assertEquals($data['link'], "link");
-        $this->assertEquals($data['sort_order'], "sort_order");
-        $this->assertEquals($data['is_enabled'], 1);
+        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
     
-    protected function getBannerData()
-    {
-        $data = [
-        'slider_id' =>'slider_id',
-        'title' =>'title',
-        'resource_map_id'=>'resource_map_id',
-        'resource_type'=>'resource_type',
-        'alt_text'=>'alt_text',
-        'link'=>'link',
-        'sort_order'=>'sort_order',
-        'is_enabled'=> 1
-        ];
-        return $data;
-    }
 }

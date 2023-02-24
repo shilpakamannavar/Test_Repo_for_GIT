@@ -6,8 +6,8 @@ use Auraine\Schedule\Api\Data\ScheduleInterface;
 use Auraine\Schedule\Api\ScheduleRepositoryInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\Api\FilterBuilder; 
-use Magento\Framework\Api\Search\FilterGroupBuilder; 
+use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\Api\Search\FilterGroupBuilder;
 use Auraine\BannerSlider\Api\BannerRepositoryInterface;
 
 class BannerSchedular
@@ -67,26 +67,28 @@ class BannerSchedular
             $startDate = $schedule->getStartDate();
             $endDate = $schedule->getEndDate();
             $status = $schedule->getStatus();
-            $old_banner_id = $schedule->getOldBannerId();
-            $new_banner_id = $schedule->getNewBannerId();
+            $oldBannerId = $schedule->getOldBannerId();
+            $newBannerId = $schedule->getNewBannerId();
             if ($startDate && $endDate) {
                 $currentDate = date('Y-m-d H:i:s');
                 if ($currentDate >= $startDate && $currentDate <= $endDate) {
                     if ($status != 'Active') {
                         $schedule->setStatus('Active');
-                       $oldBanner =  $this->bannerRepositoryInterface->loadById($old_banner_id);
+                       $oldBanner =  $this->bannerRepositoryInterface->loadById($oldBannerId);
                        $oldBanner->setIsEnabled(0);
                        $oldBanner->save();
-                       $newBanner =  $this->bannerRepositoryInterface->loadById($new_banner_id);
+
+                       $newBanner =  $this->bannerRepositoryInterface->loadById($newBannerId);
                        $newBanner->setIsEnabled(1);
                        $newBanner->save();
-                        try {
-                            $this->scheduleRepository->save($schedule);
+                       
+                       try {
+                          $this->scheduleRepository->save($schedule);
                         } catch (LocalizedException $e) {
                             // log the exception message
                         }
                     }
-                } else if ($currentDate < $startDate) {
+                } elseif ($currentDate < $startDate) {
                     if ($status != 'Pending') {
                         $schedule->setStatus('Pending');
                         try {
@@ -95,10 +97,10 @@ class BannerSchedular
                             // log the exception message
                         }
                     }
-                } else  {
+                } else {
                     if ($status != 'Inactive') {
                         $schedule->setStatus('Inactive');
-                        $newBanner =  $this->bannerRepositoryInterface->loadById($new_banner_id);
+                        $newBanner =  $this->bannerRepositoryInterface->loadById($newBannerId);
                         $newBanner->setIsEnabled(0);
                         $newBanner->save();
                         try {

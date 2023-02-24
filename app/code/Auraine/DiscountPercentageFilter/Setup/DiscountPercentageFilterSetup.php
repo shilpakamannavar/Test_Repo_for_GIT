@@ -77,6 +77,18 @@ class DiscountPercentageFilterSetup extends EavSetup
     public const CATALOG_PRODUCT_ENTITY_TYPE_ID = 4;
 
     /**
+     * This should be set explicitly
+     */
+    public const  META_INFORMATION = "Meta Information";
+
+    /**
+     * This should be set explicitly
+     */
+    public const  SIMPLE_VIRTUAL = "simple,virtual";
+
+    
+
+    /**
      * Init
      *
      * @param ModuleDataSetupInterface $setup
@@ -190,7 +202,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'visible_in_advanced_search' => true,
                         'used_in_product_listing' => true,
                         'used_for_sort_by' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                     ],
                     'special_price' => [
@@ -202,7 +214,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'sort_order' => 3,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
                         'used_in_product_listing' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -217,7 +229,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'sort_order' => 4,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
                         'used_in_product_listing' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -232,7 +244,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'sort_order' => 5,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
                         'used_in_product_listing' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -247,7 +259,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'user_defined' => true,
                         'sort_order' => 6,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -260,7 +272,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'backend' => Weight::class,
                         'input_renderer' => WeightFormHelper::class,
                         'sort_order' => 5,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -287,7 +299,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'required' => false,
                         'sort_order' => 20,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Meta Information',
+                        'group' => self::META_INFORMATION,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -299,7 +311,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'required' => false,
                         'sort_order' => 30,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Meta Information',
+                        'group' => self::META_INFORMATION,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -313,7 +325,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'class' => 'validate-length maximum-length-255',
                         'sort_order' => 40,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Meta Information',
+                        'group' => self::META_INFORMATION,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -368,7 +380,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'required' => false,
                         'sort_order' => 7,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                     ],
                     'color' => [
@@ -438,7 +450,7 @@ class DiscountPercentageFilterSetup extends EavSetup
                         'sort_order' => 8,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'visible' => false,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' => self::SIMPLE_VIRTUAL,
                         'group' => 'Prices',
                     ],
                     'visibility' => [

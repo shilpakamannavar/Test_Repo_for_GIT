@@ -105,9 +105,7 @@ class AddIsItHeatSensitiveProductAttribute implements DataPatchInterface, PatchR
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

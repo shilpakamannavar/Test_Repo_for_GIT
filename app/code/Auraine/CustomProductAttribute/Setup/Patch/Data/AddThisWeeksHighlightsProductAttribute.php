@@ -105,9 +105,7 @@ class AddThisWeeksHighlightsProductAttribute implements DataPatchInterface, Patc
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 
