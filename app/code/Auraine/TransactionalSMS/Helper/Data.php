@@ -4,6 +4,24 @@ namespace Auraine\TransactionalSMS\Helper;
 class Data
 {
     /**
+     * Description
+     * @var string const
+     */
+    private const DESCRIPTION = '{{description}}';
+    
+    /**
+     * Quantity
+     * @var string const
+     */
+    private const QUANTITY = '{{quantity}}';
+
+    /**
+     * Order id
+     * @var string const
+     */
+    private const ORDER_ID = '{{order_id}}';
+
+    /**
      * Transaction SMS status config path
      * @var string const
      */
@@ -12,12 +30,12 @@ class Data
     /**
      * @var \Magecomp\Mobilelogin\Helper\Data
      */
-    private $_helperData;
+    private $helperData;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $_scopeConfig;
+    private $scopeConfig;
 
     /**
      * Constructor to get object of MageComp Mobilelogin helper.
@@ -29,8 +47,8 @@ class Data
         \Magecomp\Mobilelogin\Helper\Data $helperData,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
-        $this->_helperData = $helperData;
-        $this->_scopeConfig = $scopeConfig;
+        $this->helperData = $helperData;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -69,7 +87,7 @@ class Data
         $deliveryDate,
         $orderId
     ) {
-        $codes = ['{{delivery_date}}', '{{order_id}}'];
+        $codes = ['{{delivery_date}}', self::ORDER_ID];
         $accurate = [$deliveryDate, $orderId];
 
         $message = $this->generateMessage($codes, $accurate, $configPath);
@@ -96,7 +114,7 @@ class Data
         
         $description = $this->getFirstFourWords($order->getAllItems()[0]->getName());
 
-        $codes = ['{{order_id}}', '{{description}}', '{{quantity}}', '{{delivery_date}}', '{{link}}'];
+        $codes = [self::ORDER_ID, self::DESCRIPTION, self::QUANTITY, '{{delivery_date}}', '{{link}}'];
         $accurate = [$orderId, $description, $quantity, $deliveryDate, $link];
 
         $message = $this->generateMessage($codes, $accurate, $configPath);
@@ -119,7 +137,7 @@ class Data
         $grandTotal,
         $orderId
     ) {
-        $codes = ['{{amount}}', '{{order_id}}'];
+        $codes = ['{{amount}}', self::ORDER_ID];
         $accurate = [$grandTotal, $orderId];
 
         $message = $this->generateMessage($codes, $accurate, $configPath);
@@ -144,7 +162,7 @@ class Data
         $quantity = $order->getTotalItemCount() < 2 ? '' : '+ ' . ($order->getTotalItemCount() - 1);
         $description = $this->getFirstFourWords($order->getAllItems()[0]->getName());
 
-        $codes = ['{{order_id}}', '{{description}}', '{{quantity}}'];
+        $codes = [self::ORDER_ID, self::DESCRIPTION, self::QUANTITY];
         $accurate = [$orderId, $description, $quantity];
 
         $message = $this->generateMessage($codes, $accurate, $configPath);
@@ -165,7 +183,7 @@ class Data
         $mobile,
         $order
     ) {
-        $codes = ['{{order_id}}', '{{description}}', '{{no_of_days}}'];
+        $codes = [self::ORDER_ID, self::DESCRIPTION, '{{no_of_days}}'];
 
         $accurate = [
             $order->getIncrementId(),
@@ -191,7 +209,7 @@ class Data
         $mobile,
         $orderId
     ) {
-        $codes = ['{{order_id}}'];
+        $codes = [self::ORDER_ID];
         $accurate = [$orderId];
 
         $message = $this->generateMessage($codes, $accurate, $configPath);
@@ -212,7 +230,7 @@ class Data
         $mobile,
         $order
     ) {
-        $codes = ['{{order_id}}', '{{description}}', '{{quantity}}'];
+        $codes = [self::ORDER_ID, self::DESCRIPTION, self::QUANTITY];
         $accurate = [
             $order->getIncrementId(),
             $this->getFirstFourWords($order->getAllItems()[0]->getName()),
@@ -226,8 +244,8 @@ class Data
     /**
      * Generate message string.
      *
-     * @param string $codes
-     * @param string $accurate
+     * @param array $codes
+     * @param array $accurate
      * @param string $configPath
      * @return string
      */
@@ -254,9 +272,9 @@ class Data
         $otpStatus = $this->getConfigValue(self::OTP_STATUS_PATH);
 
         if (strlen($mobile) == 12 && $otpStatus) {
-            $this->_helperData->callApiUrl($message, $mobile, 1);
+            $this->helperData->callApiUrl($message, $mobile, 1);
         } elseif (strlen($mobile) == 10 && $otpStatus) {
-            $this->_helperData->callApiUrl($message, "91".$mobile, 1);
+            $this->helperData->callApiUrl($message, "91".$mobile, 1);
         }
     }
 
@@ -268,7 +286,7 @@ class Data
      */
     public function getConfigValue($path)
     {
-        return $this->_scopeConfig
+        return $this->scopeConfig
             ->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 

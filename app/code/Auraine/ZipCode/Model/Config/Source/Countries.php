@@ -8,12 +8,12 @@ class Countries implements OptionSourceInterface
     /**
      * @var \Magento\Directory\Model\ResourceModel\Country\CollectionFactory
      */
-    protected $_countryCollectionFactory;
+    protected $countryCollectionFactory;
 
     /**
      * @var \Magento\Directory\Model\CountryFactory
      */
-    protected $_countryFactory;
+    protected $countryFactory;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -22,13 +22,11 @@ class Countries implements OptionSourceInterface
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
         \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
-        \Magento\Directory\Model\CountryFactory $countryFactory,
-        array $data = []
+        \Magento\Directory\Model\CountryFactory $countryFactory
     ) {
-        $this->_countryFactory = $countryFactory;
-        $this->_countryCollectionFactory = $countryCollectionFactory;
+        $this->countryFactory = $countryFactory;
+        $this->countryCollectionFactory = $countryCollectionFactory;
     }
 
     /**
@@ -36,11 +34,10 @@ class Countries implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $result = [];
-
         /** Displaying only India and not using country model as of now*/
         return [
-            ['label' => __('India'), 'value' => 'IN']];
+            ['label' => __('India'), 'value' => 'IN']
+        ];
     }
 
     /**
@@ -51,10 +48,10 @@ class Countries implements OptionSourceInterface
     public function getOptions()
     {
 
-        $countryModel = $this->_countryFactory->create();
+        $countryModel = $this->countryFactory->create();
         $result = [];
 
-        foreach ($this->_countryCollectionFactory->create()->loadByStore()->getData() as $value => $label) {
+        foreach ($this->countryCollectionFactory->create()->loadByStore()->getData() as $label) {
             $country = $countryModel->loadByCode($label['country_id']);
 
             if ($country !== null) {

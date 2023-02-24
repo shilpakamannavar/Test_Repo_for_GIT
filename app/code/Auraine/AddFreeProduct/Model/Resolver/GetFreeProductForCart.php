@@ -20,7 +20,7 @@ class GetFreeProductForCart implements ResolverInterface
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $_storeManager;
+    private $storeManager;
 
     /**
      * @param \Amasty\Promo\Model\ItemRegistry\PromoItemRegistry $promoItemRegistry
@@ -34,7 +34,7 @@ class GetFreeProductForCart implements ResolverInterface
     ) {
         $this->promoItemRegistry = $promoItemRegistry;
         $this->productRepository = $productRepository;
-        $this->_storeManager = $storeManager;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -55,7 +55,7 @@ class GetFreeProductForCart implements ResolverInterface
                     'sku' => $item->getSku(),
                     'title' => $product->getName(),
                     'isPromoItems' => true,
-                    'image' => $this->_storeManager
+                    'image' => $this->storeManager
                         ->getStore()
                         ->getBaseUrl() . 'media/catalog/product'.$ImageUrl
                 ];

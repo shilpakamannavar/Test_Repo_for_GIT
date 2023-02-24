@@ -5,6 +5,11 @@ namespace Auraine\ZipCode\Controller\Adminhtml\Pincode;
 
 class Edit extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
 {
+    /**
+     * New pincode
+     * @var string const
+     */
+    private const NEW_PINCODE = 'New Pincode';
 
     /**
      *
@@ -53,12 +58,12 @@ class Edit extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Pincode') : __('New Pincode'),
-            $id ? __('Edit Pincode') : __('New Pincode')
+            $id ? __('Edit Pincode') : __(self::NEW_PINCODE),
+            $id ? __('Edit Pincode') : __(self::NEW_PINCODE)
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Pincodes'));
         $resultPage->getConfig()->getTitle()->prepend(
-            $model->getId() ? __('Edit Pincode %1', $model->getId()) : __('New Pincode')
+            $model->getId() ? __('Edit Pincode %1', $model->getId()) : __(self::NEW_PINCODE)
         );
         return $resultPage;
     }
