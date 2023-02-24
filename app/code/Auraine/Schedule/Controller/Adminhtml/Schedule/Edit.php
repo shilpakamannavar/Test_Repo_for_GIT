@@ -13,6 +13,16 @@ class Edit extends \Auraine\Schedule\Controller\Adminhtml\Schedule
     protected $resultPageFactory;
 
     /**
+     * This should be set explicitly
+     */
+    public const  NEW_SCHEDULE = "New Schedule";
+
+    /**
+     * This should be set explicitly
+     */
+    public const  EDIT_SCHEDULE = "Edit Schedule";
+
+    /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
@@ -53,11 +63,13 @@ class Edit extends \Auraine\Schedule\Controller\Adminhtml\Schedule
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Schedule') : __('New Schedule'),
-            $id ? __('Edit Schedule') : __('New Schedule')
+            $id ? __(self::EDIT_SCHEDULE) : __(self::NEW_SCHEDULE),
+            $id ? __(self::EDIT_SCHEDULE) : __(self::NEW_SCHEDULE)
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Schedules'));
-        $resultPage->getConfig()->getTitle()->prepend($model->getId() ? __('Edit Schedule %1', $model->getId()) : __('New Schedule'));
+        $resultPage->getConfig()->getTitle()->prepend(
+            $model->getId() ? __(self::EDIT_SCHEDULE.' %1', $model->getId()) : __(self::NEW_SCHEDULE)
+        );
         return $resultPage;
     }
 }
