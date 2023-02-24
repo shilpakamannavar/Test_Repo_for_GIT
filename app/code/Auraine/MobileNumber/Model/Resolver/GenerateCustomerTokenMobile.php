@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace Auraine\MobileNumber\Model\Resolver;
 
 use Magento\Customer\Model\CustomerFactory;
