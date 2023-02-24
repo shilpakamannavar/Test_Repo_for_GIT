@@ -66,7 +66,7 @@ class Options implements \JsonSerializable
     public function jsonSerialize(): mixed
     {
         if ($this->options === null) {
-            $options = [[
+            $statusOptions = [[
                 'value' => 1,
                 'label' => 'Enable'
             ], [
@@ -78,7 +78,7 @@ class Options implements \JsonSerializable
             $this->prepareData();
 
             // Applies URL and param name for each sub-action, and any other additional data
-            foreach ($options as $optionCode) {
+            foreach ($statusOptions as $optionCode) {
                 $this->options[$optionCode['value']] = [
                     'type' => 'mass_massaction+' . $optionCode['value'],
                     'label' => __($optionCode['label']),

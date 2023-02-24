@@ -36,6 +36,8 @@ class Save extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $flag = false;
+
         if ($data) {
             $id = $this->getRequest()->getParam('pincode_id');
         
@@ -63,8 +65,15 @@ class Save extends \Magento\Backend\App\Action
             }
         
             $this->dataPersistor->set('auraine_zipcode_pincode', $data);
-            return $resultRedirect->setPath('*/*/edit', ['pincode_id' => $this->getRequest()->getParam('pincode_id')]);
+
+            $flag = true;
         }
-        return $resultRedirect->setPath('*/*/');
+
+        return $flag ?
+            $resultRedirect->setPath(
+                '*/*/edit',
+                ['pincode_id' => $this->getRequest()->getParam('pincode_id')]
+            ) :
+            $resultRedirect->setPath('*/*/');
     }
 }
