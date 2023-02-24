@@ -128,14 +128,13 @@ class AddFreeProductResolver implements ResolverInterface
                 if ($promoDataItem) {
                     $qty = $this->promoValidator->getQtyToAdd($promoDataItem, $params, $productId);
                     $updateTotalQty = true;
-                    $requestOptions = array_intersect_key($params, array_flip($this->requestOptions));
                     $itemsForAdd[] = $product->getSku();
 
                     $this->promoCartHelper->addProduct(
                         $product,
                         $qty,
                         $promoDataItem,
-                        $requestOptions,
+                        array_intersect_key($params, array_flip($this->requestOptions)),
                         $quote
                     );
                 }

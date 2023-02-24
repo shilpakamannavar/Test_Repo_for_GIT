@@ -9,7 +9,7 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
     /**
      * @var \Amasty\Rewards\Api\RewardsProviderInterface
      */
-    private $_rewardsProvider;
+    private $rewardsProvider;
 
     /**
      * @var int
@@ -24,12 +24,12 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
     /**
      * @var \Magento\Customer\Api\CustomerRepositoryInterface
      */
-    private $_customerRepository;
+    private $customerRepository;
 
     /**
      * @var \Auraine\LoyaltyPoint\Helper\Data
      */
-    protected $_helperData;
+    protected $helperData;
 
     /**
      * Constructs Loyalty point creation service object.
@@ -45,40 +45,40 @@ class LoyaltyPointCreation implements \Magento\Framework\Event\ObserverInterface
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         \Auraine\LoyaltyPoint\Helper\Data $helperData
     ) {
-        $this->_rewardsProvider = $rewardsProvider;
+        $this->rewardsProvider = $rewardsProvider;
         $this->rule = $rule;
-        $this->_customerRepository = $customerRepository;
-        $this->_helperData = $helperData;
+        $this->customerRepository = $customerRepository;
+        $this->helperData = $helperData;
     }
 
     /**
      * @inheritdoc
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return this
+     * @return $this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
-        if ($order instanceof \Magento\Framework\Model\AbstractModel) {
-            if ($order->getState() == Order::STATE_COMPLETE && !$order->getCustomerIsGuest()) {
+        if (
+            $order instanceof \Magento\Framework\Model\AbstractModel &&
+            ($order->getState() == Order::STATE_COMPLETE && !$order->getCustomerIsGuest())
+        ) {
+            $customerId = $order->getCustomerId();
+            $grandTotal = $this->helperData->getYearOldGrandTotal($customerId) - $order->getGrandTotal();
 
-                $customerId = $order->getCustomerId();
-                $grandTotal = $this->_helperData->getYearOldGrandTotal($customerId) - $order->getGrandTotal();
+            $this->slab = $this->helperData->getSlabValueOrName($grandTotal);
 
-                $this->slab = $this->_helperData->getSlabValueOrName($grandTotal);
-
-                /** Calculating loyalty points and updating it with the previous values if any. */
-                $amount = $order->getGrandTotal() * ($this->slab / 100);
-                $customer = $this->_customerRepository->getById($customerId);
-                $this->_rewardsProvider->addPointsByRule(
-                    $this->rule,
-                    $customer->getId(),
-                    $customer->getStoreId(),
-                    $amount,
-                    "Purchase is made bonus for"
-                );
-            }
+            /** Calculating loyalty points and updating it with the previous values if any. */
+            $amount = $order->getGrandTotal() * ($this->slab / 100);
+            $customer = $this->customerRepository->getById($customerId);
+            $this->rewardsProvider->addPointsByRule(
+                $this->rule,
+                $customer->getId(),
+                $customer->getStoreId(),
+                $amount,
+                "Purchase is made bonus for"
+            );
         }
 
         return $this;

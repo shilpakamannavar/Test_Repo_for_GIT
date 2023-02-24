@@ -74,7 +74,7 @@ class DataProviderAggregationPluginTest extends TestCase
     public function setUp() : void
     {
         $this->objectManager = new ObjectManager($this);
-        $this->builders = [];//$this->createMock(\array::class);
+        $this->builders = [];
         $this->logger = $this->createMock(\Psr\Log\LoggerInterface::class);
         $this->eavConfig = $this->createMock(\Magento\Eav\Model\Config::class);
         $this->swatchHelper = $this->createMock(\Magento\Swatches\Helper\Data::class);
@@ -121,14 +121,21 @@ class DataProviderAggregationPluginTest extends TestCase
 
     public function getswatchTypeTest($valueType)
     {
+        $value = null ;
         switch ($valueType) {
             case 0:
-                return 'TextSwatchData';
+                $value = 'TextSwatchData';
+                break;
             case 1:
-                return 'ColorSwatchData';
+                $value = 'ColorSwatchData';
+                break;
             case 2:
-                return 'ImageSwatchData';
+                $value = 'ImageSwatchData';
+                break;
+            default:
+                break;
         }
+        return $value ;
     }
 
     /**
@@ -136,10 +143,10 @@ class DataProviderAggregationPluginTest extends TestCase
      */
     public function dataProviderForTestGetswatchType()
     {
-        $prerequisites_swatch_type = $this->getswatchTypeTest(1);
+        $prerequisitesSwatchType = $this->getswatchTypeTest(1);
         return [
             'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisites_swatch_type],
+                'prerequisites' => ['param' => $prerequisitesSwatchType],
                 'expectedResult' => ['param' => 'ColorSwatchData']
             ]
         ];
