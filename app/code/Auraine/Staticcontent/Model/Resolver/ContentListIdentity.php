@@ -1,11 +1,11 @@
 <?php
-namespace Auraine\ImageUploader\Model\Resolver;
+namespace Auraine\Staticcontent\Model\Resolver;
 
 use Magento\Framework\GraphQl\Query\Resolver\IdentityInterface;
 
-class ImageByNameResolverIdentity implements IdentityInterface
+class ContentListIdentity implements IdentityInterface
 {
-    const CACHE_TAG = 'auraine_imageuploader_image_by_name_resolver_identity';
+    const CACHE_TAG = 'auraine_staticcontent_content_list_identity';
 
     /**
      * Model cache tag for clear cache in after save and after delete
@@ -13,7 +13,9 @@ class ImageByNameResolverIdentity implements IdentityInterface
      * @var string
      */
     protected $cacheTag = self::CACHE_TAG;
-    
+
+
+   
     /**
      * Return a unique id for the model.
      *
@@ -24,7 +26,7 @@ class ImageByNameResolverIdentity implements IdentityInterface
         $ids = [];
         $items = $resolvedData['items'] ?? [];
         foreach ($items as $item) {
-            $ids[] = sprintf('%s_%s', $this->cacheTag, $item['image_id']);
+            $ids[] = sprintf('%s_%s', $this->cacheTag, $item['content_id']);
         }
         if (!empty($ids)) {
             $ids[] = $this->cacheTag;
