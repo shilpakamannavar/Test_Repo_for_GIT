@@ -121,6 +121,7 @@ $image_url = $imageHelper->init($product, 'small_image')
           <?php echo (float)$actualPrice; ?>
         </div>
       </div>
+      <?php if ($specialPrice != 0) { ?>
       <div>
         <div style="
               font-family: Helvetica;
@@ -148,6 +149,7 @@ $image_url = $imageHelper->init($product, 'small_image')
           <?php echo (float)$discountPrice; ?>
         </div>
       </div>
+      <?php } ?>
       <hr style="border: 1px solid #d9d9d9">
       <div>
         <div style="
