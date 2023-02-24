@@ -36,13 +36,14 @@ class Save extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $result = $resultRedirect->setPath('*/*/');
         if ($data) {
             $id = $this->getRequest()->getParam('pincode_id');
         
             $model = $this->_objectManager->create(\Auraine\ZipCode\Model\Pincode::class)->load($id);
             if (!$model->getId() && $id) {
                 $this->messageManager->addErrorMessage(__('This Pincode no longer exists.'));
-                return $resultRedirect->setPath('*/*/');
+                $result = $resultRedirect->setPath('*/*/');
             }
             
             $model->setData($data);
@@ -53,9 +54,9 @@ class Save extends \Magento\Backend\App\Action
                 $this->dataPersistor->clear('auraine_zipcode_pincode');
         
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['pincode_id' => $model->getId()]);
+                    $result = $resultRedirect->setPath('*/*/edit', ['pincode_id' => $model->getId()]);
                 }
-                return $resultRedirect->setPath('*/*/');
+                $result = $resultRedirect->setPath('*/*/');
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {
@@ -63,8 +64,9 @@ class Save extends \Magento\Backend\App\Action
             }
         
             $this->dataPersistor->set('auraine_zipcode_pincode', $data);
-            return $resultRedirect->setPath('*/*/edit', ['pincode_id' => $this->getRequest()->getParam('pincode_id')]);
+            $result = $resultRedirect->setPath('*/*/edit', ['pincode_id' => $this->getRequest()->getParam('pincode_id')]
+            );
         }
-        return $resultRedirect->setPath('*/*/');
+        return $result;
     }
 }

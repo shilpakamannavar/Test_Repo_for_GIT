@@ -8,12 +8,12 @@ class Regions implements OptionSourceInterface
     /**
      * @var \Magento\Directory\Model\ResourceModel\Region\Collection
      */
-    protected $_regionCollection;
+    protected $regionCollection;
 
     /**
      * @var \Magento\Directory\Model\RegionFactory
      */
-    protected $_regionFactory;
+    protected $regionFactory;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -27,8 +27,8 @@ class Regions implements OptionSourceInterface
         \Magento\Directory\Model\RegionFactory $regionFactory,
         array $data = []
     ) {
-        $this->_regionFactory = $regionFactory;
-        $this->_regionCollection = $regionCollection;
+        $this->regionFactory = $regionFactory;
+        $this->regionCollection = $regionCollection;
     }
     
     /**
@@ -56,10 +56,10 @@ class Regions implements OptionSourceInterface
     public function getOptions()
     {
 
-        $regionModel = $this->_regionFactory->create();
+        $regionModel = $this->regionFactory->create();
         $result = [];
 
-        foreach ($this->_regionCollection->getData() as $value => $label) {
+        foreach ($this->regionCollection->getData() as $value => $label) {
             $region = $regionModel->load($label['region_id']);
             
             if ($region !== null) {

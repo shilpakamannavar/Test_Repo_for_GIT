@@ -8,12 +8,12 @@ class Countries implements OptionSourceInterface
     /**
      * @var \Magento\Directory\Model\ResourceModel\Country\CollectionFactory
      */
-    protected $_countryCollectionFactory;
+    protected $countryCollectionFactory;
 
     /**
      * @var \Magento\Directory\Model\CountryFactory
      */
-    protected $_countryFactory;
+    protected $countryFactory;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -27,8 +27,8 @@ class Countries implements OptionSourceInterface
         \Magento\Directory\Model\CountryFactory $countryFactory,
         array $data = []
     ) {
-        $this->_countryFactory = $countryFactory;
-        $this->_countryCollectionFactory = $countryCollectionFactory;
+        $this->countryFactory = $countryFactory;
+        $this->countryCollectionFactory = $countryCollectionFactory;
     }
 
     /**
@@ -51,10 +51,10 @@ class Countries implements OptionSourceInterface
     public function getOptions()
     {
 
-        $countryModel = $this->_countryFactory->create();
+        $countryModel = $this->countryFactory->create();
         $result = [];
 
-        foreach ($this->_countryCollectionFactory->create()->loadByStore()->getData() as $value => $label) {
+        foreach ($this->countryCollectionFactory->create()->loadByStore()->getData() as $value => $label) {
             $country = $countryModel->loadByCode($label['country_id']);
 
             if ($country !== null) {
