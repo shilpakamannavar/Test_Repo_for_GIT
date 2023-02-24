@@ -121,14 +121,12 @@ class UpdateDiscountPercentageTest extends TestCase
         $product['sku'] = "Stick6";
         $product['price'] = "450.00";
         $product['special_price'] = "400.00";
-        $getStoreIds = 0;
-        $product_type = 'simple';
+        $productType = 'simple';
         if (!empty($product['sku'])) {
-            $sku = $product['sku'];
-            $product_price =  $product['price'];
-            $product_sp_price =  $product['special_price'];
-            if ($product_price !=0 && $product_price != null && $product_type == 'simple') {
-                $discountPercentage = 100 - round(($product_sp_price / $product_price)*100);
+            $productPrice =  $product['price'];
+            $productSpPrice =  $product['special_price'];
+            if ($productPrice !=0 && $productPrice != null && $productType == 'simple') {
+                $discountPercentage = 100 - round(($productSpPrice / $productPrice)*100);
                 $discountVar = $this->getDiscountVarTest($discountPercentage);
                 return [
                     'Testcase 1' => [
