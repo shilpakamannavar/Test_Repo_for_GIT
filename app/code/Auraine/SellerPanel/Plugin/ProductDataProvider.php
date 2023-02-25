@@ -9,11 +9,6 @@ use Magento\Catalog\Model\Product\Attribute\Repository as ProductAttributeRepo;
 
 class ProductDataProvider extends RelatedProductDataProvider
 {
-
-  /**
-   * @var Action
-   */
-    private $productAction;
   /**
    * @var UserContextInterface
    */
@@ -31,17 +26,17 @@ class ProductDataProvider extends RelatedProductDataProvider
    *
    * @param UserContextInterface $userContext
    * @param UserCollectionFactory $userCollectionFactory
-   * @param ProductAttributeRepo $ProductAttributeRepo
+   * @param ProductAttributeRepo $productAttributeRepo
    */
     public function __construct(
         UserContextInterface $userContext,
         UserCollectionFactory $userCollectionFactory,
-        ProductAttributeRepo $ProductAttributeRepo
+        ProductAttributeRepo $productAttributeRepo
     ) {
 
         $this->userContext = $userContext;
         $this->userCollectionFactory = $userCollectionFactory;
-        $this->prodAttribute = $ProductAttributeRepo;
+        $this->prodAttribute = $productAttributeRepo;
     }
   /**
    * AroundGetData
@@ -70,11 +65,14 @@ class ProductDataProvider extends RelatedProductDataProvider
         }
         if ($roleName == 'supplier' || $roleName == 'Supplier') {
             $subject->getCollection()->clear();
-            if ($sellerAttributeValueFinal && ($sellerAttributeValueFinal!="")){
-              $items = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load();
-              $items = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->toArray();
-              $totalRecords = $subject->getCollection()->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load()->getSize();
-          }
+            if ($sellerAttributeValueFinal && ($sellerAttributeValueFinal!="")) {
+                $subject->getCollection()
+                        ->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load();
+                $subject->getCollection()
+                         ->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->toArray();
+                $subject->getCollection()
+                        ->addFieldToFilter('seller_list', ['eq' => $sellerAttributeValueFinal])->load()->getSize();
+            }
         }
         return $proceed();
     }
