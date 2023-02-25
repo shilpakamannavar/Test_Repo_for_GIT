@@ -49,10 +49,8 @@ class MassAction
         $collection->addFieldToFilter('main_table.user_id', $userId);
         $userData = $collection->getFirstItem();
         $roleName = $userData->getRoleName();
-        if ($roleName == 'supplier' || $roleName == 'Supplier') {
-            if (($actionType == "delete")) {
-                return false;
-            }
+        if (($roleName == 'supplier' || $roleName == 'Supplier') && ($actionType == "delete")) {
+            return false;
         }
         return $result;
     }
