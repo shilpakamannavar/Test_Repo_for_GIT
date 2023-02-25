@@ -50,7 +50,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
     /**
      * @var \Auraine\TransactionalSMS\Helper\Data
      */
-    protected $_helperData;
+    protected $helperData;
 
     /**
      * Constructs Loyalty point creation service object.
@@ -60,14 +60,14 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
     public function __construct(
         \Auraine\TransactionalSMS\Helper\Data $helperData
     ) {
-        $this->_helperData = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
      * @inheritdoc
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return this
+     * @return $this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
@@ -97,7 +97,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
         switch ($order->getState()) {
             case Order::STATE_PROCESSING:
                 // Order Processing (Shipped)
-                $this->_helperData->shipmentShippedSMS(
+                $this->helperData->shipmentShippedSMS(
                     self::SHIPPED_CONFIG,
                     $order
                 );
@@ -105,7 +105,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
 
             case Order::STATE_COMPLETE:
                 // Order completed (Delivered)
-                $this->_helperData->orderDeliveredSMS(
+                $this->helperData->orderDeliveredSMS(
                     self::DELIVERED_CONFIG,
                     $mobile,
                     $order
@@ -114,7 +114,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
             
             case Order::STATE_HOLDED:
                 // Order cancelled
-                $this->_helperData->shipmentCancelledSMS(
+                $this->helperData->shipmentCancelledSMS(
                     self::CANCELLED_CONFIG,
                     $mobile,
                     $order
@@ -123,7 +123,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
             
             case Order::STATE_CANCELED:
                  // Order Not Delivered
-                 $this->_helperData->shipmentNotDelivered(
+                 $this->helperData->shipmentNotDelivered(
                      self::NOT_DELIVERED_CONFIG,
                      $mobile,
                      $orderId
@@ -132,7 +132,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
             
             case "return":
                 // Return initiated
-                $this->_helperData->returnInitiatedSMS(
+                $this->helperData->returnInitiatedSMS(
                     self::RETURN_INITITATED_CONFIG,
                     $mobile,
                     $order
@@ -141,7 +141,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
 
             case "picked":
                 // Return order picked up
-                $this->_helperData->transactionSMS(
+                $this->helperData->transactionSMS(
                     self::RETURN_PICKED_CONFIG,
                     $mobile,
                     $name,
@@ -151,7 +151,7 @@ class SendSMSOnOrderStatusChange implements \Magento\Framework\Event\ObserverInt
 
             case "refunded":
                 // Amount refunded
-                $this->_helperData->transactionSMS(
+                $this->helperData->transactionSMS(
                     self::REFUND_SUCCESS_CONFIG,
                     $mobile,
                     $order->getGrandTotal(),

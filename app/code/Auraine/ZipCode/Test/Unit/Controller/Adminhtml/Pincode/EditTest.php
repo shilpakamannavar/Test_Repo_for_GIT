@@ -11,30 +11,36 @@ use PHPUnit\Framework\MockObject\MockObject;
 class EditTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
+    /**
      * Mock context
      *
-     * @var \Magento\Backend\App\Action\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Backend\App\Action\Context
      */
     private $context;
 
     /**
      * Mock coreRegistry
      *
-     * @var \Magento\Framework\Registry|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Framework\Registry
      */
     private $coreRegistry;
 
     /**
      * Mock resultPageFactoryInstance
      *
-     * @var \Magento\Framework\View\Result\Page|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Framework\View\Result\Page
      */
     private $resultPageFactoryInstance;
 
     /**
      * Mock resultPageFactory
      *
-     * @var \Magento\Framework\View\Result\PageFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Framework\View\Result\PageFactory
      */
     private $resultPageFactory;
 
@@ -79,7 +85,7 @@ class EditTest extends TestCase
     public function dataProviderForTestExecute()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -100,7 +106,7 @@ class EditTest extends TestCase
     public function dataProviderForTestInitPage()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -121,7 +127,7 @@ class EditTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -142,7 +148,7 @@ class EditTest extends TestCase
     public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -163,7 +169,7 @@ class EditTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -184,7 +190,7 @@ class EditTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -205,7 +211,7 @@ class EditTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -226,7 +232,7 @@ class EditTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

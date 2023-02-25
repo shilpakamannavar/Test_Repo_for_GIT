@@ -10,9 +10,9 @@ class RegistrationSuccess implements \Magento\Framework\Event\ObserverInterface
     private const CONFIG_PATH = "transaction_sms_control/registration_sms/message";
 
     /**
-     * @var \Auraine\TransactionalSMS\Helper\Data $_helperData
+     * @var \Auraine\TransactionalSMS\Helper\Data $helperData
      */
-    private $_helperData;
+    private $helperData;
 
     /**
      *
@@ -21,7 +21,7 @@ class RegistrationSuccess implements \Magento\Framework\Event\ObserverInterface
     public function __construct(
         \Auraine\TransactionalSMS\Helper\Data $helperData
     ) {
-        $this->_helperData = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -33,7 +33,7 @@ class RegistrationSuccess implements \Magento\Framework\Event\ObserverInterface
 
         $mobileNo = $customer->getCustomAttribute('mobilenumber')->getValue();
 
-        $this->_helperData->customerRegisterSuccessSMS(
+        $this->helperData->customerRegisterSuccessSMS(
             self::CONFIG_PATH,
             $mobileNo,
             $customer->getFirstname().' '.$customer->getLastname()

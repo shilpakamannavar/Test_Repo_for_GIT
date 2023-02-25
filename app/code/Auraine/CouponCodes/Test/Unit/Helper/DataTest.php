@@ -11,6 +11,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 class DataTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+    
+    /**
      * Mock context
      *
      * @var \Magento\Framework\App\Helper\Context|PHPUnit\Framework\MockObject\MockObject
@@ -101,7 +107,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetCustomerGroupId()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -122,7 +128,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetWebsiteId()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -143,7 +149,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetCurrentCouponRule()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -164,7 +170,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetMobileHeaderStatus()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -185,7 +191,7 @@ class DataTest extends TestCase
     public function dataProviderForTestIsModuleOutputEnabled()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

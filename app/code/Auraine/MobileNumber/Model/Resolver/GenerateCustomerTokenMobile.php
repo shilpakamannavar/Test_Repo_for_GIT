@@ -1,7 +1,5 @@
 <?php
-
 declare(strict_types=1);
-
 namespace Auraine\MobileNumber\Model\Resolver;
 
 use Magento\Customer\Model\CustomerFactory;
@@ -23,7 +21,7 @@ class GenerateCustomerTokenMobile implements ResolverInterface
     /**
      * @var CustomerFactory
      */
-    protected $_customerFactory;
+    protected $customerFactory;
 
     /**
      * @param CustomerTokenServiceInterface $customerTokenService
@@ -34,7 +32,7 @@ class GenerateCustomerTokenMobile implements ResolverInterface
         CustomerFactory $customerFactory,
     ) {
         $this->customerTokenService = $customerTokenService;
-        $this->_customerFactory = $customerFactory;
+        $this->customerFactory = $customerFactory;
     }
 
     /**
@@ -42,7 +40,7 @@ class GenerateCustomerTokenMobile implements ResolverInterface
      */
     public function resolve(
         Field $field,
-              $context,
+        $context,
         ResolveInfo $info,
         array $value = null,
         array $args = null
@@ -60,7 +58,7 @@ class GenerateCustomerTokenMobile implements ResolverInterface
         }
 
         try {
-            $collection = $this->_customerFactory->create()->getCollection()
+            $collection = $this->customerFactory->create()->getCollection()
                 ->addFieldToFilter("mobilenumber", $args['mobile']);
             if (count($collection) > 0) {
                 $email = $collection->getFirstItem()->getEmail();

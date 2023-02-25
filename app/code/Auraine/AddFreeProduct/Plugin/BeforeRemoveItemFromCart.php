@@ -59,7 +59,7 @@ class BeforeRemoveItemFromCart
     }
 
     /**
-     * Before plugin validates the incoming request and its header for mobile specific coupons.
+     * Before plugin validates the incoming request to remove free product from cart.
      *
      * @param \Magento\QuoteGraphQl\Model\Resolver\RemoveItemFromCart $subject
      * @param Field $field

@@ -75,14 +75,21 @@ class CustomerDataProviderTest extends TestCase
 
     public function getswatchTypeTests($valueType)
     {
+        $value = null ;
         switch ($valueType) {
             case 0:
-                return 'TextSwatchData';
+                $value = 'TextSwatchData';
+                break;
             case 1:
-                return 'ColorSwatchData';
+                $value = 'ColorSwatchData';
+                break;
             case 2:
-                return 'ImageSwatchData';
+                $value = 'ImageSwatchData';
+                break;
+            default:
+                break;
         }
+        return $value ;
     }
 
     /**

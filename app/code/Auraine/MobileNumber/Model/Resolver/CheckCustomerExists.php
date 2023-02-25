@@ -16,7 +16,7 @@ class CheckCustomerExists implements ResolverInterface
     /**
      * @var Data
      */
-    protected $_helperData;
+    protected $helperData;
 
     /**
      * @param Data $helperData
@@ -24,7 +24,7 @@ class CheckCustomerExists implements ResolverInterface
     public function __construct(
         Data $helperData
     ) {
-        $this->_helperData = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -43,7 +43,7 @@ class CheckCustomerExists implements ResolverInterface
             throw new GraphQlAuthenticationException(__('Invalid number.'));
         }
 
-        $collection = $this->_helperData->checkCustomerExists(
+        $collection = $this->helperData->checkCustomerExists(
             $fieldValue,
             $type
         );

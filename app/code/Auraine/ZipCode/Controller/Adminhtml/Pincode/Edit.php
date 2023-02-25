@@ -5,7 +5,6 @@ namespace Auraine\ZipCode\Controller\Adminhtml\Pincode;
 
 class Edit extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
 {
-
     /**
      *
      * @var \Magento\Framework\View\Result\PageFactory
@@ -52,13 +51,15 @@ class Edit extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
         // 3. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
+        $new = 'New Pincode' ;
+        $edit= 'Edit Pincode' ;
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Pincode') : __('New Pincode'),
-            $id ? __('Edit Pincode') : __('New Pincode')
+            $id ? __($edit) : __($new),
+            $id ? __($edit) : __($new)
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Pincodes'));
         $resultPage->getConfig()->getTitle()->prepend(
-            $model->getId() ? __('Edit Pincode %1', $model->getId()) : __('New Pincode')
+            $model->getId() ? __($edit.' %1', $model->getId()) : __($new)
         );
         return $resultPage;
     }

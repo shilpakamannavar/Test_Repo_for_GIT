@@ -11,6 +11,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 class DataTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
+    /**
      * Mock scopeConfig
      *
      * @var \Magento\Framework\App\Config\ScopeConfigInterface|PHPUnit\Framework\MockObject\MockObject
@@ -52,7 +58,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetSlabs()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -73,7 +79,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetValues()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -94,7 +100,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetStoreConfigValue()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -115,7 +121,7 @@ class DataTest extends TestCase
     public function dataProviderForTestGetNames()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

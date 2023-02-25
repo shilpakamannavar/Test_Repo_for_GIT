@@ -40,7 +40,7 @@ class Banner implements OptionSourceInterface
     {
         $items = $this->bannerRepository->getList($this->getSearchCriteriaBuilder()->create())->getItems();
         $result = [];
-        $default_res= [
+        $defaultRes= [
             ['value' => '', 'label' => 'Select Banner'],
             ];
         foreach ($items as $item) {
@@ -49,7 +49,7 @@ class Banner implements OptionSourceInterface
                 'value' => $item->getEntityId()
             ];
         }
-        return array_merge($default_res, $result);
+        return array_merge($defaultRes, $result);
     }
 
     /**

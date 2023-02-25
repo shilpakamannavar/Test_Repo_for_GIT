@@ -13,7 +13,7 @@ class ZipcodeTest extends TestCase
     /**
      * Mock zipcodeDataProvider
      *
-     * @var \Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Model\Resolver\DataProvider\Zipcode
      */
     private $zipcodeDataProvider;
 

@@ -18,9 +18,9 @@ class DataProviderAggregationPlugin extends LayerBuilder implements LayerBuilder
      */
     private $builders;
     /**
-     * @var $_logger
+     * @var $logger
      */
-    protected $_logger;
+    protected $logger;
     /**
      * @var $eavConfig
      */
@@ -34,9 +34,9 @@ class DataProviderAggregationPlugin extends LayerBuilder implements LayerBuilder
      */
     private $renderLayered;
     /**
-     * @var $_scopeConfig
+     * @var $scopeConfig
      */
-    private $_scopeConfig;
+    private $scopeConfig;
 
     /**
      * Constructor
@@ -58,11 +58,11 @@ class DataProviderAggregationPlugin extends LayerBuilder implements LayerBuilder
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->builders = $builders;
-        $this->_logger = $logger;
+        $this->logger = $logger;
         $this->eavConfig = $eavConfig;
         $this->swatchHelper = $swatchHelper;
         $this->renderLayered = $renderLayered;
-        $this->_scopeConfig = $scopeConfig;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -89,12 +89,12 @@ class DataProviderAggregationPlugin extends LayerBuilder implements LayerBuilder
                     $hexcodeData = $this->swatchHelper->getSwatchesByOptionsId([$layers[$key]['options'][$i]['value']]);
                     if ($hexcodeData) {
                         $typeName = $this->getswatchType($hexcodeData[$layers[$key]['options'][$i]['value']]['type']);
-                        $swatch_data_base_url = $this->_scopeConfig->getValue(
+                        $swatchDataBaseUrl = $this->scopeConfig->getValue(
                             'swatch_data/general/swatch_data_base_url',
                             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
                         );
                         $values = ($hexcodeData[$layers[$key]['options'][$i]['value']]['type'] == 2) ?
-                         $swatch_data_base_url.$hexcodeData[$layers[$key]['options'][$i]['value']]['value'] :
+                         $swatchDataBaseUrl.$hexcodeData[$layers[$key]['options'][$i]['value']]['value'] :
                          $hexcodeData[$layers[$key]['options'][$i]['value']]['value'];
                         $temp = [
                             'type' => $typeName,
@@ -118,13 +118,20 @@ class DataProviderAggregationPlugin extends LayerBuilder implements LayerBuilder
 
     public function getswatchType($valueType)
     {
+        $value = null ;
         switch ($valueType) {
             case 0:
-                return 'TextSwatchData';
+                $value = 'TextSwatchData';
+                break;
             case 1:
-                return 'ColorSwatchData';
+                $value = 'ColorSwatchData';
+                break;
             case 2:
-                return 'ImageSwatchData';
+                $value = 'ImageSwatchData';
+                break;
+            default:
+                break;
         }
+        return $value ;
     }
 }
