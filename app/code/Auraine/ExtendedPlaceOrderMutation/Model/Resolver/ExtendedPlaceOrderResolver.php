@@ -13,12 +13,12 @@ class ExtendedPlaceOrderResolver implements ResolverInterface
     /**
      * @var \Magento\Sales\Model\Order
      */
-    private $_order;
+    private $order;
 
     /**
      * @var \Magento\Directory\Model\CountryFactory
      */
-    private $_countryFactory;
+    private $countryFactory;
 
     /**
      * Constructs rewards points will earn from the current cart items.
@@ -30,8 +30,8 @@ class ExtendedPlaceOrderResolver implements ResolverInterface
         \Magento\Sales\Model\Order $order,
         \Magento\Directory\Model\CountryFactory $countryFactory
     ) {
-        $this->_order = $order;
-        $this->_countryFactory = $countryFactory;
+        $this->order = $order;
+        $this->countryFactory = $countryFactory;
     }
 
     /**
@@ -43,7 +43,7 @@ class ExtendedPlaceOrderResolver implements ResolverInterface
             return null;
         }
 
-        $order = $this->_order->loadByIncrementId($value['order_number']);
+        $order = $this->order->loadByIncrementId($value['order_number']);
         $shippingAddress = $order->getShippingAddress();
 
         if (empty($shippingAddress->getData())) {
@@ -71,7 +71,7 @@ class ExtendedPlaceOrderResolver implements ResolverInterface
                     'street' => implode(', ', $shippingAddress->getStreet()),
                     'city' => $shippingAddress->getCity(),
                     'region' => $shippingAddress->getRegion(),
-                    'country' => $this->_countryFactory
+                    'country' => $this->countryFactory
                         ->create()
                         ->loadByCode($shippingAddress->getCountryId())
                         ->getName()

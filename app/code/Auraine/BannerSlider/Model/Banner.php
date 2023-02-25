@@ -166,8 +166,7 @@ class Banner extends AbstractModel implements BannerInterface
     {
         return $this->getData('resource_path_poster');
     }
-
-
+    
     /**
      * Set Resource Path
      *

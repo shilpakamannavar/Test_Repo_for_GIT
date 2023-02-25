@@ -11,12 +11,12 @@ class MassStatusUpdate extends \Magento\Backend\App\Action
      * Massactions filter.
      * @var Filter
      */
-    protected $_filter;
+    protected $filter;
 
     /**
      * @var CollectionFactory
      */
-    protected $_collectionFactory;
+    protected $collectionFactory;
 
     /**
      * @param Context           $context
@@ -29,8 +29,8 @@ class MassStatusUpdate extends \Magento\Backend\App\Action
         CollectionFactory $collectionFactory
     ) {
 
-        $this->_filter = $filter;
-        $this->_collectionFactory = $collectionFactory;
+        $this->filter = $filter;
+        $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
 
@@ -41,7 +41,7 @@ class MassStatusUpdate extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $collection = $this->_filter->getCollection($this->_collectionFactory->create());
+        $collection = $this->filter->getCollection($this->collectionFactory->create());
         
         $resultRedirect = $this->resultRedirectFactory->create();
         

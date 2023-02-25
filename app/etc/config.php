@@ -1,5 +1,110 @@
 <?php
 return [
+    'scopes' => [
+        'websites' => [
+            'admin' => [
+                'website_id' => '0',
+                'code' => 'admin',
+                'name' => 'Admin',
+                'sort_order' => '0',
+                'default_group_id' => '0',
+                'is_default' => '0'
+            ],
+            'base' => [
+                'website_id' => '1',
+                'code' => 'base',
+                'name' => 'Main Website',
+                'sort_order' => '0',
+                'default_group_id' => '1',
+                'is_default' => '1'
+            ]
+        ],
+        'groups' => [
+            [
+                'group_id' => '0',
+                'website_id' => '0',
+                'name' => 'Default',
+                'root_category_id' => '0',
+                'default_store_id' => '0',
+                'code' => 'default'
+            ],
+            [
+                'group_id' => '1',
+                'website_id' => '1',
+                'name' => 'Main Website Store',
+                'root_category_id' => '2',
+                'default_store_id' => '1',
+                'code' => 'main_website_store'
+            ]
+        ],
+        'stores' => [
+            'admin' => [
+                'store_id' => '0',
+                'code' => 'admin',
+                'website_id' => '0',
+                'group_id' => '0',
+                'name' => 'Admin',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'default' => [
+                'store_id' => '1',
+                'code' => 'default',
+                'website_id' => '1',
+                'group_id' => '1',
+                'name' => 'Default Store View',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ]
+        ]
+    ],
+    'system' => [
+        'default' => [
+            'general' => [
+                'locale' => [
+                    'code' => 'en_US'
+                ]
+            ],
+            'dev' => [
+                'static' => [
+                    'sign' => '1'
+                ],
+                'front_end_development_workflow' => [
+                    'type' => 'server_side_compilation'
+                ],
+                'template' => [
+                    'allow_symlink' => NULL,
+                    'minify_html' => '0'
+                ],
+                'js' => [
+                    'merge_files' => '0',
+                    'enable_js_bundling' => NULL,
+                    'minify_files' => '0',
+                    'move_script_to_bottom' => '0',
+                    'translate_strategy' => 'dictionary',
+                    'session_storage_logging' => '0',
+                    'minify_exclude' => [
+                        'tiny_mce' => '/tiny_mce/',
+                        'cardinal_commerce' => '/v1/songbird'
+                    ]
+                ],
+                'css' => [
+                    'merge_css_files' => NULL,
+                    'minify_files' => '0',
+                    'use_css_critical_path' => '0',
+                    'minify_exclude' => [
+                        'tiny_mce' => '/tiny_mce/'
+                    ]
+                ]
+            ]
+        ],
+        'stores' => [
+
+        ],
+        'websites' => [
+
+        ]
+    ],
     'modules' => [
         'Magento_Store' => 1,
         'Magento_AdminAnalytics' => 1,
@@ -486,22 +591,31 @@ return [
         'Amasty_RewardsGraphQl' => 1,
         'Amasty_Rgrid' => 1,
         'Amasty_SalesRuleWizard' => 1,
+        'Auraine_TransactionalSMS' => 1,
+        'Auraine_AddFreeProduct' => 1,
         'Auraine_BannerSlider' => 1,
         'Auraine_Brands' => 1,
         'Auraine_Category' => 1,
         'Auraine_CouponCodes' => 1,
+        'Auraine_CustomImport' => 1,
         'Auraine_CustomProductAttribute' => 1,
         'Auraine_DiscountPercentageFilter' => 1,
         'Auraine_ExtendCatalogGraphQl' => 1,
+        'Auraine_ExtendedCustomerGraphQLException' => 1,
         'Magecomp_Mobilelogin' => 1,
         'Auraine_ImageUploader' => 1,
         'Auraine_LoyaltyPoint' => 1,
         'Auraine_MobileNumber' => 1,
         'Auraine_Offerlabel' => 1,
         'Auraine_PopularSearch' => 1,
+        'Auraine_ProductRecomender' => 1,
         'Auraine_RegionList' => 1,
+        'Auraine_Schedule' => 1,
+        'Auraine_SellerPanel' => 1,
         'Auraine_Staticcontent' => 1,
         'Auraine_SwatchData' => 1,
+        'Auraine_TransactionalEmail' => 1,
+        'Auraine_AbandonedCartNotification' => 1,
         'Auraine_ZipCode' => 1,
         'Fastly_Cdn' => 1,
         'Magecomp_MobileloginGraphQl' => 1,
@@ -513,5 +627,12 @@ return [
         'PayPal_BraintreeGraphQl' => 1,
         'Razorpay_Magento' => 1,
         'Temando_ShippingRemover' => 1
+    ],
+    'admin_user' => [
+        'locale' => [
+            'code' => [
+                'en_US'
+            ]
+        ]
     ]
 ];
