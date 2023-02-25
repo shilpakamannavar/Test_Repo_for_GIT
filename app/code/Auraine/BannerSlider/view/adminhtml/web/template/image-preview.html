@@ -7,7 +7,7 @@
             attr="
                 src: $parent.getFilePreview($file),
                 alt: $file.name,
-                title: $file.name">
+                title: $file.name" alt="">
             <div class="file-uploader-spinner image-uploader-spinner" />
             <img
                 class="preview-image"
@@ -16,7 +16,7 @@
                 attr="
                     src: $parent.getFilePreview($file),
                     alt: $file.name,
-                    title: $file.name">
+                    title: $file.name" alt="">
         </a>
 
         <div class="actions">
@@ -27,7 +27,7 @@
                 attr="title: $t('Delete image')"
                 disable="$parent.disabled"
                 click="$parent.removeFile.bind($parent, $file)">
-                <span translate="'Delete image'"/>
+                <span translate="'Delete image'" alt=""/>
             </button>
         </div>
     </div>

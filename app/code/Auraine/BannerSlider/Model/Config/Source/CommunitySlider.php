@@ -53,6 +53,8 @@ class CommunitySlider implements OptionSourceInterface
     }
 
     /**
+     * Search Builder
+     *
      * @return SearchCriteriaBuilder
      */
     protected function getSearchCriteriaBuilder()

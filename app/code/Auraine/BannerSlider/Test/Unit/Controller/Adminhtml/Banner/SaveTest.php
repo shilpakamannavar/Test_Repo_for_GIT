@@ -219,5 +219,4 @@ class SaveTest extends TestCase
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
-    
 }

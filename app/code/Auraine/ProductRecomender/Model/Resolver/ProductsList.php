@@ -10,11 +10,11 @@ use Magento\Framework\App\ObjectManager;
 
 class ProductsList implements ResolverInterface
 {
-  /** _orderCollectionFactory
+  /** orderCollectionFactory
    *
-   * @var _orderCollectionFactory
+   * @var $orderCollectionFactory
    */
-    protected $_orderCollectionFactory;
+    protected $orderCollectionFactory;
   /** OrderRepository
    *
    * @var orderRepository
@@ -35,7 +35,7 @@ class ProductsList implements ResolverInterface
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         Uid $uidEncoder = null
     ) {
-        $this->_orderCollectionFactory = $orderCollectionFactory;
+        $this->orderCollectionFactory = $orderCollectionFactory;
         $this->orderRepository = $orderRepository;
         $this->uidEncoder = $uidEncoder ?: ObjectManager::getInstance()
           ->get(Uid::class);
@@ -51,10 +51,9 @@ class ProductsList implements ResolverInterface
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
           $productId = $this->getProductId($args);
-          $orderCollection = $this->_orderCollectionFactory->create()->addAttributeToSelect('*');
+          $orderCollection = $this->orderCollectionFactory->create()->addAttributeToSelect('*');
           $orderData = $orderCollection->getData();
-          $mostBought = $this->getMostBoughtTogether($productId, $orderData);
-          return $mostBought;
+          return $this->getMostBoughtTogether($productId, $orderData);
     }
     /**
      * @param array $args
@@ -76,8 +75,8 @@ class ProductsList implements ResolverInterface
     {
         $orderItems = [];
         foreach ($orders as $order) {
-            $order_id = $order['entity_id'];
-            $order = $this->orderRepository->get($order_id);
+            $orderId = $order['entity_id'];
+            $order = $this->orderRepository->get($orderId);
             if ($this->hasItemInOrder($id, $order)) {
                 foreach ($order->getAllItems() as $item) {
 
