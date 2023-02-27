@@ -38,7 +38,6 @@ class Save extends \Magento\Backend\App\Action
         $data = $this->getRequest()->getPostValue();
         $flag = false;
 
-        return $resultRedirect->setPath('*/*/');
         if ($data) {
             $id = $this->getRequest()->getParam('pincode_id');
         
