@@ -328,24 +328,6 @@
                 </imageUploader>
             </formElements>
         </field>
-        <field name="resource_path_youtube_video" sortOrder="105" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">banner</item>
-                    <item name="depends" xsi:type="array">
-                        <item name="resource_type" xsi:type="array">
-                            <item name="field" xsi:type="string">resource_type</item>
-                            <item name="value" xsi:type="string">youtube_video</item>
-                        </item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Youtube Embed Link (only the URL)</label>
-                <visible>false</visible>
-            </settings>
-        </field> 
        <field name="resource_path_poster_image" sortOrder="90" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -391,7 +373,7 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">S3 Video Link</label>
+                <label translate="true">Video Link(Youtube and S3 videos)</label>
                 <visible>false</visible>
             </settings>
         </field> 

@@ -60,7 +60,7 @@ class Video implements ModifierInterface
             $resourceType = $item['resource_type'];
             if ($resourcePathPoster && $resourceType === 'video') {
                 unset($item['resource_path_poster']);
-                $item['resource_path_poster'] = $resourcePathPoster;
+                $item['resource_path_poster_image'] = $resourcePathPoster;
             }
         }
         return $data;
