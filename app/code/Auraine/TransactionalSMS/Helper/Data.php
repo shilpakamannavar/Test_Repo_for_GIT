@@ -73,6 +73,27 @@ class Data
     }
 
     /**
+     * Send SMS method to abandoned cart users.
+     *
+     * @param string $configPath
+     * @param string $mobile
+     * @param string $customerName
+     * @return void
+     */
+    public function customerAbandonedCartSMS(
+        $configPath,
+        $mobile,
+        $customerName
+    ) {
+        $codes = ['{{customer_name}}'];
+        $accurate = [$customerName];
+
+        $message = $this->generateMessage($codes, $accurate, $configPath);
+        
+        $this->dispachSMS($message, $mobile);
+    }
+
+    /**
      * Send SMS on successfully placing order.
      *
      * @param string $configPath

@@ -234,7 +234,7 @@ class ExtendedRule extends \Magento\Rule\Model\AbstractModel
                 'promotion_description' => $storeData['description'] ?: $this->getDefaultDescription(),
             ];
 
-            $transportBuilder = $this->objectManager->create(\Magento\SalesRule\Model\CouponFactory::class);
+            $transportBuilder = $this->objectManager->create(\Magento\Framework\Mail\Template\TransportBuilder::class);
             $transport = $transportBuilder->setTemplateIdentifier(
                 $storeData['template_id']
             )->setTemplateOptions(
@@ -249,8 +249,8 @@ class ExtendedRule extends \Magento\Rule\Model\AbstractModel
 
             try {
                 $transport->sendMessage();
-
-                $mobileNo = $customer->getCustomAttribute('mobilenumber')->getValue();
+                
+                $mobileNo = $customer->getData('mobilenumber');
 
                 if ($mobileNo) {
                     $helperData = $this->objectManager->create(\Auraine\TransactionalSMS\Helper\Data::class);
