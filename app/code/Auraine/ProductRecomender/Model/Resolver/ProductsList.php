@@ -2,11 +2,14 @@
 declare(strict_types=1);
 namespace Auraine\ProductRecomender\Model\Resolver;
 
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\App\ObjectManager;
+use Magento\Sales\Api\Data\OrderInterface;
 
 class ProductsList implements ResolverInterface
 {
@@ -23,6 +26,12 @@ class ProductsList implements ResolverInterface
 
   /** @var Uid */
     private $uidEncoder;
+
+    /**
+     * Order object cache
+     * @var OrderInterface
+     */
+    private $_order;
 
   /** Constructor function
    *
@@ -76,7 +85,7 @@ class ProductsList implements ResolverInterface
         $orderItems = [];
         foreach ($orders as $order) {
             $orderId = $order['entity_id'];
-            $order = $this->orderRepository->get($orderId);
+            $order = $this->getOrder($orderId);
             if ($this->hasItemInOrder($id, $order)) {
                 foreach ($order->getAllItems() as $item) {
 
@@ -111,5 +120,26 @@ class ProductsList implements ResolverInterface
         }
 
         return false;
+    }
+    /**
+     * Get Order
+     *
+     * @param int $orderId
+     * @return \Magento\Sales\Api\Data\OrderInterface
+     * @throws LocalizedException
+     */
+    public function getOrder($orderId)
+    {
+        if ($this->_order) {
+
+            return $this->_order;
+
+        }
+        try {
+            $this->_order = $this->orderRepository->get($orderId);
+            return $this->_order;
+        } catch (NoSuchEntityException $e) {
+            throw new \Magento\Framework\Exception\LocalizedException(__('This order no longer exists.'));
+        }
     }
 }
