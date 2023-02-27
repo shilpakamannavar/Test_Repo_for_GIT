@@ -46,7 +46,7 @@ class Edit extends \Auraine\ZipCode\Controller\Adminhtml\Pincode
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('auraine_zipcode_pincode', $model);
+        $this->coreRegistry->register('auraine_zipcode_pincode', $model);
         
         // 3. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */

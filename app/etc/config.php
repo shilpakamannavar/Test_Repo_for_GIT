@@ -73,12 +73,12 @@ return [
                     'type' => 'server_side_compilation'
                 ],
                 'template' => [
-                    'allow_symlink' => NULL,
+                    'allow_symlink' => null,
                     'minify_html' => '0'
                 ],
                 'js' => [
                     'merge_files' => '0',
-                    'enable_js_bundling' => NULL,
+                    'enable_js_bundling' => null,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
                     'translate_strategy' => 'dictionary',
@@ -89,7 +89,7 @@ return [
                     ]
                 ],
                 'css' => [
-                    'merge_css_files' => NULL,
+                    'merge_css_files' => null,
                     'minify_files' => '0',
                     'use_css_critical_path' => '0',
                     'minify_exclude' => [
@@ -591,7 +591,6 @@ return [
         'Amasty_RewardsGraphQl' => 1,
         'Amasty_Rgrid' => 1,
         'Amasty_SalesRuleWizard' => 1,
-        'Auraine_TransactionalSMS' => 1,
         'Auraine_AddFreeProduct' => 1,
         'Auraine_BannerSlider' => 1,
         'Auraine_Brands' => 1,
@@ -603,6 +602,7 @@ return [
         'Auraine_ExtendCatalogGraphQl' => 1,
         'Auraine_ExtendedCustomerGraphQLException' => 1,
         'Magecomp_Mobilelogin' => 1,
+        'Auraine_ExtendedReminder' => 1,
         'Auraine_ImageUploader' => 1,
         'Auraine_LoyaltyPoint' => 1,
         'Auraine_MobileNumber' => 1,
@@ -615,9 +615,11 @@ return [
         'Auraine_Staticcontent' => 1,
         'Auraine_SwatchData' => 1,
         'Auraine_TransactionalEmail' => 1,
-        'Auraine_AbandonedCartNotification' => 1,
+        'Auraine_TransactionalSMS' => 1,
         'Auraine_ZipCode' => 1,
         'Fastly_Cdn' => 1,
+        'MagePal_Core' => 1,
+        'MagePal_GmailSmtpApp' => 1,
         'Magecomp_MobileloginGraphQl' => 1,
         'Auraine_ExtendedPlaceOrderMutation' => 1,
         'Magecomp_Mobileloginmsg91' => 1,

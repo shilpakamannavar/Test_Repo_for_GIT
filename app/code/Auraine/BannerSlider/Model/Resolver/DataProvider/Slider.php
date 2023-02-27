@@ -139,7 +139,8 @@ class Slider
                     'slider_target_id',
                     'category_id',
                     'target_type',
-                    'target_id'
+                    'target_id',
+                    'banner_id' => 'entity_id'
                 ]);
                 $encode = "base64_encode";
                 $bannerData['category_uid'] = $encode($bannerData['category_id']);
