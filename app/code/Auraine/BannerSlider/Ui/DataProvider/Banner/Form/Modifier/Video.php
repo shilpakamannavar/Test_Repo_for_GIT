@@ -58,7 +58,7 @@ class Video implements ModifierInterface
             $item = $this->processRow($item);
             $resourcePathPoster = $item['resource_path_poster'] ?? null;
             $resourceType = $item['resource_type'];
-            if ($resourcePathPoster && $resourceType === 'video') {
+            if (($resourcePathPoster && $resourceType === 'video') || ($resourcePathPoster && $resourceType === 'youtube_video')) {
                 unset($item['resource_path_poster']);
                 $item['resource_path_poster_image'] = $resourcePathPoster;
             }
@@ -77,7 +77,7 @@ class Video implements ModifierInterface
     {
         $resourcePathPoster = $data['resource_path_poster'] ?? null;
         $resourceType = $data['resource_type'];
-        if ($resourcePathPoster && $resourceType === 'video') {
+        if (($resourcePathPoster && $resourceType === 'video')  || ($resourcePathPoster && $resourceType === 'youtube_video')) {
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $urlPoster = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathPoster;
