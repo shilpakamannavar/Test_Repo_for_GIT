@@ -124,10 +124,10 @@ class ExtendedRule extends \Magento\Rule\Model\AbstractModel
     {
         parent::_afterLoad();
 
-        $storeData = $this->_getResource()->getStoreData($this->getId());
+        $storeDataCollection = $this->_getResource()->getStoreData($this->getId());
         $defaultTemplate = self::XML_PATH_EMAIL_TEMPLATE;
 
-        foreach ($storeData as $data) {
+        foreach ($storeDataCollection as $data) {
             $template = empty($data['template_id']) ? $defaultTemplate : $data['template_id'];
             $this->setData('store_template_' . $data['store_id'], $template);
             $this->setData('store_label_' . $data['store_id'], $data['label']);
@@ -214,8 +214,8 @@ class ExtendedRule extends \Magento\Rule\Model\AbstractModel
                 $store = $storeManager->getWebsite($customer->getWebsiteId())->getDefaultStore();
             }
 
-            $storeData = $this->getStoreData($recipient['rule_id'], $store->getId());
-            if (!$storeData) {
+            $storeDataCollection = $this->getStoreData($recipient['rule_id'], $store->getId());
+            if (!$storeDataCollection) {
                 continue;
             }
 
@@ -230,13 +230,13 @@ class ExtendedRule extends \Magento\Rule\Model\AbstractModel
                 'customer_data' => [
                     'name' => $customer->getName(),
                 ],
-                'promotion_name' => $storeData['label'] ?: $this->getDefaultLabel(),
-                'promotion_description' => $storeData['description'] ?: $this->getDefaultDescription(),
+                'promotion_name' => $storeDataCollection['label'] ?: $this->getDefaultLabel(),
+                'promotion_description' => $storeDataCollection['description'] ?: $this->getDefaultDescription(),
             ];
 
             $transportBuilder = $this->objectManager->create(\Magento\Framework\Mail\Template\TransportBuilder::class);
             $transport = $transportBuilder->setTemplateIdentifier(
-                $storeData['template_id']
+                $storeDataCollection['template_id']
             )->setTemplateOptions(
                 ['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $store->getId()]
             )->setTemplateVars(
@@ -249,7 +249,7 @@ class ExtendedRule extends \Magento\Rule\Model\AbstractModel
 
             try {
                 $transport->sendMessage();
-                
+
                 $mobileNo = $customer->getData('mobilenumber');
 
                 if ($mobileNo) {
