@@ -47,7 +47,7 @@ class Edit extends \Auraine\Staticcontent\Controller\Adminhtml\Content
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('auraine_staticcontent_content', $model);
+        $this->coreRegistry->register('auraine_staticcontent_content', $model);
         
         // 3. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
