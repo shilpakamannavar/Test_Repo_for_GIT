@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Auraine\ProductRecomender\Model\Resolver;
 
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
@@ -47,23 +48,23 @@ class ProductsList implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-          $productId = $this->getProductId($args);
-          return $this->getMostBoughtTogether($productId);
+        $productUid = $this->getProductUid($args);
+        $pId = $this->uidEncoder->decode((string)$productUid);
+        return $this->getMostBoughtTogether((int)$pId);
     }
     /**
-     * GetProductId
+     * GetProductUid
      *
      * @param array $args
      * @return int
      * @throws GraphQlInputException
      */
-    private function getProductId(array $args): int
+    private function getProductUid(array $args): string
     {
-        if (!isset($args['id'])) {
-            throw new GraphQlInputException(__('"Product id should be specified'));
+        if (!isset($args['uid'])) {
+            throw new GraphQlInputException(__('"Product Uid should be specified'));
         }
-
-        return (int)$args['id'];
+        return (string)$args['uid'];
     }
     /**
      * Get frequently items bought together
@@ -85,7 +86,7 @@ class ProductsList implements ResolverInterface
         $orderItems = $connection->fetchAll($query);
         $orderItemsUid = [];
         foreach ($orderItems as $item) {
-            $prodUID = $this->uidEncoder->encode((string)$item['total_Prod_Count']);
+            $prodUID = $this->uidEncoder->encode((string)$item['product_id']);
             array_push($orderItemsUid, $prodUID);
         }
         return $orderItemsUid;

@@ -5,15 +5,20 @@
       <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title" />
       <column xsi:type="varchar" name="image" nullable="false" length="255" comment="Brand Logo" />
       <column xsi:type="varchar" name="description" nullable="false" length="255" comment="Descrition" />
-     <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores" />
+      <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores" />
       <column xsi:type="smallint" name="is_popular" nullable="false"  comment="Is Popular" />
       <column xsi:type="smallint" name="is_featured" nullable="false"  comment="Is Featured" />
       <column xsi:type="smallint" name="is_justin" nullable="false"  comment="Is Justin" />
       <column xsi:type="smallint" name="is_exclusive" nullable="false"  comment="Is Exclusive" />
-     <column xsi:type="smallint" name="status" nullable="false"  comment="Status" />
+      <column xsi:type="smallint" name="status" nullable="false"  comment="Status" />
       <column xsi:type="varchar" name="url_key" nullable="false" length="255" comment="URL Key" />
-    <column xsi:type="varchar" name="meta_key" nullable="false" length="255" comment="Meta Key" />
-    <column xsi:type="varchar" name="meta_description" nullable="false" length="255" comment="Meta Key" />
+      <column xsi:type="varchar" name="meta_key" nullable="false" length="255" comment="Meta Key" />
+      <column xsi:type="varchar" name="meta_description" nullable="false" length="255" comment="Meta Key" />
+      <column xsi:type="int" name="brand_banner_slider_id" nullable="false" comment="Banner Slider ID" />
+      <column xsi:type="int" name="brand_offer_slider_id" nullable="false" comment="Offer Slider ID" />
+      <column xsi:type="int" name="brand_exclusive_top_slider_id" nullable="false" comment="Exclusive Top Slider ID" />
+      <column xsi:type="int" name="brand_exclusive_banner_slider_id" nullable="false" comment="Exclusive List Slider ID" />
+      <column xsi:type="int" name="brand_blogs_slider_id" nullable="false" comment="Blogs Slider ID" />
       <constraint xsi:type="primary" referenceId="PRIMARY">
          <column name="entity_id" />
       </constraint>
