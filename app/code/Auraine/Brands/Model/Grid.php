@@ -159,7 +159,7 @@ class Grid extends \Magento\Framework\Model\AbstractModel implements GridInterfa
     /**
      * Set isExclusive.
      *
-     * @param int isExclusive
+     * @param int $isExclusive
      */
     public function setExclusive($isExclusive)
     {

@@ -5,7 +5,7 @@
             <class>separator-top</class>
             <label>Transactional SMS &amp; OTP configuration</label>
             <tab>auraine_system_config</tab>
-            <resource>Auraine_TransactionalSMS::module_config</resource>
+            <resource>Auraine_LoyaltyPoint::module_config</resource>
             <group id="transaction_sms" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Configuration</label>                
                 <field id="enable_sms" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">

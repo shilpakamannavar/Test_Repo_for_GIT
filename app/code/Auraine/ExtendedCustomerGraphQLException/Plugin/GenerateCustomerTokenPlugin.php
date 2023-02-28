@@ -60,7 +60,7 @@ class GenerateCustomerTokenPlugin
             $token = $this->customerTokenService->createCustomerAccessToken($args['email'], $args['password']);
             return ['token' => $token];
         } catch (AuthenticationException $e) {
-            throw new GraphQlAuthenticationException(__('Incorrect username and password'), $e);
+            throw new GraphQlAuthenticationException(__('Invalid Login or Password.Please try again'), $e);
         }
     }
 }

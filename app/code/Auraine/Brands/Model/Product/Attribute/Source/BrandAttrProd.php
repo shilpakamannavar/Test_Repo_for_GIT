@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright ©  All rights reserved.
- * See COPYING.txt for license details.
- */
 declare(strict_types=1);
 
 namespace Auraine\Brands\Model\Product\Attribute\Source;
@@ -12,7 +8,7 @@ class BrandAttrProd extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractS
     /**
      * GetAllOptions
      *
-     * @param  brandsFactory,objectManager
+     * @param  brandsFactory $brandsFactory,objectManager $objectManager
      *
      * @return array
      */
@@ -20,17 +16,19 @@ class BrandAttrProd extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractS
         \Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory $brandsFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
-        $this->_brandsFactory  = $brandsFactory;
-        $this->_objectManager = $objectManager;
+        $this->brandsFactory  = $brandsFactory;
+        $this->objectManager = $objectManager;
     }
-    /**
-     * GetAllOptions
+    /* GetAllOptions
      *
      * @return array
      */
     public function getAllOptions()
     {
-        $collection = $this->_brandsFactory->create()->addFieldToSelect('entity_id', 'value')->addFieldToSelect('title', 'label')->addFieldToFilter('status', '1');
+        $collection = $this->brandsFactory->create()
+                            ->addFieldToSelect('entity_id', 'value')
+                            ->addFieldToSelect('title', 'label')
+                            ->addFieldToFilter('status', '1');
         $brandData = $collection->getData();
         $dummy= [
             ['value' => '', 'label' => 'Select Brand'],
@@ -89,8 +87,17 @@ class BrandAttrProd extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractS
      */
     public function getAllBrandDataById($id)
     {
-        $collection = $this->_brandsFactory->create()->addFieldToSelect('entity_id', 'value')->addFieldToSelect('title', 'label')->addFieldToFilter('entity_id', $id);
-        $brandData = $collection->getData();
-        return  $brandData;
+        $collection = $this->brandsFactory->create()
+                                            ->addFieldToSelect('entity_id', 'value')
+                                            ->addFieldToSelect('title', 'label')
+                                            ->addFieldToFilter('entity_id', $id);
+        return ($collection->getData());
+    }
+    public function getAllBrandNameById($id)
+    {
+        $collection = $this->brandsFactory->create()
+                                            ->addFieldToSelect('title')
+                                            ->addFieldToFilter('entity_id', $id);
+        return ($collection->getData());
     }
 }

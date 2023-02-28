@@ -2,41 +2,29 @@
 declare(strict_types=1);
 namespace Auraine\ProductRecomender\Model\Resolver;
 
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ResourceConnection;
 
 class ProductsList implements ResolverInterface
 {
-  /** orderCollectionFactory
-   *
-   * @var $orderCollectionFactory
-   */
-    protected $orderCollectionFactory;
-  /** OrderRepository
-   *
-   * @var orderRepository
-   */
-    protected $orderRepository;
-
-  /** @var Uid */
+   /** @var Uid */
     private $uidEncoder;
 
-  /** Constructor function
-   *
-   * @param CollectionFactory $orderCollectionFactory
-   * @param OrderRepositoryInterface $orderRepository
-   * @param Uid|null $uidEncoder
-   */
+    /**
+     * @param ResourceConnection $resourceConnection
+     * @param Uid|null $uidEncoder
+     */
     public function __construct(
-        \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        ResourceConnection $resourceConnection,
         Uid $uidEncoder = null
     ) {
-        $this->orderCollectionFactory = $orderCollectionFactory;
-        $this->orderRepository = $orderRepository;
+        $this->resourceConnection = $resourceConnection;
         $this->uidEncoder = $uidEncoder ?: ObjectManager::getInstance()
           ->get(Uid::class);
     }
@@ -48,68 +36,59 @@ class ProductsList implements ResolverInterface
      *
      * @return dataProvider
      */
+    /**
+     * Resolve
+     *
+     * @param Field $field
+     * @param Context $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return array|\Magento\Framework\GraphQl\Query\Resolver\Value|mixed
+     */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-          $productId = $this->getProductId($args);
-          $orderCollection = $this->orderCollectionFactory->create()->addAttributeToSelect('*');
-          $orderData = $orderCollection->getData();
-          return $this->getMostBoughtTogether($productId, $orderData);
+        $productUid = $this->getProductUid($args);
+        $pId = $this->uidEncoder->decode((string)$productUid);
+        return $this->getMostBoughtTogether((int)$pId);
     }
     /**
+     * GetProductUid
+     *
      * @param array $args
      * @return int
      * @throws GraphQlInputException
      */
-    private function getProductId(array $args): int
+    private function getProductUid(array $args): string
     {
-        if (!isset($args['id'])) {
-            throw new GraphQlInputException(__('"Product id should be specified'));
+        if (!isset($args['uid'])) {
+            throw new GraphQlInputException(__('"Product Uid should be specified'));
         }
-
-        return (int)$args['id'];
+        return (string)$args['uid'];
     }
     /**
      * Get frequently items bought together
      */
-    private function getMostBoughtTogether(int $id, $orders): array
+    /**
+     * GetMostBoughtTogether
+     *
+     * @param int $id
+     * @return array
+     */
+    private function getMostBoughtTogether(int $id): array
     {
-        $orderItems = [];
-        foreach ($orders as $order) {
-            $orderId = $order['entity_id'];
-            $order = $this->orderRepository->get($orderId);
-            if ($this->hasItemInOrder($id, $order)) {
-                foreach ($order->getAllItems() as $item) {
-
-                    if ($id === (int) $item->getProductId()) {
-                        continue;
-                    }
-                    $orderItems[$item->getProductId()] = isset($orderItems[$item->getProductId()]) ?
-                       (int) $orderItems[$item->getProductId()] + (int) $item->getQtyOrdered() :
-                       (int) $item->getQtyOrdered();
-                }
-            }
-        }
-        arsort($orderItems);
-        // get only id in array index
-        $orderItems = array_keys($orderItems);
+        $connection = $this->resourceConnection->getConnection();
+        $table = $connection->getTableName('sales_order_item');
+        $query = 'select product_id, count(product_id) as total_Prod_Count from '.$table.' where product_id in
+        (select product_id from sales_order_item where order_id in
+        ((select order_id from sales_order_item where product_id='.$id.'))
+        and product_id != '.$id.') group by  product_id';
+        $orderItems = $connection->fetchAll($query);
         $orderItemsUid = [];
         foreach ($orderItems as $item) {
-            $prodUID = $this->uidEncoder->encode((string)$item);
+            $prodUID = $this->uidEncoder->encode((string)$item['product_id']);
             array_push($orderItemsUid, $prodUID);
         }
         return $orderItemsUid;
-    }
-   /**
-    * Has item in these orders.
-    */
-    private function hasItemInOrder(int $id, $order): bool
-    {
-        foreach ($order->getAllItems() as $item) {
-            if ($id === (int) $item->getProductId()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

@@ -52,6 +52,7 @@ type BannerSliderBanner {
     category_uid: String @doc(description: "category uid")
     target_id: String @doc(description: "target id")
     target_type: String @doc(description: "target type")
+    banner_id: Int @doc(description: "Banner id")
 }
 
 type BannerSliderResourceMap {
