@@ -73,7 +73,7 @@
 				<label translate="true">New Banner Id</label>
 				<dataScope>new_banner_id</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 			<formElements>
@@ -84,35 +84,48 @@
                 </select>
             </formElements>
 		</field>
-		<field name="start_date" formElement="date" sortOrder="40">
+		<field name="start_date">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">schedule</item>
+					<item name="dataType" xsi:type="string">string</item>
+					<item name="label" xsi:type="string" translate="true">Start Date</item>
+					<item name="formElement" xsi:type="string">date</item>
+					<item name="source" xsi:type="string">page</item>
+					<item name="sortOrder" xsi:type="number">40</item>
+					<item name="dataScope" xsi:type="string">start_date</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+					<item name="options" xsi:type="array">
+						<item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+						<item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+						<item name="showsTime" xsi:type="boolean">true</item>
+					</item>
+					<item name="storeTimeZone" xsi:type="string">string</item>
 				</item>
 			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">Start Date</label>
-				<dataScope>start_date</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
 		</field>
-		<field name="end_date" formElement="date" sortOrder="50">
+
+		<field name="end_date">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">schedule</item>
+					<item name="dataType" xsi:type="string">string</item>
+					<item name="label" xsi:type="string" translate="true">End Date</item>
+					<item name="formElement" xsi:type="string">date</item>
+					<item name="source" xsi:type="string">page</item>
+					<item name="sortOrder" xsi:type="number">50</item>
+					<item name="dataScope" xsi:type="string">end_date</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+					<item name="options" xsi:type="array">
+						<item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+						<item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+						<item name="showsTime" xsi:type="boolean">true</item>
+					</item>
+					<item name="storeTimeZone" xsi:type="string">string</item>
 				</item>
 			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">End Date</label>
-				<dataScope>end_date</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
 		</field>
 		<field name="is_active" sortOrder="10" formElement="checkbox">
             <argument name="data" xsi:type="array">
@@ -138,27 +151,5 @@
                 </checkbox>
             </formElements>
         </field>
-		<field name="status" formElement="select" sortOrder="70">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">schedule</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">status</label>
-				<dataScope>status</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-			<formElements>
-                <select>
-                    <settings>
-                        <options class="Auraine\Schedule\Model\Config\Source\StatusDropdownValues"/>
-                    </settings>
-                </select>
-            </formElements>
-		</field>
 	</fieldset>
 </form>

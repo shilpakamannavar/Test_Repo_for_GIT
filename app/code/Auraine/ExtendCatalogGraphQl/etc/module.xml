@@ -3,6 +3,7 @@
 	<module name="Auraine_ExtendCatalogGraphQl">
 		<sequence>
 			<module name="Magento_CatalogGraphQl"/>
+			<module name="Magento_Directory"/>
 		</sequence>
 	</module>
 </config>

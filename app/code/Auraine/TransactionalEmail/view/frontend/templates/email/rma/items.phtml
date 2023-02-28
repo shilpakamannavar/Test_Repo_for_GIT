@@ -17,7 +17,8 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
     $brandsList = $objectManager->create(BrandsList::class);
     $brand = (int)$product->getData('brand_name');
-    $productAttributeOptions = $objectManager->get(\Magento\Eav\Model\Config::class)->getAttribute('catalog_product', 'color');
+    $productAttributeOptions = $objectManager->get(\Magento\Eav\Model\Config::class)
+                                            ->getAttribute('catalog_product', 'color');
     $options = $productAttributeOptions->getSource()->getAllOptions();
     foreach ($options as $option) {
         if ($option['value'] == $product->getData('color')) {
@@ -38,7 +39,9 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
   $imagewidth=200;
 	$imageheight=200;
 	$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
-	$image_url = $imageHelper->init($product, 'small_image')->setImageFile($product->getSmallImage())->resize($imagewidth, $imageheight)->getUrl();
+	$image_url = $imageHelper->init($product, 'small_image')
+                          ->setImageFile($product->getSmallImage())
+                          ->resize($imagewidth, $imageheight)->getUrl();
 	 ?>
 <div style="padding: 20px">
 <div style="
@@ -72,7 +75,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
             font-family: Helvetica;
             font-size: 16px;
             font-weight: 400;
-            line-height: 12px;
+            line-height: 18px;
             letter-spacing: 0em;
             padding-bottom: 22px;
           ">
