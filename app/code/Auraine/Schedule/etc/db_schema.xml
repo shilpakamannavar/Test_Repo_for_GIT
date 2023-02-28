@@ -7,10 +7,10 @@
 		</constraint>
 		<column name="old_banner_id" nullable="true" xsi:type="int" comment="old_banner_id" identity="false"/>
 		<column name="new_banner_id" nullable="true" xsi:type="int" comment="new_banner_id" identity="false"/>
-		<column name="start_date" nullable="true" xsi:type="date" comment="start_date"/>
-		<column name="end_date" nullable="true" xsi:type="date" comment="end_date"/>
+		<column name="start_date" nullable="true" xsi:type="datetime" comment="start_date"/>
+		<column name="end_date" nullable="true" xsi:type="datetime" comment="end_date"/>
 		<column name="is_active" nullable="true" xsi:type="smallint" comment="is_active" identity="false"/>
-		<column name="status" nullable="true" xsi:type="varchar" comment="status" length="255"/>
+		<column name="status" nullable="true" xsi:type="varchar" comment="status" length="255" default="Pending"/>
 		<column name="created_at" nullable="false" xsi:type="datetime" default="CURRENT_TIMESTAMP" on_update="false"/>
 		<column name="updated_at" nullable="true" xsi:type="datetime" default="CURRENT_TIMESTAMP" on_update="true"/>
 	</table>
