@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Auraine\MobileNumber\Model\Resolver;
 
-use Magento\Customer\Model\Session;
+use Magento\CustomerGraphQl\Model\Customer\GetCustomer;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -12,22 +12,22 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 class CustomerId implements ResolverInterface
 {
     /**
-     * @var customerSession
+     * @var Get Current Customer
      */
-    private $customerSession;
+    private $getCurrentCustomer;
     /**
-     * @param Session $customerSession
+     * @param GetCustomer $getCurrentCustomer
      */
-    public function __construct(Session $customerSession)
+    public function __construct(GetCustomer $getCurrentCustomer)
     {
-        $this->customerSession = $customerSession;
+        $this->getCurrentCustomer = $getCurrentCustomer;
     }
     /**
      * @inheritdoc
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        $customerId = $this->customerSession->getCustomerId();
-        return (int) $customerId;
+        $customer = $this->getCurrentCustomer->execute($context);
+        return $customer->getId();
     }
 }
