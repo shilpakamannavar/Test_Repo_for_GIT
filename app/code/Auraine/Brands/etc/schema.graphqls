@@ -34,6 +34,7 @@ interface ProductInterface {
     @resolver(
         class: "Auraine\\Brands\\Model\\Resolver\\Product\\AddBrandAttribute"
     )
+     brand_label:String @doc(description: "Product Brand name Show") @resolver(class: "Auraine\\Brands\\Model\\Resolver\\Product\\AddBrandAttributeLabel")
 }
 
 input ProductAttributeFilterInput {

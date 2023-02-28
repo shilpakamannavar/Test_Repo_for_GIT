@@ -93,4 +93,11 @@ class BrandAttrProd extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractS
                                             ->addFieldToFilter('entity_id', $id);
         return ($collection->getData());
     }
+    public function getAllBrandNameById($id)
+    {
+        $collection = $this->brandsFactory->create()
+                                            ->addFieldToSelect('title')
+                                            ->addFieldToFilter('entity_id', $id);
+        return ($collection->getData());
+    }
 }
