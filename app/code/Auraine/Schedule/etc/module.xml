@@ -3,6 +3,7 @@
 	<module name="Auraine_Schedule">
 		<sequence>
            <module name="Auraine_BannerSlider"/>
+		   <module name="Auraine_LoyaltyPoint"/>
 		</sequence>
 	</module>
 </config>

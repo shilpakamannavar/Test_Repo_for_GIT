@@ -3,6 +3,7 @@
     <module name="Auraine_ExtendedReminder" setup_version="1.0.0">
         <sequence>
             <module name="Magento_Reminder"/>
+            <module name="Auraine_LoyaltyPoint"/>
         </sequence>
     </module>
 </config>
