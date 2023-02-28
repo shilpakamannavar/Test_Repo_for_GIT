@@ -43,14 +43,14 @@ class ExtendedPlaceOrderResolver implements ResolverInterface
             return null;
         }
 
-        $order = $this->order->loadByIncrementId($value['order_number']);
-        $shippingAddress = $order->getShippingAddress();
+        $orderObj = $this->order->loadByIncrementId($value['order_number']);
+        $shippingAddress = $orderObj->getShippingAddress();
 
         if (empty($shippingAddress->getData())) {
             return null;
         }
 
-        return $this->generateResponse($shippingAddress, $order->getCustomerEmail());
+        return $this->generateResponse($shippingAddress, $orderObj->getCustomerEmail());
     }
 
     /**
