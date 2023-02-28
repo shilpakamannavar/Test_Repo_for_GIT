@@ -14,7 +14,7 @@
 			<button name="bannerSchedule">
 				<url path="auraine_schedule/schedule/newschedule"/>
 				<class>primary</class>
-				<label translate="true">Banner Schedule</label>
+				<label translate="true">Banner Schedule Cron</label>
 			</button>
 			<button name="add">
 				<url path="*/*/new"/>
