@@ -3,6 +3,7 @@
 	<module name="Auraine_TransactionalSMS">
 		<sequence>
 			<module name="Magento_GraphQl"/>
+			<module name="Auraine_LoyaltyPoint"/>
 		</sequence>
 	</module>
 </config>

@@ -39,16 +39,16 @@ class BrandsList implements ResolverInterface
     /**
      * Resolver function for the list
      *
-     * @param Field $field, $context, ResolveInfo $info, array $value , array $args
+     * @param Field $field, context $context, ResolveInfo $info, array $value , array $args
      *
      * @return dataProvider
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-         $filter_entity_id = $args['entity_id'] ?? null;
-         $filter_label = $args['filter_label'] ?? null;
-         $filter_url = $args['url_key'] ?? null;
+         $filterEntityId = $args['entity_id'] ?? null;
+         $filterLabel = $args['filter_label'] ?? null;
+         $filterUrl = $args['url_key'] ?? null;
                  
-        return $this->dataProvider->getBrandsList($filter_entity_id, $filter_label, $filter_url);
+        return $this->dataProvider->getBrandsList($filterEntityId, $filterLabel, $filterUrl);
     }
 }

@@ -26,7 +26,7 @@ class Aggregations implements ResolverInterface
     /**
      * @var BrandsFactory
      */
-    private $_brandsFactory;
+    private $brandsFactory;
 
     /**
      * @param LayerBuilder $layerBuilder
@@ -38,7 +38,7 @@ class Aggregations implements ResolverInterface
         \Auraine\Brands\Model\Product\Attribute\Source\BrandAttrProd $brandsFactory
     ) {
         $this->layerBuilder = $layerBuilder;
-        $this->_brandsFactory  = $brandsFactory;
+        $this->brandsFactory  = $brandsFactory;
     }
     /**
      * @inheritdoc
@@ -70,7 +70,7 @@ class Aggregations implements ResolverInterface
                 foreach ($results['brand_name_bucket']['options'] as &$value) {
                     $id = (int)$value['value'];
 
-                    $result = $this->_brandsFactory->getAllBrandDataById($id);
+                    $result = $this->brandsFactory->getAllBrandDataById($id);
                     if (!empty($result)) {
                         $value['label'] = $result[0]['label'];
                         $value['value'] = $result[0]['value'];
