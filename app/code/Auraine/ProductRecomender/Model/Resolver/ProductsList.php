@@ -79,10 +79,10 @@ class ProductsList implements ResolverInterface
     {
         $connection = $this->resourceConnection->getConnection();
         $table = $connection->getTableName('sales_order_item');
-        $query = 'select product_id, count(product_id) as total_Prod_Count from '.$table.' where product_id in
+        $query = 'select product_id from '.$table.' where product_id in
         (select product_id from sales_order_item where order_id in
         ((select order_id from sales_order_item where product_id='.$id.'))
-        and product_id != '.$id.') group by  product_id';
+        and product_id != '.$id.') group by  product_id limit 12';
         $orderItems = $connection->fetchAll($query);
         $orderItemsUid = [];
         foreach ($orderItems as $item) {
