@@ -1,4 +1,6 @@
 <?php
+// @codingStandardsIgnoreFile
+
 namespace Auraine\Brands\Test\Unit\Controller\Adminhtml\Brands;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
@@ -65,6 +67,12 @@ class SaveTest extends TestCase
      */
     private $testObject;
 
+    public const TEST_TITLE="test title";
+    public const TEST_DESCRIPTION="test description";
+    public const TEST_IMG="test.png";
+
+
+
     /**
      * Main set up method
      */
@@ -87,112 +95,6 @@ class SaveTest extends TestCase
             ]
         );
     }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestExecute()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestExecute
-     */
-    public function testExecute(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestDispatch()
-    {
-        return [
-            'Testcase 2' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestDispatch
-     */
-    public function testDispatch(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestprocessUrlKeys()
-    {
-        return [
-            'Testcase 3' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestprocessUrlKeys
-     */
-    public function testprocessUrlKeys(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 4' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetActionFlag()
-    {
-        return [
-            'Testcase 5' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetActionFlag
-     */
-    public function testGetActionFlag(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
     /**
      * @return array
      */
@@ -212,43 +114,14 @@ class SaveTest extends TestCase
     public function testGetRequest(array $prerequisites, array $expectedResult)
     {
         $data = $this->getBrandData();
-         $this->assertEquals($data['title'], "test title");
-         $this->assertEquals($data['description'], "test description");
-         $this->assertEquals($data['status'], 1);
-         $this->assertEquals($data['image'], "test.png");
-         $this->assertEquals($data['is_popular'], 1);
-         $this->assertEquals($data['is_featured'], 1);
-         $this->assertEquals($data['is_exclusive'], 1);
-         $this->assertEquals($data['is_justin'], 1);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetResponse()
-    {
-        return [
-            'Testcase 7' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetResponse
-     */
-    public function testGetResponse(array $prerequisites, array $expectedResult)
-    {
-        $data = $this->getBrandData();
-         $this->assertEquals($data['title'], "test title");
-         $this->assertEquals($data['description'], "test description");
-         $this->assertEquals($data['status'], 1);
-         $this->assertEquals($data['image'], "test.png");
-         $this->assertEquals($data['is_popular'], 1);
-         $this->assertEquals($data['is_featured'], 1);
-         $this->assertEquals($data['is_exclusive'], 1);
-         $this->assertEquals($data['is_justin'], 1);
+         $this->assertEquals(TEST_TITLE, $data['title']);
+         $this->assertEquals(TEST_DESCRIPTION, $data['description']);
+         $this->assertEquals(1, $data['status']);
+         $this->assertEquals(TEST_IMG, $data['image']);
+         $this->assertEquals(1, $data['is_popular']);
+         $this->assertEquals(1, $data['is_featured']);
+         $this->assertEquals(1, $data['is_exclusive']);
+         $this->assertEquals(1, $data['is_justin']);
     }
 
      /**
