@@ -1,6 +1,4 @@
 <?php
-// @codingStandardsIgnoreFile
-
 namespace Auraine\Brands\Test\Unit\Controller\Adminhtml\Brands;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
@@ -9,6 +7,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\Brands\Controller\Adminhtml\Brands\MassStatus
+ * @codingStandardsIgnoreFile
  */
 class MassStatusTest extends TestCase
 {
