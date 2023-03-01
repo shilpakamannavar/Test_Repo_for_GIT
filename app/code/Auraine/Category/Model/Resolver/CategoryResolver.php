@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Auraine\Category\Model\Resolver;
 
+use Exception;
 use Magento\Catalog\Model\CategoryRepository;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;

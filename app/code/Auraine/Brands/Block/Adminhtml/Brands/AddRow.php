@@ -5,7 +5,7 @@ namespace Auraine\Brands\Block\Adminhtml\Brands;
 class AddRow extends \Magento\Backend\Block\Widget\Form\Container
 {
     /**
-     * Core registry.
+     * varuable for Core registry.
      *
      * @var \Magento\Framework\Registry
      */

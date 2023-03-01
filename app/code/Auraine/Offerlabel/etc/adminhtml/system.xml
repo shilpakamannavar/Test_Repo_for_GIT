@@ -5,7 +5,7 @@
             <class>separator-top</class>
             <label>Offer Label</label>
             <tab>auraine_system_config</tab>
-            <resource>Auraine_Offerlabel::module_config</resource>
+            <resource>Auraine_LoyaltyPoint::module_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Offer Label</label>
                 <field id="coupen_display_text" translate="label" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">

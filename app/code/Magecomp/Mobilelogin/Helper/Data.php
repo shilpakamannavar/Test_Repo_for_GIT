@@ -1001,6 +1001,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $collection = $this->_otpCollection->create()
                 ->addFieldToFilter('mobile', $data['mobile'])
                 ->addFieldToFilter('random_code', $data['verifyotp'])
+                ->addFieldToFilter('is_verify', ['eq' => 0])
                 ->addFieldToFilter('type', self::REGISTRATION_OTP_TYPE)
                 ->addFieldToFilter('website_id', $websiteId);
 

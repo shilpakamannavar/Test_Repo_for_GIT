@@ -7,6 +7,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\ZipCode\Controller\Adminhtml\Pincode\NewAction
+ * @codingStandardsIgnoreFile
  */
 class NewActionTest extends TestCase
 {
