@@ -5,7 +5,6 @@
 $_item = $block->getItem();
 $_order = $_item->getOrder();
 $product =  $_item->getProduct();
-$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
 use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
 
@@ -23,8 +22,8 @@ foreach ($options as $option) {
   }
 }
 $brandName = $brandsList->getBrandFromId($brand);
-$actualPrice = (float) $_item->getQtyOrdered()  * (float)$product->getPrice();
-$specialPrice = (float) $_item->getQtyOrdered()  * (float)$product->getSpecialPrice();
+$actualPrice = (float) $_item->getQtyOrdered()  * (float)$_item->getOriginalPrice();
+$specialPrice = (float) $_item->getQtyOrdered()  * (float)$_item->getPrice();
 $discountPrice = $actualPrice - $specialPrice;
 $imagewidth = 200;
 $imageheight = 200;
@@ -121,7 +120,7 @@ $image_url = $imageHelper->init($product, 'small_image')
           <?php echo (float)$actualPrice; ?>
         </div>
       </div>
-      <?php if ($specialPrice != 0) { ?>
+      <?php if ($discountPrice != 0) { ?>
       <div>
         <div style="
               font-family: Helvetica;
