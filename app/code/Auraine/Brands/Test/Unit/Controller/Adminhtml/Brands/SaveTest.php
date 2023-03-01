@@ -41,7 +41,7 @@ class SaveTest extends TestCase
     /**
      * Object to test
      *
-     * @var \Auraine\Brands\Controller\Adminhtml\Pincode\Save
+     * @var \Auraine\Brands\Controller\Adminhtml\Brands\Save
      */
     private $testObject;
 
@@ -54,7 +54,7 @@ class SaveTest extends TestCase
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->dataPersistor = $this->createMock(\Magento\Framework\App\Request\DataPersistorInterface::class);
         $this->testObject = $this->objectManager->getObject(
-            \Auraine\Brands\Controller\Adminhtml\Pincode\Save::class,
+            \Auraine\Brands\Controller\Adminhtml\Brands\Save::class,
             [
                 'context' => $this->context,
                 'dataPersistor' => $this->dataPersistor,

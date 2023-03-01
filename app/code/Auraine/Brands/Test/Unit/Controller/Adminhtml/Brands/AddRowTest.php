@@ -55,7 +55,7 @@ class AddRownTest extends TestCase
     /**
      * Object to test
      *
-     * @var \Auraine\Brands\Controller\Adminhtml\Pincode\NewAction
+     * @var \Auraine\Brands\Controller\Adminhtml\Brands\AddRow
      */
     private $testObject;
 
@@ -71,7 +71,7 @@ class AddRownTest extends TestCase
         $this->resultForwardFactory = $this->createMock(\Magento\Backend\Model\View\Result\ForwardFactory::class);
         $this->resultForwardFactory->method('create')->willReturn($this->resultForwardFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-            \Auraine\Brands\Controller\Adminhtml\Pincode\NewAction::class,
+            \Auraine\Brands\Controller\Adminhtml\Brands\NewAction::class,
             [
                 'context' => $this->context,
                 'coreRegistry' => $this->coreRegistry,
