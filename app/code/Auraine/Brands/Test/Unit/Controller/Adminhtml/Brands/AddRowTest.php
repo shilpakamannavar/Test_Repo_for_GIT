@@ -9,7 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * @covers \Auraine\Brands\Controller\Adminhtml\Brands\AddRow
  * @codingStandardsIgnoreFile
  */
-class AddRownTest extends TestCase
+class AddRowTest extends TestCase
 {
     /**
      * Test case 1
