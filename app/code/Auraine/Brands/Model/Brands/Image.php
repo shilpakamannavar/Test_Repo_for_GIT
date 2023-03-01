@@ -41,7 +41,6 @@ class Image
      */
     public function getBaseUrl()
     {
-        //return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]).$this->subDir;
         return $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]);
     }
 }
