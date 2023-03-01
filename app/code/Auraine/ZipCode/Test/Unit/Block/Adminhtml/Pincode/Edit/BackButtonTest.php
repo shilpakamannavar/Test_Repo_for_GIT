@@ -7,6 +7,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\BackButton
+ * @codingStandardsIgnoreFile
  */
 class BackButtonTest extends TestCase
 {
