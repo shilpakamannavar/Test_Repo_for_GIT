@@ -15,7 +15,7 @@ class AddRownTest extends TestCase
      * Test case 1
      * @var string const
      */
-    private const TEST_CASE_ONE = 'Testcase brands';
+    private const TEST_CASE_BRANDS = 'Testcase brands';
 
     /**
      * Mock context
@@ -55,7 +55,7 @@ class AddRownTest extends TestCase
     /**
      * Object to test
      *
-     * @var \Auraine\ZipCode\Controller\Adminhtml\Pincode\NewAction
+     * @var \Auraine\Brands\Controller\Adminhtml\Pincode\NewAction
      */
     private $testObject;
 
@@ -71,7 +71,7 @@ class AddRownTest extends TestCase
         $this->resultForwardFactory = $this->createMock(\Magento\Backend\Model\View\Result\ForwardFactory::class);
         $this->resultForwardFactory->method('create')->willReturn($this->resultForwardFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-            \Auraine\ZipCode\Controller\Adminhtml\Pincode\NewAction::class,
+            \Auraine\Brands\Controller\Adminhtml\Pincode\NewAction::class,
             [
                 'context' => $this->context,
                 'coreRegistry' => $this->coreRegistry,
@@ -86,7 +86,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestExecute()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -107,7 +107,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestInitPage()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -128,7 +128,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -149,7 +149,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -170,7 +170,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -191,7 +191,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -212,7 +212,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -233,7 +233,7 @@ class AddRownTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

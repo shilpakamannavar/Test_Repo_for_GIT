@@ -15,7 +15,7 @@ class IndexTest extends TestCase
      * Test case 1
      * @var string const
      */
-    private const TEST_CASE_ONE = 'Testcase brands';
+    private const TEST_CASE_BRANDS = 'Testcase brands';
 
     /**
      * Mock context
@@ -48,7 +48,7 @@ class IndexTest extends TestCase
     /**
      * Object to test
      *
-     * @var \Auraine\ZipCode\Controller\Adminhtml\Pincode\Index
+     * @var \Auraine\Brands\Controller\Adminhtml\Pincode\Index
      */
     private $testObject;
 
@@ -63,7 +63,7 @@ class IndexTest extends TestCase
         $this->resultPageFactory = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
         $this->resultPageFactory->method('create')->willReturn($this->resultPageFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-            \Auraine\ZipCode\Controller\Adminhtml\Pincode\Index::class,
+            \Auraine\Brands\Controller\Adminhtml\Pincode\Index::class,
             [
                 'context' => $this->context,
                 'resultPageFactory' => $this->resultPageFactory,
@@ -77,7 +77,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestExecute()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -98,7 +98,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -119,7 +119,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -140,7 +140,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -161,7 +161,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -182,7 +182,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -203,7 +203,7 @@ class IndexTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

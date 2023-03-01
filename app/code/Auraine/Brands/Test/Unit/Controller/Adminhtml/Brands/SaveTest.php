@@ -15,7 +15,7 @@ class SaveTest extends TestCase
      * Test case 1
      * @var string const
      */
-    private const TEST_CASE_ONE = 'Testcase brands';
+    private const TEST_CASE_BRANDS = 'Testcase brands';
 
     /**
      * Mock context
@@ -41,7 +41,7 @@ class SaveTest extends TestCase
     /**
      * Object to test
      *
-     * @var \Auraine\ZipCode\Controller\Adminhtml\Pincode\Save
+     * @var \Auraine\Brands\Controller\Adminhtml\Pincode\Save
      */
     private $testObject;
 
@@ -54,7 +54,7 @@ class SaveTest extends TestCase
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->dataPersistor = $this->createMock(\Magento\Framework\App\Request\DataPersistorInterface::class);
         $this->testObject = $this->objectManager->getObject(
-            \Auraine\ZipCode\Controller\Adminhtml\Pincode\Save::class,
+            \Auraine\Brands\Controller\Adminhtml\Pincode\Save::class,
             [
                 'context' => $this->context,
                 'dataPersistor' => $this->dataPersistor,
@@ -68,7 +68,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestExecute()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -89,7 +89,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -110,7 +110,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -131,7 +131,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -152,7 +152,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -173,7 +173,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -194,7 +194,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            self::TEST_CASE_ONE => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
