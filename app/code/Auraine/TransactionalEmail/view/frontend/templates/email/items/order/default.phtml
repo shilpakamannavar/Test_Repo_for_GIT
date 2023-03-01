@@ -11,6 +11,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $brandsList = $objectManager->create(BrandsList::class);
 $brand = (int)$product->getData('brand_name');
+$color = null;
 $productAttributeOptions = $objectManager->get(
   \Magento\Eav\Model\Config::class
 )->getAttribute('catalog_product', 'color');
@@ -80,6 +81,7 @@ $image_url = $imageHelper->init($product, 'small_image')
             ">
           QTY: <?= (float) $_item->getQtyOrdered() ?>
         </div>
+      <?php if (!empty($color)) {?>
         <div style="
               display: inline-block;
               padding-left: 20px;
@@ -91,6 +93,7 @@ $image_url = $imageHelper->init($product, 'small_image')
             ">
           Color: <?php echo $color; ?>
         </div>
+        <?php } ?>
       </div>
       <div>
         <div style="
