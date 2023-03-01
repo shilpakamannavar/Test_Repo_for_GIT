@@ -272,7 +272,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             'select',
             [
                 'name' => 'brand_offer_slider_id',
-                'label' => __('Banner Slider'),
+                'label' => __('Offer Slider'),
                 'id' => 'brand_offer_slider_id',
                 'title' => __('Offer Slider'),
                 'required' => false,
