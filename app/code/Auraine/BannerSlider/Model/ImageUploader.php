@@ -179,18 +179,17 @@ class ImageUploader
      */
     public function moveFileFromTmp($imageName)
     {
-        $baseTmpPath = $this->getBaseTmpPath();
-        $basePath = $this->getBasePath();
+        $basePathDir = $this->getBasePath();
 
         $baseImagePath = $this->getFilePath(
-            $basePath,
+            $basePathDir,
             Uploader::getNewFileName(
                 $this->mediaDirectory->getAbsolutePath(
-                    $this->getFilePath($basePath, $imageName)
+                    $this->getFilePath($basePathDir, $imageName)
                 )
             )
         );
-        $baseTmpImagePath = $this->getFilePath($baseTmpPath, $imageName);
+        $baseTmpImagePath = $this->getFilePath($this->baseTmpPath, $imageName);
 
         try {
             $this->coreFileStorageDatabase->copyFile(
@@ -222,8 +221,6 @@ class ImageUploader
      */
     public function saveFileToTmpDir($fileId)
     {
-        $baseTmpPath = $this->getBaseTmpPath();
-
         /** @var \Magento\MediaStorage\Model\File\Uploader $uploader */
         $uploader = $this->uploaderFactory->create(['fileId' => $fileId]);
         $uploader->setAllowedExtensions($this->getAllowedExtensions());
@@ -231,7 +228,7 @@ class ImageUploader
         if (!$uploader->checkMimeType($this->allowedMimeTypes)) {
             throw new \Magento\Framework\Exception\LocalizedException(__('File validation failed.'));
         }
-        $result = $uploader->save($this->mediaDirectory->getAbsolutePath($baseTmpPath));
+        $result = $uploader->save($this->mediaDirectory->getAbsolutePath($this->baseTmpPath));
         unset($result['path']);
 
         if (!$result) {
@@ -248,12 +245,12 @@ class ImageUploader
                 ->getStore()
                 ->getBaseUrl(
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . $this->getFilePath($baseTmpPath, $result['file']);
+                ) . $this->getFilePath($this->baseTmpPath, $result['file']);
         $result['name'] = $result['file'];
 
         if (isset($result['file'])) {
             try {
-                $relativePath = rtrim($baseTmpPath, '/') . '/' . ltrim($result['file'], '/');
+                $relativePath = rtrim($this->baseTmpPath, '/') . '/' . ltrim($result['file'], '/');
                 $this->coreFileStorageDatabase->saveFile($relativePath);
             } catch (\Exception $e) {
                 $this->logger->critical($e);
