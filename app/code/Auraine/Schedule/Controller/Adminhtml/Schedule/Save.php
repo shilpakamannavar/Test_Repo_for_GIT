@@ -87,6 +87,16 @@ class Save extends Action
             $this->dataPersistor->set('auraine_schedule_schedule', $data);
             return $resultRedirect->setPath('*/*/edit', ['schedule_id' => $id]);
         }
+        
+        if ($data['end_date'] < $data['start_date']) {
+            $this->messageManager->addErrorMessage('End Date Should Be Greater Than Start Date');
+            $this->dataPersistor->set('auraine_schedule_schedule', $data);
+            if ($id) {
+                return $resultRedirect->setPath('*/*/edit', ['schedule_id' => $id]);
+            } else {
+                return $resultRedirect->setPath('*/*/');
+            }
+        }
 
         $model->setData($data);
 
