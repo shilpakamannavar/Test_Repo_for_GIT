@@ -5,13 +5,13 @@
 $_item = $block->getItem();
 $_order = $_item->getOrder();
 $product =  $_item->getProduct();
-$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
 use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
 
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $brandsList = $objectManager->create(BrandsList::class);
 $brand = (int)$product->getData('brand_name');
+$color = null;
 $productAttributeOptions = $objectManager->get(
   \Magento\Eav\Model\Config::class
 )->getAttribute('catalog_product', 'color');
@@ -23,8 +23,8 @@ foreach ($options as $option) {
   }
 }
 $brandName = $brandsList->getBrandFromId($brand);
-$actualPrice = (float) $_item->getQtyOrdered()  * (float)$product->getPrice();
-$specialPrice = (float) $_item->getQtyOrdered()  * (float)$product->getSpecialPrice();
+$actualPrice = (float) $_item->getQtyOrdered()  * (float)$_item->getOriginalPrice();
+$specialPrice = (float) $_item->getQtyOrdered()  * (float)$_item->getPrice();
 $discountPrice = $actualPrice - $specialPrice;
 $imagewidth = 200;
 $imageheight = 200;
@@ -81,6 +81,7 @@ $image_url = $imageHelper->init($product, 'small_image')
             ">
           QTY: <?= (float) $_item->getQtyOrdered() ?>
         </div>
+      <?php if (!empty($color)) {?>
         <div style="
               display: inline-block;
               padding-left: 20px;
@@ -92,6 +93,7 @@ $image_url = $imageHelper->init($product, 'small_image')
             ">
           Color: <?php echo $color; ?>
         </div>
+        <?php } ?>
       </div>
       <div>
         <div style="
@@ -121,7 +123,7 @@ $image_url = $imageHelper->init($product, 'small_image')
           <?php echo (float)$actualPrice; ?>
         </div>
       </div>
-      <?php if ($specialPrice != 0) { ?>
+      <?php if ($discountPrice != 0) { ?>
       <div>
         <div style="
               font-family: Helvetica;
