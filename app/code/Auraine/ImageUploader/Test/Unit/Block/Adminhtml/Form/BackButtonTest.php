@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 namespace Auraine\ImageUploader\Test\Unit\Block\Adminhtml\Form;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;

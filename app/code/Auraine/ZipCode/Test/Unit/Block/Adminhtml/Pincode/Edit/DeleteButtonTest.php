@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\DeleteButton
+ * @codingStandardsIgnoreFile
  */
 class DeleteButtonTest extends TestCase
 {
