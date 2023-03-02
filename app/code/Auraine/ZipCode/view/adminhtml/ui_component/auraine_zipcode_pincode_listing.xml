@@ -89,6 +89,18 @@
 					<label translate="true">Delete</label>
 				</settings>
 			</action>
+
+			<action name="custom_export">
+				<settings>
+					<confirm>
+						<message translate="true">Are you sure to export selected items?</message>
+						<title translate="true">Export items</title>
+					</confirm>
+					<url path="auraine_zipcode/index/export"/>
+					<type>custom_export</type>
+					<label translate="true">Export</label>
+				</settings>
+        	</action>
 		</massaction>
 	</listingToolbar>
 

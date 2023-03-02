@@ -196,7 +196,7 @@
                 <item name="options" xsi:type="object">Auraine\BannerSlider\Model\Config\Source\CommunitySlider</item>
             </argument>
         </field>
-        <field name="resource_map_id" sortOrder="80" formElement="select">
+        <field name="resource_map_id" sortOrder="60" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -214,6 +214,22 @@
                 <select>
                     <settings>
                         <options class="Auraine\BannerSlider\Model\Config\Source\ResourceMap"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="video_type" sortOrder="95" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Video Type</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Source\VideoOption"/>
                     </settings>
                 </select>
             </formElements>
@@ -342,11 +358,11 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Youtube Embed Link (only the URL)</label>
+                <label translate="true">Video Link (only the URL)</label>
                 <visible>false</visible>
             </settings>
         </field> 
-       <field name="resource_path_poster_image" sortOrder="90" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+       <field name="resource_path_poster_image" sortOrder="110" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -391,7 +407,7 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Video Link</label>
+                <label translate="true">Video Link (only the URL)</label>
                 <visible>false</visible>
             </settings>
         </field> 
