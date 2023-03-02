@@ -88,6 +88,7 @@ class Save extends Action
                 'is_enabled',
                 'slider_target_id',
                 'target_type',
+                'video_type',
                 'target_id',
                 'category_id'
             ]);
@@ -118,7 +119,9 @@ class Save extends Action
             }
 
             $resourcePathProcessorsPoster = $this->processorPoolPoster->getProcessors();
+            
             if (isset($resourcePathProcessorsPoster[$model->getResourceType()])) {
+
                 try {
                     $model->setResourcePathPoster($resourcePathProcessorsPoster[
                     $model->getResourceType()
@@ -130,6 +133,7 @@ class Save extends Action
             }
             $this->dataPersistor->set('bannerslider_banner', $model->getData());
             $model = $this->bannerRepository->save($model);
+
             $this->dataPersistor->clear('bannerslider_banner');
             $this->messageManager->addSuccessMessage(__('Banner %1 saved successfully', $model->getEntityId()));
             switch ($this->getRequest()->getParam('back')) {

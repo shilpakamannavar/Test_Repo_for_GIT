@@ -16,10 +16,8 @@ class Countries implements OptionSourceInterface
     protected $countryFactory;
 
     /**
-     * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory
      * @param \Magento\Directory\Model\CountryFactory $countryFactory
-     * @param array $data
      */
     public function __construct(
         \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,

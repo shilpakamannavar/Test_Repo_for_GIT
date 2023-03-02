@@ -41,6 +41,7 @@
                 default="1" comment="Target ID"/>
         <column xsi:type="varchar" name="category_id" nullable="false" default="1" comment="Category ID"/>
         <column xsi:type="varchar" name="target_type" nullable="false" comment="Target Type"/>
+         <column xsi:type="varchar" name="video_type" nullable="false" comment="video Type"/>
         <column xsi:type="varchar" name="slider_target_id" nullable="false" comment="Slider Target ID"/>
         <column xsi:type="varchar" name="title" nullable="false" comment="Slider Title"/>
         <column xsi:type="int" name="resource_map_id" padding="10" unsigned="true" nullable="false" identity="false"

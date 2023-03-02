@@ -139,6 +139,7 @@ class Slider
                     'slider_target_id',
                     'category_id',
                     'target_type',
+                    'video_type',
                     'target_id',
                     'banner_id' => 'entity_id'
                 ]);
@@ -186,14 +187,15 @@ class Slider
             if (is_numeric($key)) {
                 $key = $field;
             }
-
-            if ($key=== 'resource_path' || $key=== 'resource_path_mobile' || $key== 'resource_path_poster') {
-                $data[$key] = $this->videoCheck($object->getData($field));
+            if ($key === 'resource_path' || $key=== 'resource_path_mobile' || $key == 'resource_path_poster') {
+                $data[$key] = $this->videoCheck($object->getData($field), $field);
+                $x[$key] = $field;
             } else {
                 $data[$key] = $object->getData($field);
             }
 
         }
+
         return $data;
     }
 
@@ -205,10 +207,10 @@ class Slider
      */
     protected function videoCheck($url)
     {
+        $output = explode(".", $url);   
         $currentStore = $this->storeManager->getStore();
         $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-
-        if (strpos($url, 'youtube.com') > 0) {
+        if (strpos($url, 'youtube.com') > 0 || in_array("s3", $output)||  $output[count($output)-1] === 'mp4') {
             return $url;
         } else {
             return ($url) ? $mediaUrl.$url: '';
