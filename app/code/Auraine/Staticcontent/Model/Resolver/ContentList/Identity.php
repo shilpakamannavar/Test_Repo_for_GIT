@@ -1,9 +1,9 @@
 <?php
-namespace Auraine\Staticcontent\Model\Resolver;
+namespace Auraine\Staticcontent\Model\Resolver\ContentList;
 
 use Magento\Framework\GraphQl\Query\Resolver\IdentityInterface;
 
-class ContentListIdentity implements IdentityInterface
+class Identity implements IdentityInterface
 {
     const CACHE_TAG = 'auraine_staticcontent_content_list_identity';
 
