@@ -6,8 +6,11 @@
 				<resource id="Auraine_Schedule::schedule" title="schedule" sortOrder="10">
 					<resource id="Auraine_Schedule::schedule_save" title="Save schedule" sortOrder="10"/>
 					<resource id="Auraine_Schedule::schedule_delete" title="Delete schedule" sortOrder="20"/>
-					<resource id="Auraine_Schedule::schedule_update" title="Update schedule" sortOrder="30"/>
+					<resource id="Auraine_Schedule::schedule_edit" title="Update schedule" sortOrder="30"/>
 					<resource id="Auraine_Schedule::schedule_view" title="View schedule" sortOrder="40"/>
+					<resource id="Auraine_Schedule::schedule_index" title="View Schedule Grid" sortOrder="50"/>
+					<resource id="Auraine_Schedule::schedule_newschedule" title="New Schedule" sortOrder="60"/>
+					<resource id="Auraine_Schedule::schedule_newsaction" title="New Schedule Action" sortOrder="70"/>
 				</resource>
 			</resource>
 		</resources>
