@@ -104,14 +104,7 @@ class PromoValidatorTest extends TestCase
             ->with($sku, $ruleId)
             ->willReturn($promoItemDataMock);
 
-        $promoValidator = new PromoValidator(
-            $this->promoItemRegistryMock,
-            $this->checkoutSessionMock,
-            $this->maskedQuoteInterfaceMock,
-            $this->quoteFactoryMock,
-            $this->customerSessionMock
-        );
-        $result = $promoValidator->getPromoDataItem($sku, ['rule_id' => $ruleId]);
+        $result = $this->promoValidator->getPromoDataItem($sku, ['rule_id' => $ruleId]);
         $this->assertEquals($promoItemDataMock, $result);
     }
 
@@ -134,15 +127,7 @@ class PromoValidatorTest extends TestCase
             ->with($sku)
             ->willReturn([$promoItemDataMock]);
 
-        $promoValidator = new PromoValidator(
-            $this->promoItemRegistryMock,
-            $this->checkoutSessionMock,
-            $this->maskedQuoteInterfaceMock,
-            $this->quoteFactoryMock,
-            $this->customerSessionMock
-        );
-
-        $result = $promoValidator->getPromoDataItem($sku, []);
+        $result = $this->promoValidator->getPromoDataItem($sku, []);
         $this->assertEquals($promoItemDataMock, $result);
     }
 
@@ -174,18 +159,10 @@ class PromoValidatorTest extends TestCase
      */
     public function testIsPromoItemsAddedInQuote()
     {
-        $promoValidator = new PromoValidator(
-            $this->createMock(PromoItemRegistry::class),
-            $this->createMock(\Magento\Checkout\Model\Session::class),
-            $this->createMock(\Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface::class),
-            $this->createMock(\Magento\Quote\Model\QuoteFactory::class),
-            $this->createMock(\Magento\Customer\Model\Session::class)
-        );
-
         // Test case where no items were added to the quote
         $items = [];
         $itemsForAdd = ['sku1', 'sku2'];
-        $result = $promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
+        $result = $this->promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
         $this->assertFalse($result);
 
         // Test case where one item was added to the quote
@@ -195,7 +172,7 @@ class PromoValidatorTest extends TestCase
             ['sku', null, 'sku1'],
         ]);
         $itemsForAdd = ['sku1', 'sku2'];
-        $result = $promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
+        $result = $this->promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
         $this->assertTrue($result);
 
         // Test case where multiple items were added to the quote
@@ -212,7 +189,7 @@ class PromoValidatorTest extends TestCase
             ['sku', null, 'sku3'],
         ]);
         $itemsForAdd = ['sku1', 'sku2'];
-        $result = $promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
+        $result = $this->promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
         $this->assertTrue($result);
     }
 }
