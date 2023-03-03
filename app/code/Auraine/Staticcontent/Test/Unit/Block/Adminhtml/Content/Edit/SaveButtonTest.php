@@ -1,112 +1,47 @@
 <?php
-// @codingStandardsIgnoreFile
+
 namespace Auraine\Staticcontent\Test\Unit\Block\Adminhtml\Content\Edit;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+use Auraine\Staticcontent\Block\Adminhtml\Content\Edit\SaveButton;
+use Magento\Framework\TestFramework\Unit\BaseTestCase;
+use Magento\Backend\Block\Widget\Context;
 
-/**
- * @covers \Auraine\Staticcontent\Block\Adminhtml\Content\Edit\SaveButton
- */
-class SaveButtonTest extends TestCase
+class SaveButtonTest extends BaseTestCase
 {
     /**
-     * Mock context
-     *
-     * @var \Magento\Backend\Block\Widget\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var SaveButton
      */
-    private $context;
+    protected $saveButton;
 
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\Staticcontent\Block\Adminhtml\Content\Edit\SaveButton
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->context = $this->createMock(\Magento\Backend\Block\Widget\Context::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\Staticcontent\Block\Adminhtml\Content\Edit\SaveButton::class,
-            [
-                'context' => $this->context,
-            ]
-        );
+        $context = $this->getMockBuilder(Context::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->saveButton = new SaveButton($context);
     }
 
     /**
-     * @return array
+     * Test getButtonData method
      */
-    public function dataProviderForTestGetButtonData()
+    public function testGetButtonData()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $buttonData = $this->saveButton->getButtonData();
 
-    /**
-     * @dataProvider dataProviderForTestGetButtonData
-     */
-    public function testGetButtonData(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetModelId()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetModelId
-     */
-    public function testGetModelId(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertArrayHasKey('label', $buttonData);
+        $this->assertArrayHasKey('class', $buttonData);
+        $this->assertArrayHasKey('data_attribute', $buttonData);
+        $this->assertArrayHasKey('sort_order', $buttonData);
+        $this->assertIsArray($buttonData['data_attribute']);
+        $this->assertEquals('save', $buttonData['data_attribute']['form-role']);
+        $this->assertEquals('Save Content', $buttonData['label']);
+        $this->assertEquals('save primary', $buttonData['class']);
+        $this->assertEquals(90, $buttonData['sort_order']);
+        $this->assertArrayHasKey('mage-init', $buttonData['data_attribute']);
+        $this->assertIsArray($buttonData['data_attribute']['mage-init']);
+        $this->assertArrayHasKey('button', $buttonData['data_attribute']['mage-init']);
+        $this->assertIsArray($buttonData['data_attribute']['mage-init']['button']);
+        $this->assertEquals('save', $buttonData['data_attribute']['mage-init']['button']['event']);
     }
 }
