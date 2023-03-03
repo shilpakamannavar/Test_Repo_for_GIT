@@ -1,63 +1,31 @@
 <?php
-// @codingStandardsIgnoreFile
+
 namespace Auraine\ImageUploader\Test\Unit\Block\Adminhtml\Form;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Auraine\ImageUploader\Block\Adminhtml\Form\UploadButton;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\ImageUploader\Block\Adminhtml\Form\UploadButton
- */
 class UploadButtonTest extends TestCase
 {
     /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
+     * Test getButtonData method of UploadButton class
      */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\ImageUploader\Block\Adminhtml\Form\UploadButton
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    public function testGetButtonData()
     {
-        $this->objectManager = new ObjectManager($this);
+        $uploadButton = new UploadButton();
 
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\ImageUploader\Block\Adminhtml\Form\UploadButton::class,
-            [
+        $buttonData = $uploadButton->getButtonData();
 
-            ]
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetButtonData()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetButtonData
-     */
-    public function testGetButtonData(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertIsArray($buttonData);
+        $this->assertArrayHasKey('label', $buttonData);
+        $this->assertArrayHasKey('class', $buttonData);
+        $this->assertArrayHasKey('data_attribute', $buttonData);
+        $this->assertArrayHasKey('mage-init', $buttonData['data_attribute']);
+        $this->assertArrayHasKey('form-role', $buttonData['data_attribute']);
+        $this->assertEquals('Upload', $buttonData['label']);
+        $this->assertEquals('save primary', $buttonData['class']);
+        $this->assertEquals('save', $buttonData['data_attribute']['form-role']);
+        $this->assertEquals(90, $buttonData['sort_order']);
     }
 }
