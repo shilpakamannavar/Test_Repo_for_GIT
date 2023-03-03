@@ -74,8 +74,9 @@ class BannerSlider implements ResolverInterface
         if ($cachedData) {
             $result = $this->json->unserialize($cachedData);
         } else {
+            $cacheLifetime = 86400; // 1 day
             $result = $this->sliderDataResolver->getData($args);
-            $this->cache->save($this->json->serialize($result), $cacheKey);
+            $this->cache->save($this->json->serialize($result), $cacheKey, [], $cacheLifetime);
         }
         
         return $result;

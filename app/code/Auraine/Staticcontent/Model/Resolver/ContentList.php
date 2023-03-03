@@ -67,6 +67,7 @@ class ContentList implements ResolverInterface
         if ($cachedData) {
             $result = $this->json->unserialize($cachedData);
         } else {
+            $cacheLifetime = 86400; // 1 day
             $collection = $this->value->create()
                 ->addFieldToFilter('type', $content)
                 ->addFieldToFilter('enable', 1)
@@ -82,7 +83,7 @@ class ContentList implements ResolverInterface
                 ];
             }
 
-            $this->cache->save($this->json->serialize($result), $cacheKey);
+            $this->cache->save($this->json->serialize($result), $cacheKey, [], $cacheLifetime);
         }
 
         return $result;
