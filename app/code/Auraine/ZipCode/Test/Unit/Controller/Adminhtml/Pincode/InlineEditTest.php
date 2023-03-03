@@ -7,6 +7,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\ZipCode\Controller\Adminhtml\Pincode\InlineEdit
+ * @codingStandardsIgnoreFile
  */
 class InlineEditTest extends TestCase
 {

@@ -5,7 +5,7 @@ namespace Auraine\Brands\Controller\Adminhtml\Brands;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
-use Auraine\Brands\Model\ResourceModel\Brands\Collection;
+use Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
@@ -24,7 +24,7 @@ class MassDelete extends \Magento\Backend\App\Action
     public function __construct(
         Context $context,
         Filter $filter,
-        Collection $collectionFactory
+        CollectionFactory $collectionFactory
     ) {
 
         $this->filter = $filter;
@@ -38,16 +38,26 @@ class MassDelete extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $collection = $this->filter->getCollection($this->collectionFactory->create());
-        $recordDeleted = 0;
-        foreach ($collection->getItems() as $record) {
-            $record->setId($record->getEntityId());
-            $record->delete();
-            $recordDeleted++;
-        }
-        $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $recordDeleted));
+        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        $resultRedirect = $this->resultRedirectFactory->create();
 
-        return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('*/*/index');
+        try {
+            $collection = $this->filter->getCollection($this->collectionFactory->create());
+
+            $done = 0;
+            foreach ($collection as $item) {
+                $item->delete();
+                ++$done;
+            }
+
+            if ($done) {
+                $this->messageManager->addSuccess(__('A total of %1 record(s) were modified.', $done));
+            }
+        } catch (\Exception $e) {
+            $this->messageManager->addError($e->getMessage());
+        }
+
+        return $resultRedirect->setUrl($this->_redirect->getRefererUrl());
     }
     /**
      * Check Category Map recode delete Permission. @return bool*/
