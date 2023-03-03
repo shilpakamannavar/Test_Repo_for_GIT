@@ -131,7 +131,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
               display: inline-block;
             ">
             
-            <?php echo (float)$actualPrice; ?>
+            <?php echo round((float)$actualPrice); ?>
           </div>
         </div>
         <?php  if($discountAmount != 0){ ?>
@@ -159,7 +159,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
               width: 50%;
               display: inline-block;
             ">
-            <?php echo (float)$discountAmount;?>
+            <?php echo round((float)$discountAmount);?>
           </div>
         </div>
         <?php }?>
@@ -189,7 +189,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
               display: inline-block;
               padding-bottom: 20px;
             ">
-            <?php  if($discountAmount == 0){echo $actualPrice;}else {echo $discountAmount ;} ?>
+            <?php  if($discountAmount == 0){echo round($actualPrice);}else {echo round($discountAmount) ;} ?>
           </div>
         </div>
       </div>

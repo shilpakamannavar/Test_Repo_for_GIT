@@ -123,7 +123,7 @@ $image_url = $imageHelper->init($product, 'small_image')
               display: inline-block;
             ">
 
-          <?php echo (float)$actualPrice; ?>
+          <?php echo round((float)$actualPrice) ; ?>
         </div>
       </div>
       <?php if ($discountPrice != 0) { ?>
@@ -151,7 +151,7 @@ $image_url = $imageHelper->init($product, 'small_image')
               width: 50%;
               display: inline-block;
             ">
-          <?php echo (float)$discountPrice; ?>
+          <?php echo round((float)$discountPrice) ; ?>
         </div>
       </div>
       <?php } ?>
@@ -181,7 +181,7 @@ $image_url = $imageHelper->init($product, 'small_image')
               display: inline-block;
               padding-bottom: 20px;
             ">
-          <?= /* @noEscape */ $block->getItemPrice($_item) ?>
+          <?= /* @noEscape */ round($_item->getPrice())  ?>
         </div>
       </div>
     </div>
