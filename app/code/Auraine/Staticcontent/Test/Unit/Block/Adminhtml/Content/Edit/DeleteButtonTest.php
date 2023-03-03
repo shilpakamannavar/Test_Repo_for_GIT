@@ -1,132 +1,77 @@
 <?php
+
 namespace Auraine\Staticcontent\Test\Unit\Block\Adminhtml\Content\Edit;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+use Auraine\Staticcontent\Block\Adminhtml\Content\Edit\DeleteButton;
+use Magento\Backend\Block\Widget\Context;
+use Magento\Framework\TestFramework\Unit\BaseTestCase;
 
-/**
- * @covers \Auraine\Staticcontent\Block\Adminhtml\Content\Edit\DeleteButton
- */
-class DeleteButtonTest extends TestCase
+class DeleteButtonTest extends BaseTestCase
 {
     /**
-     * Mock context
-     *
-     * @var \Magento\Backend\Block\Widget\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var DeleteButton
      */
-    private $context;
+    protected $deleteButton;
 
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\Staticcontent\Block\Adminhtml\Content\Edit\DeleteButton
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->context = $this->createMock(\Magento\Backend\Block\Widget\Context::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\Staticcontent\Block\Adminhtml\Content\Edit\DeleteButton::class,
-            [
-                'context' => $this->context,
-            ]
-        );
+        $context = $this->getMockBuilder(Context::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->deleteButton = new DeleteButton($context);
     }
 
     /**
-     * @return array
+     * Test getButtonData method with model ID
      */
-    public function dataProviderForTestGetButtonData()
+    public function testGetButtonDataWithModelId()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
+        $this->deleteButton->setModelId(1);
+        $buttonData = $this->deleteButton->getButtonData();
+
+        $this->assertArrayHasKey('label', $buttonData);
+        $this->assertArrayHasKey('class', $buttonData);
+        $this->assertArrayHasKey('on_click', $buttonData);
+        $this->assertArrayHasKey('sort_order', $buttonData);
+
+        $this->assertEquals(__('Delete Content'), $buttonData['label']);
+        $this->assertEquals('delete', $buttonData['class']);
+        $this->assertStringContainsString('deleteConfirm', $buttonData['on_click']);
+        $this->assertStringContainsString($this->deleteButton->getDeleteUrl(), $buttonData['on_click']);
+        $this->assertEquals(20, $buttonData['sort_order']);
     }
 
     /**
-     * @dataProvider dataProviderForTestGetButtonData
+     * Test getButtonData method without model ID
      */
-    public function testGetButtonData(array $prerequisites, array $expectedResult)
+    public function testGetButtonDataWithoutModelId()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $buttonData = $this->deleteButton->getButtonData();
+
+        $this->assertEmpty($buttonData);
     }
 
     /**
-     * @return array
+     * Test getDeleteUrl method with model ID
      */
-    public function dataProviderForTestGetDeleteUrl()
+    public function testGetDeleteUrlWithModelId()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
+        $this->deleteButton->setModelId(1);
+        $expectedUrl = '*/*/delete/content_id/1';
+        $actualUrl = $this->deleteButton->getDeleteUrl();
+
+        $this->assertEquals($expectedUrl, $actualUrl);
     }
 
     /**
-     * @dataProvider dataProviderForTestGetDeleteUrl
+     * Test getDeleteUrl method without model ID
      */
-    public function testGetDeleteUrl(array $prerequisites, array $expectedResult)
+    public function testGetDeleteUrlWithoutModelId()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        $expectedUrl = '*/*/delete/content_id/';
+        $actualUrl = $this->deleteButton->getDeleteUrl();
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetModelId()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetModelId
-     */
-    public function testGetModelId(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertEquals($expectedUrl, $actualUrl);
     }
 }

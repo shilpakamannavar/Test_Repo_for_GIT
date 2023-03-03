@@ -4,52 +4,32 @@ namespace Auraine\Brands\Test\Unit\Controller\Adminhtml\Brands;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Auraine\Brands\Model\Grid;
 
 /**
- * @covers \Auraine\Brands\Controller\Adminhtml\Brands\Save
+ * @covers \\Auraine\Brands\Controller\Adminhtml\Brands\Save
+ * @codingStandardsIgnoreFile
  */
 class SaveTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_BRANDS = 'Testcase brands';
+
+    /**
      * Mock context
      *
-     * @var \Magento\Backend\App\Action\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Backend\App\Action\Context
      */
     private $context;
-    /**
-     * Mock Grid
-     *
-     * @var Auraine\Brands\Model\Grid
-     */
-    protected $grid;
-    /**
-     * Mock gridFactoryInstance
-     *
-     * @var \Auraine\Brands\Model\Grid|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $gridFactoryInstance;
 
     /**
-     * Mock gridFactory
+     * Mock dataPersistor
      *
-     * @var \Auraine\Brands\Model\GridFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Framework\App\Request\DataPersistorInterface
      */
-    private $gridFactory;
-
-    /**
-     * Mock fileUploaderFactoryInstance
-     *
-     * @var \Magento\MediaStorage\Model\File\Uploader|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $fileUploaderFactoryInstance;
-
-    /**
-     * Mock fileUploaderFactory
-     *
-     * @var \Magento\MediaStorage\Model\File\UploaderFactory|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $fileUploaderFactory;
+    private $dataPersistor;
 
     /**
      * Object Manager instance
@@ -72,18 +52,12 @@ class SaveTest extends TestCase
     {
         $this->objectManager = new ObjectManager($this);
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
-        $this->gridFactoryInstance = $this->createMock(\Auraine\Brands\Model\Grid::class);
-        $this->gridFactory = $this->createMock(\Auraine\Brands\Model\GridFactory::class);
-        $this->gridFactory->method('create')->willReturn($this->gridFactoryInstance);
-        $this->fileUploaderFactoryInstance = $this->createMock(\Magento\MediaStorage\Model\File\Uploader::class);
-        $this->fileUploaderFactory = $this->createMock(\Magento\MediaStorage\Model\File\UploaderFactory::class);
-        $this->fileUploaderFactory->method('create')->willReturn($this->fileUploaderFactoryInstance);
+        $this->dataPersistor = $this->createMock(\Magento\Framework\App\Request\DataPersistorInterface::class);
         $this->testObject = $this->objectManager->getObject(
             \Auraine\Brands\Controller\Adminhtml\Brands\Save::class,
             [
                 'context' => $this->context,
-                'gridFactory' => $this->gridFactory,
-                'fileUploaderFactory' => $this->fileUploaderFactory,
+                'dataPersistor' => $this->dataPersistor,
             ]
         );
     }
@@ -94,7 +68,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestExecute()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -115,7 +89,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestDispatch()
     {
         return [
-            'Testcase 2' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -133,10 +107,10 @@ class SaveTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTestprocessUrlKeys()
+    public function dataProviderForTestProcessUrlKeys()
     {
         return [
-            'Testcase 3' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -144,9 +118,9 @@ class SaveTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderForTestprocessUrlKeys
+     * @dataProvider dataProviderForTestProcessUrlKeys
      */
-    public function testprocessUrlKeys(array $prerequisites, array $expectedResult)
+    public function testProcessUrlKeys(array $prerequisites, array $expectedResult)
     {
         $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
@@ -157,7 +131,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetUrl()
     {
         return [
-            'Testcase 4' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -178,7 +152,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetActionFlag()
     {
         return [
-            'Testcase 5' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -199,7 +173,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetRequest()
     {
         return [
-            'Testcase 6' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -211,15 +185,7 @@ class SaveTest extends TestCase
      */
     public function testGetRequest(array $prerequisites, array $expectedResult)
     {
-        $data = $this->getBrandData();
-         $this->assertEquals($data['title'], "test title");
-         $this->assertEquals($data['description'], "test description");
-         $this->assertEquals($data['status'], 1);
-         $this->assertEquals($data['image'], "test.png");
-         $this->assertEquals($data['is_popular'], 1);
-         $this->assertEquals($data['is_featured'], 1);
-         $this->assertEquals($data['is_exclusive'], 1);
-         $this->assertEquals($data['is_justin'], 1);
+        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
 
     /**
@@ -228,7 +194,7 @@ class SaveTest extends TestCase
     public function dataProviderForTestGetResponse()
     {
         return [
-            'Testcase 7' => [
+            self::TEST_CASE_BRANDS => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -240,33 +206,6 @@ class SaveTest extends TestCase
      */
     public function testGetResponse(array $prerequisites, array $expectedResult)
     {
-        $data = $this->getBrandData();
-         $this->assertEquals($data['title'], "test title");
-         $this->assertEquals($data['description'], "test description");
-         $this->assertEquals($data['status'], 1);
-         $this->assertEquals($data['image'], "test.png");
-         $this->assertEquals($data['is_popular'], 1);
-         $this->assertEquals($data['is_featured'], 1);
-         $this->assertEquals($data['is_exclusive'], 1);
-         $this->assertEquals($data['is_justin'], 1);
-    }
-
-     /**
-      * @return array
-      */
-    protected function getBrandData()
-    {
-        return  [
-            'title' => 'test title',
-            'description' => 'test description',
-            'status' => 1,
-            'image' => "test.png",
-            'is_popular' => 1,
-            'is_featured' => 1,
-            'is_exclusive' => 1,
-            'is_justin' => 1,
-              
-        ];
-      
+        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
 }

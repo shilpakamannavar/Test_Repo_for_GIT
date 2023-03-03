@@ -1,213 +1,86 @@
 <?php
+
 namespace Auraine\ImageUploader\Test\Unit\Controller\Adminhtml\Images;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
+use Auraine\ImageUploader\Controller\Adminhtml\Images\Upload;
 
-/**
- * @covers \Auraine\ImageUploader\Controller\Adminhtml\Images\Upload
- */
-class UploadTest extends TestCase
+class UploadTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Mock context
-     *
-     * @var \Magento\Backend\App\Action\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var Context|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $context;
+    protected $context;
 
     /**
-     * Mock resultPageFactoryInstance
-     *
-     * @var \Magento\Framework\View\Result\Page|PHPUnit\Framework\MockObject\MockObject
+     * @var PageFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $resultPageFactoryInstance;
+    protected $resultPageFactory;
 
     /**
-     * Mock resultPageFactory
-     *
-     * @var \Magento\Framework\View\Result\PageFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var Upload
      */
-    private $resultPageFactory;
+    protected $controller;
 
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\ImageUploader\Controller\Adminhtml\Images\Upload
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
-        $this->resultPageFactoryInstance = $this->createMock(\Magento\Framework\View\Result\Page::class);
-        $this->resultPageFactory = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
-        $this->resultPageFactory->method('create')->willReturn($this->resultPageFactoryInstance);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\ImageUploader\Controller\Adminhtml\Images\Upload::class,
+        $objectManager = new ObjectManager($this);
+
+        $this->context = $this->getMockBuilder(Context::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->resultPageFactory = $this->getMockBuilder(PageFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->controller = $objectManager->getObject(
+            Upload::class,
             [
                 'context' => $this->context,
-                'resultPageFactory' => $this->resultPageFactory,
+                'resultPageFactory' => $this->resultPageFactory
             ]
         );
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestExecute()
+    public function testExecute()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $resultPage = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Page::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    /**
-     * @dataProvider dataProviderForTestExecute
-     */
-    public function testExecute(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        $resultPage->expects($this->once())
+            ->method('setActiveMenu')
+            ->with('Auraine_ImageUploader::images_uploader')
+            ->willReturnSelf();
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestDispatch()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $title = $this->getMockBuilder(\Magento\Framework\View\Page\Title::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    /**
-     * @dataProvider dataProviderForTestDispatch
-     */
-    public function testDispatch(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        $title->expects($this->once())
+            ->method('prepend')
+            ->with(__('Upload Image'))
+            ->willReturnSelf();
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTest_processUrlKeys()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $config = $this->getMockBuilder(\Magento\Framework\View\Page\Config::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    /**
-     * @dataProvider dataProviderForTest_processUrlKeys
-     */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        $config->expects($this->once())
+            ->method('getTitle')
+            ->willReturn($title);
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $resultPage->expects($this->once())
+            ->method('getConfig')
+            ->willReturn($config);
 
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        $this->resultPageFactory->expects($this->once())
+            ->method('create')
+            ->willReturn($resultPage);
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetActionFlag()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetActionFlag
-     */
-    public function testGetActionFlag(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetRequest()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetRequest
-     */
-    public function testGetRequest(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetResponse()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetResponse
-     */
-    public function testGetResponse(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertEquals($resultPage, $this->controller->execute());
     }
 }
