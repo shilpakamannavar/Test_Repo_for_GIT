@@ -4,46 +4,9 @@
 namespace Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier;
 
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;
-use Magento\Framework\File\Mime;
-use Magento\Framework\Filesystem;
-use Magento\Framework\UrlInterface;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Video implements ModifierInterface
 {
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var Mime
-     */
-    private $mime;
-
-     /**
-      *
-      * LocalImage constructor.
-      * @param Filesystem $filesystem
-      * @param StoreManagerInterface $storeManager
-      * @param Mime $mime
-      */
-    public function __construct(
-        Filesystem $filesystem,
-        StoreManagerInterface $storeManager,
-        Mime $mime
-    ) {
-        $this->filesystem = $filesystem;
-        $this->storeManager = $storeManager;
-        $this->mime = $mime;
-    }
 
     /**
      * Modify Data
@@ -55,18 +18,18 @@ class Video implements ModifierInterface
     public function modifyData(array $data)
     {
         foreach ($data as &$item) {
-            $item = $this->processRow($item);
-            $resourcePathPoster = $item['resource_path_poster'] ?? null;
+            $resourcePath = $item['resource_path'] ?? null;
             $resourceType = $item['resource_type'];
-            if (($resourcePathPoster && $resourceType === 'video') || ($resourcePathPoster && $resourceType === 'youtube_video')) {
-                unset($item['resource_path_poster']);
-                $item['resource_path_poster_image'] = $resourcePathPoster;
+            if ($resourcePath && $resourceType === 'video') {
+                unset($item['resource_path']);
+                $item['resource_path_video'] = $resourcePath;
+                
             }
         }
         return $data;
     }
 
-    /**
+/**
      * Process Data
      *
      * @param array $data
@@ -77,7 +40,7 @@ class Video implements ModifierInterface
     {
         $resourcePathPoster = $data['resource_path_poster'] ?? null;
         $resourceType = $data['resource_type'];
-        if (($resourcePathPoster && $resourceType === 'video')  || ($resourcePathPoster && $resourceType === 'youtube_video')) {
+        if ($resourcePathPoster && $resourceType === 'video') {
             /** @var \Magento\Store\Model\Store $store */
             $store = $this->storeManager->getStore();
             $urlPoster = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathPoster;
