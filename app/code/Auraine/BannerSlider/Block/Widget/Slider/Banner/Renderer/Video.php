@@ -5,7 +5,7 @@ namespace Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer;
 use Auraine\BannerSlider\Api\Data\BannerInterface;
 use Auraine\BannerSlider\Block\Widget\Slider\Banner\RendererInterface;
 
-class YoutubeVideo extends AbstractRenderer
+class Video extends AbstractRenderer
 {
     /**
      * @var $_template

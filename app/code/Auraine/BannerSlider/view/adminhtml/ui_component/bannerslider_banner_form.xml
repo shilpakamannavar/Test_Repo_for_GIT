@@ -344,14 +344,14 @@
                 </imageUploader>
             </formElements>
         </field>
-         <field name="resource_path_youtube_video" sortOrder="105" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+         <field name="resource_path_video" sortOrder="105" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
                     <item name="depends" xsi:type="array">
                         <item name="resource_type" xsi:type="array">
                             <item name="field" xsi:type="string">resource_type</item>
-                            <item name="value" xsi:type="string">youtube_video</item>
+                            <item name="value" xsi:type="string">video</item>
                         </item>
                     </item>
                 </item>
@@ -366,7 +366,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
-                    <item name="depends" xsi:type="array">youtube_video
+                    <item name="depends" xsi:type="array">video
                     </item>
                 </item>
             </argument>
@@ -393,24 +393,6 @@
                 </imageUploader>
             </formElements>
         </field>
-         <field name="resource_path_video" sortOrder="100" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">banner</item>
-                    <item name="depends" xsi:type="array">
-                        <item name="resource_type" xsi:type="array">
-                            <item name="field" xsi:type="string">resource_type</item>
-                            <item name="value" xsi:type="string">video</item>
-                        </item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Video Link (only the URL)</label>
-                <visible>false</visible>
-            </settings>
-        </field> 
         <field name="additional_information" sortOrder="140" formElement="wysiwyg" template="ui/form/field">
          <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">

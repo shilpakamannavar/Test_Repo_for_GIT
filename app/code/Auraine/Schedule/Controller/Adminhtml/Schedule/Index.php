@@ -37,5 +37,14 @@ class Index extends \Magento\Backend\App\Action
             $resultPage->getConfig()->getTitle()->prepend(__("Manage Schedule"));
             return $resultPage;
     }
+
+    /**Is allowes
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Auraine_Schedule::schedule_index');
+    }
 }
 

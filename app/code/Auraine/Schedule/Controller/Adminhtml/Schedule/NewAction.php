@@ -37,5 +37,14 @@ class NewAction extends \Auraine\Schedule\Controller\Adminhtml\Schedule
         $resultForward = $this->resultForwardFactory->create();
         return $resultForward->forward('edit');
     }
+
+    /**Is allowes
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Auraine_Schedule::schedule_newsaction');
+    }
 }
 
