@@ -1,37 +1,74 @@
 <?php
 namespace Auraine\AddFreeProduct\Test\Unit\Model\Resolver;
 
-
 use Amasty\Promo\Helper\Cart;
 use Amasty\Promo\Model\Registry;
 use Auraine\AddFreeProduct\Model\DataProvider\PromoValidator;
 use Auraine\AddFreeProduct\Model\Resolver\AddFreeProductResolver;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Checkout\Model\Session;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\Phrase;
 use Magento\Quote\Model\QuoteRepository;
 use PHPUnit\Framework\TestCase;
 
 class AddFreeProductResolverTest extends TestCase
 {
+    /**
+     * AddFreeProductResolver object
+     *
+     * @var AddFreeProductResolver
+     */
     private AddFreeProductResolver $resolver;
 
+    /**
+     * Mock promoRegistryMock
+     *
+     * @var Registry|\PHPUnit\Framework\MockObject\MockObject
+     */
     private Registry|\PHPUnit\Framework\MockObject\MockObject $promoRegistryMock;
 
+    /**
+     * Mock promoCartHelperMock
+     *
+     * @var Cart|\PHPUnit\Framework\MockObject\MockObject
+     */
     private Cart|\PHPUnit\Framework\MockObject\MockObject $promoCartHelperMock;
 
+    /**
+     * Mock productRepositoryMock
+     *
+     * @var ProductRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
     private ProductRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $productRepositoryMock;
 
+    /**
+     * Mock checkoutSessionMock
+     *
+     * @var Session|\PHPUnit\Framework\MockObject\MockObject
+     */
     private Session|\PHPUnit\Framework\MockObject\MockObject $checkoutSessionMock;
 
+    /**
+     * Mock quoteRepositoryMock
+     *
+     * @var QuoteRepository|\PHPUnit\Framework\MockObject\MockObject
+     */
     private QuoteRepository|\PHPUnit\Framework\MockObject\MockObject $quoteRepositoryMock;
 
+    /**
+     * Mock promoValidatorMock
+     *
+     * @var PromoValidator|\PHPUnit\Framework\MockObject\MockObject
+     */
     private PromoValidator|\PHPUnit\Framework\MockObject\MockObject $promoValidatorMock;
 
+    /**
+     * Main setUp method
+     *
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->promoRegistryMock = $this->createMock(Registry::class);
@@ -51,6 +88,11 @@ class AddFreeProductResolverTest extends TestCase
         );
     }
 
+    /**
+     * testResolveThrowsGraphQlInputExceptionWhenCartIdIsMissing
+     *
+     * @return void
+     */
     public function testResolveThrowsGraphQlInputExceptionWhenCartIdIsMissing(): void
     {
         $this->expectException(GraphQlInputException::class);
@@ -65,6 +107,11 @@ class AddFreeProductResolverTest extends TestCase
         $this->resolver->resolve($field, $context, $info, $value, $args);
     }
 
+    /**
+     * testResolveThrowsGraphQlInputExceptionWhenCartItemsAreMissing
+     *
+     * @return void
+     */
     public function testResolveThrowsGraphQlInputExceptionWhenCartItemsAreMissing(): void
     {
         $this->expectException(GraphQlInputException::class);

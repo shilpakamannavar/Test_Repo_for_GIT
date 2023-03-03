@@ -1,8 +1,6 @@
 <?php
 namespace Auraine\AddFreeProduct\Test\Unit\Model\DataProvider;
 
-
-
 use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
 use Auraine\AddFreeProduct\Model\DataProvider\PromoValidator;
 use PHPUnit\Framework\TestCase;
@@ -10,13 +8,53 @@ use Amasty\Promo\Model\ItemRegistry\PromoItemData;
 
 class PromoValidatorTest extends TestCase
 {
+    /**
+     * Mock promoItemRegistryMock
+     *
+     * @var PromoItemRegistry
+     */
     private $promoItemRegistryMock;
+
+    /**
+     * Mock checkoutSessionMock
+     *
+     * @var \Magento\Checkout\Model\Session
+     */
     private $checkoutSessionMock;
+
+    /**
+     * Mock maskedQuoteInterfaceMock
+     *
+     * @var \Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface
+     */
     private $maskedQuoteInterfaceMock;
+
+    /**
+     * Mock quoteFactoryMock
+     *
+     * @var \Magento\Quote\Model\QuoteFactory
+     */
     private $quoteFactoryMock;
+
+    /**
+     * Mock customerSessionMock
+     *
+     * @var \Magento\Customer\Model\Session
+     */
     private $customerSessionMock;
+
+    /**
+     * Mock promoValidator
+     *
+     * @var PromoValidator
+     */
     private $promoValidator;
 
+    /**
+     * Main set up method
+     *
+     * @return void
+     */
     public function setUp(): void
     {
         $this->promoItemRegistryMock = $this->getMockBuilder(PromoItemRegistry::class)
@@ -25,7 +63,9 @@ class PromoValidatorTest extends TestCase
         $this->checkoutSessionMock = $this->getMockBuilder(\Magento\Checkout\Model\Session::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->maskedQuoteInterfaceMock = $this->getMockBuilder(\Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface::class)
+        $this->maskedQuoteInterfaceMock = $this->getMockBuilder(
+            \Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface::class
+        )
             ->disableOriginalConstructor()
             ->getMock();
         $this->quoteFactoryMock = $this->getMockBuilder(\Magento\Quote\Model\QuoteFactory::class)
@@ -42,9 +82,13 @@ class PromoValidatorTest extends TestCase
             $this->quoteFactoryMock,
             $this->customerSessionMock
         );
-
     }
 
+    /**
+     * testGetPromoDataItemWithRuleId
+     *
+     * @return void
+     */
     public function testGetPromoDataItemWithRuleId()
     {
         $sku = 'test_sku';
@@ -71,6 +115,11 @@ class PromoValidatorTest extends TestCase
         $this->assertEquals($promoItemDataMock, $result);
     }
 
+    /**
+     * testGetPromoDataItemWithoutRuleId
+     *
+     * @return void
+     */
     public function testGetPromoDataItemWithoutRuleId()
     {
         $sku = 'test_sku';
@@ -97,6 +146,11 @@ class PromoValidatorTest extends TestCase
         $this->assertEquals($promoItemDataMock, $result);
     }
 
+    /**
+     * testGetQtyToAdd
+     *
+     * @return void
+     */
     public function testGetQtyToAdd()
     {
         $promoDataItem = $this->createMock(PromoItemData::class);
@@ -113,6 +167,11 @@ class PromoValidatorTest extends TestCase
         $this->assertEquals(5, $qty);
     }
 
+    /**
+     * testIsPromoItemsAddedInQuote
+     *
+     * @return void
+     */
     public function testIsPromoItemsAddedInQuote()
     {
         $promoValidator = new PromoValidator(
@@ -156,5 +215,4 @@ class PromoValidatorTest extends TestCase
         $result = $promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
         $this->assertTrue($result);
     }
-
 }
