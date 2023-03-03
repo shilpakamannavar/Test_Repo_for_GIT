@@ -1,112 +1,53 @@
 <?php
-// @codingStandardsIgnoreFile
 namespace Auraine\Staticcontent\Test\Unit\Block\Adminhtml\Type\Edit;
 
+use Auraine\Staticcontent\Block\Adminhtml\Type\Edit\SaveButton;
+use Auraine\Staticcontent\Block\Adminhtml\Type\Edit\GenericButton;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\Staticcontent\Block\Adminhtml\Type\Edit\SaveButton
- */
 class SaveButtonTest extends TestCase
 {
     /**
-     * Mock context
-     *
-     * @var \Magento\Backend\Block\Widget\Context|PHPUnit\Framework\MockObject\MockObject
+     * @var SaveButton
      */
-    private $context;
+    protected $saveButton;
 
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\Staticcontent\Block\Adminhtml\Type\Edit\SaveButton
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->context = $this->createMock(\Magento\Backend\Block\Widget\Context::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\Staticcontent\Block\Adminhtml\Type\Edit\SaveButton::class,
+        $objectManager = new ObjectManager($this);
+
+        $genericButtonMock = $this->getMockBuilder(GenericButton::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->saveButton = $objectManager->getObject(
+            SaveButton::class,
             [
-                'context' => $this->context,
+                'data' => [],
+                'genericButton' => $genericButtonMock,
             ]
         );
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetButtonData()
+    public function testInstanceOfButtonProviderInterface()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
+        $this->assertInstanceOf(ButtonProviderInterface::class, $this->saveButton);
+    }
+
+    public function testGetButtonData()
+    {
+        $expectedData = [
+            'label' => __('Save Type'),
+            'class' => 'save primary',
+            'data_attribute' => [
+                'mage-init' => ['button' => ['event' => 'save']],
+                'form-role' => 'save',
+            ],
+            'sort_order' => 90,
         ];
-    }
 
-    /**
-     * @dataProvider dataProviderForTestGetButtonData
-     */
-    public function testGetButtonData(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetModelId()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetModelId
-     */
-    public function testGetModelId(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertEquals($expectedData, $this->saveButton->getButtonData());
     }
 }
