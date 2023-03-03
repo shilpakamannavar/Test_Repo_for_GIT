@@ -9,7 +9,7 @@ $bannerData = $block->getFormattedBanners();
             <div class="resource-map">
                 <h3>
                     <label>
-                        <a href="<?php echo $block->getResourceMapUrl($resourceMapId) ?>" target="_blank">
+                        <a href="<?php echo $block->getResourceMapUrl($resourceMapId) ?>" target="_blank" rel="noopener">
                             <?php echo $banners['title'] ?>
                         </a>
                     </label>
@@ -19,7 +19,7 @@ $bannerData = $block->getFormattedBanners();
                         <li>
                             <a href="<?php echo $block->getUrl('*/banner/edit', [
                                     'entity_id' => $banner['entity_id']
-                                ]) ?>" target="_blank" title="<?php echo $banner['title'] ?>">
+                                ]) ?>" target="_blank" title="<?php echo $banner['title'] ?>" rel="noopener">
                                 <?php echo $banner['resource_path'] ?>
                             </a>
                         </li>

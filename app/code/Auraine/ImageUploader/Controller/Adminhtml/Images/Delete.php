@@ -45,16 +45,13 @@ class Delete extends Action
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('id');
-        $url = $this->imageCollectionFactory
-                    ->create()
-                    ->addFieldToSelect('path')
-                    ->addFieldToFilter('image_id', $id)
-                    ->getData();
+        $imageCollection = $this->imageCollectionFactory->create();
+        $imageCollection->addFieldToSelect('path')->addFieldToFilter('image_id', $id);
+        $image = $this->imageFactory->create()->load($id);
+        $url = $imageCollection->getData();
         try {
-            $imageModel = $this->imageFactory->create();
-            $imageModel->setId($id);
-            @unlink(getcwd().'/media/'.$url[0]['path']);
-            $imageModel->delete();
+            $image->delete();
+            @unlink(getcwd() . '/media/' . $url[0]['path']);
             $this->messageManager->addSuccessMessage(__('You deleted the image.'));
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());

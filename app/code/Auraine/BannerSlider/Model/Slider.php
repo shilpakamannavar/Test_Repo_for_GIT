@@ -188,11 +188,11 @@ class Slider extends AbstractModel implements SliderInterface
             $searchCriteria = $this->searchCriteriaBuilderFactory->create()
                 ->addFilter('slider_id', $this->getEntityId(), 'eq')
                 ->create();
-            $banners = $this->bannerRepository->getList($searchCriteria)->getItems();
-            foreach ($banners as $banner) {
+            $bannersData = $this->bannerRepository->getList($searchCriteria)->getItems();
+            foreach ($bannersData as $banner) {
                 $banner->setResourcePath($this->resourcePathResolver->resolve($banner));
             }
-            $this->banners = $banners;
+            $this->banners = $bannersData;
         }
         return $this->banners;
     }
