@@ -19,19 +19,7 @@ class GetFreeProductForCartTest extends \PHPUnit\Framework\TestCase
 
         $storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
 
-        $resolver = new \Auraine\AddFreeProduct\Model\Resolver\GetFreeProductForCart(
-            $promoItemRegistry,
-            $productRepository,
-            $storeManager
-        );
-
-        $field = $this->createMock(\Magento\Framework\GraphQl\Config\Element\Field::class);
-        $context = [];
-        $info = $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class);
-        $value = null;
-        $args = null;
-
-        $result = $resolver->resolve($field, $context, $info, $value, $args);
+        $result = $this->resolverResponse($promoItemRegistry, $productRepository, $storeManager);
 
         $this->assertIsArray($result);
         $this->assertEmpty($result);
@@ -63,23 +51,37 @@ class GetFreeProductForCartTest extends \PHPUnit\Framework\TestCase
         $store->method('getBaseUrl')->willReturn('http://example.com/');
         $storeManager->method('getStore')->willReturn($store);
 
-        // Instantiate the resolver with the mocks
+        $result = $this->resolverResponse($promoItemRegistry, $productRepository, $storeManager);
+
+        // Verify that the result contains the expected data
+        $this->assertIsArray($result);
+    }
+
+    /**
+     * Resolver response
+     *
+     * @param \Amasty\Promo\Model\ItemRegistry\PromoItemRegistry|
+     *  \PHPUnit\Framework\MockObject\MockObject $promoItemRegistry
+     * @param \Magento\Catalog\Api\ProductRepositoryInterface|
+     *  \PHPUnit\Framework\MockObject\MockObject $productRepository
+     * @param \Magento\Store\Model\StoreManagerInterface|\PHPUnit\Framework\MockObject\MockObject $storeManager
+     *
+     * @return \Auraine\AddFreeProduct\Model\Resolver\GetFreeProductForCart
+     */
+    private function resolverResponse($promoItemRegistry, $productRepository, $storeManager)
+    {
         $resolver = new \Auraine\AddFreeProduct\Model\Resolver\GetFreeProductForCart(
             $promoItemRegistry,
             $productRepository,
             $storeManager
         );
 
-        // Call the resolve method with a fake context, field, and info
         $field = $this->createMock(\Magento\Framework\GraphQl\Config\Element\Field::class);
         $context = [];
         $info = $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class);
         $value = null;
         $args = null;
-        $result = $resolver->resolve($field, $context, $info, $value, $args);
 
-        // Verify that the result contains the expected data
-        $this->assertIsArray($result);
+        return $resolver->resolve($field, $context, $info, $value, $args);
     }
-    
 }
