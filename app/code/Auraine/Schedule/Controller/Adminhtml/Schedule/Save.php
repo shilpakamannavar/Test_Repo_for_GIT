@@ -118,4 +118,13 @@ class Save extends Action
             );
         }
     }
+
+    /**Is allowes
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Auraine_Schedule::schedule_save');
+    }
 }
