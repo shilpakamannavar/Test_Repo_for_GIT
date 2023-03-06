@@ -7,7 +7,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\SaveButton
- * @codingStandardsIgnoreFile
  */
 class SaveButtonTest extends TestCase
 {

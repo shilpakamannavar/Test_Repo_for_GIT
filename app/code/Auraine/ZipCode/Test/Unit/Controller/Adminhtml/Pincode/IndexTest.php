@@ -7,7 +7,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\ZipCode\Controller\Adminhtml\Pincode\Index
- * @codingStandardsIgnoreFile
  */
 class IndexTest extends TestCase
 {
