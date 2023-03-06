@@ -9,7 +9,6 @@ use Auraine\Zipcode\Model\ResourceModel\Pincode\CollectionFactory;
 
 /**
  * @covers \Auraine\ZipCode\Controller\Adminhtml\Index\MassStatusUpdate
- * @codingStandardsIgnoreFile
  */
 class MassStatusUpdateTest extends TestCase
 {
