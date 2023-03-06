@@ -1,5 +1,5 @@
 <?php
-// @codingStandardsIgnoreFile
+
 namespace Auraine\Staticcontent\Test\Unit\Controller\Adminhtml\Content;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
