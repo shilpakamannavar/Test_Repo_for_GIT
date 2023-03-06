@@ -29,7 +29,7 @@
             <argument name="resources" xsi:type="array">
                 <item name="local_image" xsi:type="string">Local Image</item>
                 <item name="external_image" xsi:type="string">External Image</item>
-                 <item name="youtube_video" xsi:type="string">Video</item>
+                 <item name="video" xsi:type="string">Video</item>
             </argument>
         </arguments>
     </type>
@@ -52,7 +52,6 @@
             <argument name="processors" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\LocalImage</item>
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\ExternalImage</item>
-                <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\YoutubeVideo</item>
                 <item name="video" xsi:type="object">Auraine\BannerSlider\Model\Banner\ResourcePath\Processor\Video</item>
             </argument>
         </arguments>
@@ -137,13 +136,9 @@
                     <item name="class" xsi:type="string">Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\ExternalImage</item>
                     <item name="sortOrder" xsi:type="number">20</item>
                 </item>
-                <item name="youtube_video" xsi:type="array">
-                    <item name="class" xsi:type="string">Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\YoutubeVideo</item>
-                    <item name="sortOrder" xsi:type="number">30</item>
-                </item>
                 <item name="video" xsi:type="array">
                     <item name="class" xsi:type="string">Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\Video</item>
-                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
                 </item>
             </argument>
         </arguments>
@@ -158,7 +153,6 @@
             <argument name="processors" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\LocalImage</item>
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\ExternalImage</item>
-                <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\YoutubeVideo</item>
                 <item name="video" xsi:type="object">Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath\Video</item>
             </argument>
         </arguments>
@@ -182,8 +176,7 @@
             <argument name="renderers" xsi:type="array">
                 <item name="local_image" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\LocalImage</item>
                 <item name="external_image" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\ExternalImage</item>
-                <item name="youtube_video" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\YoutubeVideo</item>
-                 <item name="video" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\Video</item>
+                <item name="video" xsi:type="object">Auraine\BannerSlider\Block\Widget\Slider\Banner\Renderer\Video</item>
             </argument>
         </arguments>
     </type>
