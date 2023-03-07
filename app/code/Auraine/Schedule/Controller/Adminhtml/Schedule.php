@@ -38,5 +38,14 @@ abstract class Schedule extends \Magento\Backend\App\Action
             ->addBreadcrumb(__('Schedule'), __('Schedule'));
         return $resultPage;
     }
+
+    /**Is allowes
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Auraine_Schedule::schedule');
+    }
 }
 

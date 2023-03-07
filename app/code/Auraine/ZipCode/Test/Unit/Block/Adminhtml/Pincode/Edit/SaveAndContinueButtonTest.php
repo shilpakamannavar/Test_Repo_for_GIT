@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\SaveAndContinueButton
- * @codingStandardsIgnoreFile
  */
 class SaveAndContinueButtonTest extends TestCase
 {

@@ -43,5 +43,14 @@ class Delete extends \Auraine\Schedule\Controller\Adminhtml\Schedule
         // go to grid
         return $resultRedirect->setPath('*/*/');
     }
+
+    /**Is allowes
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Auraine_Schedule::schedule_delete');
+    }
 }
 

@@ -39,14 +39,13 @@ class NewSchedule extends \Magento\Backend\App\Action
          $this->_response;
          return $resultRedirect->setPath('*/*/');
     }
-
-    /**
-     * Is the user allowed to view the page.
-    *
-    * @return bool
-    */
+      
+    /**Is allowes
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed(static::ADMIN_RESOURCE);
+        return $this->_authorization->isAllowed('Auraine_Schedule::schedule_newschedule');
     }
 }
