@@ -75,8 +75,7 @@ class Zipcode
 
         $countryModel = $this->countryFactory->create();
         $country = $countryModel->loadByCode($countryId);
-        $region = $this->regionFactory->create()->load($stateId);
-
+        $region = $this->regionFactory->create()->loadByCode($stateId, $countryId);
         return [
                 'city' => $pincode->getCity(),
                 'country' => $country->getName(),
