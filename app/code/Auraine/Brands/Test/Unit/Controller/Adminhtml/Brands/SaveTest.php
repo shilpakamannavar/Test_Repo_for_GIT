@@ -7,7 +7,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \\Auraine\Brands\Controller\Adminhtml\Brands\Save
- * 
+ * @codingStandardsIgnoreFile
  */
 class SaveTest extends TestCase
 {
