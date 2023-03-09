@@ -66,7 +66,7 @@ class Export extends \Magento\Backend\App\Action
         $exportDirectory = $this->directoryList->getPath(DirectoryList::VAR_DIR) . '/export/';
         $filePath = $exportDirectory . $fileName;
 
-        $csvHeader = ['Zipcode', 'City', 'State', 'Country', 'Status'];
+        $csvHeader = ['code', 'city', 'state', 'country_id', 'status'];
         $csvData = [];
 
         $collection = $this->entityFactory->create();

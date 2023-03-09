@@ -1,9 +1,9 @@
 <?php
-namespace Auraine\ZipCode\Model\Config\Source;
+namespace Auraine\Zipcode\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
-class Regions implements OptionSourceInterface
+class AddRegions implements OptionSourceInterface
 {
     /**
      * @var \Magento\Directory\Model\ResourceModel\Region\Collection
