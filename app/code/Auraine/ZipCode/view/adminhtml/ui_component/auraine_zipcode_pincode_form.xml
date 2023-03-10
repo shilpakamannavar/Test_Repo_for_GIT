@@ -1,0 +1,146 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">auraine_zipcode_pincode_form.pincode_form_data_source</item>
+		</item>
+		<item name="label" xsi:type="string" translate="true">General Information</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+	</argument>
+	<settings>
+		<buttons>
+			<button name="back" class="Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\BackButton"/>
+			<button name="delete" class="Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\DeleteButton"/>
+			<button name="save" class="Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\SaveButton"/>
+			<button name="save_and_continue" class="Auraine\ZipCode\Block\Adminhtml\Pincode\Edit\SaveAndContinueButton"/>
+		</buttons>
+		<namespace>auraine_zipcode_pincode_form</namespace>
+		<dataScope>data</dataScope>
+		<deps>
+			<dep>auraine_zipcode_pincode_form.pincode_form_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="pincode_form_data_source">
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+		<settings>
+			<submitUrl path="*/*/save"/>
+		</settings>
+		<dataProvider name="pincode_form_data_source" class="Auraine\ZipCode\Model\Pincode\DataProvider">
+			<settings>
+				<requestFieldName>pincode_id</requestFieldName>
+				<primaryFieldName>pincode_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<fieldset name="general">
+		<settings>
+			<label>General</label>
+		</settings>
+		<field name="code" formElement="input" sortOrder="10">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">pincode</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">PinCode</label>
+				<dataScope>code</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
+					<rule name="validate-digits" xsi:type="boolean">true</rule>
+					<rule name="validate-digits-range" xsi:type="string">100000-999999</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="city" formElement="input" sortOrder="20">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">pincode</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">City</label>
+				<dataScope>city</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
+					<rule name="validate-alphanum-with-spaces" xsi:type="boolean">true</rule>
+					<rule name="validate-length maximum-length-50" xsi:type="boolean">true</rule>
+				</validation>
+			</settings>
+		</field>
+		
+		<field name="status" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">pincode</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Status</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+		<field name="country_id" sortOrder="40" formElement="select">
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">Countires</label>
+			</settings>
+			<formElements>
+				<select>
+					<settings>
+							<options class="Auraine\ZipCode\Model\Config\Source\Countries"/>
+
+					</settings>
+				</select>
+			</formElements>
+		</field>
+		
+		<field name="state">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">State/Region</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">store</item>
+					<item name="sortOrder" xsi:type="number">80</item>
+					<item name="visible" xsi:type="boolean">false</item>
+				</item>
+			</argument>
+		</field>
+		<field name="state">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Auraine\ZipCode\Model\Config\Source\AddRegions</item>
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">State/Region</item>
+					<item name="formElement" xsi:type="string">select</item>
+					<item name="source" xsi:type="string">store</item>
+					<item name="sortOrder" xsi:type="number">90</item>
+					<item name="customEntry" xsi:type="string">region</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+	</fieldset>
+</form>

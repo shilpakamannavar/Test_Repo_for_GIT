@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+   <table name="auraine_shopbrand" resource="default" engine="innodb" comment="auraine_shopbrand is the table name">
+      <column xsi:type="int" name="entity_id" padding="6" unsigned="false" nullable="false" identity="true" comment="ID" />
+      <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title" />
+      <column xsi:type="varchar" name="image" nullable="false" length="255" comment="Brand Logo" />
+      <column xsi:type="varchar" name="description" nullable="false" length="255" comment="Descrition" />
+      <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores" />
+      <column xsi:type="smallint" name="is_popular" nullable="false"  comment="Is Popular" />
+      <column xsi:type="smallint" name="is_featured" nullable="false"  comment="Is Featured" />
+      <column xsi:type="smallint" name="is_justin" nullable="false"  comment="Is Justin" />
+      <column xsi:type="smallint" name="is_exclusive" nullable="false"  comment="Is Exclusive" />
+      <column xsi:type="smallint" name="status" nullable="false"  comment="Status" />
+      <column xsi:type="varchar" name="url_key" nullable="false" length="255" comment="URL Key" />
+      <column xsi:type="varchar" name="meta_key" nullable="false" length="255" comment="Meta Key" />
+      <column xsi:type="varchar" name="meta_description" nullable="false" length="255" comment="Meta Key" />
+      <column xsi:type="int" name="brand_banner_slider_id" nullable="false" comment="Banner Slider ID" />
+      <column xsi:type="int" name="brand_offer_slider_id" nullable="false" comment="Offer Slider ID" />
+      <column xsi:type="int" name="brand_exclusive_top_slider_id" nullable="false" comment="Exclusive Top Slider ID" />
+      <column xsi:type="int" name="brand_exclusive_banner_slider_id" nullable="false" comment="Exclusive List Slider ID" />
+      <column xsi:type="int" name="brand_blogs_slider_id" nullable="false" comment="Blogs Slider ID" />
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+         <column name="entity_id" />
+      </constraint>
+      <constraint xsi:type="unique" referenceId="BRAND_TITLE">
+			<column name="title"/>
+		</constraint>
+       <constraint xsi:type="unique" referenceId="BRAND_URL_KEY">
+			<column name="url_key"/>
+		</constraint>
+   </table>
+</schema>

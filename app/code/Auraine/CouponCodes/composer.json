@@ -1,0 +1,34 @@
+{
+ "name": "auraine/module-couponlist",
+ "description": "Coupon Code Listing extension",
+ "type": "magento2-module",
+ "version": "1.0.0",
+ "license": [
+   "OSL-3.0",
+   "AFL-3.0"
+ ],
+ "keywords": [
+   "magento 2",
+   "auraine",
+   "coupon code list",
+   "coupon code listing",
+   "coupon code listing graphql",
+   "coupon code listing on cart page"
+ ],
+ "authors": [
+   {
+     "name": "Auraine",
+     "email": "musthaq.ahemmad@maisondauraine.com",
+     "homepage": "https://www.maisondauraine.com",
+     "role": "PHP Developer"
+   }
+ ],
+ "autoload": {
+   "files": [
+     "registration.php"
+   ],
+   "psr-4": {
+     "Auraine\\CouponCodes\\": ""
+   }
+ }
+}

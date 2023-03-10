@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+       <add id="Auraine_ImageUploader::images" title="Images" translate="title" 
+          module="Auraine_ImageUploader" sortOrder="0" parent="Auraine::top_level"
+          action="imageuploader/images" resource="Auraine_ImageUploader::upload" />
+    </menu>
+</config>

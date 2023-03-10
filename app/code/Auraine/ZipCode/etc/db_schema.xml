@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="pincode" resource="default" engine="innodb" comment="pincode Table">
+		<column xsi:type="int" name="pincode_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="pincode_id"/>
+		</constraint>
+		<column name="code" nullable="false" xsi:type="varchar" comment="Zip code" length="255"/>
+		<column name="city" nullable="true" xsi:type="varchar" comment="Zip code city" length="255"/>
+		<column name="country_id" nullable="true" xsi:type="varchar" comment="Zipcode country" length="255"/>
+		<column name="state" nullable="true" xsi:type="varchar" comment="Zipcode State" length="100"/>
+		<column name="status" nullable="true" xsi:type="smallint" comment="Zipcode status" default="0" identity="false"/>
+		<index referenceId="AURAINE_ZIPCODE_PINCODE_STATUS" indexType="btree">
+			<column name="status"/>
+		</index>
+	</table>
+</schema>

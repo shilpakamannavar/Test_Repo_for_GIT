@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Auraine\Schedule\Api\ScheduleRepositoryInterface" type="Auraine\Schedule\Model\ScheduleRepository"/>
+	<preference for="Auraine\Schedule\Api\Data\ScheduleInterface" type="Auraine\Schedule\Model\Schedule"/>
+	<preference for="Auraine\Schedule\Api\Data\ScheduleSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Auraine\Schedule\Model\ResourceModel\Schedule\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">auraine_schedule_schedule</argument>
+			<argument name="resourceModel" xsi:type="string">Auraine\Schedule\Model\ResourceModel\Schedule\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="auraine_schedule_schedule_listing_data_source" xsi:type="string">Auraine\Schedule\Model\ResourceModel\Schedule\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+</config>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Auraine_Brands::brands" title="Brands" module="Auraine_Brands" sortOrder="20" resource="Auraine_Brands::brands"/>
+
+        <add id="Auraine_Brands::azbrands" title="A-Z Brands" module="Auraine_Brands" sortOrder="20" action="brands/brands"  parent="Auraine_Brands::brands"  resource="Auraine_Brands::brands"/>
+    
+    </menu>
+
+
+</config>

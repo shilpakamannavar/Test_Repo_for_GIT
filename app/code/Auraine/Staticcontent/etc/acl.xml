@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Auraine_Staticcontent::Content" title="Content" sortOrder="10">
+					<resource id="Auraine_Staticcontent::Content_save" title="Save Content" sortOrder="10"/>
+					<resource id="Auraine_Staticcontent::Content_delete" title="Delete Content" sortOrder="20"/>
+					<resource id="Auraine_Staticcontent::Content_update" title="Update Content" sortOrder="30"/>
+					<resource id="Auraine_Staticcontent::Content_view" title="View Content" sortOrder="40"/>
+				</resource>
+				<resource id="Auraine_Staticcontent::Type" title="Type" sortOrder="10">
+					<resource id="Auraine_Staticcontent::Type_save" title="Save Type" sortOrder="10"/>
+					<resource id="Auraine_Staticcontent::Type_delete" title="Delete Type" sortOrder="20"/>
+					<resource id="Auraine_Staticcontent::Type_update" title="Update Type" sortOrder="30"/>
+					<resource id="Auraine_Staticcontent::Type_view" title="View Type" sortOrder="40"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

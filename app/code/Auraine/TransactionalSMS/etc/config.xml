@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <transaction_sms_control>
+            <transaction_sms>
+                <enable_sms>0</enable_sms>
+            </transaction_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <registration_sms>
+                <message>Welcome to Glamourbook India. Visit us: www.glamourbook.com for exciting offers and wide range of products.</message>
+            </registration_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <order_confirm_sms>
+                <message>Order Placed: Your Glamourbook Order ID {{order_id}} is successfully placed and will reach you by {{delivery_date}}.</message>
+            </order_confirm_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <shipped_sms>
+                <message>Shipped: Your Glamourbook order ID {{order_id}} of {{description}} + {{quantity}} items is shipped and will reach you by {{delivery_date}}. Track at {{link}}</message>
+            </shipped_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <delivered_sms>
+                <message>Delivered: Your Glamourbook order ID {{order_id}} of {{desciption}} + {{quantity}} items is delivered.</message>
+            </delivered_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <cancelled_sms>
+                <message>Cancelled: Your Glamourbook order ID {{order_id}} of {{description}} + {{quantity}} items is cancelled.</message>
+            </cancelled_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <not_delivered_sms>
+                <message>Your Glamourbook order ID {{order_id}} could not be delivered.</message>
+            </not_delivered_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <return_inititated_sms>
+                <message>Return initiated: Return request initiated against your order ID {{order_id}} of {{description}} and will be picked up within {{no_of_days}} business days.</message>
+            </return_inititated_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <return_picked_sms>
+                <message>Return picked: Return is picked up against your order ID {{order_id}} of {{description}}.</message>
+            </return_picked_sms>
+        </transaction_sms_control>
+
+        <transaction_sms_control>
+            <refund_success>
+                <message>Refund: Refund is initiated against your order id {{order_id}} of amount Rs {{amount}}.</message>
+            </refund_success>
+        </transaction_sms_control>
+    </default>
+</config>
