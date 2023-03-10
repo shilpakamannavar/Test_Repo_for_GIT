@@ -128,7 +128,7 @@
 		</field>
 		<field name="state">
 			<argument name="data" xsi:type="array">
-				<item name="options" xsi:type="object">Magento\Directory\Model\ResourceModel\Region\Collection</item>
+				<item name="options" xsi:type="object">Auraine\ZipCode\Model\Config\Source\AddRegions</item>
 				<item name="config" xsi:type="array">
 					<item name="dataType" xsi:type="string">text</item>
 					<item name="label" xsi:type="string" translate="true">State/Region</item>
@@ -138,10 +138,6 @@
 					<item name="customEntry" xsi:type="string">region</item>
 					<item name="validation" xsi:type="array">
 						<item name="required-entry" xsi:type="boolean">true</item>
-					</item>
-					<item name="filterBy" xsi:type="array">
-						<item name="target" xsi:type="string">${ $.provider }:${ $.parentScope }.country_id</item>
-						<item name="field" xsi:type="string">country_id</item>
 					</item>
 				</item>
 			</argument>
