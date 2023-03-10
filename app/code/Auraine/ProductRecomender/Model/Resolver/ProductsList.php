@@ -73,7 +73,7 @@ class ProductsList implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        $cacheKey = self::CACHE_KEY_PREFIX . md5(json_encode($args));
+        $cacheKey = self::CACHE_KEY_PREFIX . hash('sha256', json_encode($args));
         $cachedData = $this->cache->load($cacheKey);
 
         if ($cachedData) {
