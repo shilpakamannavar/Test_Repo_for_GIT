@@ -1,5 +1,110 @@
 <?php
 return [
+    'scopes' => [
+        'websites' => [
+            'admin' => [
+                'website_id' => '0',
+                'code' => 'admin',
+                'name' => 'Admin',
+                'sort_order' => '0',
+                'default_group_id' => '0',
+                'is_default' => '0'
+            ],
+            'base' => [
+                'website_id' => '1',
+                'code' => 'base',
+                'name' => 'Main Website',
+                'sort_order' => '0',
+                'default_group_id' => '1',
+                'is_default' => '1'
+            ]
+        ],
+        'groups' => [
+            [
+                'group_id' => '0',
+                'website_id' => '0',
+                'name' => 'Default',
+                'root_category_id' => '0',
+                'default_store_id' => '0',
+                'code' => 'default'
+            ],
+            [
+                'group_id' => '1',
+                'website_id' => '1',
+                'name' => 'Main Website Store',
+                'root_category_id' => '2',
+                'default_store_id' => '1',
+                'code' => 'main_website_store'
+            ]
+        ],
+        'stores' => [
+            'admin' => [
+                'store_id' => '0',
+                'code' => 'admin',
+                'website_id' => '0',
+                'group_id' => '0',
+                'name' => 'Admin',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'default' => [
+                'store_id' => '1',
+                'code' => 'default',
+                'website_id' => '1',
+                'group_id' => '1',
+                'name' => 'Default Store View',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ]
+        ]
+    ],
+    'system' => [
+        'default' => [
+            'general' => [
+                'locale' => [
+                    'code' => 'en_US'
+                ]
+            ],
+            'dev' => [
+                'static' => [
+                    'sign' => '1'
+                ],
+                'front_end_development_workflow' => [
+                    'type' => 'server_side_compilation'
+                ],
+                'template' => [
+                    'allow_symlink' => null,
+                    'minify_html' => '0'
+                ],
+                'js' => [
+                    'merge_files' => '0',
+                    'enable_js_bundling' => null,
+                    'minify_files' => '0',
+                    'move_script_to_bottom' => '0',
+                    'translate_strategy' => 'dictionary',
+                    'session_storage_logging' => '0',
+                    'minify_exclude' => [
+                        'tiny_mce' => '/tiny_mce/',
+                        'cardinal_commerce' => '/v1/songbird'
+                    ]
+                ],
+                'css' => [
+                    'merge_css_files' => null,
+                    'minify_files' => '0',
+                    'use_css_critical_path' => '0',
+                    'minify_exclude' => [
+                        'tiny_mce' => '/tiny_mce/'
+                    ]
+                ]
+            ]
+        ],
+        'stores' => [
+
+        ],
+        'websites' => [
+
+        ]
+    ],
     'modules' => [
         'Magento_Store' => 1,
         'Magento_AdminAnalytics' => 1,
@@ -76,7 +181,7 @@ return [
         'Magento_Downloadable' => 1,
         'Magento_Staging' => 1,
         'Magento_GiftCard' => 1,
-        'Magento_GraphQlServer' => 1,
+        'Magento_ServicesConnector' => 1,
         'Magento_Wishlist' => 1,
         'Magento_UrlRewrite' => 1,
         'Magento_UrlRewriteGraphQl' => 1,
@@ -121,7 +226,7 @@ return [
         'Magento_CustomerImportExport' => 1,
         'Magento_CatalogWidget' => 1,
         'Magento_BundleProductDataExporter' => 1,
-        'Magento_ServicesConnector' => 1,
+        'Magento_ServicesId' => 1,
         'Magento_Multishipping' => 1,
         'Magento_DeferredTotalCalculating' => 1,
         'Magento_Deploy' => 1,
@@ -165,9 +270,9 @@ return [
         'Magento_GoogleOptimizerStaging' => 1,
         'Magento_GoogleShoppingAds' => 1,
         'Magento_Banner' => 1,
-        'Magento_AdminGraphQlServer' => 1,
+        'Magento_GraphQlServer' => 1,
         'Magento_GraphQlCache' => 1,
-        'Magento_ServicesId' => 1,
+        'Magento_AdminGraphQlServer' => 1,
         'Magento_GroupedProduct' => 1,
         'Magento_GroupedImportExport' => 1,
         'Magento_GroupedCatalogInventory' => 1,
@@ -199,6 +304,7 @@ return [
         'Magento_InventoryConfigurableProductIndexer' => 1,
         'Magento_InventoryConfiguration' => 1,
         'Magento_InventoryConfigurationApi' => 1,
+        'Magento_InventoryDataExporter' => 1,
         'Magento_InventoryDistanceBasedSourceSelection' => 1,
         'Magento_InventoryDistanceBasedSourceSelectionAdminUi' => 1,
         'Magento_InventoryDistanceBasedSourceSelectionApi' => 1,
@@ -334,6 +440,7 @@ return [
         'Magento_ProductRecommendationsAdmin' => 1,
         'Magento_ProductRecommendationsLayout' => 1,
         'Magento_CatalogSyncAdmin' => 1,
+        'Magento_ProductVariantDataExporter' => 1,
         'Magento_ProductVideo' => 1,
         'Magento_ProductVideoStaging' => 1,
         'Magento_PromotionPermissions' => 1,
@@ -394,13 +501,18 @@ return [
         'Magento_Rss' => 1,
         'Magento_SalesRuleStaging' => 1,
         'Magento_SaaSCommon' => 1,
+        'Magento_SaaSCategory' => 1,
         'Magento_SaaSCatalog' => 1,
+        'Magento_SaaSInventory' => 1,
         'Magento_SaaSProductOverride' => 1,
+        'Magento_SaaSProductVariant' => 1,
+        'Magento_SalesOrdersDataExporter' => 1,
         'Magento_BannerPageBuilder' => 1,
         'Magento_SalesAnalytics' => 1,
         'Magento_AsyncOrderGraphQl' => 1,
         'Magento_MultipleWishlistGraphQl' => 1,
         'Magento_SalesInventory' => 1,
+        'Magento_SaaSSales' => 1,
         'Magento_CatalogRuleStaging' => 1,
         'Magento_RewardStaging' => 1,
         'Magento_GoogleTagManager' => 1,
@@ -415,9 +527,10 @@ return [
         'Magento_Securitytxt' => 1,
         'Magento_SendFriend' => 1,
         'Magento_SendFriendGraphQl' => 1,
-        'Magento_DataServicesMultishipping' => 1,
         'Magento_ProductRecommendationsSyncAdmin' => 1,
+        'Magento_DataServicesMultishipping' => 1,
         'Magento_ServicesIdGraphQlServer' => 1,
+        'Magento_ServicesIdLayout' => 1,
         'Magento_InventoryInStorePickupSalesAdminUi' => 1,
         'Magento_AwsS3PageBuilder' => 1,
         'Magento_StagingGraphQl' => 1,
@@ -479,29 +592,48 @@ return [
         'Amasty_RewardsGraphQl' => 1,
         'Amasty_Rgrid' => 1,
         'Amasty_SalesRuleWizard' => 1,
+        'Auraine_AddFreeProduct' => 1,
         'Auraine_BannerSlider' => 1,
         'Auraine_Brands' => 1,
         'Auraine_Category' => 1,
         'Auraine_CouponCodes' => 1,
+        'Auraine_CustomImport' => 1,
         'Auraine_CustomProductAttribute' => 1,
         'Auraine_DiscountPercentageFilter' => 1,
         'Auraine_ExtendCatalogGraphQl' => 1,
+        'Auraine_ExtendedCustomerGraphQLException' => 1,
         'Magecomp_Mobilelogin' => 1,
         'Auraine_LoyaltyPoint' => 1,
+        'Auraine_ImageUploader' => 1,
+        'Auraine_ExtendedReminder' => 1,
         'Auraine_MobileNumber' => 1,
         'Auraine_Offerlabel' => 1,
         'Auraine_PopularSearch' => 1,
+        'Auraine_ProductRecomender' => 1,
+        'Auraine_RegionList' => 1,
+        'Auraine_Schedule' => 1,
+        'Auraine_SellerPanel' => 1,
         'Auraine_Staticcontent' => 1,
         'Auraine_SwatchData' => 1,
+        'Auraine_TransactionalEmail' => 1,
+        'Auraine_TransactionalSMS' => 1,
         'Auraine_ZipCode' => 1,
         'Fastly_Cdn' => 1,
         'Magecomp_MobileloginGraphQl' => 1,
         'Auraine_ExtendedPlaceOrderMutation' => 1,
         'Magecomp_Mobileloginmsg91' => 1,
         'Magecomp_Mobilelogintwilio' => 1,
+        'Magecomp_Textlocal' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
         'Razorpay_Magento' => 1,
         'Temando_ShippingRemover' => 1
+    ],
+    'admin_user' => [
+        'locale' => [
+            'code' => [
+                'en_US'
+            ]
+        ]
     ]
 ];

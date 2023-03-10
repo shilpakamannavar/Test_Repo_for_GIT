@@ -72,10 +72,10 @@ class LocalImage implements ModifierInterface
             $store = $this->storeManager->getStore();
             $url = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePath;
             $fileName = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath($resourcePath);
-            $file_exists = 'file_exists';
+            $fileExists = 'file_exists';
             $basename = 'basename';
             $filesize = 'filesize';
-            if ($file_exists($fileName)) {
+            if ($fileExists($fileName)) {
                 $resourcePathData = [
                     'name' => $basename($fileName),
                     'url' => $url,
@@ -84,6 +84,51 @@ class LocalImage implements ModifierInterface
                 ];
                 unset($data['resource_path']);
                 $data['resource_path_local_image'][0] = $resourcePathData;
+            }
+        }
+        $resourcePathMobile = $data['resource_path_mobile'] ?? null;
+        $resourceTypeMobile = $data['resource_type'];
+        if ($resourcePathMobile && $resourceTypeMobile === 'local_image') {
+            /** @var \Magento\Store\Model\Store $store */
+            $store = $this->storeManager->getStore();
+            $urlMobile = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathMobile;
+            $fileNameMobile = $this->filesystem
+                ->getDirectoryRead(DirectoryList::MEDIA)
+                ->getAbsolutePath($resourcePathMobile);
+            $fileExistsMobile = 'file_exists';
+            $basename = 'basename';
+            $filesize = 'filesize';
+            if ($fileExistsMobile($fileNameMobile)) {
+                $resourcePathDataMobile = [
+                    'name' => $basename($fileNameMobile),
+                    'url' => $urlMobile,
+                    'size' => $filesize($fileNameMobile),
+                    'type' => $this->mime->getMimeType($fileNameMobile)
+                ];
+                unset($data['resource_path_mobile']);
+                $data['resource_path_local_image_mobile'][0] = $resourcePathDataMobile;
+            }
+        }
+        $resourcePathPoster = $data['resource_path_poster'] ?? null;
+        if ($resourcePathPoster && $resourceType === 'video') {
+            /** @var \Magento\Store\Model\Store $store */
+            $store = $this->storeManager->getStore();
+            $urlPoster = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathPoster;
+            $fileNamePoster = $this->filesystem
+                ->getDirectoryRead(DirectoryList::MEDIA)
+                ->getAbsolutePath($resourcePathPoster);
+            $fileExistsPoster = 'file_exists';
+            $basename = 'basename';
+            $filesize = 'filesize';
+            if ($fileExistsPoster($fileNamePoster)) {
+                $resourcePathDataPoster = [
+                    'name' => $basename($fileNamePoster),
+                    'url' => $urlPoster,
+                    'size' => $filesize($fileNamePoster),
+                    'type' => $this->mime->getMimeType($fileNamePoster)
+                ];
+                unset($data['resource_path_poster']);
+                $data['resource_path_poster_image'][0] = $resourcePathDataPoster;
             }
         }
         return $data;

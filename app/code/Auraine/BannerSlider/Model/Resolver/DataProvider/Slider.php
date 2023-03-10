@@ -43,20 +43,32 @@ class Slider
     {
         $data = $result = [];
         $sliderId = $args['sliderId'] ?? null;
+        $sliderIds = $args['sliderIds'] ?? null;
         $sliderType = $args['slider_type'] ?? null;
         $pageType = $args['page_type'] ?? null;
-        $sortOrder = $args['sort_order'] ?? null;
         $categoryId = $args['category_id'] ?? null;
-        $category_uid = $args['category_uid'] ?? null;
+        $categoryUid = $args['category_uid'] ?? null;
+        $type = $args['type'] ?? null;
         $collection = $this->sliderRepository->getCollection()->addFieldToFilter('is_enabled', 1);
         $decode = "base64_decode";
-        
-        if (!empty($category_uid)) {
-            $collection->addFieldToFilter('category_id', $decode($category_uid));
+
+        if (!empty($type) && $type === 'mobile') {
+            $collection->addFieldToFilter('display_type', ['neq' => 'web']);
+        } else {
+            $collection->addFieldToFilter('display_type', ['neq' => 'mobile']);
         }
-        
+
+        if (!empty($categoryUid)) {
+            $collection->addFieldToFilter('category_id', $decode($categoryUid));
+        }
+
         if (!empty($sliderId)) {
             $collection->addFieldToFilter('entity_id', $sliderId);
+        }
+
+        if (!empty($sliderIds)) {
+            $collection->addFieldToFilter('entity_id', [
+                'in' => [$sliderIds]]);
         }
 
         if (!empty($sliderType)) {
@@ -90,6 +102,7 @@ class Slider
                     'target_type',
                     'target_id',
                     'sort_order',
+                    'display_type'
                 ]);
                 $encode = "base64_encode";
                 $data['category_uid'] = $encode($data['category_id']);
@@ -110,20 +123,35 @@ class Slider
     {
         $banners = [];
         foreach ($slider->getBanners() as $banner) {
-            $bannerData = $this->extractData($banner, [
-                'slider_id',
-                'resource_type',
-                'resource_path',
-                'is_enabled',
-                'title',
-                'alt_text',
-                'link',
-                'additional_information',
-                'sort_order',
-                'slider_community_id'
-            ]);
-            $bannerData['resource_map'] = $this->getResourceMap($banner);
-            $banners[] = $bannerData;
+            if ($banner->getIsEnabled()== 1) {
+                $bannerData = $this->extractData($banner, [
+                    'slider_id',
+                    'resource_type',
+                    'resource_path',
+                    'resource_path_mobile',
+                    'resource_path_poster',
+                    'is_enabled',
+                    'title',
+                    'alt_text',
+                    'link',
+                    'additional_information',
+                    'sort_order',
+                    'slider_target_id',
+                    'category_id',
+                    'target_type',
+                    'video_type',
+                    'target_id',
+                    'banner_id' => 'entity_id'
+                ]);
+                $encode = "base64_encode";
+                $bannerData['category_uid'] = $encode($bannerData['category_id']);
+                $communityId = explode(',', $bannerData['slider_target_id']);
+                $communityId=str_replace('"', "", json_encode($communityId));
+                $communityId = json_decode($communityId, true);
+                $bannerData['slider_target_id'] = $communityId;
+                $bannerData['resource_map'] = $this->getResourceMap($banner);
+                $banners[] = $bannerData;
+            }
         }
         return $banners;
     }
@@ -155,18 +183,19 @@ class Slider
     {
         $data = [];
         foreach ($fields as $key => $field) {
-            
+
             if (is_numeric($key)) {
                 $key = $field;
             }
-
-            if ($key=== 'resource_path') {
-                $data[$key] = $this->videoCheck($object->getData($field));
+            if ($key === 'resource_path' || $key=== 'resource_path_mobile' || $key == 'resource_path_poster') {
+                $data[$key] = $this->videoCheck($object->getData($field), $field);
+                $x[$key] = $field;
             } else {
                 $data[$key] = $object->getData($field);
             }
-            
+
         }
+
         return $data;
     }
 
@@ -178,13 +207,13 @@ class Slider
      */
     protected function videoCheck($url)
     {
+        $output = explode(".", $url);   
         $currentStore = $this->storeManager->getStore();
         $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-       
-        if (strpos($url, 'youtube.com') > 0) {
+        if (strpos($url, 'youtube.com') > 0 || in_array("s3", $output)||  $output[count($output)-1] === 'mp4') {
             return $url;
         } else {
-            return $mediaUrl.$url;
+            return ($url) ? $mediaUrl.$url: '';
         }
     }
 }

@@ -5,11 +5,11 @@ namespace Auraine\Brands\Block\Adminhtml\Brands;
 class AddRow extends \Magento\Backend\Block\Widget\Form\Container
 {
     /**
-     * Core registry.
+     * varuable for Core registry.
      *
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry = null;
+    protected $coreRegistry = null;
 
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
@@ -21,7 +21,7 @@ class AddRow extends \Magento\Backend\Block\Widget\Form\Container
         \Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->_coreRegistry = $registry;
+        $this->coreRegistry = $registry;
         parent::__construct($context, $data);
     }
 
@@ -34,7 +34,7 @@ class AddRow extends \Magento\Backend\Block\Widget\Form\Container
         $this->_blockGroup = 'Auraine_Brands';
         $this->_controller = 'adminhtml_Brands';
         parent::_construct();
-        if ($this->_isAllowedAction('Auraine_Brands::add_row')) {
+        if ($this->_isAllowedAction('Auraine_Brands::brands_addrow')) {
             $this->buttonList->update('save', 'label', __('Save'));
         } else {
             $this->buttonList->remove('save');

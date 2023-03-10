@@ -12,9 +12,9 @@ class Save extends \Magento\Backend\App\Action
      */
     protected $gridFactory;
     /**
-     * @var _fileUploaderFactory
+     * @var fileUploaderFactory
      */
-    protected $_fileUploaderFactory;
+    protected $fileUploaderFactory;
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param GridFactory $gridFactory
@@ -27,7 +27,7 @@ class Save extends \Magento\Backend\App\Action
         \Magento\MediaStorage\Model\File\UploaderFactory $fileUploaderFactory
     ) {
         $this->gridFactory = $gridFactory;
-        $this->_fileUploaderFactory = $fileUploaderFactory;
+        $this->fileUploaderFactory = $fileUploaderFactory;
         parent::__construct($context);
     }
     /**
@@ -41,8 +41,8 @@ class Save extends \Magento\Backend\App\Action
                 * Save image upload
                 */
             try {
-                $base_media_path = 'auraine/brands';
-                $uploader = $this->_fileUploaderFactory->create(['fileId' => 'image']);
+                $baseMediaPath = 'auraine/brands';
+                $uploader = $this->fileUploaderFactory->create(['fileId' => 'image']);
                 $uploader->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png']);
                 /** @var \Magento\Framework\Image\Adapter\AdapterInterface $imageAdapter */
                 $imageAdapter = $this->_objectManager->get('Magento\Framework\Image\AdapterFactory')->create();
@@ -54,9 +54,9 @@ class Save extends \Magento\Backend\App\Action
                 $mediaDirectory = $this->_objectManager->get('Magento\Framework\Filesystem')->
                 getDirectoryRead(DirectoryList::MEDIA);
                 $result = $uploader->save(
-                    $mediaDirectory->getAbsolutePath($base_media_path)
+                    $mediaDirectory->getAbsolutePath($baseMediaPath)
                 );
-                $data['image'] = $base_media_path.$result['file'];
+                $data['image'] = $baseMediaPath.$result['file'];
             } catch (\Exception $e) {
                 if ($e->getCode() == 0) {
                     $this->messageManager->addError($e->getMessage());
@@ -92,12 +92,12 @@ class Save extends \Magento\Backend\App\Action
         }
         $this->_redirect('brands/brands/index');
     }
-    /** Is allowes
+    /**Is allowes
      *
      * @return bool
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Auraine_Brands::save');
+        return $this->_authorization->isAllowed('Auraine_Brands::brands_save');
     }
 }

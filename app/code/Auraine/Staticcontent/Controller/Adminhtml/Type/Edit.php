@@ -1,13 +1,16 @@
 <?php
+
 /**
  * Copyright ©  All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Auraine\Staticcontent\Controller\Adminhtml\Type;
 
 class Edit extends \Auraine\Staticcontent\Controller\Adminhtml\Type
+
 {
 
     protected $resultPageFactory;
@@ -36,7 +39,7 @@ class Edit extends \Auraine\Staticcontent\Controller\Adminhtml\Type
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('type_id');
         $model = $this->_objectManager->create(\Auraine\Staticcontent\Model\Type::class);
-        
+
         // 2. Initial checking
         if ($id) {
             $model->load($id);
@@ -47,17 +50,20 @@ class Edit extends \Auraine\Staticcontent\Controller\Adminhtml\Type
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('auraine_staticcontent_type', $model);
-        
+        $this->coreRegistry->register('auraine_staticcontent_type', $model);
+
         // 3. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
+        $newtype = 'New Type';
+        $edittype = 'Edit Type';
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Type') : __('New Type'),
-            $id ? __('Edit Type') : __('New Type')
+            $id ? __($edittype) : __($newtype),
+            $id ? __($edittype) : __($newtype)
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Types'));
-        $resultPage->getConfig()->getTitle()->prepend($model->getId() ? __('Edit Type %1', $model->getId()) : __('New Type'));
+        $resultPage->getConfig()->getTitle()->prepend(
+            $model->getId() ? __($edittype.'%1', $model->getId()) : __($newtype));
         return $resultPage;
     }
 }

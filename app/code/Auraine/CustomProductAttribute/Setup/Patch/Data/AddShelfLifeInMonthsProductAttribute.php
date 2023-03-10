@@ -105,9 +105,7 @@ class AddShelfLifeInMonthsProductAttribute implements DataPatchInterface, PatchR
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

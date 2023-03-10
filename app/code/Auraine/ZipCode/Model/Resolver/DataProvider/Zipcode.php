@@ -13,17 +13,17 @@ class Zipcode
      *
      * @var \Auraine\Zipcode\Model\PincodeFactory
      */
-    protected $_pincodeFactory;
+    protected $pincodeFactory;
 
     /**
      * @var \Magento\Directory\Model\CountryFactory
      */
-    protected $_countryFactory;
+    protected $countryFactory;
 
     /**
      * @var \Magento\Directory\Model\RegionFactory
      */
-    protected $_regionFactory;
+    protected $regionFactory;
 
     /**
      * Constructes model Pincode Model factory service
@@ -37,20 +37,20 @@ class Zipcode
         \Magento\Directory\Model\CountryFactory $countryFactory,
         \Magento\Directory\Model\RegionFactory $regionFactory,
     ) {
-        $this->_pincodeFactory = $pincodeFactory;
-        $this->_countryFactory = $countryFactory;
-        $this->_regionFactory = $regionFactory;
+        $this->pincodeFactory = $pincodeFactory;
+        $this->countryFactory = $countryFactory;
+        $this->regionFactory = $regionFactory;
     }
 
     /**
      * Checks the pincode available to ship.
      *
-     * @param String $code
+     * @param int $code
      * @return bool
      */
     private function isAvailable($code): bool
     {
-        $pincode = $this->_pincodeFactory->create()->load($code, 'code');
+        $pincode = $this->pincodeFactory->create()->load($code, 'code');
 
         return $pincode->getStatus() ? (bool) $pincode->getStatus() : false;
     }
@@ -58,32 +58,31 @@ class Zipcode
     /**
      * Checks & generates the response for pincode availability.
      *
-     * @param String $code
+     * @param int $code
      * @return array
      */
     public function generateZipCodeResponse($code): array
     {
 
-        $pincode = $this->_pincodeFactory->create()->load($code, 'code');
+        $pincode = $this->pincodeFactory->create()->load($code, 'code');
 
         if (empty($pincode->getData())) {
             throw new GraphQlInputException(__("Pincode isn't available "));
         }
 
-        $country_id=$pincode->getCountry();
-        $state_id=$pincode->getState();
+        $countryId = $pincode->getCountry();
+        $stateId = $pincode->getState();
 
-        $countryModel = $this->_countryFactory->create();
-        $country = $countryModel->loadByCode($country_id);
-        $region = $this->_regionFactory->create()->load($state_id);
-
+        $countryModel = $this->countryFactory->create();
+        $country = $countryModel->loadByCode($countryId);
+        $region = $this->regionFactory->create()->loadByCode($stateId, $countryId);
         return [
                 'city' => $pincode->getCity(),
                 'country' => $country->getName(),
                 'status' => $pincode->getStatus(),
                 'state' => $region->getName(),
-                'country_id' => $country_id,
-                'state_id' => $state_id
+                'country_id' => $countryId,
+                'state_id' => $stateId
             ];
     }
 

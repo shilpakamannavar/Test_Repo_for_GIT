@@ -105,9 +105,7 @@ class AddSpfProductAttribute implements DataPatchInterface, PatchRevertableInter
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

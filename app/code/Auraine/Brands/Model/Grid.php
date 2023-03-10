@@ -13,15 +13,15 @@ class Grid extends \Magento\Framework\Model\AbstractModel implements GridInterfa
     public const CACHE_TAG = 'auraine_shopbrand';
     /**Cache tag for the brands
      *
-     * @var _cacheTag
+     * @var cacheTag
      */
-    protected $_cacheTag = 'auraine_shopbrand';
+    protected $cacheTag = 'auraine_shopbrand';
     /**
      * Event prefix for the brans
      *
-     * @var _eventPrefix
+     * @var eventPrefix
      */
-    protected $_eventPrefix = 'auraine_shopbrand';
+    protected $eventPrefix = 'auraine_shopbrand';
     /**
      * Constructor for Grid
      *
@@ -127,11 +127,11 @@ class Grid extends \Magento\Framework\Model\AbstractModel implements GridInterfa
     /**
      * Set Title.
      *
-     * @param int $is_popular
+     * @param int $isPopular
      */
-    public function setPopular($is_popular)
+    public function setPopular($isPopular)
     {
-        return $this->setData(self::POPULAR, $is_popular);
+        return $this->setData(self::POPULAR, $isPopular);
     }
     /**
      * Set Title.
@@ -143,11 +143,11 @@ class Grid extends \Magento\Framework\Model\AbstractModel implements GridInterfa
     /**
      * Set Title.
      *
-     * @param int $is_justin
+     * @param int $isJustin
      */
-    public function setJustin($is_justin)
+    public function setJustin($isJustin)
     {
-        return $this->getData(self::JUSTIN, $is_justin);
+        return $this->getData(self::JUSTIN, $isJustin);
     }
     /**
      * Set Title.
@@ -157,28 +157,28 @@ class Grid extends \Magento\Framework\Model\AbstractModel implements GridInterfa
         return $this->getData(self::EXCLUSIVE);
     }
     /**
-     * Set is_exclusive.
+     * Set isExclusive.
      *
-     * @param int is_exclusive
+     * @param int $isExclusive
      */
-    public function setExclusive($is_exclusive)
+    public function setExclusive($isExclusive)
     {
-        return $this->getData(self::EXCLUSIVE, $is_exclusive);
+        return $this->getData(self::EXCLUSIVE, $isExclusive);
     }
     /**
-     * Get is_featured.
+     * Get isFeatured.
      */
     public function getFeatured()
     {
         return $this->getData(self::FEATURED);
     }
     /**
-     * Set is_featured.
+     * Set isFeatured.
      *
-     * @param int $is_featured
+     * @param int $isFeatured
      */
-    public function setFeatured($is_featured)
+    public function setFeatured($isFeatured)
     {
-        return $this->getData(self::FEATURED, $is_featured);
+        return $this->getData(self::FEATURED, $isFeatured);
     }
 }

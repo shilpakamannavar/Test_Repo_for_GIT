@@ -1,5 +1,6 @@
 type Customer {
     mobilenumber: String @doc(description: "Customer Mobile Number") @resolver(class: "\\Auraine\\MobileNumber\\Model\\Resolver\\MobileNumber")
+    id: Int @doc(description: "The entity ID of the customer entity.") @resolver(class: "\\Auraine\\MobileNumber\\Model\\Resolver\\CustomerId")
 }
 
 type Query {

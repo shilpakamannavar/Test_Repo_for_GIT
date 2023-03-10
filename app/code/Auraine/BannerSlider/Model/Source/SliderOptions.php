@@ -25,7 +25,14 @@ class SliderOptions implements OptionSourceInterface
         ['label' => __('Product Slider'), 'value' => 'product_slider'],
         ['label' => __('Look'), 'value' => 'look'],
         ['label' => __('Blog Slider'), 'value' => 'blog_slider'],
-        ['label' => __('Category Circular'), 'value' => 'category_circular'],
+        ['label' => __('Category Circle'), 'value' => 'category_circle'],
+        ['label' => __('Video Player'), 'value' => 'video_player'],
+        ['label' => __('Video Slider'), 'value' => 'video_slider'],
+        ['label' => __('Video Banner'), 'value' => 'video_banner'],
+        ['label' => __('Image and Description'), 'value' => 'image_with_description'],
+        ['label' => __('Image,Title and Description'), 'value' => 'image_top_description'],
+        ['label' => __('Slider with Title and Description'), 'value' => 'slider_with_title_description'],
+        ['label' => __('Slider with Offer'), 'value' => 'slider_with_offer'],
         ['label' => __('Other'), 'value' => 'other']
         ];
     }

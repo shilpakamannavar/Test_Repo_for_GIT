@@ -151,7 +151,15 @@
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <label translate="true">Resource</label>
             </settings>
-            </column>      
+        </column>
+        <column name="resource_path_mobile" class="Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePathMobile">
+            <settings>
+                <filter>false</filter>
+                <sortable>false</sortable>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">Resource Mobile</label>
+            </settings>
+        </column>       
         <column name="alt_text">
             <settings>
                 <filter>text</filter>

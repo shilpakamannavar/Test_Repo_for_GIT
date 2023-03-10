@@ -2,6 +2,8 @@
 namespace Auraine\Brands\Block\Adminhtml\Brands\Edit;
 
 use Magento\Store\Model\System\Store;
+use Auraine\BannerSlider\Model\Config\Source\Slider;
+use Auraine\Brands\Block\Adminhtml\Brands\BrandSlider;
 
 /**
  * Adminhtml Add New Row Form.
@@ -11,13 +13,33 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
     /**
      * @var \Magento\Store\Model\System\Store
      */
-    protected $_systemStore;
+    protected $systemStore;
+    /**
+     * @var \Magento\Store\Model\System\Store
+     */
+    protected $options;
+    /**
+     * @var \Magento\Store\Model\System\Store
+     */
+    protected $featureOptions;
+     /**
+      * @var \Magento\Store\Model\System\Store
+      */
+    protected $wysiwygConfig;
+     /**
+      * @var \Magento\Store\Model\System\Store
+      */
+    protected $slider;
+     /**
+      * @var \Magento\Store\Model\System\Store
+      */
+    protected $brandSlider;
     /**
      * Constructor function
      *
      * @param Context $context,Registry $registry,FormFactory $formFactory,Config $wysiwygConfig
      *
-     * @param Status $options,FeatureStatus $feature_options,Store $systemStore,array $data
+     * @param Status $options,FeatureStatus $featureOptions,Store $systemStore,array $data
      *
      */
     public function __construct(
@@ -26,15 +48,20 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Auraine\Brands\Model\Status $options,
-        \Auraine\Brands\Model\FeatureStatus $feature_options,
+        \Auraine\Brands\Model\FeatureStatus $featureOptions,
+        Slider $slider,
         Store $systemStore,
+        BrandSlider $brandSlider,
         array $data = []
     ) {
-        $this->_options = $options;
-        $this->_feature_options = $feature_options;
-        $this->_wysiwygConfig = $wysiwygConfig;
+        $this->options = $options;
+        $this->featureOptions = $featureOptions;
+        $this->wysiwygConfig = $wysiwygConfig;
         parent::__construct($context, $registry, $formFactory, $data);
+        $this->slider = $slider;
+       
         $this->systemStore = $systemStore;
+        $this->brandSlider = $brandSlider;
     }
 
     /**
@@ -44,7 +71,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      */
     protected function _prepareForm()
     {
-        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
         $model = $this->_coreRegistry->registry('row_data');
         $form = $this->_formFactory->create(
             ['data' => [
@@ -55,7 +81,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                         ]
             ]
         );
-
         $form->setHtmlIdPrefix('wkgrid_');
         if ($model->getId()) {
             $fieldset = $form->addFieldset(
@@ -69,6 +94,10 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 ['legend' => __('Add New Brands'), 'class' => 'fieldset-wide']
             );
         }
+
+        $sliderOptions=$this->brandSlider->getSliderOptions();
+        $sliderOptions=array_merge([['value' => '', 'label' => __('Select Slider')]], $sliderOptions);
+        
         $fieldset->addField(
             'title',
             'text',
@@ -82,7 +111,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
       
-        $field = $fieldset->addField(
+        $fieldset->addField(
             'stores',
             'select',
             [
@@ -96,7 +125,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
 
-        $wysiwygConfig = $this->_wysiwygConfig->getConfig(['tab_id' => $this->getTabId()]);
+        $wysiwygConfig = $this->wysiwygConfig->getConfig(['tab_id' => $this->getTabId()]);
 
         $fieldset->addField(
             'description',
@@ -129,9 +158,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Popular'),
                 'id' => 'is_popular',
                 'title' => __('Is Popular'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
-              
-               
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
             ]
         );
         $fieldset->addField(
@@ -142,7 +169,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Featured'),
                 'id' => 'is_featured',
                 'title' => __('Is Featured'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
                 'class' => 'switch-checkbox',
                
             ]
@@ -156,7 +183,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Exclusive'),
                 'id' => 'is_exclusive',
                 'title' => __('Is Exclusive'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
                 'class' => 'switch-checkbox',
                
             ]
@@ -170,7 +197,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Is Just Launched'),
                 'id' => 'is_justin',
                 'title' => __('Is Just Launched'),
-                'values' => $this->_feature_options->getOptionArrayYesNo(),
+                'values' => $this->featureOptions->getOptionArrayYesNo(),
                 'class' => 'toggle',
               
             ]
@@ -183,7 +210,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Status'),
                 'id' => 'status',
                 'title' => __('Status'),
-                'values' => $this->_options->getOptionArray(),
+                'values' => $this->options->getOptionArray(),
                 'class' => 'required-entry',
                 'required' => true,
               
@@ -197,7 +224,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('URL Key'),
                 'id' => 'url_key',
                 'title' => __('URL Key'),
-                'class' => 'required-entry',
+                'class' => 'validate-alphanum required-entry',
                 'required' => true,
                 'note' => "URL key for website redirect"
             ]
@@ -225,6 +252,71 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'title' => __('Meta Description'),
                 'required' => false,
                 'note' => "For SEO purpose"
+            ]
+        );
+        $fieldset->addField(
+            'brand_banner_slider_id',
+            'select',
+            [
+                'name' => 'brand_banner_slider_id',
+                'label' => __('Banner Slider'),
+                'id' => 'brand_banner_slider_id',
+                'title' => __('Banner Slider'),
+                'required' => false,
+                'values' => $sliderOptions,
+                'note' => "For Landing Page Top Banner"
+            ]
+        );
+        $fieldset->addField(
+            'brand_offer_slider_id',
+            'select',
+            [
+                'name' => 'brand_offer_slider_id',
+                'label' => __('Offer Slider'),
+                'id' => 'brand_offer_slider_id',
+                'title' => __('Offer Slider'),
+                'required' => false,
+                'values' => $sliderOptions,
+                'note' => "For Landing Page Offer Banner"
+            ]
+        );
+        $fieldset->addField(
+            'brand_exclusive_top_slider_id',
+            'select',
+            [
+                'name' => 'brand_exclusive_top_slider_id',
+                'label' => __('Exclusive Slider'),
+                'id' => 'brand_exclusive_top_slider_id',
+                'title' => __('Exclusive Top Slider'),
+                'required' => false,
+                'values' => $sliderOptions,
+                'note' => "For Landing Page Exclusive Top slider"
+            ]
+        );
+        $fieldset->addField(
+            'brand_exclusive_banner_slider_id',
+            'select',
+            [
+                'name' => 'brand_exclusive_banner_slider_id',
+                'label' => __('Exclusive Slider'),
+                'id' => 'brand_exclusive_banner_slider_id',
+                'title' => __('Exclusive Banners Slider'),
+                'required' => false,
+                'values' => $sliderOptions,
+                'note' => "For Landing Page Exclusive Banners slider"
+            ]
+        );
+        $fieldset->addField(
+            'brand_blogs_slider_id',
+            'select',
+            [
+                'name' => 'brand_blogs_slider_id',
+                'label' => __('Blogs Slider'),
+                'id' => 'brand_blogs_slider_id',
+                'title' => __('Exclusive Blogs Slider'),
+                'required' => false,
+                'values' => $sliderOptions,
+                'note' => "For Landing Page Blogs slider"
             ]
         );
 

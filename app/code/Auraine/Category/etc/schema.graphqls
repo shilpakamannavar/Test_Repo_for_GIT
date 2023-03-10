@@ -6,3 +6,12 @@ input CategoryFilterInput {
     category_our_exclusives_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_our_exclusives_slider_id Value")
     category_blogs_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_blogs_slider_id Value")
 }
+
+type Category {
+    category_image_2: String @resolver(class: "Auraine\\Category\\Model\\Resolver\\CategoryImageResolver") @doc(description: "Custom by shiffin category image attribute with full URL")
+}
+
+interface CategoryInterface {
+  category_image_2: String @doc(description: "An optional Image of the category.") @resolver(class: "Auraine\\Category\\Model\\Resolver\\CategoryResolver")
+   }
+   

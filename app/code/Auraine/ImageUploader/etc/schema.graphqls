@@ -1,7 +1,7 @@
 type Query {
   getImageById(
     image_id: Int @doc(description: "The id of the Image"),
-  ): ImageDetails @resolver (class:"\\Auraine\\ImageUploader\\Model\\Resolver\\ImageByNameResolver") @doc(description:"Image Details")
+  ): ImageDetails @resolver (class:"\\Auraine\\ImageUploader\\Model\\Resolver\\ImageByNameResolver") @doc(description:"Image Details") 
 }
 
 type ImageDetails {

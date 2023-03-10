@@ -22,6 +22,11 @@ is_featured: String @doc(description: "Is featured or not")
 url_key: String @doc(description: "URL key")
 meta_key: String @doc(description: "Meta key")
 meta_description: String @doc(description: "Meta description")
+brand_banner_slider_id: Int @doc(description: "brand banner slider id")
+brand_offer_slider_id: Int @doc(description: "Brand Offer Slider Id")
+brand_exclusive_top_slider_id: Int @doc(description: "Brand Exclusive Top Slider Id")
+brand_exclusive_banner_slider_id: Int @doc(description: "Brand Exclusive Banner Slider Id")
+brand_blogs_slider_id: Int @doc(description: "Brand Blogs Slider Id")
 }
 
 interface ProductInterface {
@@ -29,6 +34,7 @@ interface ProductInterface {
     @resolver(
         class: "Auraine\\Brands\\Model\\Resolver\\Product\\AddBrandAttribute"
     )
+     brand_label:String @doc(description: "Product Brand name Show") @resolver(class: "Auraine\\Brands\\Model\\Resolver\\Product\\AddBrandAttributeLabel")
 }
 
 input ProductAttributeFilterInput {
@@ -54,5 +60,6 @@ type Products @doc(description: "Contains the results of a `products` query.") {
 interface OrderItemInterface @doc(description: "Order item details.") @resolver(class:"Auraine\\Brands\\Model\\Resolver\\OrderItem\\DataProvider") {
     brand_name: Int @doc(description: "Returns the product brand id.")
     image_url: String @doc(description: "Returns Product thumbnail.")
-    order_status_cancel: Boolean @doc(description: "The current status of the order can be cancel or not.") 
+    order_status_cancel: Boolean @doc(description: "The current status of the order can be cancel or not.")
+    product_original_price: Money! @doc(description: "The original price of the base product.")
 }

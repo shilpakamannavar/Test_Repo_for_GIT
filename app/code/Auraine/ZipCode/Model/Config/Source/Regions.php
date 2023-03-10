@@ -8,27 +8,23 @@ class Regions implements OptionSourceInterface
     /**
      * @var \Magento\Directory\Model\ResourceModel\Region\Collection
      */
-    protected $_regionCollection;
+    protected $regionCollection;
 
     /**
      * @var \Magento\Directory\Model\RegionFactory
      */
-    protected $_regionFactory;
+    protected $regionFactory;
 
     /**
-     * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Directory\Model\ResourceModel\Region\Collection $regionCollection
      * @param \Magento\Directory\Model\RegionFactory $regionFactory
-     * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
         \Magento\Directory\Model\ResourceModel\Region\Collection $regionCollection,
-        \Magento\Directory\Model\RegionFactory $regionFactory,
-        array $data = []
+        \Magento\Directory\Model\RegionFactory $regionFactory
     ) {
-        $this->_regionFactory = $regionFactory;
-        $this->_regionCollection = $regionCollection;
+        $this->regionFactory = $regionFactory;
+        $this->regionCollection = $regionCollection;
     }
     
     /**
@@ -55,15 +51,15 @@ class Regions implements OptionSourceInterface
      */
     public function getOptions()
     {
-
-        $regionModel = $this->_regionFactory->create();
+        $regionCollection = $this->regionCollection->addCountryFilter('IN'); // Filter by country code 'IN'
+        $regionModel = $this->regionFactory->create();
         $result = [];
 
-        foreach ($this->_regionCollection->getData() as $value => $label) {
+        foreach ($this->regionCollection->getData() as $label) {
             $region = $regionModel->load($label['region_id']);
             
             if ($region !== null) {
-                $result[$label['region_id']] = $label['name'];
+                $result[$label['code']] = $label['name'];
             }
         }
        

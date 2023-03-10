@@ -47,17 +47,20 @@ class Edit extends \Auraine\Staticcontent\Controller\Adminhtml\Content
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('auraine_staticcontent_content', $model);
+        $this->coreRegistry->register('auraine_staticcontent_content', $model);
         
         // 3. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
+        $newcontent = 'New Content';
+        $editcontent = 'Edit Content';
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Content') : __('New Content'),
-            $id ? __('Edit Content') : __('New Content')
+            $id ? __($editcontent) : __($newcontent),
+            $id ? __($editcontent) : __($newcontent)
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Contents'));
-        $resultPage->getConfig()->getTitle()->prepend($model->getId() ? __('Edit Content %1', $model->getId()) : __('New Content'));
+        $resultPage->getConfig()->getTitle()->prepend(
+            $model->getId() ? __($editcontent.' %1', $model->getId()) : __($newcontent));
         return $resultPage;
     }
 }

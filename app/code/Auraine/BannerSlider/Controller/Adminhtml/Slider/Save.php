@@ -50,7 +50,6 @@ class Save extends Action
     public function execute()
     {
         $sliderId = $this->getRequest()->getParam('entity_id');
-        $sliderData = $this->getRequest()->getPostValue();
 
         try {
             $model = $sliderId ? $this->sliderRepository->loadById($sliderId) : $this->sliderRepository->create();
@@ -70,14 +69,15 @@ class Save extends Action
                 'sort_order',
                 'target_type',
                 'target_id',
-                'category_id'
-                
+                'category_id',
+                'display_type'
+
             ]);
             $this->dataPersistor->set('bannerslider_slider', $model->getData());
             $model = $this->sliderRepository->save($model);
             $this->dataPersistor->clear('bannerslider_slider');
             $this->messageManager->addSuccessMessage(__('Slider %1 saved successfully', $model->getEntityId()));
-            
+
             switch ($this->getRequest()->getParam('back')) {
                 case 'continue':
                     $url = $this->getUrl('*/*/edit', ['entity_id' => $model->getEntityId()]);
@@ -93,9 +93,9 @@ class Save extends Action
             $url = $this->getUrl('*/*');
         } catch (CouldNotSaveException $exception) {
             $this->messageManager->addErrorMessage($exception->getMessage());
-            $url = $this->getUrl('*/*/edit', ['entity_id' => $id]);
+            $url = $this->getUrl('*/*/edit', ['entity_id' => $sliderId]);
         }
-        
+
         return $this->resultRedirectFactory->create()->setUrl($url);
     }
 

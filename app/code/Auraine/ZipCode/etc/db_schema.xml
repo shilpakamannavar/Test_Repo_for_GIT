@@ -6,10 +6,6 @@
 			<column name="pincode_id"/>
 		</constraint>
 		<column name="code" nullable="false" xsi:type="varchar" comment="Zip code" length="255"/>
-		<!-- <constraint xsi:type="unique" referenceId="AURAINE_ZIPCODE_PINCODE_CODE_UNIQUE">
-			<column name="code"/>
-		</constraint> -->
-
 		<column name="city" nullable="true" xsi:type="varchar" comment="Zip code city" length="255"/>
 		<column name="country_id" nullable="true" xsi:type="varchar" comment="Zipcode country" length="255"/>
 		<column name="state" nullable="true" xsi:type="varchar" comment="Zipcode State" length="100"/>

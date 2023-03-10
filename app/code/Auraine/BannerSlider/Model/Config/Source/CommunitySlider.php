@@ -40,7 +40,7 @@ class CommunitySlider implements OptionSourceInterface
     {
         $items = $this->sliderRepository->getList($this->getSearchCriteriaBuilder()->create())->getItems();
         $result = [];
-        $default_res= [
+        $emptyResult= [
             ['value' => '', 'label' => 'Select Slider'],
             ];
         foreach ($items as $item) {
@@ -49,10 +49,12 @@ class CommunitySlider implements OptionSourceInterface
                 'value' => $item->getEntityId()
             ];
         }
-        return array_merge($default_res, $result);
+        return array_merge($emptyResult, $result);
     }
 
     /**
+     * Search Builder
+     *
      * @return SearchCriteriaBuilder
      */
     protected function getSearchCriteriaBuilder()

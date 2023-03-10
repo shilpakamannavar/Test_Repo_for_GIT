@@ -44,12 +44,12 @@ class OptionsProcessoroverrideTest extends TestCase
      */
     public function dataProviderForTestGetItemOptions()
     {
-        $item_option = 3;
+        $itemOption = 3;
         $expectedResult = 3;
 
         return [
             'Testcase 1' => [
-                'prerequisites' => ['param' => $item_option],
+                'prerequisites' => ['param' => $itemOption],
                 'expectedResult' => ['param' => $expectedResult]
             ]
         ];

@@ -75,7 +75,11 @@ class AddGenderProductAttribute implements DataPatchInterface, PatchRevertableIn
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => false,
                 'is_filterable_in_grid' => false,
-                'option' => array('values' => array("MEN","UNISEX","WOMEN","ADULT-WOMEN","ADULT-MEN","BOYS","GIRLS","FORALL"))
+                'option' => array(
+                    'values' => array(
+                    "MEN","UNISEX","WOMEN","ADULT-WOMEN","ADULT-MEN","BOYS","GIRLS","FORALL"
+                    )
+                    )
             ]
         );
 
@@ -105,9 +109,7 @@ class AddGenderProductAttribute implements DataPatchInterface, PatchRevertableIn
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

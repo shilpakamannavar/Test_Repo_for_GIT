@@ -1,90 +1,57 @@
 <?php
+
 namespace Auraine\ImageUploader\Test\Unit\Block\Adminhtml\Form;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Auraine\ImageUploader\Block\Adminhtml\Form\BackButton;
+use Magento\Backend\Model\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\ImageUploader\Block\Adminhtml\Form\BackButton
- */
 class BackButtonTest extends TestCase
 {
     /**
-     * Mock urlInterface
-     *
-     * @var \Magento\Backend\Model\UrlInterface|PHPUnit\Framework\MockObject\MockObject
+     * Test getButtonData method of BackButton class
      */
-    private $urlInterface;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\ImageUploader\Block\Adminhtml\Form\BackButton
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    public function testGetButtonData()
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->urlInterface = $this->createMock(\Magento\Backend\Model\UrlInterface::class);
-        $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Block\Adminhtml\Form\BackButton::class,
-            [
-                'urlInterface' => $this->urlInterface,
-            ]
-        );
+        $urlInterfaceMock = $this->getMockBuilder(UrlInterface::class)
+            ->getMock();
+        $urlInterfaceMock->expects($this->once())
+            ->method('getUrl')
+            ->with('*/*/')
+            ->willReturn('http://example.com');
+
+        $backButton = new BackButton($urlInterfaceMock);
+
+        $buttonData = $backButton->getButtonData();
+
+        $this->assertIsArray($buttonData);
+        $this->assertArrayHasKey('label', $buttonData);
+        $this->assertArrayHasKey('on_click', $buttonData);
+        $this->assertArrayHasKey('class', $buttonData);
+        $this->assertArrayHasKey('sort_order', $buttonData);
+        $this->assertEquals('Back', $buttonData['label']);
+        $this->assertEquals("location.href = 'http://example.com';", $buttonData['on_click']);
+        $this->assertEquals('back', $buttonData['class']);
+        $this->assertEquals(10, $buttonData['sort_order']);
     }
 
     /**
-     * @return array
+     * Test getBackUrl method of BackButton class
      */
-    public function dataProviderForTestGetButtonData()
+    public function testGetBackUrl()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $urlInterfaceMock = $this->getMockBuilder(UrlInterface::class)
+            ->getMock();
+        $urlInterfaceMock->expects($this->once())
+            ->method('getUrl')
+            ->with('*/*/')
+            ->willReturn('http://example.com');
 
-    /**
-     * @dataProvider dataProviderForTestGetButtonData
-     */
-    public function testGetButtonData(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        $backButton = new BackButton($urlInterfaceMock);
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetBackUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $backUrl = $backButton->getBackUrl();
 
-    /**
-     * @dataProvider dataProviderForTestGetBackUrl
-     */
-    public function testGetBackUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertEquals('http://example.com', $backUrl);
     }
 }

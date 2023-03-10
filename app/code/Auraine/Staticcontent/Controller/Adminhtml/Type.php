@@ -11,7 +11,7 @@ abstract class Type extends \Magento\Backend\App\Action
 {
 
     const ADMIN_RESOURCE = 'Auraine_Staticcontent::top_level';
-    protected $_coreRegistry;
+    protected $coreRegistry;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -21,7 +21,7 @@ abstract class Type extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry
     ) {
-        $this->_coreRegistry = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 

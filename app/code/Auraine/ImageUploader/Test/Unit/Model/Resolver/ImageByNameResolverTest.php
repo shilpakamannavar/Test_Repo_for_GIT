@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 namespace Auraine\ImageUploader\Test\Unit\Model\Resolver;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
@@ -56,7 +57,7 @@ class ImageByNameResolverTest extends TestCase
         $this->imageCollectionFactory->method('create')->willReturn($this->imageCollectionFactoryInstance);
         $this->storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Model\Resolver\ImageByNameResolver::class,
+            \Auraine\ImageUploader\Model\Resolver\ImageByNameResolver::class,
             [
                 'imageCollectionFactory' => $this->imageCollectionFactory,
                 'storeManager' => $this->storeManager,

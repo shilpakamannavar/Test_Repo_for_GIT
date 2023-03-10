@@ -57,7 +57,7 @@ class DataProvider extends CoreDataProvider
      * @var array
      */
     private $orderItemList = [];
-    
+
     /**
      * @var StoreManagerInterface
      */
@@ -141,9 +141,7 @@ class DataProvider extends CoreDataProvider
             /** @var OrderInterface $associatedOrder */
             $associatedOrder = $orderList[$orderItem->getOrderId()];
             $itemOptions = $this->optionsProcessor->getItemOptions($orderItem);
-
             $this->orderItemList[$orderItem->getItemId()] = [
-
                 'id' => base64_encode($orderItem->getItemId()),
                 'associatedProduct' => $associatedProduct,
                 'model' => $orderItem,
@@ -155,6 +153,10 @@ class DataProvider extends CoreDataProvider
                 'discounts' => $this->getDiscountDetails($associatedOrder, $orderItem),
                 'product_sale_price' => [
                     'value' => $orderItem->getPrice(),
+                    'currency' => $associatedOrder->getOrderCurrencyCode()
+                ],
+                'product_original_price' => [
+                    'value' => $orderItem->getOriginalPrice(),
                     'currency' => $associatedOrder->getOrderCurrencyCode()
                 ],
                 'selected_options' => $itemOptions['selected_options'],

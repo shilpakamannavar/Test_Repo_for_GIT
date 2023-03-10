@@ -105,9 +105,7 @@ class AddExclusiveProductAttribute implements DataPatchInterface, PatchRevertabl
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

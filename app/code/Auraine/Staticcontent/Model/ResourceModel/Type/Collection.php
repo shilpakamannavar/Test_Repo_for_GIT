@@ -15,7 +15,7 @@ class Collection extends AbstractCollection
     /**
      * @inheritDoc
      */
-    protected $_idFieldName = 'type_id';
+    protected $idFieldName = 'type_id';
 
     /**
      * @inheritDoc

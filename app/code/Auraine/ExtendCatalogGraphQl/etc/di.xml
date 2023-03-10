@@ -3,4 +3,5 @@
 	<type name="Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product\CollectionProcessor\StockProcessor">
 		<plugin name="Auraine_ExtendCatalogGraphQl_Plugin_Magento_CatalogGraphQl_Model_Resolver_Products_DataProvider_Product_CollectionProcessor_StockProcessor" type="Auraine\ExtendCatalogGraphQl\Plugin\Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product\CollectionProcessor\StockProcessor" sortOrder="10" disabled="false"/>
 	</type>
+	<preference for="Magento\Directory\Model\Config\Source\WeightUnit" type="Auraine\ExtendCatalogGraphQl\Model\Config\Source\WeightUnit" />
 </config>

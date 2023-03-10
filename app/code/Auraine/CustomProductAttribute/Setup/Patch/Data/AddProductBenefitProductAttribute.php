@@ -105,9 +105,7 @@ class AddProductBenefitProductAttribute implements DataPatchInterface, PatchReve
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

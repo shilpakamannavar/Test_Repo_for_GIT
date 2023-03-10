@@ -1,4 +1,5 @@
 <?php
+
 namespace Auraine\ImageUploader\Test\Unit\Controller\Adminhtml\Images;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
@@ -56,7 +57,7 @@ class IndexTest extends TestCase
         $this->resultPageFactory = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
         $this->resultPageFactory->method('create')->willReturn($this->resultPageFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\ImageUploader\Controller\Adminhtml\Images\Index::class,
+            \Auraine\ImageUploader\Controller\Adminhtml\Images\Index::class,
             [
                 'context' => $this->context,
                 'resultPageFactory' => $this->resultPageFactory,

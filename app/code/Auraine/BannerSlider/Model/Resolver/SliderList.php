@@ -9,6 +9,8 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
+use Magento\Framework\App\CacheInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 
 class SliderList implements ResolverInterface
 {
@@ -16,16 +18,38 @@ class SliderList implements ResolverInterface
     * @var $dataProvider
     */
     private $dataProvider;
-    
+
+     /**
+     * Cache instance
+     *
+     * @var CacheInterface
+     */
+    protected $cache;
+
+    /**
+     * Serializer instance
+     *
+     * @var Json
+     */
+    protected $json;
+
+    /**
+     * Cache key prefix
+     */
+    const CACHE_KEY_PREFIX = 'auraine_sliderlist_';
     /**
      * Slider List Constructor.
      *
      * @param \Auraine\BannerSlider\Model\Resolver\DataProvider\SliderList $dataProvider
      */
     public function __construct(
-        \Auraine\BannerSlider\Model\Resolver\DataProvider\SliderList $dataProvider
+        \Auraine\BannerSlider\Model\Resolver\DataProvider\SliderList $dataProvider,
+        CacheInterface $cache,
+        Json $json
     ) {
         $this->dataProvider = $dataProvider;
+        $this->cache = $cache;
+        $this->json = $json;
     }
 
     /**
@@ -36,12 +60,22 @@ class SliderList implements ResolverInterface
      * @param ResolveInfo $info
      * @param array|null $value
      * @param array|null $args
-     * @return void
+     * @return array
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        $filter_entity_id = $args['entity_id'] ?? null;
+        $filterEntityId = $args['entity_id'] ?? null;
 
-        return $this->dataProvider->getSliderList($filter_entity_id);
+        $cacheKey = self::CACHE_KEY_PREFIX . $filterEntityId;
+        $cachedData = $this->cache->load($cacheKey);
+
+        if ($cachedData) {
+            $result = $this->json->unserialize($cachedData);
+        } else {
+            $cacheLifetime = 86400; // 1 day
+            $result = $this->dataProvider->getSliderList($filterEntityId);
+            $this->cache->save($this->json->serialize($result), $cacheKey, [], $cacheLifetime);
+        }
+        return $result;
     }
 }

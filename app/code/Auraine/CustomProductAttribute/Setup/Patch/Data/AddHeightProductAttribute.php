@@ -105,9 +105,7 @@ class AddHeightProductAttribute implements DataPatchInterface, PatchRevertableIn
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 

@@ -53,7 +53,11 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         try {
-            if ($this->getRequest()->getMethod() !== 'POST' || !$this->_formKeyValidator->validate($this->getRequest())) {
+            if ($this->getRequest()
+                    ->getMethod() !== 'POST' ||
+                    !$this->_formKeyValidator->validate(
+                        $this->getRequest()
+                    )) {
                 throw new LocalizedException(__('Invalid Request'));
             }
 
@@ -81,7 +85,11 @@ class Save extends \Magento\Backend\App\Action
                 $image->setName($params['name']);
                 $image->save();
             } catch (ValidationException $e) {
-                throw new LocalizedException(__('Image extension is not supported. Only extensions allowed are jpg, jpeg and png'));
+                throw new LocalizedException(
+                    __(
+                        'Image extension is not supported. Only extensions allowed are jpg, jpeg and png'
+                    )
+                );
             } catch (\Exception $e) {
                 //if an except is thrown, no image has been uploaded
                 throw new LocalizedException(__('Image is required'));

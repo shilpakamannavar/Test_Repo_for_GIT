@@ -81,7 +81,7 @@ class VerifyOtp implements ResolverInterface
                 }
             }
         } catch (NoSuchEntityException $e) {
-            throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
+            throw new GraphQlAuthenticationException(__('Invalid Login or Password.Please try again'), $e);
         }
         return $output ;
     }

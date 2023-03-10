@@ -65,6 +65,6 @@ class AddRow extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Auraine_Brands::add_row');
+        return $this->_authorization->isAllowed('Auraine_Brands::brands_addrow');
     }
 }

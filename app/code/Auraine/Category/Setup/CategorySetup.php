@@ -116,6 +116,11 @@ class CategorySetup extends EavSetup
      */
     public function getDefaultEntities()
     {
+        $general = 'General Information';
+        $custom = 'Custom Design';
+        $display ='Display Settings';
+        $meta = 'Meta Information';
+        $products =  'simple,virtual';
         return [
             'catalog_category' => [
                 'entity_type_id' => self::CATEGORY_ENTITY_TYPE_ID,
@@ -132,7 +137,7 @@ class CategorySetup extends EavSetup
                         'input' => 'text',
                         'sort_order' => 1,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'is_active' => [
                         'type' => 'int',
@@ -141,7 +146,7 @@ class CategorySetup extends EavSetup
                         'source' => Boolean::class,
                         'sort_order' => 2,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'description' => [
                         'type' => 'text',
@@ -152,7 +157,7 @@ class CategorySetup extends EavSetup
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'wysiwyg_enabled' => true,
                         'is_html_allowed_on_front' => true,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'image' => [
                         'type' => 'varchar',
@@ -162,7 +167,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 5,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'meta_title' => [
                         'type' => 'varchar',
@@ -171,7 +176,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 6,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'meta_keywords' => [
                         'type' => 'text',
@@ -180,7 +185,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 7,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'meta_description' => [
                         'type' => 'text',
@@ -189,7 +194,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 8,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'display_mode' => [
                         'type' => 'varchar',
@@ -199,7 +204,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 10,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Display Settings',
+                        'group' => $display,
                     ],
                     'landing_page' => [
                         'type' => 'int',
@@ -209,7 +214,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 20,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Display Settings',
+                        'group' => $display,
                     ],
                     'is_anchor' => [
                         'type' => 'int',
@@ -218,7 +223,7 @@ class CategorySetup extends EavSetup
                         'source' => Boolean::class,
                         'required' => false,
                         'sort_order' => 30,
-                        'group' => 'Display Settings',
+                        'group' => $display,
                     ],
                     'path' => [
                         'type' => 'static',
@@ -226,7 +231,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 12,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'position' => [
                         'type' => 'static',
@@ -234,38 +239,38 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 13,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'all_children' => [
                         'type' => 'text',
                         'required' => false,
                         'sort_order' => 14,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'path_in_store' => [
                         'type' => 'text',
                         'required' => false,
                         'sort_order' => 15,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'children' => [
                         'type' => 'text',
                         'required' => false,
                         'sort_order' => 16,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'custom_design' => [
                         'type' => 'varchar',
-                        'label' => 'Custom Design',
+                        'label' =>  $custom,
                         'input' => 'select',
                         'source' => Theme::class,
                         'required' => false,
                         'sort_order' => 10,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'custom_design_from' => [
                         'type' => 'datetime',
@@ -275,7 +280,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 30,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'custom_design_to' => [
                         'type' => 'datetime',
@@ -285,7 +290,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 40,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'page_layout' => [
                         'type' => 'varchar',
@@ -295,7 +300,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 50,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'custom_layout_update' => [
                         'type' => 'text',
@@ -305,7 +310,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 60,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'level' => [
                         'type' => 'static',
@@ -313,7 +318,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 24,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'children_count' => [
                         'type' => 'static',
@@ -321,7 +326,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 25,
                         'visible' => false,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'available_sort_by' => [
                         'type' => 'text',
@@ -332,7 +337,7 @@ class CategorySetup extends EavSetup
                         'sort_order' => 40,
                         'input_renderer' => Available::class,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Display Settings',
+                        'group' => $display,
                     ],
                     'default_sort_by' => [
                         'type' => 'varchar',
@@ -344,7 +349,7 @@ class CategorySetup extends EavSetup
                         'input_renderer' =>
                             DefaultSortby::class,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Display Settings',
+                        'group' => $display,
                     ],
                     'include_in_menu' => [
                         'type' => 'int',
@@ -354,7 +359,7 @@ class CategorySetup extends EavSetup
                         'default' => '1',
                         'sort_order' => 10,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'custom_use_parent_settings' => [
                         'type' => 'int',
@@ -364,7 +369,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 5,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'custom_apply_to_products' => [
                         'type' => 'int',
@@ -374,7 +379,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 6,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Custom Design',
+                        'group' =>  $custom,
                     ],
                     'filter_price_range' => [
                         'type' => 'decimal',
@@ -384,7 +389,7 @@ class CategorySetup extends EavSetup
                         'sort_order' => 51,
                         'input_renderer' => Pricestep::class,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Display Settings',
+                        'group' => $display,
                     ],
                     'category_banner_slider_id' => [
                         'type' => 'int',
@@ -393,7 +398,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 52,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'category_blogs_slider_id' => [
                         'type' => 'int',
@@ -402,7 +407,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 53,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'category_offers_slider_id' => [
                         'type' => 'int',
@@ -411,7 +416,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 54,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'category_our_exclusives_top_slider_id' => [
                         'type' => 'int',
@@ -420,7 +425,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 55,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'category_our_exclusives_slider_id' => [
                         'type' => 'int',
@@ -429,7 +434,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 55,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                     'category_popular_brands_slider_id' => [
                         'type' => 'int',
@@ -438,7 +443,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 56,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General Information',
+                        'group' => $general,
                     ],
                 ],
             ],
@@ -515,7 +520,7 @@ class CategorySetup extends EavSetup
                         'visible_in_advanced_search' => true,
                         'used_in_product_listing' => true,
                         'used_for_sort_by' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                     ],
                     'special_price' => [
@@ -527,7 +532,7 @@ class CategorySetup extends EavSetup
                         'sort_order' => 3,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
                         'used_in_product_listing' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -542,7 +547,7 @@ class CategorySetup extends EavSetup
                         'sort_order' => 4,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
                         'used_in_product_listing' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -557,7 +562,7 @@ class CategorySetup extends EavSetup
                         'sort_order' => 5,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
                         'used_in_product_listing' => true,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -572,7 +577,7 @@ class CategorySetup extends EavSetup
                         'user_defined' => true,
                         'sort_order' => 6,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
@@ -585,7 +590,7 @@ class CategorySetup extends EavSetup
                         'backend' => Weight::class,
                         'input_renderer' => WeightFormHelper::class,
                         'sort_order' => 5,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -612,7 +617,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 20,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Meta Information',
+                        'group' =>$meta,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -624,7 +629,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 30,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Meta Information',
+                        'group' =>$meta,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -638,7 +643,7 @@ class CategorySetup extends EavSetup
                         'class' => 'validate-length maximum-length-255',
                         'sort_order' => 40,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'Meta Information',
+                        'group' =>$meta,
                         'is_used_in_grid' => true,
                         'is_visible_in_grid' => false,
                         'is_filterable_in_grid' => true,
@@ -693,7 +698,7 @@ class CategorySetup extends EavSetup
                         'required' => false,
                         'sort_order' => 7,
                         'global' => ScopedAttributeInterface::SCOPE_WEBSITE,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                     ],
                     'color' => [
@@ -763,7 +768,7 @@ class CategorySetup extends EavSetup
                         'sort_order' => 8,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'visible' => false,
-                        'apply_to' => 'simple,virtual',
+                        'apply_to' =>$products,
                         'group' => 'Prices',
                     ],
                     'visibility' => [
@@ -777,7 +782,7 @@ class CategorySetup extends EavSetup
                     ],
                     'custom_design' => [
                         'type' => 'varchar',
-                        'label' => 'Custom Design',
+                        'label' =>  $custom,
                         'input' => 'select',
                         'source' => Theme::class,
                         'required' => false,

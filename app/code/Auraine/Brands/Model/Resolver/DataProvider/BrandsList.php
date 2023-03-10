@@ -8,14 +8,14 @@ use Magento\Framework\Exception\LocalizedException;
 class BrandsList
 {
      /**
-      * @var _brandsFactory
+      * @var brandsFactory
       */
-    protected $_brandsFactory;
+    protected $brandsFactory;
     /** use for obj managaer
      *
-     * @var _objectManager
+     * @var objectManager
      */
-    protected $_objectManager;
+    protected $objectManager;
    /**
     * Brand factory
     *
@@ -31,33 +31,33 @@ class BrandsList
         \Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory $brandsFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
-        $this->_brandsFactory  = $brandsFactory;
-        $this->_objectManager = $objectManager;
+        $this->brandsFactory  = $brandsFactory;
+        $this->objectManager = $objectManager;
     }
         /**
          * Mapped Brand List page.
          *
-         * @param filter_entity_id $filter_entity_id ,filter_label $filter_label ,filter_url $filter_url
+         * @param filter_entity_id $filterEntityId ,filter_label $filterLabel ,filter_url $filterUrl
          *
          * @return \Magento\Backend\Model\View\Result\Page
          */
-    public function getBrandsList($filter_entity_id, $filter_label, $filter_url)
+    public function getBrandsList($filterEntityId, $filterLabel, $filterUrl)
     {
         $brandData = [];
         try {
-            $collection = $this->_brandsFactory->create()->addFieldToFilter('status', 1);
+            $collection = $this->brandsFactory->create()->addFieldToFilter('status', 1);
             $brandData = $collection->getData();
        
-            if ($filter_entity_id) {
+            if ($filterEntityId) {
               
-                $collection = $this->_brandsFactory->create()->addFieldToFilter('entity_id', $filter_entity_id);
+                $collection = $this->brandsFactory->create()->addFieldToFilter('entity_id', $filterEntityId);
                 $brandData = $collection->getData();
             }
-            if ($filter_label) {
-                $brandData =   $this->filterFunction($filter_label);
+            if ($filterLabel) {
+                $brandData =   $this->filterFunction($filterLabel);
             }
-            if ($filter_url) {
-                $collection = $this->_brandsFactory->create()->addFieldToFilter('url_key', $filter_url);
+            if ($filterUrl) {
+                $collection = $this->brandsFactory->create()->addFieldToFilter('url_key', $filterUrl);
                 $brandData = $collection->getData();
             }
 
@@ -76,7 +76,7 @@ class BrandsList
     public function save($data)
     {
         if (is_array($data)) {
-            $training = $this->_objectManager->create('Auraine\Brands\Model\Grid');
+            $training = $this->objectManager->create('Auraine\Brands\Model\Grid');
             $training->setData($data)->save();
         }
         return ['message' => 'Successfully a new Brand has been created'];
@@ -84,16 +84,32 @@ class BrandsList
      /**
       * This function is used to filter the grands by their feature
       *
-      * @param String $filter_label
+      * @param String $filterLabel
       *
       * @return \Magento\Backend\Model\View\Result\Page
       */
-    public function filterFunction($filter_label)
+    public function filterFunction($filterLabel)
     {
-        if ($filter_label) {
-            $collection = $this->_brandsFactory->create()->addFieldToFilter($filter_label, 1);
-            $brandData = $collection->getData();
-            return $brandData ;
+        if ($filterLabel) {
+            $collection = $this->brandsFactory->create()->addFieldToFilter($filterLabel, 1);
+            return $collection->getData();
         }
+    }
+    /**
+     * Get brand name form brand id
+     *
+     * @param int $id
+     * @return string
+     */
+    public function getBrandFromId($id)
+    {
+        $brandData = null ;
+        try {
+            $collection = $this->brandsFactory->create()->addFieldToSelect('title')->addFieldToFilter('entity_id', $id);
+            $brandData = $collection->getData();
+        } catch (NoSuchEntityException $e) {
+            throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
+        }
+        return $brandData[0]['title'];
     }
 }

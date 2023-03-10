@@ -13,42 +13,42 @@ class ZipcodeTest extends TestCase
     /**
      * Mock pincodeFactoryInstance
      *
-     * @var \Auraine\ZipCode\Model\Pincode|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Model\Pincode
      */
     private $pincodeFactoryInstance;
 
     /**
      * Mock pincodeFactory
      *
-     * @var \Auraine\ZipCode\Model\PincodeFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Model\PincodeFactory
      */
     private $pincodeFactory;
 
     /**
      * Mock countryFactoryInstance
      *
-     * @var \Magento\Directory\Model\Country|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Directory\Model\Country
      */
     private $countryFactoryInstance;
 
     /**
      * Mock countryFactory
      *
-     * @var \Magento\Directory\Model\CountryFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Directory\Model\CountryFactory
      */
     private $countryFactory;
 
     /**
      * Mock regionFactoryInstance
      *
-     * @var \Magento\Directory\Model\Region|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Directory\Model\Region
      */
     private $regionFactoryInstance;
 
     /**
      * Mock regionFactory
      *
-     * @var \Magento\Directory\Model\RegionFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Directory\Model\RegionFactory
      */
     private $regionFactory;
 

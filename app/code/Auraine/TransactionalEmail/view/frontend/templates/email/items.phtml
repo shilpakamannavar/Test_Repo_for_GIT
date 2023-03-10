@@ -1,0 +1,119 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+ // phpcs:disable Magento2.Templates.ThisInTemplate
+// @codingStandardsIgnoreFile
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Sales\Block\Order\Email\Items */
+$_order = $block->getOrder() ;
+ if ($_order):
+$_items = $_order->getAllItems();
+   foreach ($_items as $_item) :
+    if (!$_item->getParentItem()) {
+    ?>
+    <?= $block->getItemHtml($_item) ?>
+    <?php }
+     endforeach;
+$shipping_address = $_order->getShippingAddress();
+$countryName = '';
+$countryId = $shipping_address->getData("country_id");
+if (!empty($countryId)) {
+    $countryModel = \Magento\Framework\App\ObjectManager::getInstance()
+    ->create('Magento\Directory\Model\Country')->load($countryId);
+    if ($countryModel) {
+        $countryName = $countryModel->getName();
+    }
+}
+$firstname = $shipping_address->getData("firstname");
+$lastname = $shipping_address->getData("lastname");
+$company = $shipping_address->getData("company");
+$street = $shipping_address->getData("street");
+$city = $shipping_address->getData("city");
+$region = $shipping_address->getData("region");
+$postcode = $shipping_address->getData("postcode");
+$telephone = $shipping_address->getData("telephone");
+$output = '';
+$br = "<br/>";
+if (!empty($firstname) && !empty($lastname)) {
+    $output .= $firstname . ' ' . $lastname .$br;
+}
+if (!empty($company)) {
+    $output .= $company .$br;
+}
+if (!empty($street)) {
+    $output .= $street . $br;
+}
+if (!empty($city)) {
+    $output .= $city . $br;
+}
+if (!empty($region)) {
+    $output .= $region . $br;
+}
+if (!empty($countryname)) {
+    $output .= $countryname . $br;
+} elseif (!empty($countryId)) {
+    $output .= $countryId . $br;
+}
+if (!empty($postcode)) {
+    $output .= $postcode . $br;
+}
+if (!empty($telephone)) {
+    $output .= "Tel: " . $telephone;
+}
+?>
+<div style="
+        border-width: 1px 0px 0px 0px;
+        border-style: solid;
+        margin-bottom: 10px;
+      ">
+  <div style="
+          padding: 20px;
+          display: inline-block;
+          width: 35%;
+          vertical-align: top;
+        ">
+    <div style="
+            font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0em;
+            padding-bottom: 20px;
+          "> Delivery Address: </div>
+    <div style="
+            font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 19px;
+            letter-spacing: 0em;
+          ">
+     <?= $output;?>
+    </div>
+  </div>
+  <div style="
+          padding: 20px;
+          display: inline-block;
+          width: 35%;
+          border-width: 0px 0px 0px 1px;
+          border-style: solid;
+        ">
+    <div style="
+            font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 19px;
+            letter-spacing: 0em;
+          "> Billing Details </div>
+    <div>
+      <table>
+        <caption></caption>
+        <th></th>
+        <tr> <?= $block->getChildHtml('order_totals') ?> </tr>
+      </table>
+    </div>
+  </div>
+</div><?php endif; ?>

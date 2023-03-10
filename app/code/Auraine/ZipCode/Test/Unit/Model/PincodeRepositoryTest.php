@@ -16,58 +16,64 @@ use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 class PincodeRepositoryTest extends TestCase
 {
     /**
+     * Test case 1
+     * @var string const
+     */
+    private const TEST_CASE_ONE = 'Testcase 1';
+
+    /**
      * Mock resource
      *
-     * @var \Auraine\ZipCode\Model\ResourceModel\Pincode|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Model\ResourceModel\Pincode
      */
     private $resource;
 
     /**
      * Mock pincodeFactoryInstance
      *
-     * @var \Auraine\ZipCode\Api\Data\PincodeInterface|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Api\Data\PincodeInterface
      */
     private $pincodeFactoryInstance;
 
     /**
      * Mock pincodeFactory
      *
-     * @var \Auraine\ZipCode\Api\Data\PincodeInterfaceFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Api\Data\PincodeInterfaceFactory
      */
     private $pincodeFactory;
 
     /**
      * Mock pincodeCollectionFactoryInstance
      *
-     * @var \Auraine\ZipCode\Model\ResourceModel\Pincode\Collection|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Model\ResourceModel\Pincode\Collection
      */
     private $pincodeCollectionFactoryInstance;
 
     /**
      * Mock pincodeCollectionFactory
      *
-     * @var \Auraine\ZipCode\Model\ResourceModel\Pincode\CollectionFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Model\ResourceModel\Pincode\CollectionFactory
      */
     private $pincodeCollectionFactory;
 
     /**
      * Mock searchResultsFactoryInstance
      *
-     * @var \Auraine\ZipCode\Api\Data\PincodeSearchResultsInterface|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Api\Data\PincodeSearchResultsInterface
      */
     private $searchResultsFactoryInstance;
 
     /**
      * Mock searchResultsFactory
      *
-     * @var \Auraine\ZipCode\Api\Data\PincodeSearchResultsInterfaceFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var \Auraine\ZipCode\Api\Data\PincodeSearchResultsInterfaceFactory
      */
     private $searchResultsFactory;
 
     /**
      * Mock collectionProcessor
      *
-     * @var \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface|PHPUnit\Framework\MockObject\MockObject
+     * @var \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface
      */
     private $collectionProcessor;
 
@@ -122,7 +128,7 @@ class PincodeRepositoryTest extends TestCase
     public function dataProviderForTestSave()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -147,7 +153,7 @@ class PincodeRepositoryTest extends TestCase
     public function dataProviderForTestGet()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -170,7 +176,7 @@ class PincodeRepositoryTest extends TestCase
     public function dataProviderForTestGetList()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -195,7 +201,7 @@ class PincodeRepositoryTest extends TestCase
     public function dataProviderForTestDelete()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]
@@ -220,7 +226,7 @@ class PincodeRepositoryTest extends TestCase
     public function dataProviderForTestDeleteById()
     {
         return [
-            'Testcase 1' => [
+            self::TEST_CASE_ONE => [
                 'prerequisites' => ['param' => 1],
                 'expectedResult' => ['param' => 1]
             ]

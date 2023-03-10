@@ -12,12 +12,13 @@ class BannerActions extends Column
 {
 
     public const ENTITY_ID = 'entity_id';
+    private const DISABLE_TEMPLATE = '__disableTmpl';
 
     /**
      * @var Escaper
      */
     private $escaper;
-    
+
     /**
      * @var UrlInterface
      */
@@ -60,7 +61,7 @@ class BannerActions extends Column
                             [self::ENTITY_ID => $item[self::ENTITY_ID]]
                         ),
                         'label' => __('Edit'),
-                        '__disableTmpl' => true,
+                        self::DISABLE_TEMPLATE => true,
                     ];
                     $title = $this->escaper->escapeHtml($item['title']);
                     $item[$name]['delete'] = [
@@ -72,10 +73,10 @@ class BannerActions extends Column
                         'confirm' => [
                             'title' => __('Delete %1', $title),
                             'message' => __('Are you sure you want to delete a %1 record?', $title),
-                            '__disableTmpl' => true,
+                            self::DISABLE_TEMPLATE => true,
                         ],
                         'post' => true,
-                        '__disableTmpl' => true,
+                        self::DISABLE_TEMPLATE => true,
                     ];
                 }
             }

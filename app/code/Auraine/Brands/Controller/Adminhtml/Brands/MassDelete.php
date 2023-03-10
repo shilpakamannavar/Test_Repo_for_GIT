@@ -12,10 +12,10 @@ class MassDelete extends \Magento\Backend\App\Action
     /** Massactions filter.
      * @var Filter
      */
-    protected $_filter;
+    protected $filter;
     /**@var CollectionFactory
      */
-    protected $_collectionFactory;
+    protected $collectionFactory;
     /** Adding context,filter and collectionFactory
      * @param Context           $context
      * @param Filter            $filter
@@ -27,8 +27,8 @@ class MassDelete extends \Magento\Backend\App\Action
         CollectionFactory $collectionFactory
     ) {
 
-        $this->_filter = $filter;
-        $this->_collectionFactory = $collectionFactory;
+        $this->filter = $filter;
+        $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
     /**
@@ -38,21 +38,31 @@ class MassDelete extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $collection = $this->_filter->getCollection($this->_collectionFactory->create());
-        $recordDeleted = 0;
-        foreach ($collection->getItems() as $record) {
-            $record->setId($record->getEntityId());
-            $record->delete();
-            $recordDeleted++;
-        }
-        $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $recordDeleted));
+        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        $resultRedirect = $this->resultRedirectFactory->create();
 
-        return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('*/*/index');
+        try {
+            $collection = $this->filter->getCollection($this->collectionFactory->create());
+
+            $done = 0;
+            foreach ($collection as $item) {
+                $item->delete();
+                ++$done;
+            }
+
+            if ($done) {
+                $this->messageManager->addSuccess(__('A total of %1 record(s) were modified.', $done));
+            }
+        } catch (\Exception $e) {
+            $this->messageManager->addError($e->getMessage());
+        }
+
+        return $resultRedirect->setUrl($this->_redirect->getRefererUrl());
     }
     /**
      * Check Category Map recode delete Permission. @return bool*/
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Auraine_Brands::row_data_delete');
+        return $this->_authorization->isAllowed('Auraine_Brands::brands_massdelete');
     }
 }

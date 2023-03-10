@@ -22,7 +22,7 @@ interface ResourceMapRepositoryInterface
      * @return \Auraine\BannerSlider\Api\Data\ResourceMapInterface
      */
     public function create(): \Auraine\BannerSlider\Api\Data\ResourceMapInterface;
-    
+
     /**
      * Save Resource Map
      *

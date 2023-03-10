@@ -6,11 +6,12 @@ namespace Auraine\ExtendCatalogGraphQl\Plugin\Magento\CatalogGraphQl\Model\Resol
 
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product\CollectionProcessor\StockProcessor as Stock;
 
 class StockProcessor
 {
     public function aroundProcess(
-        \Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product\CollectionProcessor\StockProcessor $subject,
+        Stock $subject,
         \Closure $proceed,
         Collection $collection,
         SearchCriteriaInterface $searchCriteria,
@@ -18,8 +19,6 @@ class StockProcessor
     ) {
         $stockFlag = 'has_stock_status_filter';
         if (!$collection->hasFlag($stockFlag)) {
-            // Removed bellow line for fetching out of stock variant graphql data
-            //$this->stockStatusResource->addStockDataToCollection($collection, !$this->stockConfig->isShowOutOfStock());
             $collection->setFlag($stockFlag, true);
         }
 

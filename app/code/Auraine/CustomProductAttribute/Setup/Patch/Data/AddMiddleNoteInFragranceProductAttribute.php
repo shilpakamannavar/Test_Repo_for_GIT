@@ -105,9 +105,7 @@ class AddMiddleNoteInFragranceProductAttribute implements DataPatchInterface, Pa
      */
     public static function getDependencies()
     {
-        return [
-        
-        ];
+        return [];
     }
 }
 
