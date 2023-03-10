@@ -1,0 +1,17 @@
+input CategoryFilterInput {
+    category_banner_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_banner_slider_id Value")
+    category_offers_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_offers_slider_id Value")
+    category_popular_brands_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_popular_brands_slider_id Value")
+    category_our_exclusives_top_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_our_exclusives_top_slider_id Value")
+    category_our_exclusives_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_our_exclusives_slider_id Value")
+    category_blogs_slider_id: FilterEqualTypeInput @doc(description: "Category Data filter with category_blogs_slider_id Value")
+}
+
+type Category {
+    category_image_2: String @resolver(class: "Auraine\\Category\\Model\\Resolver\\CategoryImageResolver") @doc(description: "Custom by shiffin category image attribute with full URL")
+}
+
+interface CategoryInterface {
+  category_image_2: String @doc(description: "An optional Image of the category.") @resolver(class: "Auraine\\Category\\Model\\Resolver\\CategoryResolver")
+   }
+   

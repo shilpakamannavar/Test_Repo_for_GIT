@@ -1,0 +1,10 @@
+type Query {
+getStaticContent (
+ content: String @doc(description: "Name of the content")
+ )
+: [Content] @resolver (class:"\\Auraine\\Staticcontent\\Model\\Resolver\\ContentList") @doc(description:"List of Contents") 
+}
+type Content {
+    label:String @doc(description: "Label of the content")
+    value:String @doc(description: "Value of the content")
+}

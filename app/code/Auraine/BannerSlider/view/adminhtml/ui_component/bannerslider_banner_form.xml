@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">bannerslider_banner_form.bannerslider_banner_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Banner Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Auraine\BannerSlider\Block\Adminhtml\Banner\Edit\SaveButton"/>
+            <button name="delete" class="Auraine\BannerSlider\Block\Adminhtml\Banner\Edit\DeleteButton"/>
+            <button name="back" class="Auraine\BannerSlider\Block\Adminhtml\Banner\Edit\BackButton"/>
+        </buttons>
+        <namespace>bannerslider_banner_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>bannerslider_banner_form.bannerslider_banner_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="bannerslider_banner_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="codbansli/banner/save"/>
+        </settings>
+        <dataProvider class="Auraine\BannerSlider\Model\Banner\DataProvider" name="bannerslider_banner_form_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="entity_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>entity_id</dataScope>
+            </settings>
+        </field>
+        <field name="is_enabled" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Is Enabled</label>
+                <dataScope>is_enabled</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="title" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+            </settings>
+        </field>
+        <field name="sort_order" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Sort Order</label>
+                <dataScope>sort_order</dataScope>
+            </settings>
+        </field>
+        <field name="category_id" sortOrder="50" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">category</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                   <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Category</label>
+                <dataScope>category_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\Categories"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+         <field name="target_id" sortOrder="60" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Target ID (Mobile)</label>
+                <dataScope>target_id</dataScope>
+            </settings>
+        </field>
+        <field name="target_type" sortOrder="70" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Target Type</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Source\TargetOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="slider_id" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Slider</label>
+                <dataScope>slider_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\Slider"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+      <field name="slider_target_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Multi Target Slider </item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dataScope" xsi:type="string">slider_target_id</item>
+                </item>
+                <item name="options" xsi:type="object">Auraine\BannerSlider\Model\Config\Source\CommunitySlider</item>
+            </argument>
+        </field>
+        <field name="resource_map_id" sortOrder="60" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Resource Map</label>
+                <dataScope>resource_map_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\ResourceMap"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="video_type" sortOrder="95" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Video Type</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Source\VideoOption"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="resource_type" sortOrder="90" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Resource Type</label>
+                <dataScope>resource_type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\ResourceType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="resource_path_external_image" sortOrder="90" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                        <item name="resource_type" xsi:type="array">
+                            <item name="field" xsi:type="string">resource_type</item>
+                            <item name="value" xsi:type="string">external_image</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Resource Path</label>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="resource_path_local_image" sortOrder="100" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                        <item name="resource_type" xsi:type="array">
+                            <item name="field" xsi:type="string">resource_type</item>
+                            <item name="value" xsi:type="string">local_image</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Banner Resource</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="codbansli/banner_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Auraine_BannerSlider/image-preview</previewTmpl>
+                        <openDialogTitle>Resource</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>auraine/banner/images</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="resource_path_local_image_mobile" sortOrder="100" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                        <item name="resource_type" xsi:type="array">
+                            <item name="field" xsi:type="string">resource_type</item>
+                            <item name="value" xsi:type="string">local_image</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Banner Resource Mobile</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="codbansli/banner_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Auraine_BannerSlider/image-preview</previewTmpl>
+                        <openDialogTitle>Resource</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>auraine/banner/images</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+         <field name="resource_path_video" sortOrder="105" component="Auraine_BannerSlider/js/form/element/depends/text" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">
+                        <item name="resource_type" xsi:type="array">
+                            <item name="field" xsi:type="string">resource_type</item>
+                            <item name="value" xsi:type="string">video</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Video Link (only the URL)</label>
+                <visible>false</visible>
+            </settings>
+        </field> 
+       <field name="resource_path_poster_image" sortOrder="110" component="Auraine_BannerSlider/js/form/element/depends/image-uploader" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="depends" xsi:type="array">video
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Poster Image(Youtube and S3 videos)</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="codbansli/banner_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Auraine_BannerSlider/image-preview</previewTmpl>
+                        <openDialogTitle>Resource</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>auraine/banner/images</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="additional_information" sortOrder="140" formElement="wysiwyg" template="ui/form/field">
+         <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="source" xsi:type="string">lrpricerules</item>
+                <item name="wysiwygConfigData" xsi:type="array">
+                    <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+                    <item name="toggle_button" xsi:type="boolean">true</item>
+                    <item name="height" xsi:type="string">150px</item>
+                    <item name="add_variables" xsi:type="boolean">true</item>
+                    <item name="add_widgets" xsi:type="boolean">true</item>
+                    <item name="add_images" xsi:type="boolean">true</item>
+                    <item name="add_directives" xsi:type="boolean">true</item>
+                </item>
+            </item>
+        </argument>
+        <settings>
+            <label translate="true">Additional Information</label>
+            <dataScope>additional_information</dataScope>
+        </settings>
+        <formElements>
+            <wysiwyg>
+                <settings>
+                    <rows>5</rows>
+                    <wysiwyg>true</wysiwyg>
+                </settings>
+            </wysiwyg>
+        </formElements>
+    </field>
+        <field name="alt_text" sortOrder="160" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Alt Text</label>
+                <dataScope>alt_text</dataScope>
+            </settings>
+        </field>
+        <field name="link" sortOrder="150" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Link</label>
+                <dataScope>link</dataScope>
+            </settings>
+        </field>
+      <field name="resource_type" sortOrder="90" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Resource Type</label>
+                <dataScope>resource_type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Auraine\BannerSlider\Model\Config\Source\ResourceType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

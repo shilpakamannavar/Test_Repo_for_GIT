@@ -1,0 +1,13 @@
+type Customer {
+    mobilenumber: String @doc(description: "Customer Mobile Number") @resolver(class: "\\Auraine\\MobileNumber\\Model\\Resolver\\MobileNumber")
+    id: Int @doc(description: "The entity ID of the customer entity.") @resolver(class: "\\Auraine\\MobileNumber\\Model\\Resolver\\CustomerId")
+}
+
+type Query {
+    checkCustomerExists(field_value:String, type:String) : Boolean @resolver( class: "\\Auraine\\MobileNumber\\Model\\Resolver\\CheckCustomerExists" ) @doc(description: "Customer exist or not based on email & mobile")
+    getMobileUsingEmail(email: String!): String @resolver ( class: "\\Auraine\\MobileNumber\\Model\\Resolver\\GetMobileUsingEmail" ) @doc(description: "Customer exist or not based on email & mobile")
+}
+
+type Mutation {
+    generateCustomerTokenMobile(mobile: String! @doc(description: "The customer's mobile number."), password: String! @doc(description: "The customer's password.")): CustomerToken @resolver(class: "\\Auraine\\MobileNumber\\Model\\Resolver\\GenerateCustomerTokenMobile") @doc(description:"Generate a token for specified customer.")
+}
