@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d78437c2c544495c21e0adcb3e890dc",
+    "content-hash": "f2660e03891c1fb0c0ae2139252b9bfa",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -23137,11 +23137,11 @@
         },
         {
             "name": "magento/quality-patches",
-            "version": "1.1.27",
+            "version": "1.1.28",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/magento/quality-patches/magento-quality-patches-1.1.27.0.zip",
-                "shasum": "ad2e6eff50dbcfb03bfff39861f4522c55707035"
+                "url": "https://repo.magento.com/archives/magento/quality-patches/magento-quality-patches-1.1.28.0.zip",
+                "shasum": "660915da90af425e3cb274cd4baf87d2f61e4ae6"
             },
             "require": {
                 "ext-json": "*",
@@ -23155,7 +23155,7 @@
                 "codeception/module-phpbrowser": "^1.0",
                 "codeception/module-rest": "^1.2",
                 "composer/semver": "@stable",
-                "consolidation/robo": "^1.2",
+                "consolidation/robo": "^1.2 || ^2.0",
                 "phpmd/phpmd": "@stable",
                 "phpunit/phpunit": "^8.5 || ^9.5",
                 "squizlabs/php_codesniffer": "^3.0"

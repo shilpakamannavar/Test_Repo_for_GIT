@@ -35,6 +35,7 @@
         "magento/live-search": "^2.0",
         "magento/magento-cloud-metapackage": ">=2.4.5 <2.4.6",
         "magento/product-recommendations": "^4.0",
+        "magento/quality-patches": "^1.1",
         "magento/saas-export": "^101.4",
         "razorpay/razorpay": "^2.8",
         "twilio/sdk": "^6.44"
