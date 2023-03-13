@@ -9,6 +9,8 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
+use Magento\Framework\App\CacheInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 
 class BrandsList implements ResolverInterface
 {
@@ -27,14 +29,36 @@ class BrandsList implements ResolverInterface
      * @var dataProvider
      */
     private $dataProvider;
+      /**
+     * Cache instance
+     *
+     * @var CacheInterface
+     */
+    protected $cache;
+
+    /**
+     * Serializer instance
+     *
+     * @var Json
+     */
+    protected $json;
+
+    /**
+     * Cache key prefix
+     */
+    const CACHE_KEY_PREFIX = 'auraine_brands_';
      /** Constructor function
       *
       * @param String $dataProvider
       */
     public function __construct(
-        \Auraine\Brands\Model\Resolver\DataProvider\BrandsList $dataProvider
+        \Auraine\Brands\Model\Resolver\DataProvider\BrandsList $dataProvider,
+        CacheInterface $cache,
+        Json $json
     ) {
         $this->dataProvider = $dataProvider;
+        $this->cache = $cache;
+        $this->json = $json;
     }
     /**
      * Resolver function for the list
@@ -45,10 +69,21 @@ class BrandsList implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-         $filterEntityId = $args['entity_id'] ?? null;
-         $filterLabel = $args['filter_label'] ?? null;
-         $filterUrl = $args['url_key'] ?? null;
-                 
-        return $this->dataProvider->getBrandsList($filterEntityId, $filterLabel, $filterUrl);
+         
+         
+        $cacheKey = self::CACHE_KEY_PREFIX . hash('sha256', json_encode($args));
+         $cachedData = $this->cache->load($cacheKey);
+ 
+         if ($cachedData) {
+             $result = $this->json->unserialize($cachedData);
+         } else {
+            $cacheLifetime = 86400; // 1 day
+            $filterEntityId = $args['entity_id'] ?? null;
+            $filterLabel = $args['filter_label'] ?? null;
+            $filterUrl = $args['url_key'] ?? null;
+            $result = $this->dataProvider->getBrandsList($filterEntityId, $filterLabel, $filterUrl);
+            $this->cache->save($this->json->serialize($result), $cacheKey, [], $cacheLifetime);
+           }
+        return $result;
     }
 }

@@ -109,6 +109,28 @@ class LocalImage implements ModifierInterface
                 $data['resource_path_local_image_mobile'][0] = $resourcePathDataMobile;
             }
         }
+        $resourcePathPoster = $data['resource_path_poster'] ?? null;
+        if ($resourcePathPoster && $resourceType === 'video') {
+            /** @var \Magento\Store\Model\Store $store */
+            $store = $this->storeManager->getStore();
+            $urlPoster = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $resourcePathPoster;
+            $fileNamePoster = $this->filesystem
+                ->getDirectoryRead(DirectoryList::MEDIA)
+                ->getAbsolutePath($resourcePathPoster);
+            $fileExistsPoster = 'file_exists';
+            $basename = 'basename';
+            $filesize = 'filesize';
+            if ($fileExistsPoster($fileNamePoster)) {
+                $resourcePathDataPoster = [
+                    'name' => $basename($fileNamePoster),
+                    'url' => $urlPoster,
+                    'size' => $filesize($fileNamePoster),
+                    'type' => $this->mime->getMimeType($fileNamePoster)
+                ];
+                unset($data['resource_path_poster']);
+                $data['resource_path_poster_image'][0] = $resourcePathDataPoster;
+            }
+        }
         return $data;
     }
 

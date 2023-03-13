@@ -7,7 +7,6 @@ use Magento\Framework\App\ResourceConnection;
 
 class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEntity
 {
-    public const ID = 'pincode_id';
     public const CODE = 'code';
     public const CITY = 'city';
     public const STATE = 'state';
@@ -40,7 +39,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
      * @array
      */
     protected $validColumnNames = [
-    self::ID,
     self::CODE,
     self::CITY,
     self::STATE,
@@ -177,7 +175,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             foreach ($bunch as $rowNum => $rowData) {
                 $this->validateRow($rowData, $rowNum);
                 if (!$this->getErrorAggregator()->isRowInvalid($rowNum)) {
-                     $rowTtile = $rowData[self::ID];
+                     $rowTtile = $rowData[self::CODE];
                      $listTitle[] = $rowTtile;
                 }
                 if ($this->getErrorAggregator()->hasToBeTerminated()) {
@@ -206,6 +204,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             $entityList = [];
             foreach ($bunch as $rowNum => $rowData) {
                 if (!$this->validateRow($rowData, $rowNum)) {
+
                     $this->addRowError(ValidatorInterface::ERROR_TITLE_IS_EMPTY, $rowNum);
                     continue;
                 }
@@ -213,17 +212,14 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                     $this->getErrorAggregator()->addRowToSkip($rowNum);
                     continue;
                 }
- 
-                $rowTtile= $rowData[self::ID];
+                $rowTtile= $rowData[self::CODE];
                 $listTitle[] = $rowTtile;
                 $entityList[$rowTtile][] = [
-                self::ID => $rowData[self::ID],
                 self::CODE => $rowData[self::CODE],
                 self::CITY => $rowData[self::CITY],
                 self::STATE => $rowData[self::STATE],
                 self::COUNTRY => $rowData[self::COUNTRY],
                 self::STATUS => $rowData[self::STATUS],
-
                 ];
             }
             if (\Magento\ImportExport\Model\Import::BEHAVIOR_REPLACE == $behavior) {
@@ -256,7 +252,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             }
             if ($entityIn) {
                 $this->_connection->insertOnDuplicate($tableName, $entityIn, [
-                    self::ID,
                     self::CODE,
                     self::CITY,
                     self::STATE,
@@ -264,6 +259,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                     self::STATUS
                 ]);
             }
+        
         }
         return $this;
     }
@@ -281,7 +277,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             try {
                 $this->countItemsDeleted += $this->_connection->delete(
                     $this->_connection->getTableName(self::TABLE_ENTITY),
-                    $this->_connection->quoteInto(self::ID . ' IN (?)', $ids)
+                    $this->_connection->quoteInto(self::CODE . ' IN (?)', $ids)
                 );
                 return true;
             } catch (\Exception $e) {
@@ -291,6 +287,25 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         } else {
             return false;
         }
+    }
+    /**
+     * Pincode duplicate validation
+     *
+     * @param string $code
+     *
+     * @return int
+     */
+    protected function isPincodeExists($code)
+    {
+        $select = $this->_connection->select()->from(
+            $this->_connection->getTableName(self::TABLE_ENTITY)
+        )->where(
+            self::CODE . ' = ?',
+            $code
+        );
+        $result = $this->_connection->fetchAll($select);
+        $count=count($result);
+        return $count;
     }
 
     /**
@@ -308,9 +323,17 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         $state =  $rowData['state'] ?? 0;
         $countryId = $rowData['country_id'] ?? '';
         $status = (int) $rowData['status'] ?? 0;
-
+       
         if (!$code) {
+            
             $this->addRowError('CodeIsRequired', $rowNum);
+        }
+        if ($code) {
+            $count= $this->isPincodeExists($code);
+            if($count > 0)
+            {
+                $this->addRowError('CodeExists', $rowNum);
+            }
         }
             /* Only for India - without space in between */
         if (!preg_match('/^[1-9]{1}\d{2}\d{3}$/', $code)) {
@@ -322,7 +345,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if (!$state) {
             $this->addRowError('StateIsRequired', $rowNum);
         }
-        if ($state && !preg_match('/^\d*$/', $state)) {
+        if ($state && !preg_match('/^[A-Z]{2}$/', $state)) {
             $this->addRowError('InvalidState', $rowNum);
         }
         
@@ -388,5 +411,10 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             'CountryIsIndia',
             __('Country id should be IN for India.')
         );
+        $this->addMessageTemplate(
+            'CodeExists',
+            __('This pincode already exists in the database')
+        );
+        
     }
 }
