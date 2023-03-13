@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Auraine_CsvUploader::csv" title="Bulk Upload Csv Attribute" sortOrder="10">
+					<resource id="Auraine_CsvUploader::csv_save" title="Save Bulk Upload" sortOrder="10"/>
+					<resource id="Auraine_CsvUploader::csv_upload" title="Upload Csv" sortOrder="20"/>
+					<resource id="Auraine_CsvUploader::csv_tempupload" title="Csv Temp Upload" sortOrder="30"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

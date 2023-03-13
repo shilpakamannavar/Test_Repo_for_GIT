@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+       <add id="Auraine_CsvUploader::csv" title="Bulk Import" translate="title" 
+          module="Auraine_CsvUploader" sortOrder="0" parent="Auraine::top_level"
+          action="csvuploader/csv/upload" resource="Auraine_CsvUploader::csv_upload" />
+    </menu>
+</config>
