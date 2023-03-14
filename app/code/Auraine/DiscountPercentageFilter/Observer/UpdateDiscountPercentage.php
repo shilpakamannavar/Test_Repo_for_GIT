@@ -79,11 +79,13 @@ class UpdateDiscountPercentage implements ObserverInterface
                     'title'
                     )->addFieldToFilter('entity_id', $product['brand_name']);
                 $brandData = $collection->getData();
-                $this->action->updateAttributes([
-                    $productData->getEntityId()
-                ], [
-                    'brand_label' => $brandData[0]['title']
-                ], $this->getStoreIds());
+                if (!empty($brandData)) {
+                    $this->action->updateAttributes([
+                        $productData->getEntityId()
+                    ], [
+                        'brand_label' => $brandData[0]['title']
+                    ], $this->getStoreIds());
+                }
             }
 
             if ($productPrice !=0 && $productPrice != null && $productType == 'simple') {
