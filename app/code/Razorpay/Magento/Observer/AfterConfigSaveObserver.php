@@ -30,13 +30,38 @@ class AfterConfigSaveObserver implements ObserverInterface
     private $configWriter;
 
     /**
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    protected $keyId;
+
+    protected $keySecret;
+
+    protected $rzp;
+
+    protected $webhookUrl;
+
+    protected $webhookId;
+
+    /**
      * StatusAssignObserver constructor.
      *
      * @param OrderRepositoryInterface $orderRepository
      */
     public function __construct(
         \Razorpay\Magento\Model\Config $config,
-        RequestInterface $request, 
+        RequestInterface $request,
         WriterInterface $configWriter,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Psr\Log\LoggerInterface $logger
@@ -44,17 +69,19 @@ class AfterConfigSaveObserver implements ObserverInterface
         $this->config = $config;
         $this->request = $request;
         $this->configWriter = $configWriter;
-        $this->_storeManager = $storeManager;
+        $this->storeManager = $storeManager;
         $this->logger          = $logger;
-        
+
         $this->config = $config;
 
-        $this->key_id = $this->config->getConfigData(Config::KEY_PUBLIC_KEY);
-        $this->key_secret = $this->config->getConfigData(Config::KEY_PRIVATE_KEY);
+        $this->keyId = $this->config->getConfigData(Config::KEY_PUBLIC_KEY);
+        $this->keySecret = $this->config->getConfigData(Config::KEY_PRIVATE_KEY);
 
-        $this->rzp = new Api($this->key_id, $this->key_secret);
+        $this->rzp = new Api($this->keyId, $this->keySecret);
 
-        $this->webhookUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB) . 'razorpay/payment/webhook';
+        $this->webhookUrl = $this->storeManager->getStore()->getBaseUrl(
+                \Magento\Framework\UrlInterface::URL_TYPE_WEB
+            ) . 'razorpay/payment/webhook';
 
         $this->webhookId = null;
     }
@@ -63,38 +90,33 @@ class AfterConfigSaveObserver implements ObserverInterface
      * {@inheritdoc}
      */
     public function execute(Observer $observer)
-    { 
+    {
 
         $razorpayParams = $this->request->getParam('groups')['razorpay']['fields'];
-        
-        if(in_array($_SERVER['SERVER_ADDR'], ["127.0.0.1","::1"]))
-        {
+
+        if (in_array($_SERVER['SERVER_ADDR'], ["127.0.0.1","::1"])) {
             $this->config->setConfigData('enable_webhook', 0);
 
             $this->logger->info("Can't enable/disable webhook on localhost.");
             return;
         }
 
-        try
-        {
-            $webhookPresent = $this->getExistingWebhook();
+        try {
+            $this->getExistingWebhook();
 
-            if(empty($razorpayParams['enable_webhook']['value']) === true)
-            {
+            if (empty($razorpayParams['enable_webhook']['value']) === true) {
                 $this->disableWebhook();
                 return;
             }
-                    
+
             $events = [];
 
-            foreach($razorpayParams['webhook_events']['value'] as $event)
-            {
-                $events[$event] = true;   
-            }            
+            foreach ($razorpayParams['webhook_events']['value'] as $event) {
+                $events[$event] = true;
+            }
 
-            if(empty($this->webhookId) === false)
-            {
-                $webhook = $this->rzp->webhook->edit([
+            if (empty($this->webhookId) === false) {
+                $this->rzp->webhook->edit([
                     "url" => $this->webhookUrl,
                     "events" => $events,
                     "secret" => $razorpayParams['webhook_secret']['value'],
@@ -102,10 +124,8 @@ class AfterConfigSaveObserver implements ObserverInterface
                 ], $this->webhookId);
 
                 $this->logger->info("Razorpay Webhook Updated by Admin.");
-            }
-            else
-            {
-                $webhook = $this->rzp->webhook->create([
+            } else {
+                $this->rzp->webhook->create([
                     "url" => $this->webhookUrl,
                     "events" => $events,
                     "secret" => $razorpayParams['webhook_secret']['value'],
@@ -114,24 +134,19 @@ class AfterConfigSaveObserver implements ObserverInterface
 
                 $this->logger->info("Razorpay Webhook Created by Admin");
             }
-            
-        }
-        catch(\Razorpay\Api\Errors\Error $e)
-        {
-            
+
+        } catch (\Razorpay\Api\Errors\Error $e) {
             $this->logger->info($e->getMessage());
             //in case of error disable the webhook config
             $this->disableWebhook();
-        }
-        catch(\Exception $e)
-        {            
+        } catch (\Exception $e) {
             $this->logger->info($e->getMessage());
 
             $this->disableWebhook();
         }
-        
+
         return;
-        
+
     }
 
     /**
@@ -141,59 +156,44 @@ class AfterConfigSaveObserver implements ObserverInterface
      */
     private function getExistingWebhook()
     {
-        
-        try
-        {       
-            //fetch all the webhooks 
-            $webhooks = $this->rzp->webhook->all();   
-            
-            if(($webhooks->count) > 0 and (empty($this->webhookUrl) === false))
-            {
-                foreach ($webhooks->items as $key => $webhook)
-                {
-                    if($webhook->url === $this->webhookUrl)
-                    {
+
+        try {
+            //fetch all the webhooks
+            $webhooks = $this->rzp->webhook->all();
+
+            if (($webhooks->count) > 0 && (empty($this->webhookUrl) === false)) {
+                foreach ($webhooks->items as $key => $webhook) {
+                    if ($webhook->url === $this->webhookUrl) {
                         $this->webhookId = $webhook->id;
                         return ['id' => $webhook->id];
                     }
                 }
             }
-        }
-        catch(\Razorpay\Api\Errors\Error $e)
-        {            
+        } catch (\Razorpay\Api\Errors\Error $e) {
             $this->logger->info($e->getMessage());
-
             $this->disableWebhook();
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->logger->info($e->getMessage());
-
             $this->disableWebhook();
         }
 
-        return ['id' => null];   
+        return ['id' => null];
     }
 
     private function disableWebhook()
     {
         $this->config->setConfigData('enable_webhook', 0);
 
-        try
-        {
-            $webhook = $this->rzp->webhook->edit([
-                    "url" => $this->webhookUrl,
-                    "active" => false,
-                ], $this->webhookId);
+        try {
+            $this->rzp->webhook->edit([
+                "url" => $this->webhookUrl,
+                "active" => false,
+            ], $this->webhookId);
 
             $this->logger->info("Razorpay Webhook Disabled by Admin.");
-        }
-        catch(\Razorpay\Api\Errors\Error $e)
-        {            
+        } catch (\Razorpay\Api\Errors\Error $e) {
             $this->logger->info($e->getMessage());
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->logger->info($e->getMessage());
         }
 

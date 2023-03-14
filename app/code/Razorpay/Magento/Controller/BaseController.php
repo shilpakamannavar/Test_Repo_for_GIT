@@ -35,6 +35,10 @@ abstract class BaseController extends \Magento\Framework\App\Action\Action
      * @var \Razorpay\Magento\Model\Checkout
      */
     protected $checkout;
+    protected $config;
+    protected $keyId;
+    protected $keySecret;
+    protected $rzp;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
@@ -53,10 +57,10 @@ abstract class BaseController extends \Magento\Framework\App\Action\Action
         $this->checkoutSession = $checkoutSession;
         $this->config = $config;
 
-        $this->key_id = $this->config->getConfigData(Config::KEY_PUBLIC_KEY);
-        $this->key_secret = $this->config->getConfigData(Config::KEY_PRIVATE_KEY);
+        $this->keyId = $this->config->getConfigData(Config::KEY_PUBLIC_KEY);
+        $this->keySecret = $this->config->getConfigData(Config::KEY_PRIVATE_KEY);
 
-        $this->rzp = new Api($this->key_id, $this->key_secret);
+        $this->rzp = new Api($this->keyId, $this->keySecret);
     }
 
     /**
