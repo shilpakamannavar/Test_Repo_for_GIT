@@ -1,98 +1,76 @@
 <?php
+
 namespace Auraine\LoyaltyPoint\Test\Unit\Model\Resolver;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use PHPUnit\Framework\TestCase;
+use Auraine\LoyaltyPoint\Helper\Data;
+use Auraine\LoyaltyPoint\Model\Resolver\CustomerLoyaltyResolver;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use PHPUnit\Framework\MockObject\MockObject;
-use Magento\Sales\Model\ResourceModel\Order\Collection;
-use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Auraine\LoyaltyPoint\Model\Resolver\CustomerLoyaltyResolver
- */
 class CustomerLoyaltyResolverTest extends TestCase
 {
-    /**
-     * Mock orderCollectionFactoryInstance
-     *
-     * @var \Magento\Sales\Model\ResourceModel\Order\Collection|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $orderCollectionFactoryInstance;
+    /** @var Data|MockObject */
+    private $helperDataMock;
 
-    /**
-     * Mock orderCollectionFactory
-     *
-     * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $orderCollectionFactory;
+    /** @var CustomerLoyaltyResolver */
+    private $customerLoyaltyResolver;
 
-    /**
-     * Mock helperData
-     *
-     * @var \Auraine\LoyaltyPoint\Helper\Data|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $helperData;
-
-    /**
-     * Mock helperNameById
-     *
-     * @var \Auraine\LoyaltyPoint\Helper\GetTireNameByid|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $helperNameById;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\LoyaltyPoint\Model\Resolver\CustomerLoyaltyResolver
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->orderCollectionFactoryInstance = $this->createMock(Collection::class);
-        $this->orderCollectionFactory = $this->createMock(CollectionFactory::class);
-        $this->orderCollectionFactory->method('create')->willReturn($this->orderCollectionFactoryInstance);
-        $this->helperData = $this->createMock(\Auraine\LoyaltyPoint\Helper\Data::class);
-        $this->helperNameById = $this->createMock(\Auraine\LoyaltyPoint\Helper\GetTireNameByid::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\LoyaltyPoint\Model\Resolver\CustomerLoyaltyResolver::class,
-            [
-                'orderCollectionFactory' => $this->orderCollectionFactory,
-                'helperData' => $this->helperData,
-                'helperNameById' => $this->helperNameById,
-            ]
-        );
+        $this->helperDataMock = $this->getMockBuilder(Data::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->customerLoyaltyResolver = new CustomerLoyaltyResolver($this->helperDataMock);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestResolve()
+    public function testResolveThrowsExceptionWhenModelValueIsNotSet(): void
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
+        $this->expectException(LocalizedException::class);
+        $this->expectExceptionMessage('"model" value should be specified');
+
+        $field = $this->createMock(Field::class);
+        $context = [];
+        $info = $this->createMock(ResolveInfo::class);
+        $value = null;
+        $args = [];
+
+        $this->customerLoyaltyResolver->resolve($field, $context, $info, $value, $args);
     }
 
-    /**
-     * @dataProvider dataProviderForTestResolve
-     */
-    public function testResolve(array $prerequisites, array $expectedResult)
+    public function testResolveReturnsSlabValueOrNameBasedOnGrandTotal(): void
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $grandTotal = 123.45;
+        $expectedResult = 'some_slab_value';
+
+        $field = $this->createMock(Field::class);
+        $context = [];
+        $info = $this->createMock(ResolveInfo::class);
+        $args = [];
+
+        $value = ['model' => $this->getModelMock()];
+        
+        $this->helperDataMock->expects($this->once())
+            ->method('getYearOldGrandTotal')
+            ->with($value['model']->getId())
+            ->willReturn($grandTotal);
+
+        $this->helperDataMock->expects($this->once())
+            ->method('getSlabValueOrName')
+            ->with($grandTotal, true)
+            ->willReturn($expectedResult);
+
+        $result = $this->customerLoyaltyResolver->resolve($field, $context, $info, $value, $args);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    private function getModelMock()
+    {
+        return $this->getMockBuilder(\stdClass::class)
+            ->addMethods(['getId'])
+            ->getMock();
     }
 }
