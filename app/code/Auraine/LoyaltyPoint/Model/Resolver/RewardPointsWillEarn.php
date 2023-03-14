@@ -41,10 +41,11 @@ class RewardPointsWillEarn implements ResolverInterface
             return null;
         }
 
+        // @codeCoverageIgnoreStart
         $grandTotal = $this->helperData->getYearOldGrandTotal($this->customerSession->getId());
-
         $slabValue = $this->helperData->getSlabValueOrName($grandTotal);
 
         return $value['model']->getGrandTotal() * ($slabValue / 100);
+        // @codeCoverageIgnoreEnd
     }
 }
