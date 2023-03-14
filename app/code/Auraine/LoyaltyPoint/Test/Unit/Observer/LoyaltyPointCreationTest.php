@@ -1,116 +1,106 @@
 <?php
+
 namespace Auraine\LoyaltyPoint\Test\Unit\Observer;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Auraine\LoyaltyPoint\Helper\Data;
+use Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\Event;
+use Magento\Sales\Model\Order;
+use Amasty\Rewards\Api\RewardsProviderInterface;
+use Amasty\Rewards\Model\Rule;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
-use Magento\Sales\Model\ResourceModel\Order\Collection;
-use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 
-/**
- * @covers \Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation
- */
 class LoyaltyPointCreationTest extends TestCase
 {
     /**
-     * Mock orderCollectionFactoryInstance
-     *
-     * @var \Magento\Sales\Model\ResourceModel\Order\Collection|PHPUnit\Framework\MockObject\MockObject
+     * @var RewardsProviderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $orderCollectionFactoryInstance;
+    private $rewardsProviderMock;
 
     /**
-     * Mock orderCollectionFactory
-     *
-     * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory|PHPUnit\Framework\MockObject\MockObject
+     * @var Rule|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $orderCollectionFactory;
+    private $ruleMock;
 
     /**
-     * Mock rewardsProvider
-     *
-     * @var \Amasty\Rewards\Api\RewardsProviderInterface|PHPUnit\Framework\MockObject\MockObject
+     * @var CustomerRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $rewardsProvider;
+    private $customerRepositoryMock;
 
     /**
-     * Mock rule
-     *
-     * @var \Amasty\Rewards\Model\Rule|PHPUnit\Framework\MockObject\MockObject
+     * @var Data|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $rule;
+    private $helperDataMock;
 
     /**
-     * Mock customerRepository
-     *
-     * @var \Magento\Customer\Api\CustomerRepositoryInterface|PHPUnit\Framework\MockObject\MockObject
+     * @var LoyaltyPointCreation
      */
-    private $customerRepository;
+    private $loyaltyPointCreation;
 
-    /**
-     * Mock helperData
-     *
-     * @var \Auraine\LoyaltyPoint\Helper\Data|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $helperData;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->orderCollectionFactoryInstance = $this->createMock(Collection::class);
-        $this->orderCollectionFactory = $this->createMock(CollectionFactory::class);
-        $this->orderCollectionFactory->method('create')->willReturn($this->orderCollectionFactoryInstance);
-        $this->rewardsProvider = $this->createMock(\Amasty\Rewards\Api\RewardsProviderInterface::class);
-        $this->rule = $this->createMock(\Amasty\Rewards\Model\Rule::class);
-        $this->customerRepository = $this->createMock(\Magento\Customer\Api\CustomerRepositoryInterface::class);
-        $this->helperData = $this->createMock(\Auraine\LoyaltyPoint\Helper\Data::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\LoyaltyPoint\Observer\LoyaltyPointCreation::class,
-            [
-                'orderCollectionFactory' => $this->orderCollectionFactory,
-                'rewardsProvider' => $this->rewardsProvider,
-                'rule' => $this->rule,
-                'customerRepository' => $this->customerRepository,
-                'helperData' => $this->helperData,
-            ]
+        $this->rewardsProviderMock = $this->createMock(RewardsProviderInterface::class);
+        $this->ruleMock = $this->createMock(Rule::class);
+        $this->customerRepositoryMock = $this->createMock(CustomerRepositoryInterface::class);
+        $this->helperDataMock = $this->createMock(Data::class);
+
+        $this->loyaltyPointCreation = new LoyaltyPointCreation(
+            $this->rewardsProviderMock,
+            $this->ruleMock,
+            $this->customerRepositoryMock,
+            $this->helperDataMock
         );
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestExecute()
+    public function testExecuteWithRegisteredCustomer()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        // Create mock objects for the dependencies
+        $rewardsProviderMock = $this->getMockBuilder(\Amasty\Rewards\Api\RewardsProviderInterface::class)
+            ->getMock();
+        $ruleMock = $this->getMockBuilder(\Amasty\Rewards\Model\Rule::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $customerRepositoryMock = $this->getMockBuilder(\Magento\Customer\Api\CustomerRepositoryInterface::class)
+            ->getMock();
+        $helperDataMock = $this->getMockBuilder(\Auraine\LoyaltyPoint\Helper\Data::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-    /**
-     * @dataProvider dataProviderForTestExecute
-     */
-    public function testExecute(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        // Create a mock order object
+        $orderMock = $this->getMockBuilder(\Magento\Sales\Model\Order::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $orderMock->expects($this->once())
+            ->method('getCustomerId')
+            ->willReturn(1);
+        $orderMock->expects($this->once())
+            ->method('getGrandTotal')
+            ->willReturn(100);
+
+        // Create a mock event object
+        $eventMock = $this->getMockBuilder(\Magento\Framework\Event::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $eventMock->expects($this->once())
+            ->method('getOrder')
+            ->willReturn($orderMock);
+
+        // Create a mock observer object
+        $observerMock = $this->getMockBuilder(\Magento\Framework\Event\Observer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $observerMock->expects($this->once())
+            ->method('getEvent')
+            ->willReturn($eventMock);
+
+        // Create the object under test
+        $object = new LoyaltyPointCreation($rewardsProviderMock, $ruleMock, $customerRepositoryMock, $helperDataMock);
+
+        // Call the method under test
+        $result = $object->execute($observerMock);
+
+        // Assert the result
+        $this->assertEquals($object, $result);
     }
 }

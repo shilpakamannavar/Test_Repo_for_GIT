@@ -77,21 +77,4 @@ class RewardPointsWillEarnTest extends TestCase
 
         self::assertNull($result);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

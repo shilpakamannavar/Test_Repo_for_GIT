@@ -96,5 +96,4 @@ class DataTest extends TestCase
         
         $this->assertNull($slabValue, 'Slab value should be null for a grand total less than all slabs');
     }
-
 }
