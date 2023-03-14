@@ -143,16 +143,10 @@ class ImportOptions extends Command
         $importProductRawData = $this->csvProcessor->getData($this->getBasePath() . $ds . $filePath);
         $sortOrder = 0;
         foreach ($importProductRawData as $dataRow) {
-            //Skip header row if exists
-            //if (stristr($dataRow[0], "admin")) {
-           //     continue;
-           // }
-            //print_r($attributeCode);die;
             $storeLabel = null;
             if (isset($dataRow[1])) {
                 $storeLabel = $dataRow[1];
             }
-            //$output->writeln("importing option - " . $dataRow[0]);
             $this->createOrGetId($attributeCode, $dataRow[0], $storeLabel, $sortOrder++);
         }
     }

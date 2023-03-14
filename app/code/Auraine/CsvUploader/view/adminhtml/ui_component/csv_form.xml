@@ -95,39 +95,5 @@
                 </fileUploader>
             </formElements>
         </field>
-      <!-- <field name="image" formElement="importUploader">
-        <settings>
-            <label translate="true">Images</label>
-            <validation>
-                <rule name="required-entry" xsi:type="boolean">true</rule>
-            </validation>
-        </settings>
-        <formElements>
-            <imageUploader>
-                <settings>
-                    <allowedExtensions>jpg</allowedExtensions>
-                    <maxFileSize>2097152</maxFileSize>
-                    <uploaderConfig>
-                        <param xsi:type="string" name="url">importuploader/import/tempUpload</param>
-                    </uploaderConfig>
-                </settings>
-            </imageUploader>
-        </formElements>
-    </field> -->
-    <!-- <field name="name" formElement="textarea" sortOrder="40">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Type</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">Name</label>
-				<dataScope>name</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field> -->
   </fieldset>
 </form>
