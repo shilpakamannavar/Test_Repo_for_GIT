@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 namespace Auraine\ProductRecomender\Model\Resolver;
-
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -45,14 +44,14 @@ class ProductsList implements ResolverInterface
         Json $json,
         ResourceConnection $resourceConnection,
         Uid $uidEncoder = null,
-        
+
     ) {
         $this->cache = $cache;
         $this->json = $json;
         $this->resourceConnection = $resourceConnection;
         $this->uidEncoder = $uidEncoder ?: ObjectManager::getInstance()
           ->get(Uid::class);
-       
+
     }
 
     /**
@@ -74,7 +73,7 @@ class ProductsList implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        $cacheKey = self::CACHE_KEY_PREFIX . md5(json_encode($args));
+        $cacheKey = self::CACHE_KEY_PREFIX . hash('sha256', json_encode($args));
         $cachedData = $this->cache->load($cacheKey);
 
         if ($cachedData) {
@@ -87,7 +86,7 @@ class ProductsList implements ResolverInterface
             $result =  $this->getMostBoughtTogether((int)$pId);
             $this->cache->save($this->json->serialize($result), $cacheKey, [], $cacheLifetime);
         }
-       
+
         return $result;
     }
     /**
