@@ -30,8 +30,8 @@ class AddBrandAttribute implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-        $product = $value['model'];
-        $_product = $this->productFactory->create()->load($product->getId());
-        return $_product->getData('brand_name');
+        $products = $value['model'];
+        $product = $this->productFactory->create()->load($products->getId());
+        return $product->getData('brand_name');
     }
 }
