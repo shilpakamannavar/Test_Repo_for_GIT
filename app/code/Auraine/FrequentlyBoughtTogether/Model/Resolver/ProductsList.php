@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-namespace Auraine\ProductRecomender\Model\Resolver;
+namespace Auraine\FrequentlyBoughtTogether\Model\Resolver;
+
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -18,10 +19,10 @@ class ProductsList implements ResolverInterface
     private $uidEncoder;
 
       /**
-     * Cache instance
-     *
-     * @var CacheInterface
-     */
+       * Cache instance
+       *
+       * @var CacheInterface
+       */
     protected $cache;
 
     /**
@@ -30,28 +31,35 @@ class ProductsList implements ResolverInterface
      * @var Json
      */
     protected $json;
+    /**
+     * Resource Connection instance
+     *
+     * @var ResourceConnection
+     */
+    protected $resourceConnection;
 
     /**
-     * Cache key prefix
+     * Cache key prefix for product list
      */
-    const CACHE_KEY_PREFIX = 'auraine_productList_';
+    public const CACHE_KEY_PREFIX = 'auraine_productList_';
     /**
+     * @param CacheInterface $cache
+     * @param Json $json
      * @param ResourceConnection $resourceConnection
      * @param Uid|null $uidEncoder
+     *
      */
     public function __construct(
         CacheInterface $cache,
         Json $json,
         ResourceConnection $resourceConnection,
         Uid $uidEncoder = null,
-
     ) {
         $this->cache = $cache;
         $this->json = $json;
         $this->resourceConnection = $resourceConnection;
         $this->uidEncoder = $uidEncoder ?: ObjectManager::getInstance()
           ->get(Uid::class);
-
     }
 
     /**
@@ -96,7 +104,7 @@ class ProductsList implements ResolverInterface
      * @return int
      * @throws GraphQlInputException
      */
-    private function getProductUid(array $args): string
+    public function getProductUid(array $args): string
     {
         if (!isset($args['uid'])) {
             throw new GraphQlInputException(__('"Product Uid should be specified'));
@@ -112,7 +120,7 @@ class ProductsList implements ResolverInterface
      * @param int $id
      * @return array
      */
-    private function getMostBoughtTogether(int $id): array
+    public function getMostBoughtTogether(int $id): array
     {
         $connection = $this->resourceConnection->getConnection();
         $table = $connection->getTableName('sales_order_item');
