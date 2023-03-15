@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class BackButtonTest extends TestCase
 {
+    public const URL = 'http://example.com';
+
     /**
      * Test getButtonData method of BackButton class
      */
@@ -19,7 +21,7 @@ class BackButtonTest extends TestCase
         $urlInterfaceMock->expects($this->once())
             ->method('getUrl')
             ->with('*/*/')
-            ->willReturn('http://example.com');
+            ->willReturn(self::URL);
 
         $backButton = new BackButton($urlInterfaceMock);
 
@@ -31,7 +33,7 @@ class BackButtonTest extends TestCase
         $this->assertArrayHasKey('class', $buttonData);
         $this->assertArrayHasKey('sort_order', $buttonData);
         $this->assertEquals('Back', $buttonData['label']);
-        $this->assertEquals("location.href = 'http://example.com';", $buttonData['on_click']);
+        $this->assertEquals("location.href = ".self::URL.";", $buttonData['on_click']);
         $this->assertEquals('back', $buttonData['class']);
         $this->assertEquals(10, $buttonData['sort_order']);
     }
@@ -46,7 +48,7 @@ class BackButtonTest extends TestCase
         $urlInterfaceMock->expects($this->once())
             ->method('getUrl')
             ->with('*/*/')
-            ->willReturn('http://example.com');
+            ->willReturn(self::URL);
 
         $backButton = new BackButton($urlInterfaceMock);
 
