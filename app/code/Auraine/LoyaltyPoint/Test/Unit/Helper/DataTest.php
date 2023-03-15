@@ -1,138 +1,99 @@
 <?php
 namespace Auraine\LoyaltyPoint\Test\Unit\Helper;
 
+use Auraine\LoyaltyPoint\Helper\Data;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Sales\Model\ResourceModel\Order\Collection;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use Magento\Sales\Model\Order;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\LoyaltyPoint\Helper\Data
- */
 class DataTest extends TestCase
 {
     /**
-     * Test case 1
-     * @var string const
-     */
-    private const TEST_CASE_ONE = 'Testcase 1';
-
-    /**
-     * Mock scopeConfig
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $scopeConfig;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
+     * @var ObjectManager
      */
     private $objectManager;
 
     /**
-     * Object to test
-     *
-     * @var \Auraine\LoyaltyPoint\Helper\Data
+     * @var Data
      */
-    private $testObject;
+    private $dataHelper;
 
     /**
-     * Main set up method
+     * @var ScopeConfigInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function setUp() : void
+    private $scopeConfigMock;
+
+    /**
+     * @var CollectionFactory|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $orderCollectionFactoryMock;
+
+    /**
+     * @var Collection|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $orderCollectionMock;
+
+    protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
-        $this->scopeConfig = $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\LoyaltyPoint\Helper\Data::class,
-            [
-                'scopeConfig' => $this->scopeConfig,
-            ]
+
+        $this->scopeConfigMock = $this->createMock(ScopeConfigInterface::class);
+        $this->orderCollectionFactoryMock = $this->createMock(CollectionFactory::class);
+        $this->orderCollectionMock = $this->createMock(Collection::class);
+
+        $this->dataHelper = $this->objectManager->getObject(Data::class, [
+            'scopeConfig' => $this->scopeConfigMock,
+            'orderCollectionFactory' => $this->orderCollectionFactoryMock,
+        ]);
+    }
+
+    public function testGetYearOldGrandTotalReturnsCorrectValue()
+    {
+        $customerId = 1;
+
+        $this->orderCollectionFactoryMock->expects($this->once())
+            ->method('create')
+            ->willReturn($this->orderCollectionMock);
+
+        $this->orderCollectionMock->expects($this->any())
+            ->method('addFieldToFilter')
+            ->withConsecutive(
+                [$this->equalTo('customer_id'), $this->equalTo($customerId)],
+                [$this->equalTo('state'), $this->equalTo(Order::STATE_COMPLETE)],
+                [$this->equalTo('created_at'), $this->equalTo(['lteq' => date('Y-m-d H:i:s')])],
+                [$this->equalTo('created_at'), $this->equalTo(['gteq' => date('Y-m-d H:i:s', strtotime('-1 year'))])]
+            )
+            ->willReturnSelf();
+
+        $orderMock1 = $this->createMock(Order::class);
+        $orderMock1->expects($this->once())
+            ->method('getGrandTotal')
+            ->willReturn(100);
+
+        $orderMock2 = $this->createMock(Order::class);
+        $orderMock2->expects($this->once())
+            ->method('getGrandTotal')
+            ->willReturn(200);
+
+        $this->orderCollectionMock->expects($this->once())
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator([$orderMock1, $orderMock2]));
+
+        $this->assertEquals(300, $this->dataHelper->getYearOldGrandTotal($customerId));
+    }
+
+    public function testGetSlabValueOrNameWithLowGrandTotal()
+    {
+        $dataHelper = new \Auraine\LoyaltyPoint\Helper\Data(
+            $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class),
+            $this->createMock(\Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class)
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetSlabs()
-    {
-        return [
-            self::TEST_CASE_ONE => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetSlabs
-     */
-    public function testGetSlabs(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetValues()
-    {
-        return [
-            self::TEST_CASE_ONE => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetValues
-     */
-    public function testGetValues(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetStoreConfigValue()
-    {
-        return [
-            self::TEST_CASE_ONE => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetStoreConfigValue
-     */
-    public function testGetStoreConfigValue(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetNames()
-    {
-        return [
-            self::TEST_CASE_ONE => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetNames
-     */
-    public function testGetNames(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        
+        $slabValue = $dataHelper->getSlabValueOrName(100);
+        
+        $this->assertNull($slabValue, 'Slab value should be null for a grand total less than all slabs');
     }
 }
