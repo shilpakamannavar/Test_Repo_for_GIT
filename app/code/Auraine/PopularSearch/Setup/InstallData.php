@@ -3,8 +3,8 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-    
-namespace Auraine\Category\Setup;
+
+namespace Auraine\PopularSearch\Setup;
     
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -14,33 +14,33 @@ use Magento\Eav\Setup\EavSetupFactory;
 class InstallData implements InstallDataInterface
 {
 
-private $eavSetupFactory;
+    private $eavSetupFactory;
 
-public function __construct(EavSetupFactory $eavSetupFactory)
-{
-    $this->eavSetupFactory = $eavSetupFactory;
-}
+    public function __construct(EavSetupFactory $eavSetupFactory)
+    {
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
 
 /**
  * {@inheritdoc}
  *
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
-public function install(
-    ModuleDataSetupInterface $setup,
-    ModuleContextInterface $context
-) {
-    $installer = $setup;
+    public function install(
+        ModuleDataSetupInterface $setup,
+        ModuleContextInterface $context
+    ) {
+        $installer = $setup;
 
-    $installer->startSetup();
+        $installer->startSetup();
 
 
-    $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
-    $eavSetup->addAttribute(
-        \Magento\Catalog\Model\Category::ENTITY,
-        'popular_search',
-        [
+        $eavSetup->addAttribute(
+            \Magento\Catalog\Model\Category::ENTITY,
+            'popular_search',
+            [
             'group' => 'General Information',
             'type' => 'int',
             'backend' => '',
@@ -61,8 +61,7 @@ public function install(
             'used_in_product_listing' => true,
             'unique' => false,
             'option' => ''
-        ]
-
-    );
-}
+            ]
+        );
+    }
 }
