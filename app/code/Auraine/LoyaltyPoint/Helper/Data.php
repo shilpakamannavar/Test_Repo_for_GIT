@@ -9,12 +9,12 @@ class Data
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $_scopeConfig;
+    private $scopeConfig;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
-    private $_orderCollectionFactory;
+    private $orderCollectionFactory;
 
     /**
      * Constructs helper Service provider to fetch Store config values.
@@ -27,8 +27,8 @@ class Data
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory
     ) {
-        $this->_scopeConfig = $scopeConfig;
-        $this->_orderCollectionFactory = $orderCollectionFactory;
+        $this->scopeConfig = $scopeConfig;
+        $this->orderCollectionFactory = $orderCollectionFactory;
     }
 
     /**
@@ -69,7 +69,7 @@ class Data
      */
     private function getStoreConfigValue($path)
     {
-        return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -96,7 +96,7 @@ class Data
     public function getYearOldGrandTotal($customerId)
     {
         /** Fetching one year old orders of customer from current date */
-        $customerOrders = $this->_orderCollectionFactory
+        $customerOrders = $this->orderCollectionFactory
             ->create()
             ->addFieldToFilter('customer_id', $customerId)
             ->addFieldToFilter('state', Order::STATE_COMPLETE)

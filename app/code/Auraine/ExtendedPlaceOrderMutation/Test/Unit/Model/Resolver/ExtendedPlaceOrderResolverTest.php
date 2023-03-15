@@ -24,7 +24,7 @@ class ExtendedPlaceOrderResolverTest extends \PHPUnit\Framework\TestCase
      */
     private $resolver;
 
-    
+
 
     /**
      * @var \Magento\Sales\Model\Order|\PHPUnit\Framework\MockObject\MockObject
@@ -95,7 +95,7 @@ class ExtendedPlaceOrderResolverTest extends \PHPUnit\Framework\TestCase
 
     public function testResolveWhenShippingAddressIsEmpty()
     {
-       
+
         $orderNumber = '100000001';
         $fieldMock = $this->getMockBuilder(Field::class)
             ->disableOriginalConstructor()
@@ -112,7 +112,7 @@ class ExtendedPlaceOrderResolverTest extends \PHPUnit\Framework\TestCase
             ->method('loadByIncrementId')
             ->with($orderNumber)
             ->willReturnSelf();
-            
+
         $orderMock->expects($this->any())
             ->method('getShippingAddress')
             ->willReturn(null);
@@ -131,7 +131,7 @@ class ExtendedPlaceOrderResolverTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertNull($result);
-        
+
     }
 
 
@@ -168,7 +168,7 @@ public function testResolveWhenShippingAddressIsNotEmpty()
 
         $this->shippingAddressMock->expects($this->any())
                 ->method('getStreet')
-                ->willReturn($streetName);    
+                ->willReturn($streetName);
 
     $countryMock = $this->getMockBuilder(\Magento\Directory\Model\Country::class)
             ->disableOriginalConstructor()

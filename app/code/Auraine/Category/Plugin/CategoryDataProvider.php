@@ -6,8 +6,14 @@ use Magento\Catalog\Helper\Category as CategoryHelper;
 
 class CategoryDataProvider
 {
-    private $categoryHelper;
+    /**
+     * @var CategoryHelper
+     */
+    protected $categoryHelper;
 
+    /**
+     * @param CategoryHelper $categoryHelper
+     */
     public function __construct(CategoryHelper $categoryHelper)
     {
         $this->categoryHelper = $categoryHelper;

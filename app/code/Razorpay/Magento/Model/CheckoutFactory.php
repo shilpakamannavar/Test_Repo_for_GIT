@@ -9,7 +9,7 @@ class CheckoutFactory
      *
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $_objectManager = null;
+    protected $objectManager = null;
 
     /**
      * Factory constructor
@@ -18,7 +18,7 @@ class CheckoutFactory
      */
     public function __construct(\Magento\Framework\ObjectManagerInterface $objectManager)
     {
-        $this->_objectManager = $objectManager;
+        $this->objectManager = $objectManager;
     }
 
     /**
@@ -30,6 +30,6 @@ class CheckoutFactory
      */
     public function create($className, array $data = [])
     {
-        return $this->_objectManager->create($className, $data);
+        return $this->objectManager->create($className, $data);
     }
 }

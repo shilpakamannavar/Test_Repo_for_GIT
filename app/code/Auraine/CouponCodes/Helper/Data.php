@@ -20,22 +20,22 @@ class Data extends AbstractHelper
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $_customerSession;
+    protected $customerSession;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
 
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $_objectManager;
+    protected $objectManager;
 
     /**
      * @var \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory
      */
-    protected $_collectionFactory;
+    protected $collectionFactory;
 
     /**
      * @param \Magento\Framework\App\Helper\Context $context
@@ -52,10 +52,10 @@ class Data extends AbstractHelper
         \Magento\Framework\ObjectManagerInterface $objectManger
     ) {
         parent::__construct($context);
-        $this->_storeManager = $storeManager;
-        $this->_customerSession = $customerSession;
-        $this->_collectionFactory = $collectionFactory;
-        $this->_objectManager = $objectManger;
+        $this->storeManager = $storeManager;
+        $this->customerSession = $customerSession;
+        $this->collectionFactory = $collectionFactory;
+        $this->objectManager = $objectManger;
     }
 
     /**
@@ -65,8 +65,8 @@ class Data extends AbstractHelper
      */
     private function getCustomerGroupId()
     {
-        if ($this->_customerSession->isLoggedIn()) {
-            return $this->_customerSession->getCustomer()->getGroupId();
+        if ($this->customerSession->isLoggedIn()) {
+            return $this->customerSession->getCustomer()->getGroupId();
         } else {
             return 0;
         }
@@ -79,7 +79,7 @@ class Data extends AbstractHelper
      */
     private function getWebsiteId()
     {
-        return $this->_storeManager->getStore()->getWebsiteId();
+        return $this->storeManager->getStore()->getWebsiteId();
     }
 
     /**
@@ -92,7 +92,7 @@ class Data extends AbstractHelper
         $websiteId = $this->getWebsiteId();
         $customerGroupId = $this->getCustomerGroupId();
 
-        return $this->_collectionFactory->create()
+        return $this->collectionFactory->create()
             ->addWebsiteGroupDateFilter($websiteId, $customerGroupId)
             ->addAllowedSalesRulesFilter()
             ->addFieldToFilter('coupon_type', ['neq' => '1'])
@@ -106,7 +106,7 @@ class Data extends AbstractHelper
      */
     public function getMobileHeaderStatus()
     {
-        $request = $this->_objectManager->create(\Magento\Framework\App\RequestInterface::class);
+        $request = $this->objectManager->create(\Magento\Framework\App\RequestInterface::class);
         $mobileHeader = $request->getHeader(self::CUSTOM_MOBILE_HEADER_NAME);
         
         return  $mobileHeader == self::CUSTOM_MOBILE_HEADER_CONTENT;

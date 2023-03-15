@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">csv_form.csv_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Bulk Upload Size And Color Attribute</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">csv_form</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Auraine\CsvUploader\Block\Adminhtml\Form\UploadButton"/>
+        </buttons>
+        <deps>
+            <dep>csv_form.csv_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="csv_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="name" xsi:type="string">csv_form_data_source</argument>
+            <argument name="class" xsi:type="string">Auraine\CsvUploader\Ui\Component\Form\DataProvider</argument>
+            <argument name="primaryFieldName" xsi:type="string">csv_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/*/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="image">
+      <settings>
+          <label translate="true">Bulk Upload Size And Color Attribute</label>
+      </settings>
+			<field name="name" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="array">
+                    <item name="option_1" xsi:type="array">
+                        <item name="label" xsi:type="string">Select Attribute Type</item>
+                        <item name="value" xsi:type="string"> </item>
+                    </item>
+                    <item name="option_2" xsi:type="array">
+                        <item name="label" xsi:type="string">Size Options</item>
+                        <item name="value" xsi:type="string">size</item>
+                    </item>
+                    <item name="option_3" xsi:type="array">
+                        <item name="label" xsi:type="string">Color Options</item>
+                        <item name="value" xsi:type="string">color</item>
+                    </item>
+                    <item name="option_4" xsi:type="array">
+                        <item name="label" xsi:type="string">Hex Color</item>
+                        <item name="value" xsi:type="string">hex color</item>
+                    </item>
+                    <item name="option_5" xsi:type="array">
+                        <item name="label" xsi:type="string">Swatches Color</item>
+                        <item name="value" xsi:type="string">swatches color</item>
+                    </item>
+                </item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Attribute Type</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">name</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+      <field name="image" formElement="fileUploader" sortOrder="20">
+            <settings>
+                <label translate="true">CSV File</label>
+                <validation>
+                <rule name="required-entry" xsi:type="boolean">true</rule>
+            </validation>
+            </settings>
+            <formElements>
+                <fileUploader>
+                    <settings>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">csvuploader/csv/tempUpload</param>
+                        </uploaderConfig>
+                    </settings>
+                </fileUploader>
+            </formElements>
+        </field>
+  </fieldset>
+</form>

@@ -18,6 +18,9 @@ class Order extends \Razorpay\Magento\Controller\BaseController
 
     protected $orderRepository;
 
+    protected $config;
+    protected $objectManagement;
+
     protected $logger;
     /**
      * @param \Magento\Framework\App\Action\Context $context
@@ -57,73 +60,84 @@ class Order extends \Razorpay\Magento\Controller\BaseController
         $this->objectManagement   = \Magento\Framework\App\ObjectManager::getInstance();
     }
 
+    private function getSalesOrderData($receiptId)
+    {
+        # fetch the related sales order and verify the payment ID with rzp payment id
+        # To avoid duplicate order entry for same quote
+        $collection = $this->_objectManager->get('Magento\Sales\Model\Order')
+            ->getCollection()
+            ->addFieldToSelect('entity_id')
+            ->addFilter('quote_id', $receiptId)
+            ->getFirstItem();
+
+        return $collection->getData();
+    }
+
+    private function getMazeVersion()
+    {
+        return $this->_objectManager->get(
+            'Magento\Framework\App\ProductMetadataInterface'
+        )->getVersion();
+    }
+
+    private function getModuleVersion()
+    {
+        return $this->_objectManager->get(
+            'Magento\Framework\Module\ModuleList'
+        )->getOne('Razorpay_Magento')['setup_version'];
+    }
+
     public function execute()
     {
-        $receipt_id = $this->getQuote()->getId();
+        $receiptId = $this->getQuote()->getId();
 
-        if(empty($_POST['error']) === false)
-        {
+        if (empty($_POST['error']) === false) {
             $this->messageManager->addError(__('Payment Failed'));
             return $this->_redirect('checkout/cart');
         }
 
-        if (isset($_POST['order_check']))
-        {
-            if (empty($this->cache->load("quote_processing_".$receipt_id)) === false)
-            {
+        if (isset($_POST['order_check'])) {
+            if (empty($this->cache->load("quote_processing_".$receiptId)) === false) {
                 $responseContent = [
-                'success'   => true,
-                'order_id'  => false,
-                'parameters' => []
+                    'success'   => true,
+                    'order_id'  => false,
+                    'parameters' => []
                 ];
 
-                # fetch the related sales order and verify the payment ID with rzp payment id
-                # To avoid duplicate order entry for same quote
-                $collection = $this->_objectManager->get('Magento\Sales\Model\Order')
-                                                   ->getCollection()
-                                                   ->addFieldToSelect('entity_id')
-                                                   ->addFilter('quote_id', $receipt_id)
-                                                   ->getFirstItem();
+                $salesOrder = $this->getSalesOrderData($receiptId);
 
-                $salesOrder = $collection->getData();
+                if (empty($salesOrder['entity_id']) === false) {
 
-                if (empty($salesOrder['entity_id']) === false)
-                {
-                    $this->logger->info("Razorpay inside order already processed with webhook quoteID:" . $receipt_id
-                                    ." and OrderID:".$salesOrder['entity_id']);
+                    $this->logger->info("Razorpay inside order already processed with webhook quoteID:" . $receiptId
+                        ." and OrderID:".$salesOrder['entity_id']);
 
                     $this->checkoutSession
-                            ->setLastQuoteId($this->getQuote()->getId())
-                            ->setLastSuccessQuoteId($this->getQuote()->getId())
-                            ->clearHelperData();
+                        ->setLastQuoteId($this->getQuote()->getId())
+                        ->setLastSuccessQuoteId($this->getQuote()->getId())
+                        ->clearHelperData();
 
                     $order = $this->orderRepository->get($salesOrder['entity_id']);
 
                     if ($order) {
                         $this->checkoutSession->setLastOrderId($order->getId())
-                                           ->setLastRealOrderId($order->getIncrementId())
-                                           ->setLastOrderStatus($order->getStatus());
+                            ->setLastRealOrderId($order->getIncrementId())
+                            ->setLastOrderStatus($order->getStatus());
                     }
 
                     $responseContent['order_id'] = true;
                 }
-            }
-            else
-            {
-                if(empty($receipt_id) === false)
-                {
+            } else {
+                if (empty($receiptId) === false) {
                     //set the chache to stop webhook processing
-                    $this->cache->save("started", "quote_Front_processing_$receipt_id", ["razorpay"], 30);
+                    $this->cache->save("started", "quote_Front_processing_$receiptId", ["razorpay"], 30);
 
-                    $this->logger->info("Razorpay front-end order processing started quoteID:" . $receipt_id);
+                    $this->logger->info("Razorpay front-end order processing started quoteID:" . $receiptId);
 
                     $responseContent = [
-                    'success'   => false,
-                    'parameters' => []
+                        'success'   => false,
+                        'parameters' => []
                     ];
-                }
-                else
-                {
+                } else {
                     $this->logger->info("Razorpay order already processed with quoteID:" . $this->checkoutSession
                             ->getLastQuoteId());
 
@@ -143,29 +157,22 @@ class Order extends \Razorpay\Magento\Controller\BaseController
             return $response;
         }
 
-        if(isset($_POST['razorpay_payment_id']))
-        {
+        if (isset($_POST['razorpay_payment_id'])) {
             $this->getQuote()->getPayment()->setMethod(PaymentMethod::METHOD_CODE);
 
-            try
-            {
-                if(!$this->customerSession->isLoggedIn()) {
+            try {
+                if (!$this->customerSession->isLoggedIn()) {
                     $this->getQuote()->setCheckoutMethod($this->cartManagement::METHOD_GUEST);
                     $this->getQuote()->setCustomerEmail($this->customerSession->getCustomerEmailAddress());
                 }
                 $this->cartManagement->placeOrder($this->getQuote()->getId());
                 return $this->_redirect('checkout/onepage/success');
-            }
-            catch(\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->messageManager->addError(__($e->getMessage()));
                 return $this->_redirect('checkout/cart');
             }
-        }
-        else
-        {
-            if(empty($_POST['email']) === true)
-            {
+        } else {
+            if (empty($_POST['email']) === true) {
                 $this->logger->info("Email field is required");
 
                 $responseContent = [
@@ -174,36 +181,24 @@ class Order extends \Razorpay\Magento\Controller\BaseController
                 ];
 
                 $code = 200;
-            }
-            else
-            {
+            } else {
                 $amount = (int) (number_format($this->getQuote()->getGrandTotal() * 100, 0, ".", ""));
 
-                $payment_action = $this->config->getPaymentAction();
+                $paymentAction = $this->config->getPaymentAction();
 
-                $maze_version = $this->_objectManager->get('Magento\Framework\App\ProductMetadataInterface')->getVersion();
-                $module_version =  $this->_objectManager->get('Magento\Framework\Module\ModuleList')->getOne('Razorpay_Magento')['setup_version'];
-
+                $mazeVersion = $this->getMazeVersion();
+                $moduleVersion =  $this->getModuleVersion();
                 $this->customerSession->setCustomerEmailAddress($_POST['email']);
 
-                if ($payment_action === 'authorize')
-                {
-                    $payment_capture = 0;
-                }
-                else
-                {
-                    $payment_capture = 1;
-                }
-
+                $paymentCapture = ($paymentAction === 'authorize') ? 0 : 1;
                 $code = 400;
 
-                try
-                {
+                try {
                     $order = $this->rzp->order->create([
                         'amount' => $amount,
-                        'receipt' => $receipt_id,
+                        'receipt' => $receiptId,
                         'currency' => $this->getQuote()->getQuoteCurrencyCode(),
-                        'payment_capture' => $payment_capture,
+                        'paymentCapture' => $paymentCapture,
                         'app_offer' => ($this->getDiscount() > 0) ? 1 : 0
                     ]);
 
@@ -212,21 +207,19 @@ class Order extends \Razorpay\Magento\Controller\BaseController
                         'parameters' => []
                     ];
 
-                    if (null !== $order && !empty($order->id))
-                    {
-                        $is_hosted = false;
+                    if (null !== $order && !empty($order->id)) {
 
                         $merchantPreferences    = $this->getMerchantPreferences();
 
                         $responseContent = [
                             'success'           => true,
                             'rzp_order'         => $order->id,
-                            'order_id'          => $receipt_id,
+                            'order_id'          => $receiptId,
                             'amount'            => $order->amount,
                             'quote_currency'    => $this->getQuote()->getQuoteCurrencyCode(),
                             'quote_amount'      => number_format($this->getQuote()->getGrandTotal(), 2, ".", ""),
-                            'maze_version'      => $maze_version,
-                            'module_version'    => $module_version,
+                            'mazeVersion'      => $mazeVersion,
+                            'moduleVersion'    => $moduleVersion,
                             'is_hosted'         => $merchantPreferences['is_hosted'],
                             'image'             => $merchantPreferences['image'],
                             'embedded_url'      => $merchantPreferences['embedded_url'],
@@ -239,36 +232,29 @@ class Order extends \Razorpay\Magento\Controller\BaseController
 
                         //save to razorpay orderLink
                         $orderLinkCollection = $this->_objectManager->get('Razorpay\Magento\Model\OrderLink')
-                                                               ->getCollection()
-                                                               ->addFilter('quote_id', $receipt_id)
-                                                               ->getFirstItem();
+                            ->getCollection()
+                            ->addFilter('quote_id', $receiptId)
+                            ->getFirstItem();
 
                         $orderLinkData = $orderLinkCollection->getData();
 
-                        if (empty($orderLinkData['entity_id']) === false)
-                        {
+                        if (empty($orderLinkData['entity_id']) === false) {
                             $orderLinkCollection->setRzpOrderId($order->id)
-                                      ->save();
-                        }
-                        else
-                        {
+                                ->save();
+                        } else {
                             $orderLnik = $this->_objectManager->create('Razorpay\Magento\Model\OrderLink');
-                            $orderLnik->setQuoteId($receipt_id)
-                                      ->setRzpOrderId($order->id)
-                                      ->save();
+                            $orderLnik->setQuoteId($receiptId)
+                                ->setRzpOrderId($order->id)
+                                ->save();
                         }
 
                     }
-                }
-                catch(\Razorpay\Api\Errors\Error $e)
-                {
+                } catch (\Razorpay\Api\Errors\Error $e) {
                     $responseContent = [
                         'message'   => $e->getMessage(),
                         'parameters' => []
                     ];
-                }
-                catch(\Exception $e)
-                {
+                } catch (\Exception $e) {
                     $responseContent = [
                         'message'   => $e->getMessage(),
                         'parameters' => []
@@ -277,12 +263,11 @@ class Order extends \Razorpay\Magento\Controller\BaseController
             }
 
             //set the chache for race with webhook
-            $this->cache->save("started", "quote_Front_processing_$receipt_id", ["razorpay"], 300);
+            $this->cache->save("started", "quote_Front_processing_$receiptId", ["razorpay"], 300);
 
             $response = $this->resultFactory->create(ResultFactory::TYPE_JSON);
             $response->setData($responseContent);
             $response->setHttpResponseCode($code);
-
             return $response;
         }
     }
@@ -299,14 +284,11 @@ class Order extends \Razorpay\Magento\Controller\BaseController
 
     protected function getMerchantPreferences()
     {
-        try
-        {
-            $api = new Api($this->config->getKeyId(),"");
+        try {
+            $api = new Api($this->config->getKeyId(), "");
 
             $response = $api->request->request("GET", "preferences");
-        }
-        catch (\Razorpay\Api\Errors\Error $e)
-        {
+        }catch (\Razorpay\Api\Errors\Error $e) {
             echo 'Magento Error : ' . $e->getMessage();
         }
 
@@ -316,8 +298,7 @@ class Order extends \Razorpay\Magento\Controller\BaseController
         $preferences['is_hosted'] = false;
         $preferences['image'] = $response['options']['image'];
 
-        if(isset($response['options']['redirect']) && $response['options']['redirect'] === true)
-        {
+        if (isset($response['options']['redirect']) && $response['options']['redirect'] === true) {
             $preferences['is_hosted'] = true;
         }
 

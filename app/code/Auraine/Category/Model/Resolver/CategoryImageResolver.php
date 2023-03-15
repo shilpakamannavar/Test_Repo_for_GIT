@@ -56,6 +56,7 @@ class CategoryImageResolver implements ResolverInterface
         /* @var $category Category */
         $category = $value['model'];
         $imagePath = $category->getData('category_image_2');
+
        if ($imagePath) {
             $mediaUrl = $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]);
             $imageUrl = $mediaUrl . $imagePath;
