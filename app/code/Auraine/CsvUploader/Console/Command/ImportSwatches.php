@@ -144,23 +144,19 @@ class ImportSwatches extends Command
                 $swImgJpg = $swatchImgExt . $swatchNameToLower . '.jpg';
                 $swImgPng = $swatchImgExt . $swatchNameToLower . '.png';
 
-                if ($swatchOptions) {
-                    if ($swatchOptions[0]['option_id'] == $optionId) {
-                        if (file_exists($swImgJpg) || file_exists($swImgPng)) {
-                            if ($swatchOptions && $swatchOptions[0]['option_id'] == $optionId) {
-                                $swatchImage = (
-                                    file_exists($swImgJpg)
-                                    ) ? '/' . $swatchNameToLower . '.jpg' : '/' . $swatchNameToLower . '.png';
-                                $connection->query(
-                                    "UPDATE eav_attribute_option_swatch
-                                    SET value= '{$swatchImage}' WHERE option_id = '{$optionId}'"
-                                );
-                                $connection->query(
-                                    "UPDATE eav_attribute_option_swatch
-                                    SET type= '2' WHERE option_id = '{$optionId}'"
-                                );
-                            }
-                        }
+                if (file_exists($swImgJpg) || file_exists($swImgPng)) {
+                    if ($swatchOptions && $swatchOptions[0]['option_id'] == $optionId) {
+                        $swatchImage = (
+                            file_exists($swImgJpg)
+                            ) ? '/' . $swatchNameToLower . '.jpg' : '/' . $swatchNameToLower . '.png';
+                        $connection->query(
+                            "UPDATE eav_attribute_option_swatch
+                            SET value= '{$swatchImage}' WHERE option_id = '{$optionId}'"
+                        );
+                        $connection->query(
+                            "UPDATE eav_attribute_option_swatch
+                            SET type= '2' WHERE option_id = '{$optionId}'"
+                        );
                     }
                 } else {
                     $swatchImage = (

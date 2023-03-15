@@ -40,15 +40,21 @@ class AddData implements DataPatchInterface
         foreach ($newRegions as $code => $name) {
 
             $binds = ['country_id'   => 'IN', 'code' => $code, 'default_name' => $name];
-            $this->moduleDataSetup->getConnection()->insert($this->moduleDataSetup->
-                getTable('directory_country_region'), $binds
+            $this->moduleDataSetup->getConnection()->insert(
+                $this->moduleDataSetup->getTable(
+                'directory_country_region'
+                ),
+                $binds
             );
             $regionId = $this->moduleDataSetup->getConnection()->
                 lastInsertId($this->moduleDataSetup->getTable('directory_country_region'));
 
             $binds = ['locale'=> 'en_US', 'region_id' => $regionId, 'name'=> $name];
-            $this->moduleDataSetup->getConnection()->insert($this->moduleDataSetup->
-                getTable('directory_country_region_name'), $binds
+            $this->moduleDataSetup->getConnection()->insert(
+                $this->moduleDataSetup->getTable(
+                'directory_country_region_name'
+                ),
+                $binds
             );
         }
     }

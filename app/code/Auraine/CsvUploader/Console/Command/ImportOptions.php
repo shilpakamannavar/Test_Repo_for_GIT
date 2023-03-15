@@ -121,13 +121,13 @@ class ImportOptions extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $attribute_code = $input->getArgument(self::ATTRIBUTE_CODE_ARGUMENT);
-        $file_path = $input->getArgument(self::FILE_PATH_ARGUMENT);
+        $attributeCode = $input->getArgument(self::ATTRIBUTE_CODE_ARGUMENT);
+        $filePath = $input->getArgument(self::FILE_PATH_ARGUMENT);
 
-        if (!$attribute_code || !$file_path) {
+        if (!$attributeCode || !$filePath) {
             $output->writeln('Please specify attribute code and import file path (*.csv)');
         } else {
-            $this->importFromCsvFile($file_path, $attribute_code);
+            $this->importFromCsvFile($filePath, $attributeCode);
         }
         return null;
     }
@@ -238,8 +238,7 @@ class ImportOptions extends Command
                 $this->getAttribute($attributeCode)->getAttributeId(),
                 $option
             );
-            $optionId = $this->getOptionId($attributeCode, $label, true);
-            return $optionId;
+            return $this->getOptionId($attributeCode, $label, true);
         }
         return false;
     }
