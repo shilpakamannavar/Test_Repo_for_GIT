@@ -7,6 +7,7 @@ use Magento\Framework\App\CacheInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use PHPUnit\Framework\TestCase;
+use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory;
 
 class CategorySetupTest extends TestCase
 {
@@ -47,7 +48,7 @@ class CategorySetupTest extends TestCase
             'moduleDataSetup' => $this->moduleDataSetupMock,
         ]);
 
-        $collectionFactoryMock = $this->getMockBuilder(\Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory::class)
+        $collectionFactoryMock = $this->getMockBuilder(CollectionFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
         
@@ -107,5 +108,4 @@ class CategorySetupTest extends TestCase
 
         $this->assertEquals($expected, $this->categorySetup->getDefaultEntities());
     }
-
 }
