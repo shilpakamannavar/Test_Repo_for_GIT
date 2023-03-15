@@ -60,7 +60,7 @@ class CheckCustomerExists implements ResolverInterface
      */
     public function validateMobile($mobile)
     {
-        $pattern = '/^(\+?\d{1,4}[ \-]*)?(\(\d{2,3}\)[ \-]*)?(\d{2,4}[ \-]*)?\d{3,4}[ \-]*\d{3,4}$/';
-        return (bool)preg_match($pattern, $mobile);
+        $pattern = '/^(\+?\d{1,4}|\(\d{2,3}\)|\d{2,4})[\s-]?\d{3,4}[\s-]?\d{3,4}$/';
+        return preg_match($pattern, $mobile) && strlen($mobile) >= 10 && strlen($mobile) <= 12;
     }
 }
