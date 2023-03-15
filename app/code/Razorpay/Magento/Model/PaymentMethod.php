@@ -24,6 +24,7 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
     const METHOD_CODE                   = 'razorpay';
     const CONFIG_MASKED_FIELDS          = 'masked_fields';
     const CURRENCY                      = 'INR';
+    const RAZORPAY_ERROR                      = 'Razorpay Error:';
 
     /**
      * @var string
@@ -197,7 +198,6 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
         try {
             /** @var \Magento\Sales\Model\Order\Payment $payment */
             $order = $payment->getOrder();
-            $orderId = $order->getIncrementId();
 
             $request = $this->getPostData();
 
@@ -216,8 +216,8 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
             }
 
             if (empty($request['payload']['payment']['entity']['id']) === false) {
-                $payment_id = $request['payload']['payment']['entity']['id'];
-                $rzp_order_id = $request['payload']['order']['entity']['id'];
+                $paymentId = $request['payload']['payment']['entity']['id'];
+                $rzpOrderId = $request['payload']['order']['entity']['id'];
 
                 $isWebhookCall = true;
                 //validate that request is from webhook only
@@ -228,9 +228,9 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
                 if (empty($request['query']) === false) {
 
                     //update orderLink
-                    $_objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
+                    $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
 
-                    $orderLinkCollection = $_objectManager->get('Razorpay\Magento\Model\OrderLink')
+                    $orderLinkCollection = $objectManager->get('Razorpay\Magento\Model\OrderLink')
                         ->getCollection()
                         ->addFilter('quote_id', $order->getQuoteId())
                         ->getFirstItem();
@@ -239,58 +239,75 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
 
                     if (empty($orderLink['entity_id']) === false) {
 
-                        $payment_id = $orderLink['rzp_payment_id'];
+                        $paymentId = $orderLink['rzp_payment_id'];
 
-                        $rzp_order_id = $orderLink['rzp_order_id'];
+                        $rzpOrderId = $orderLink['rzp_order_id'];
 
-                        $rzp_signature = $orderLink['rzp_signature'];
+                        $rzpSignature = $orderLink['rzp_signature'];
 
-                        $rzp_order_amount_actual = (int) $orderLink['rzp_order_amount'];
+                        $rzpOrderAmountActual = (int) $orderLink['rzp_order_amount'];
 
-                        if ((empty($payment_id) === true) &&
-                            (emprty($rzp_order_id) === true) &&
-                            (emprty($rzp_signature) === true)) {
+                        if ((empty($paymentId) === true) &&
+                            (emprty($rzpOrderId) === true) &&
+                            (emprty($rzpSignature) === true)) {
                             throw new LocalizedException(__("Razorpay Payment details missing."));
                         }
 
-                        if ($orderAmount !== $rzp_order_amount_actual) {
-                            $rzpOrderAmount = $order->getOrderCurrency()->formatTxt(number_format($rzp_order_amount_actual / 100, 2, ".", ""));
+                        if ($orderAmount !== $rzpOrderAmountActual) {
+                            $rzpOrderAmount = $order->getOrderCurrency()->formatTxt(number_format(
+                                $rzpOrderAmountActual / 100,
+                                2,
+                                ".",
+                                ""
+                                )
+                            );
 
-                            throw new LocalizedException(__("Cart order amount = %1 doesn't match with amount paid = %2", $order->getOrderCurrency()->formatTxt($order->getGrandTotal()), $rzpOrderAmount));
+                            throw new LocalizedException(__(
+                                "Cart order amount = %1 doesn't match with amount paid = %2",
+                                $order->getOrderCurrency()->formatTxt($order->getGrandTotal()),
+                                $rzpOrderAmount
+                                )
+                            );
                         }
 
                         //validate payment signature first
                         $this->validateSignature([
-                            'razorpay_payment_id' => $payment_id,
-                            'razorpay_order_id'   => $rzp_order_id,
-                            'razorpay_signature'  => $rzp_signature
+                            'razorpay_payment_id' => $paymentId,
+                            'razorpay_order_id'   => $rzpOrderId,
+                            'razorpay_signature'  => $rzpSignature
                         ]);
 
                         try {
                             //fetch the payment from API and validate the amount
-                            $payment_data = $this->rzp->payment->fetch($payment_id);
+                            $paymentData = $this->rzp->payment->fetch($paymentId);
                         } catch (\Razorpay\Api\Errors\Error $e) {
                             $this->_logger->critical($e);
-                            throw new LocalizedException(__('Razorpay Error: %1.', $e->getMessage()));
+                            throw new LocalizedException(__(self::RAZORPAY_ERROR.' %1.', $e->getMessage()));
                         }
 
-                        if ($payment_data->order_id === $rzp_order_id) {
+                        if ($paymentData->order_id === $rzpOrderId) {
                             try {
                                 //fetch order from API
-                                $rzp_order_data = $this->rzp->order->fetch($rzp_order_id);
+                                $rzpOrderData = $this->rzp->order->fetch($rzpOrderId);
                             } catch (\Razorpay\Api\Errors\Error $e) {
                                 $this->_logger->critical($e);
-                                throw new LocalizedException(__('Razorpay Error: %1.', $e->getMessage()));
+                                throw new LocalizedException(__(self::RAZORPAY_ERROR.' %1.', $e->getMessage()));
                             }
 
                             //verify order receipt
-                            if ($rzp_order_data->receipt !== $order->getQuoteId()) {
+                            if ($rzpOrderData->receipt !== $order->getQuoteId()) {
                                 throw new LocalizedException(__("Not a valid Razorpay Payment"));
                             }
 
                             //verify currency
-                            if ($payment_data->currency !== $order->getOrderCurrencyCode()) {
-                                throw new LocalizedException(__("Order Currency:(%1) not matched with payment currency:(%2)", $order->getOrderCurrencyCode(), $payment_data->currency));
+                            $currency = $paymentData->currency;
+                            if ($currency !== $order->getOrderCurrencyCode()) {
+                                throw new LocalizedException(__(
+                                    "Order Currency:(%1) not matched with payment currency:(%2)",
+                                    $order->getOrderCurrencyCode(),
+                                    $currency
+                                    )
+                                );
                             }
                         } else {
                             throw new LocalizedException(__("Not a valid Razorpay Payments."));
@@ -302,19 +319,30 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
                 } else {
                     // Order processing through front-end
 
-                    $payment_id = $request['paymentMethod']['additional_data']['rzp_payment_id'];
+                    $paymentId = $request['paymentMethod']['additional_data']['rzp_payment_id'];
 
-                    $rzp_order_id = $this->order->getOrderId();
+                    $rzpOrderId = $this->order->getOrderId();
 
                     if ($orderAmount !== $this->order->getRazorpayOrderAmount()) {
-                        $rzpOrderAmount = $order->getOrderCurrency()->formatTxt(number_format($this->order->getRazorpayOrderAmount() / 100, 2, ".", ""));
+                        $rzpOrderAmount = $order->getOrderCurrency()->formatTxt(number_format(
+                            $this->order->getRazorpayOrderAmount() / 100,
+                            2,
+                            ".",
+                            ""
+                            )
+                        );
 
-                        throw new LocalizedException(__("Cart order amount = %1 doesn't match with amount paid = %2", $order->getOrderCurrency()->formatTxt($order->getGrandTotal()), $rzpOrderAmount));
+                        throw new LocalizedException(__(
+                            "Cart order amount = %1 doesn't match with amount paid = %2",
+                            $order->getOrderCurrency()->formatTxt($order->getGrandTotal()),
+                            $rzpOrderAmount
+                            )
+                        );
                     }
 
                     $this->validateSignature([
-                        'razorpay_payment_id' => $payment_id,
-                        'razorpay_order_id'   => $rzp_order_id,
+                        'razorpay_payment_id' => $paymentId,
+                        'razorpay_order_id'   => $rzpOrderId,
                         'razorpay_signature'  => $request['paymentMethod']['additional_data']['rzp_signature']
                     ]);
                 }
@@ -322,16 +350,16 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
 
             $payment->setStatus(self::STATUS_APPROVED)
                 ->setAmountPaid($amount)
-                ->setLastTransId($payment_id)
-                ->setTransactionId($payment_id)
+                ->setLastTransId($paymentId)
+                ->setTransactionId($paymentId)
                 ->setIsTransactionClosed(true)
                 ->setShouldCloseParentTransaction(true);
 
             //update the Razorpay payment with corresponding created order ID of this quote ID
-            $this->updatePaymentNote($payment_id, $order, $rzp_order_id, $isWebhookCall);
+            $this->updatePaymentNote($paymentId, $order, $rzpOrderId, $isWebhookCall);
         } catch (\Exception $e) {
             $this->_logger->critical($e);
-            throw new LocalizedException(__('Razorpay Error: %1.', $e->getMessage()));
+            throw new LocalizedException(__(self::RAZORPAY_ERROR.' %1.', $e->getMessage()));
         }
 
         return $this;
@@ -376,9 +404,9 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
         );
 
         //update orderLink
-        $_objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
+        $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
 
-        $orderLinkCollection = $_objectManager->get('Razorpay\Magento\Model\OrderLink')
+        $orderLinkCollection = $objectManager->get('Razorpay\Magento\Model\OrderLink')
             ->getCollection()
             ->addFieldToSelect('entity_id')
             ->addFilter('quote_id', $order->getQuoteId())
@@ -420,7 +448,11 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
     {
         $webhookSecret = $this->config->getWebhookSecret();
 
-        $this->rzp->utility->verifyWebhookSignature(json_encode($post), $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'], $webhookSecret);
+        $this->rzp->utility->verifyWebhookSignature(
+            json_encode($post),
+            $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'],
+            $webhookSecret
+        );
     }
 
     protected function getPostData()

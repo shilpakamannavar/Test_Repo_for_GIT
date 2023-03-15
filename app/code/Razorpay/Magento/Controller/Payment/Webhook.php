@@ -10,6 +10,9 @@ use Razorpay\Magento\Model\PaymentMethod;
 class Webhook extends \Razorpay\Magento\Controller\BaseController
 
 {
+    const WEBHOOK_MESSAGE = 'Razorpay Webhook: Order processing is active for quoteID:';
+    const WEBHOOK_IN_MESSAGE = 'Razorpay Webhook: Quote order is inactive for quoteID:';
+
     /**
      * @var \Magento\Checkout\Model\Session
      */
@@ -216,7 +219,7 @@ class Webhook extends \Razorpay\Magento\Controller\BaseController
             // Check if front-end cache flag active
             if (empty($this->cache->load("quote_Front_processing_" . $quoteId)) === false) {
                 $this->logger->info(
-                    "Razorpay Webhook: Order processing is active for quoteID: $quoteId
+                    self::WEBHOOK_MESSAGE . " $quoteId
                      and Razorpay payment_id(:$paymentId)"
                 );
                 $this->setHeader();
@@ -229,8 +232,9 @@ class Webhook extends \Razorpay\Magento\Controller\BaseController
 
             //ignore webhook call for some time as per config, from first webhook call
             if ((time() - $orderLinkCollection->getWebhookFirstNotifiedAt()) < $webhookWaitTime) {
-                $this->logger->info(__(
-                    "Razorpay Webhook: Order processing is active for quoteID: $quoteId and Razorpay payment_id(:$paymentId) and webhook attempt: %1",
+                $this->logger->info(
+                    __(
+                        self::WEBHOOK_MESSAGE ." $quoteId and Razorpay payment_id(:$paymentId) and webhook attempt: %1",
                         ($orderLink['webhook_count'] + 1)
                     )
                 );
@@ -242,7 +246,7 @@ class Webhook extends \Razorpay\Magento\Controller\BaseController
 
         // Check if front-end cache flag active
         if (empty($this->cache->load("quote_Front_processing_" . $quoteId)) === false) {
-            $this->logger->info("Razorpay Webhook: Order processing is active for quoteID: $quoteId
+            $this->logger->info(self::WEBHOOK_MESSAGE . " $quoteId
              and Razorpay payment_id(:$paymentId)");
             $this->setHeader();
 
@@ -313,8 +317,9 @@ class Webhook extends \Razorpay\Magento\Controller\BaseController
 
         if (empty($orderLink['entity_id']) === false && ($orderLink['order_placed'])) {
 
-            $this->logger->info(__(
-                "Razorpay Webhook: Quote order is inactive for quoteID: $quoteId and Razorpay payment_id(:$paymentId) with Maze OrderID (:%1) ",
+            $this->logger->info(
+                __(
+                    self::WEBHOOK_IN_MESSAGE ." $quoteId and Razorpay payment_id(:$paymentId) with Maze OrderID (:%1)",
                 $orderLink['increment_order_id']
                 )
             );
@@ -371,8 +376,6 @@ class Webhook extends \Razorpay\Magento\Controller\BaseController
         $this->logger->info(
             "Razorpay Webhook Processed successfully for Razorpay payment_id(:$paymentId):
                  and quoteID(: $quoteId) and OrderID(: " . $order->getEntityId() . ")");
-
-        return;
     }
 
     protected function getQuoteObject($post, $quoteId)

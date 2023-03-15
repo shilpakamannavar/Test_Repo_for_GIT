@@ -60,13 +60,40 @@ class Order extends \Razorpay\Magento\Controller\BaseController
         $this->objectManagement   = \Magento\Framework\App\ObjectManager::getInstance();
     }
 
+    private function getSalesOrderData($receiptId)
+    {
+        # fetch the related sales order and verify the payment ID with rzp payment id
+        # To avoid duplicate order entry for same quote
+        $collection = $this->_objectManager->get('Magento\Sales\Model\Order')
+            ->getCollection()
+            ->addFieldToSelect('entity_id')
+            ->addFilter('quote_id', $receiptId)
+            ->getFirstItem();
+
+        return $collection->getData();
+    }
+
+    private function getMazeVersion()
+    {
+        return $this->_objectManager->get(
+            'Magento\Framework\App\ProductMetadataInterface'
+        )->getVersion();
+    }
+
+    private function getModuleVersion()
+    {
+        return $this->_objectManager->get(
+            'Magento\Framework\Module\ModuleList'
+        )->getOne('Razorpay_Magento')['setup_version'];
+    }
+
     public function execute()
     {
         $receiptId = $this->getQuote()->getId();
 
         if (empty($_POST['error']) === false) {
             $this->messageManager->addError(__('Payment Failed'));
-            $return = $this->_redirect('checkout/cart');
+            return $this->_redirect('checkout/cart');
         }
 
         if (isset($_POST['order_check'])) {
@@ -77,15 +104,7 @@ class Order extends \Razorpay\Magento\Controller\BaseController
                     'parameters' => []
                 ];
 
-                # fetch the related sales order and verify the payment ID with rzp payment id
-                # To avoid duplicate order entry for same quote
-                $collection = $this->_objectManager->get('Magento\Sales\Model\Order')
-                    ->getCollection()
-                    ->addFieldToSelect('entity_id')
-                    ->addFilter('quote_id', $receiptId)
-                    ->getFirstItem();
-
-                $salesOrder = $collection->getData();
+                $salesOrder = $this->getSalesOrderData($receiptId);
 
                 if (empty($salesOrder['entity_id']) === false) {
 
@@ -135,7 +154,7 @@ class Order extends \Razorpay\Magento\Controller\BaseController
             $response->setData($responseContent);
             $response->setHttpResponseCode(200);
 
-            $return = $response;
+            return $response;
         }
 
         if (isset($_POST['razorpay_payment_id'])) {
@@ -147,10 +166,10 @@ class Order extends \Razorpay\Magento\Controller\BaseController
                     $this->getQuote()->setCustomerEmail($this->customerSession->getCustomerEmailAddress());
                 }
                 $this->cartManagement->placeOrder($this->getQuote()->getId());
-                $return = $this->_redirect('checkout/onepage/success');
+                return $this->_redirect('checkout/onepage/success');
             } catch (\Exception $e) {
                 $this->messageManager->addError(__($e->getMessage()));
-                $return = $this->_redirect('checkout/cart');
+                return $this->_redirect('checkout/cart');
             }
         } else {
             if (empty($_POST['email']) === true) {
@@ -167,21 +186,11 @@ class Order extends \Razorpay\Magento\Controller\BaseController
 
                 $paymentAction = $this->config->getPaymentAction();
 
-                $mazeVersion = $this->_objectManager->get(
-                    'Magento\Framework\App\ProductMetadataInterface'
-                )->getVersion();
-                $moduleVersion =  $this->_objectManager->get(
-                    'Magento\Framework\Module\ModuleList'
-                )->getOne('Razorpay_Magento')['setup_version'];
-
+                $mazeVersion = $this->getMazeVersion();
+                $moduleVersion =  $this->getModuleVersion();
                 $this->customerSession->setCustomerEmailAddress($_POST['email']);
 
-                if ($paymentAction === 'authorize') {
-                    $paymentCapture = 0;
-                } else {
-                    $paymentCapture = 1;
-                }
-
+                $paymentCapture = ($paymentAction === 'authorize') ? 0 : 1;
                 $code = 400;
 
                 try {
@@ -199,7 +208,6 @@ class Order extends \Razorpay\Magento\Controller\BaseController
                     ];
 
                     if (null !== $order && !empty($order->id)) {
-
 
                         $merchantPreferences    = $this->getMerchantPreferences();
 
@@ -260,10 +268,8 @@ class Order extends \Razorpay\Magento\Controller\BaseController
             $response = $this->resultFactory->create(ResultFactory::TYPE_JSON);
             $response->setData($responseContent);
             $response->setHttpResponseCode($code);
-
-            $return = $response;
+            return $response;
         }
-        return $return ;
     }
 
     public function getOrderID()

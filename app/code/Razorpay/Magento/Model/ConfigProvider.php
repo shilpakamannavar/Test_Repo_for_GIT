@@ -70,7 +70,7 @@ class ConfigProvider implements ConfigProviderInterface
             return [];
         }
 
-        $config = [
+        return [
             'payment' => [
                 'razorpay' => [
                     'merchant_name' => $this->config->getMerchantNameOverride(),
@@ -78,7 +78,5 @@ class ConfigProvider implements ConfigProviderInterface
                 ],
             ],
         ];
-
-        return $config;
     }
 }

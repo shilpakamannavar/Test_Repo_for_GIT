@@ -72,19 +72,19 @@ class SetRzpPaymentDetailsOnCart implements ResolverInterface
             throw new GraphQlInputException(__('Required parameter "rzp_payment_id" is missing.'));
         }
 
-        $rzp_payment_id = $args['input']['rzp_payment_id'];
+        $rzpPaymentId = $args['input']['rzp_payment_id'];
 
         if (empty($args['input']['rzp_order_id'])) {
             throw new GraphQlInputException(__('Required parameter "rzp_order_id" is missing.'));
         }
 
-        $rzp_order_id = $args['input']['rzp_order_id'];
+        $rzpOrderId = $args['input']['rzp_order_id'];
 
         if (empty($args['input']['rzp_signature'])) {
             throw new GraphQlInputException(__('Required parameter "rzp_signature" is missing.'));
         }
 
-        $rzp_signature = $args['input']['rzp_signature'];
+        $rzpSignature = $args['input']['rzp_signature'];
 
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
         $cart = $this->getCartForUser->execute($maskedCartId, $context->getUserId(), $storeId);
@@ -92,9 +92,9 @@ class SetRzpPaymentDetailsOnCart implements ResolverInterface
 
         try {
             //fetch order from API
-            $rzp_order_data = $this->rzp->order->fetch($rzp_order_id);
+            $rzpOrderData = $this->rzp->order->fetch($rzpOrderId);
 
-            if ($rzp_order_data->receipt !== $cart->getId()) {
+            if ($rzpOrderData->receipt !== $cart->getId()) {
                 throw new GraphQlInputException(__('Not a valid Razorpay orderID'));
             }
 
@@ -113,16 +113,16 @@ class SetRzpPaymentDetailsOnCart implements ResolverInterface
 
 
             if (empty($orderLinkData['entity_id']) === false) {
-                $orderLinkCollection->setRzpPaymentId($rzp_payment_id)
-                    ->setRzpOrderId($rzp_order_id)
-                    ->setRzpSignature($rzp_signature)
+                $orderLinkCollection->setRzpPaymentId($rzpPaymentId)
+                    ->setRzpOrderId($rzpOrderId)
+                    ->setRzpSignature($rzpSignature)
                     ->save();
             } else {
                 $orderLnik = $this->objectManager->create('Razorpay\Magento\Model\OrderLink');
                 $orderLnik->setQuoteId($cart->getId())
-                    ->setRzpPaymentId($rzp_payment_id)
-                    ->setRzpOrderId($rzp_order_id)
-                    ->setRzpSignature($rzp_signature)
+                    ->setRzpPaymentId($rzpPaymentId)
+                    ->setRzpOrderId($rzpOrderId)
+                    ->setRzpSignature($rzpSignature)
                     ->save();
             }
 

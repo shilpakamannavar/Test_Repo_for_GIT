@@ -144,9 +144,6 @@ class AfterConfigSaveObserver implements ObserverInterface
 
             $this->disableWebhook();
         }
-
-        return;
-
     }
 
     /**
@@ -162,7 +159,7 @@ class AfterConfigSaveObserver implements ObserverInterface
             $webhooks = $this->rzp->webhook->all();
 
             if (($webhooks->count) > 0 && (empty($this->webhookUrl) === false)) {
-                foreach ($webhooks->items as $key => $webhook) {
+                foreach ($webhooks->items as $webhook) {
                     if ($webhook->url === $this->webhookUrl) {
                         $this->webhookId = $webhook->id;
                         return ['id' => $webhook->id];

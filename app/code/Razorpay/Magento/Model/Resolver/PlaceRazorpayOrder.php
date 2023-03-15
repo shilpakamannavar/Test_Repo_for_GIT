@@ -54,19 +54,12 @@ class PlaceRazorpayOrder implements ResolverInterface
         $receiptId      = $cart->getId();
         $amount          = (int) (number_format($cart->getGrandTotal() * 100, 0, ".", ""));
         $paymentAction  = $this->scopeConfig->getValue('payment/razorpay/payment_action', $storeScope);
-
-        $payment_capture = 1;
-
-        if ($paymentAction === 'authorize') {
-
-            $payment_capture = 0;
-        }
-
+        $paymentCapture = ($paymentAction === 'authorize') ? 0 : 1;
         $order = $this->rzp->order->create([
             'amount'          => $amount,
             'receipt'         => $receiptId,
             'currency'        => $cart->getQuoteCurrencyCode(),
-            'payment_capture' => $payment_capture,
+            'payment_capture' => $paymentCapture,
             'app_offer'       => (($cart->getBaseSubtotal() - $cart->getBaseSubtotalWithDiscount()) > 0) ? 1 : 0,
         ]);
 
@@ -104,25 +97,26 @@ class PlaceRazorpayOrder implements ResolverInterface
                     ->save();
             }
 
-            return $responseContent;
+            $result = $responseContent;
 
         }else {
-            return [
+            $result = [
                 'success' => false,
                 'message' => "Razorpay Order not generated. Something went wrong",
             ];
         }
     } catch (\Razorpay\Api\Errors\Error $e) {
-        return [
+        $result = [
             'success' => false,
             'message' => $e->getMessage(),
         ];
     }  catch (\Exception $e) {
 
-        return [
+        $result = [
             'success' => false,
             'message' => $e->getMessage(),
         ];
     }
+        return $result;
     }
 }

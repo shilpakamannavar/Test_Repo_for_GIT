@@ -11,10 +11,8 @@ class WebhookUrl extends \Magento\Config\Block\System\Config\Form\Field
 {
     protected function _getElementHtml(AbstractElement $element)
     {
-
         $baseUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
-        $copyButton = "<div class='rzp-webhook-to-clipboard'
-                                           style='background-color: #337ab7; color: white; border: none;cursor: pointer; padding: 2px 4px; text-decoration: none;display: inline-block;'>Copy Url</div>
+        $copyButton = "<div class='rzp-webhook-to-clipboard' style='background-color: #337ab7; color: white; border: none;cursor: pointer; padding: 2px 4px; text-decoration: none;display: inline-block;'>Copy Url</div>
 						<script type='text/javascript'>
 						//<![CDATA[
 						require([
@@ -36,7 +34,10 @@ class WebhookUrl extends \Magento\Config\Block\System\Config\Form\Field
 						</script>
 						";
 
-        $element->setComment("*Please use below url for webhook* <span style='width:300px;font-weight: bold;' class='rzp-webhook-url' >" . $baseUrl . "razorpay/payment/webhook</span>" . $copyButton);
+        $element->setComment(
+            "*Please use below url for webhook* <span style='width:300px;font-weight: bold;' class='rzp-webhook-url' >".
+            $baseUrl . "razorpay/payment/webhook</span>" . $copyButton
+        );
 
         return $element->getElementHtml();
 
