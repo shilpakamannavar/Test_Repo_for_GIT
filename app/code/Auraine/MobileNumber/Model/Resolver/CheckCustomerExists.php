@@ -49,7 +49,7 @@ class CheckCustomerExists implements ResolverInterface
         );
 
         return !((count($collection) == 0));
-
+        
     }
 
     /**
@@ -59,8 +59,8 @@ class CheckCustomerExists implements ResolverInterface
     public function validateMobile($mobile)
     {
         $pattern = '/^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/';
-        if(preg_match($pattern, $mobile)) {
-            if(strlen($mobile) >= 10 && strlen($mobile) == 12) {
+        if (preg_match($pattern, $mobile)) {
+            if (strlen($mobile) >= 10 && strlen($mobile) == 12) {
                 return true;
             } else {
                 return false;
