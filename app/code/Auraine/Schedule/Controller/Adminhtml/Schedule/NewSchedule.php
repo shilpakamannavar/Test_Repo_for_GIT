@@ -12,17 +12,17 @@ class NewSchedule extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected $_pageFactory;
+    protected $pageFactory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
-       \Magento\Backend\App\Action\Context $context,
-       \Magento\Framework\View\Result\PageFactory $pageFactory
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $pageFactory
     )
     {
-        $this->_pageFactory = $pageFactory;
+        $this->pageFactory = $pageFactory;
         return parent::__construct($context);
     }
 

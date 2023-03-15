@@ -1,0 +1,8 @@
+type Query {
+    getFrequentProducts
+    (
+        uid: String @doc(description: "Uid of the product")
+
+    )
+    : [String] @resolver( class: "Auraine\\FrequentlyBoughtTogether\\Model\\Resolver\\ProductsList") @doc(description: "List of Frequent Products")
+}
