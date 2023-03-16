@@ -89,7 +89,7 @@ class BannerSchedular
             $newBannerId = $schedule->getNewBannerId();
             if ($startDate && $endDate && $newBannerId) {
                 $currentDate = $this->timezoneInterface->date()->format('Y-m-d H:i:s');
-    
+
                 // Enable/disable banners based on schedule status
                 $this->handleBanners(
                     $currentDate,
@@ -107,47 +107,43 @@ class BannerSchedular
     private function handleBanners($currentDate, $startDate, $endDate, $status, $oldBannerId, $newBannerId, $schedule)
     {
         if ($currentDate >= $startDate && $currentDate <= $endDate) {
-                    
-            if ($status != 'Active') {
-                
-                $schedule->setStatus('Active');
-                if ($oldBannerId) {
-                    $oldBanner =  $this->bannerRepositoryInterface->loadById($oldBannerId);
-                    $oldBanner->setIsEnabled(0);
-                    $oldBanner->save();
-                }
-                
-               $newBanner =  $this->bannerRepositoryInterface->loadById($newBannerId);
-               $newBanner->setIsEnabled(1);
-               $newBanner->save();
-               
-               try {
-                  $this->scheduleRepository->save($schedule);
-                } catch (LocalizedException $e) {
-                    // log the exception message
-                }
-            }
+            $this->activateBanner($oldBannerId, $newBannerId);
+            $this->scheduleBanner($schedule, 'Active');
         } elseif ($currentDate < $startDate) {
-            if ($status != 'Pending') {
-                $schedule->setStatus('Pending');
-                try {
-                    $this->scheduleRepository->save($schedule);
-                } catch (LocalizedException $e) {
-                    // log the exception message
-                }
-            }
+            $this->scheduleBanner($schedule, 'Pending');
         } else {
-            if ($status != 'Inactive') {
-                $schedule->setStatus('Inactive');
-                $newBanner =  $this->bannerRepositoryInterface->loadById($newBannerId);
-                $newBanner->setIsEnabled(0);
-                $newBanner->save();
-                try {
-                    $this->scheduleRepository->save($schedule);
-                } catch (LocalizedException $e) {
-                    // log the exception message
-                }
-            }
+            $this->deactivateBanner($newBannerId);
+            $this->scheduleBanner($schedule, 'Inactive');
         }
+    }
+
+    private function activateBanner($oldBannerId, $newBannerId)
+    {
+        if ($oldBannerId) {
+            $oldBanner =  $this->bannerRepositoryInterface->loadById($oldBannerId);
+            $oldBanner->setIsEnabled(0);
+            $oldBanner->save();
+        }
+
+        $newBanner =  $this->bannerRepositoryInterface->loadById($newBannerId);
+        $newBanner->setIsEnabled(1);
+        $newBanner->save();
+    }
+
+    private function scheduleBanner($schedule, $status)
+    {
+        $schedule->setStatus($status);
+        try {
+            $this->scheduleRepository->save($schedule);
+        } catch (LocalizedException $e) {
+            // log the exception message
+        }
+    }
+
+    private function deactivateBanner($newBannerId)
+    {
+        $newBanner =  $this->bannerRepositoryInterface->loadById($newBannerId);
+        $newBanner->setIsEnabled(0);
+        $newBanner->save();
     }
 }

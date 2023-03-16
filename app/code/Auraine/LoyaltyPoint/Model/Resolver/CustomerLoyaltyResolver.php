@@ -21,7 +21,7 @@ class CustomerLoyaltyResolver implements ResolverInterface
     /**
      * @var \Auraine\LoyaltyPoint\Helper\Data
      */
-    protected $_helperData;
+    protected $helperData;
 
     /**
      * @param Data $helperData
@@ -29,7 +29,7 @@ class CustomerLoyaltyResolver implements ResolverInterface
     public function __construct(
         Data $helperData
     ) {
-        $this->_helperData = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -46,8 +46,8 @@ class CustomerLoyaltyResolver implements ResolverInterface
             throw new LocalizedException(__('"model" value should be specified'));
         }
 
-        $grandTotal = $this->_helperData->getYearOldGrandTotal($value['model']->getId());
+        $grandTotal = $this->helperData->getYearOldGrandTotal($value['model']->getId());
 
-        return $this->_helperData->getSlabValueOrName($grandTotal, true);
+        return $this->helperData->getSlabValueOrName($grandTotal, true);
     }
 }

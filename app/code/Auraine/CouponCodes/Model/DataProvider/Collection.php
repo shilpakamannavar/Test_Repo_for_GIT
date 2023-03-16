@@ -6,17 +6,17 @@ class Collection
     /**
      * @var \Auraine\CouponCodes\Helper\Data
      */
-    protected $_helperData;
+    protected $helperData;
 
     /**
      * @var \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory
      */
-    protected $_collectionFactory;
+    protected $collectionFactory;
 
     /**
      * @var \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory
      */
-    protected $_utility;
+    protected $utility;
 
     /**
      * @var \Magento\Framework\Serialize\SerializerInterface
@@ -37,9 +37,9 @@ class Collection
         \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory $collectionFactory,
         \Magento\Framework\Serialize\SerializerInterface $serializer
     ) {
-        $this->_helperData = $helperData;
-        $this->_utility = $utility;
-        $this->_collectionFactory = $collectionFactory;
+        $this->helperData = $helperData;
+        $this->utility = $utility;
+        $this->collectionFactory = $collectionFactory;
         $this->serializer = $serializer;
     }
 
@@ -51,7 +51,7 @@ class Collection
      */
     private function getRulesCollection($isMobile = false)
     {
-        $collection = $this->_helperData->getCurrentCouponRule();
+        $collection = $this->helperData->getCurrentCouponRule();
 
         return !$isMobile ? $collection->addFieldToFilter('is_mobile_specific', ['neq' => '1']) : $collection;
     }

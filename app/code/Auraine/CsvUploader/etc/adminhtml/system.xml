@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="csv_upload" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Swatch Image Directory URL</label>
+            <tab>auraine_system_config</tab>
+            <resource>Auraine_LoyaltyPoint::module_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">              
+                <field id="swatch_image_directory_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Swatch Image Directory URL</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

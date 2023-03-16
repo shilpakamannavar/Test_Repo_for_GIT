@@ -8,6 +8,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order\Payment;
 use Razorpay\Magento\Model\PaymentMethod;
 use Magento\Framework\Exception\LocalizedException;
+
 /**
  * Class AfterPlaceOrderObserver
  * @package PayU\PaymentGateway\Observer
@@ -25,7 +26,20 @@ class AfterPlaceOrderObserver implements ObserverInterface
      */
     private $orderRepository;
 
+    /**
+     * @var Config
+     */
+    private $config;
 
+    /**
+     * @var Session
+     */
+    private $checkoutSession;
+
+    /**
+     * @var PaymentMethod
+     */
+    private $rzpMethod;
 
     /**
      * StatusAssignObserver constructor.
@@ -49,23 +63,21 @@ class AfterPlaceOrderObserver implements ObserverInterface
      * {@inheritdoc}
      */
     public function execute(Observer $observer)
-    { 
-
+    {
         $order = $observer->getOrder();
 
         /** @var Payment $payment */
         $payment = $order->getPayment();
 
-        $pay_method = $payment->getMethodInstance();
+        $payMethod = $payment->getMethodInstance();
 
-        $code = $pay_method->getCode();
+        $code = $payMethod->getCode();
 
-        if($code === PaymentMethod::METHOD_CODE)
-        {
+        if ($code === PaymentMethod::METHOD_CODE) {
             $this->updateOrderLinkStatus($payment);
-            
+
         }
-        
+
     }
 
     /**
@@ -82,36 +94,37 @@ class AfterPlaceOrderObserver implements ObserverInterface
         $lastQuoteId = $order->getQuoteId();
         $rzpPaymentId  = $payment->getLastTransId();
 
-        $amount_paid = number_format($this->rzpMethod->getAmountPaid($rzpPaymentId) / 100, 2, ".", "");
+        $amountPaid = number_format($this->rzpMethod->getAmountPaid($rzpPaymentId) / 100, 2, ".", "");
 
         $order->addStatusHistoryComment(
-                    __('Actual Amount Paid of %1, with Razorpay Offer/Fee applied.',  $order->getBaseCurrency()->formatTxt($amount_paid))
-                );
+            __(
+                'Actual Amount Paid of %1, with Razorpay Offer/Fee applied.',
+                $order->getBaseCurrency()->formatTxt($amountPaid))
+        );
         $order->save();
 
-        //update quote 
+        //update quote
         $quote = $objectManager->get('Magento\Quote\Model\Quote')->load($lastQuoteId);
         $quote->setIsActive(false)->save();
         $this->checkoutSession->replaceQuote($quote);
 
         //update razorpay orderLink
         $orderLinkCollection = $objectManager->get('Razorpay\Magento\Model\OrderLink')
-                                                   ->getCollection()
-                                                   ->addFieldToSelect('entity_id')
-                                                   ->addFilter('quote_id', $lastQuoteId)
-                                                   ->addFilter('rzp_payment_id', $rzpPaymentId)
-                                                   ->addFilter('increment_order_id', $order->getRealOrderId())
-                                                   ->getFirstItem();
+            ->getCollection()
+            ->addFieldToSelect('entity_id')
+            ->addFilter('quote_id', $lastQuoteId)
+            ->addFilter('rzp_payment_id', $rzpPaymentId)
+            ->addFilter('increment_order_id', $order->getRealOrderId())
+            ->getFirstItem();
 
         $orderLink = $orderLinkCollection->getData();
 
-        if (empty($orderLink['entity_id']) === false)
-        {
+        if (empty($orderLink['entity_id']) === false) {
             $orderLinkCollection->setOrderId($order->getEntityId())
-                                ->setOrderPlaced(true)
-                                ->save();
-        }                
-        
+                ->setOrderPlaced(true)
+                ->save();
+        }
+
     }
 
 }

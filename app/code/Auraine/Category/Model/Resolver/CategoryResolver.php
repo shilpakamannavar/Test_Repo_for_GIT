@@ -34,7 +34,6 @@ class CategoryResolver implements ResolverInterface
     {
         $category = $value['model'];
         $imageUrl = null;
-
         if ($category->getData('category_image_2')) {
             $imageUrl = rtrim($this->urlBuilder->getBaseUrl(), '/'). $category->getData('category_image_2');
         }

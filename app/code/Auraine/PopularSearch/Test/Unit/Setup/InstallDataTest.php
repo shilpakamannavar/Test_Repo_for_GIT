@@ -1,11 +1,10 @@
 <?php
-namespace Auraine\Category\Test\Unit\Setup;
+namespace Auraine\PopularSearch\Test\Unit\Setup;
 
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Catalog\Model\Category;
-use Magento\Eav\Model\Entity\Attribute;
 use PHPUnit\Framework\TestCase;
 
 class InstallDataTest extends TestCase

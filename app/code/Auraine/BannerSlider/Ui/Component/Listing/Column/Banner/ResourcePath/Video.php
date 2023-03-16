@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Auraine\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath;
 
 class Video implements ProcessorInterface

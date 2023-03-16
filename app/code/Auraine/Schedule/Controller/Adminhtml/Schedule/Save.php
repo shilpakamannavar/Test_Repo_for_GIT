@@ -20,6 +20,8 @@ use Magento\Framework\Exception\LocalizedException;
 
 class Save extends Action
 {
+    const REDIRECT_URL = '*/*/edit';
+
     private DataPersistorInterface $dataPersistor;
     private ScheduleRepositoryInterface $scheduleRepository;
     private SearchCriteriaBuilder $searchCriteriaBuilder;
@@ -85,14 +87,14 @@ class Save extends Action
         if ($data['old_banner_id'] == $data['new_banner_id']) {
             $this->messageManager->addErrorMessage('Banners should not be same choose different banners');
             $this->dataPersistor->set('auraine_schedule_schedule', $data);
-            return $resultRedirect->setPath('*/*/edit', ['schedule_id' => $id]);
+            return $resultRedirect->setPath(self::REDIRECT_URL, ['schedule_id' => $id]);
         }
         
         if ($data['end_date'] < $data['start_date']) {
             $this->messageManager->addErrorMessage('End Date Should Be Greater Than Start Date');
             $this->dataPersistor->set('auraine_schedule_schedule', $data);
             if ($id) {
-                return $resultRedirect->setPath('*/*/edit', ['schedule_id' => $id]);
+                return $resultRedirect->setPath(self::REDIRECT_URL, ['schedule_id' => $id]);
             } else {
                 return $resultRedirect->setPath('*/*/');
             }

@@ -48,25 +48,19 @@ class CheckCustomerExists implements ResolverInterface
             $type
         );
 
-        return !((count($collection) == 0));
-        
+        return !empty($collection);
     }
 
     /**
-     * @param $mobile
+     * Function for validating mobile number
+     *
+     * @param String $mobile
+     *
      * @return bool
      */
     public function validateMobile($mobile)
     {
-        $pattern = '/^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/';
-        if (preg_match($pattern, $mobile)) {
-            if (strlen($mobile) >= 10 && strlen($mobile) == 12) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        $pattern = '/^(\+?\d{1,4}|\(\d{2,3}\)|\d{2,4})[\s-]?\d{3,4}[\s-]?\d{3,4}$/';
+        return preg_match($pattern, $mobile) && strlen($mobile) >= 10 && strlen($mobile) <= 12;
     }
 }
