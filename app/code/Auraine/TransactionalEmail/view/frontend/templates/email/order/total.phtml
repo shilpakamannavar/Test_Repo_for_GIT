@@ -1,9 +1,8 @@
 <?php
-/**
- * // @codingStandardsIgnoreFile
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// @codingStandardsIgnoreFile
+// phpcs:disable Magento2.Templates.ThisInTemplate
 
 /**
  * @var $block \Magento\Sales\Block\Order\Totals
@@ -22,7 +21,8 @@
                 <?= $block->escapeHtml($_total->getLabel()) ?>
             <?php endif ?>
         </th>
-        <td <?= /* @noEscape */ $block->getValueProperties() ?> data-th="<?= $block->escapeHtmlAttr($_total->getLabel()) ?>">
+        <td <?= /* @noEscape */ $block->getValueProperties() ?>
+            data-th="<?= $block->escapeHtmlAttr($_total->getLabel()) ?>">
             <?php $value = $block->escapeHtmlAttr($_total->getValue());
              if ($_total->getStrong()) : ?>
                 <strong><?= /* @noEscape */ round($value)  ?></strong>

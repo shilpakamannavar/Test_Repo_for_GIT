@@ -25,7 +25,7 @@ class Data
      * Transaction SMS status config path
      * @var string const
      */
-    private const OTP_STATUS_PATH = "transaction_sms_control/transaction_sms/enable_sms";
+    public const OTP_STATUS_PATH = "transaction_sms_control/transaction_sms/enable_sms";
 
     /**
      * @var \Magecomp\Mobilelogin\Helper\Data
@@ -66,7 +66,7 @@ class Data
     ) {
         $codes = ['{{customer_name}}'];
         $accurate = [$customerName];
-
+        
         $message = $this->generateMessage($codes, $accurate, $configPath);
 
         $this->dispachSMS($message, $mobile);
@@ -89,7 +89,7 @@ class Data
         $accurate = [$customerName];
 
         $message = $this->generateMessage($codes, $accurate, $configPath);
-        
+
         $this->dispachSMS($message, $mobile);
     }
 

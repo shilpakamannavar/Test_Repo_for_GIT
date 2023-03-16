@@ -68,7 +68,7 @@ class Config
     {
         return $this->getConfigData(self::WEBHOOK_SECRET);
     }
-    
+
     public function getPaymentAction()
     {
         return $this->getConfigData(self::KEY_PAYMENT_ACTION);

@@ -22,7 +22,7 @@ class LoyaltyResolver implements ResolverInterface
     /**
      * @var \Auraine\LoyaltyPoint\Helper\Data
      */
-    protected $_helperData;
+    protected $helperData;
 
     /**
      * @var GetCustomer
@@ -39,7 +39,7 @@ class LoyaltyResolver implements ResolverInterface
         Data $helperData
     ) {
         $this->customerGetter = $customerGetter;
-        $this->_helperData = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -54,8 +54,8 @@ class LoyaltyResolver implements ResolverInterface
     ) {
         $customer = $this->customerGetter->execute($context);
         $customerId = (int)$customer->getId();
-        $grandTotal = $this->_helperData->getYearOldGrandTotal($customerId);
+        $grandTotal = $this->helperData->getYearOldGrandTotal($customerId);
 
-        return $this->_helperData->getSlabValueOrName($grandTotal, true);
+        return $this->helperData->getSlabValueOrName($grandTotal, true);
     }
 }
