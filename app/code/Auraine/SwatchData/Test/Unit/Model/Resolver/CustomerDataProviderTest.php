@@ -1,102 +1,97 @@
 <?php
-namespace Auraine\SwatchData\Test\Unit\Model\Resolver;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Auraine\SwatchData\Model\Resolver\DataProvider;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Swatches\Helper\Data;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\SwatchData\Model\Resolver\CustomerDataProvider
- */
 class CustomerDataProviderTest extends TestCase
 {
-    /**
-     * Mock swatchHelper
-     *
-     * @var \Magento\Swatches\Helper\Data|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $swatchHelper;
+    private $swatchHelperMock;
+    private $scopeConfigMock;
+    private $dataProvider;
 
-    /**
-     * Mock scopeConfig
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $scopeConfig;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * Object to test
-     *
-     * @var \Auraine\SwatchData\Model\Resolver\CustomerDataProvider
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->swatchHelper = $this->createMock(\Magento\Swatches\Helper\Data::class);
-        $this->scopeConfig = $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\SwatchData\Model\Resolver\CustomerDataProvider::class,
-            [
-                'swatchHelper' => $this->swatchHelper,
-                'scopeConfig' => $this->scopeConfig,
-            ]
+        $this->swatchHelperMock = $this->getMockBuilder(Data::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->scopeConfigMock = $this->getMockBuilder(ScopeConfigInterface::class)
+            ->getMock();
+
+        $this->dataProvider = new DataProvider(
+            $this->swatchHelperMock,
+            $this->scopeConfigMock
         );
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestResolve()
+    public function testResolveReturnsNullWhenOptionLabelIsNotColor()
     {
-        $value['option_label'] = 'Color';
-        if ($value['option_label'] == 'Color') {
-            $typeName = $this->getswatchTypeTests(1);
+        $field = $this->getMockBuilder(Field::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $context = $this->getMockBuilder(ContextInterface::class)
+            ->getMock();
+        $info = $this->getMockBuilder(ResolveInfo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $value = [
+            'option_label' => 'Size',
+            'value_id' => 1
+        ];
+        $args = null;
 
-            return [
-                'Testcase 1' => [
-                    'prerequisites' => ['param' => $typeName],
-                    'expectedResult' => ['param' => 'ColorSwatchData']
-                ]
-            ];
-        }
+        $result = $this->dataProvider->resolve($field, $context, $info, $value, $args);
+
+        $this->assertNull($result);
     }
 
-    public function getswatchTypeTests($valueType)
+    public function testResolveReturnsExpectedResultWhenOptionLabelIsColor()
     {
-        $value = null ;
-        switch ($valueType) {
-            case 0:
-                $value = 'TextSwatchData';
-                break;
-            case 1:
-                $value = 'ColorSwatchData';
-                break;
-            case 2:
-                $value = 'ImageSwatchData';
-                break;
-            default:
-                break;
-        }
-        return $value ;
+        $field = $this->getMockBuilder(Field::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $context = $this->getMockBuilder(ContextInterface::class)
+            ->getMock();
+        $info = $this->getMockBuilder(ResolveInfo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $value = [
+            'option_label' => 'Color',
+            'value_id' => 1
+        ];
+        $args = null;
+
+        $swatchData = [
+            'type' => 1,
+            'value' => 'FFFFFF'
+        ];
+
+        $this->swatchHelperMock->expects($this->once())
+            ->method('getSwatchesByOptionsId')
+            ->with([$value['value_id']])
+            ->willReturn([$value['value_id'] => $swatchData]);
+
+        $expectedResult = [
+            'type' => 'ColorSwatchData',
+            'value' => 'FFFFFF'
+        ];
+
+        $result = $this->dataProvider->resolve($field, $context, $info, $value, $args);
+
+        $this->assertEquals($expectedResult, $result);
     }
 
-    /**
-     * @dataProvider dataProviderForTestResolve
-     */
-    public function testResolve(array $prerequisites, array $expectedResult)
+    public function testGetSwatchTypeReturnsExpectedResult()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $valueType = 1;
+
+        $result = $this->dataProvider->getSwatchType($valueType);
+
+        $this->assertEquals('ColorSwatchData', $result);
     }
 }
