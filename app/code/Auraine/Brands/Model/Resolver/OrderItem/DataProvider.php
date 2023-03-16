@@ -61,7 +61,7 @@ class DataProvider extends CoreDataProvider
     /**
      * @var StoreManagerInterface
      */
-    private $_storeManager;
+    private $storeManager;
 
     /**
      * @param OrderItemRepositoryInterface $orderItemRepository
@@ -83,7 +83,7 @@ class DataProvider extends CoreDataProvider
         $this->orderRepository = $orderRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->optionsProcessor = $optionsProcessor;
-        $this->_storeManager=$storeManager;
+        $this->storeManager=$storeManager;
     }
 
     /**
@@ -137,7 +137,7 @@ class DataProvider extends CoreDataProvider
 
             /** @var ProductInterface $associatedProduct */
             $associatedProduct = $productList[$orderItem->getProductId()] ?? null;
-            $ImageUrl= $associatedProduct->getData('image') ?? '';
+            $imageUrl= $associatedProduct->getData('image') ?? '';
             /** @var OrderInterface $associatedOrder */
             $associatedOrder = $orderList[$orderItem->getOrderId()];
             $itemOptions = $this->optionsProcessor->getItemOptions($orderItem);
@@ -168,7 +168,7 @@ class DataProvider extends CoreDataProvider
                 'quantity_canceled' => $orderItem->getQtyCanceled(),
                 'quantity_returned' => $orderItem->getQtyReturned(),
                 'brand_name' => $associatedProduct->getData('brand_name'),
-                'image_url' => $this->_storeManager->getStore()->getBaseUrl().'media/catalog/product'.$ImageUrl,
+                'image_url' => $this->storeManager->getStore()->getBaseUrl().'media/catalog/product'.$imageUrl,
                 'order_status_cancel'=>$associatedOrder->canCancel(),
             ];
 

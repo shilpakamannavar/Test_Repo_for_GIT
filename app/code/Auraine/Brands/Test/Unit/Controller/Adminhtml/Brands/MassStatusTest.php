@@ -61,8 +61,12 @@ class MassStatusTest extends TestCase
         $this->objectManager = new ObjectManager($this);
         $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
         $this->filter = $this->createMock(\Magento\Ui\Component\MassAction\Filter::class);
-        $this->collectionFactoryInstance = $this->createMock(\Auraine\Brands\Model\ResourceModel\Brands\Collection::class);
-        $this->collectionFactory = $this->createMock(\Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory::class);
+        $this->collectionFactoryInstance = $this->createMock(
+            \Auraine\Brands\Model\ResourceModel\Brands\Collection::class
+        );
+        $this->collectionFactory = $this->createMock(
+            \Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory::class
+        );
         $this->collectionFactory->method('create')->willReturn($this->collectionFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
             \Auraine\Brands\Controller\Adminhtml\Brands\MassStatus::class,

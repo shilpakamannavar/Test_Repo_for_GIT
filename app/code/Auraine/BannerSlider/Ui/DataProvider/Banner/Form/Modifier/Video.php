@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Auraine\BannerSlider\Ui\DataProvider\Banner\Form\Modifier;
 
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;
@@ -23,7 +22,7 @@ class Video implements ModifierInterface
             if ($resourcePath && $resourceType === 'video') {
                 unset($item['resource_path']);
                 $item['resource_path_video'] = $resourcePath;
-                
+
             }
         }
         return $data;
