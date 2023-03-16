@@ -45,7 +45,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     self::COUNTRY,
     self::STATUS,
     ];
- 
+
     /**
      * Need to log in import history
      *
@@ -68,7 +68,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
      * @var _resource
      */
     protected $_resource;
- 
+
     /**
      * Constructor function
      *
@@ -112,7 +112,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     {
         return $this->validColumnNames;
     }
- 
+
     /**
      * Entity type code getter.
      *
@@ -122,7 +122,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
     {
         return 'pincode';
     }
- 
+
     /**
      * Row validation.
      *
@@ -130,7 +130,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
      * @param int $rowNum
      * @return bool
      */
- 
+
    /**
     * Create Advanced message data from raw data.
     *
@@ -152,7 +152,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         $this->saveAndReplaceEntity();
         return $this;
     }
- 
+
     /**
      * Replace entity data
      *
@@ -188,7 +188,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         }
         return $this;
     }
-     
+
     /**
      * Save and replace entity
      *
@@ -232,7 +232,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         }
         return $this;
     }
- 
+
     /**
      * Save custom data.
      *
@@ -259,11 +259,11 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
                     self::STATUS
                 ]);
             }
-        
+
         }
         return $this;
     }
- 
+
      /**
       * Delete custom data.
       *
@@ -283,7 +283,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             } catch (\Exception $e) {
                 return false;
             }
- 
+
         } else {
             return false;
         }
@@ -304,8 +304,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             $code
         );
         $result = $this->_connection->fetchAll($select);
-        $count=count($result);
-        return $count;
+        return count($result);
     }
 
     /**
@@ -323,21 +322,20 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         $state =  $rowData['state'] ?? 0;
         $countryId = $rowData['country_id'] ?? '';
         $status = (int) $rowData['status'] ?? 0;
-       
+
         if (!$code) {
-            
+
             $this->addRowError('CodeIsRequired', $rowNum);
         }
         if ($code) {
             $count= $this->isPincodeExists($code);
-            if($count > 0)
-            {
+            if ($count > 0) {
                 $this->addRowError('CodeExists', $rowNum);
             }
         }
-            /* Only for India - without space in between */
-        if (!preg_match('/^[1-9]{1}\d{2}\d{3}$/', $code)) {
-                $this->addRowError('CodeNotValid', $rowNum);
+        /* Only for India - without space in between */
+        if (!preg_match('/^[1-9]\d{5}$/', $code)) {
+            $this->addRowError('CodeNotValid', $rowNum);
         }
         if (!$city) {
             $this->addRowError('CityIsRequired', $rowNum);
@@ -348,7 +346,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if ($state && !preg_match('/^[A-Z]{2}$/', $state)) {
             $this->addRowError('InvalidState', $rowNum);
         }
-        
+
         if (!$countryId) {
             $this->addRowError('CountryIsRequired', $rowNum);
         }
@@ -358,7 +356,7 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
         if (!$status) {
             $rowData['status']=0;
         }
-        if (!preg_match('/^[0-1]{1}$/', $status)) {
+        if (!preg_match('/^[01]$/', $status)) {
             $this->addRowError('InvalidStatus', $rowNum);
         }
         if (isset($this->_validatedRows[$rowNum])) {
@@ -415,6 +413,6 @@ class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEnt
             'CodeExists',
             __('This pincode already exists in the database')
         );
-        
+
     }
 }

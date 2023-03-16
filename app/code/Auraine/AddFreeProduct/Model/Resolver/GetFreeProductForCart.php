@@ -48,7 +48,7 @@ class GetFreeProductForCart implements ResolverInterface
         foreach ($freeItems as $item) {
             if ($item->isDeleted()) {
                 $product = $this->productRepository->get($item->getSku());
-                $ImageUrl = $product->getImage() ?? '';
+                $imageUrl = $product->getImage() ?? '';
 
                 $data [] = [
                     'id' => $product->getId(),
@@ -57,7 +57,7 @@ class GetFreeProductForCart implements ResolverInterface
                     'isPromoItems' => true,
                     'image' => $this->storeManager
                         ->getStore()
-                        ->getBaseUrl() . 'media/catalog/product'.$ImageUrl
+                        ->getBaseUrl() . 'media/catalog/product'.$imageUrl
                 ];
             }
         }

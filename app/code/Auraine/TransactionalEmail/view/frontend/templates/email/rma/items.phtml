@@ -9,6 +9,7 @@
 //phpcs:disable Magento2.Files.LineLength.MaxExceeded
 /** @var $block \Magento\Rma\Block\Email\Items */
 use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
+
 ?>
 <?php foreach ($block->getCollection() as $item) : ?>
     <?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -33,18 +34,18 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
     $actualPrice = $qtyOrdered * $product->getPrice();
     $specialPrice = $qtyOrdered * $product->getSpecialPrice();
 // Calculate the discount amount
-    if($specialPrice != 0){
+    if ($specialPrice != 0) {
       $discountAmount = $actualPrice - $specialPrice;
     } else {
       $discountAmount = 0;
     }
   $imagewidth=200;
-	$imageheight=200;
-	$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
-	$image_url = $imageHelper->init($product, 'small_image')
+ $imageheight=200;
+ $imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+ $image_url = $imageHelper->init($product, 'small_image')
                           ->setImageFile($product->getSmallImage())
                           ->resize($imagewidth, $imageheight)->getUrl();
-	 ?>
+  ?>
 <div style="padding: 20px">
 <div style="
                             background-color: #f5f5f5;
@@ -134,7 +135,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
             <?= round((float)$actualPrice); ?>
           </div>
         </div>
-        <?php  if($discountAmount != 0){ ?>
+        <?php  if ($discountAmount != 0) { ?>
         <div>
           <div style="
               font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
@@ -189,7 +190,7 @@ use Auraine\Brands\Model\Resolver\DataProvider\BrandsList;
               display: inline-block;
               padding-bottom: 20px;
             ">
-            <?php  if($discountAmount == 0){echo round($actualPrice);}else {echo round($discountAmount) ;} ?>
+            <?php  if ($discountAmount == 0) {echo round($actualPrice);}else {echo round($discountAmount) ;} ?>
           </div>
         </div>
       </div>

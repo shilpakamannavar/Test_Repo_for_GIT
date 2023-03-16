@@ -49,8 +49,11 @@ class AddPopularSearchAttribute implements DataPatchInterface, PatchRevertableIn
         $this->moduleDataSetup->getConnection()->startSetup();
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        if(!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::POPULAR_SEARCH)) {
-            $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::POPULAR_SEARCH);                                                        
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, self::POPULAR_SEARCH)) {
+            $eavSetup->removeAttribute(
+                \Magento\Catalog\Model\Category::ENTITY,
+                self::POPULAR_SEARCH
+            );
      }
         $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::POPULAR_SEARCH);
         $eavSetup->addAttribute(
@@ -78,7 +81,7 @@ class AddPopularSearchAttribute implements DataPatchInterface, PatchRevertableIn
                 'unique' => false,
                 'option' => ''
             ]
-    
+
         );
 
         $this->moduleDataSetup->getConnection()->endSetup();
@@ -89,7 +92,10 @@ class AddPopularSearchAttribute implements DataPatchInterface, PatchRevertableIn
         $this->moduleDataSetup->getConnection()->startSetup();
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::POPULAR_SEARCH);
+        $eavSetup->removeAttribute(
+            \Magento\Catalog\Model\Category::ENTITY,
+            self::POPULAR_SEARCH
+        );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
@@ -108,7 +114,7 @@ class AddPopularSearchAttribute implements DataPatchInterface, PatchRevertableIn
     public static function getDependencies()
     {
         return [
-        
+
         ];
     }
 }

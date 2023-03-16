@@ -207,7 +207,7 @@ class Slider
      */
     protected function videoCheck($url)
     {
-        $output = explode(".", $url);   
+        $output = explode(".", $url);
         $currentStore = $this->storeManager->getStore();
         $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
         if (strpos($url, 'youtube.com') > 0 || in_array("s3", $output)||  $output[count($output)-1] === 'mp4') {

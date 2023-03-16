@@ -26,7 +26,7 @@ class Regions implements OptionSourceInterface
         $this->regionFactory = $regionFactory;
         $this->regionCollection = $regionCollection;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -55,14 +55,14 @@ class Regions implements OptionSourceInterface
         $regionModel = $this->regionFactory->create();
         $result = [];
 
-        foreach ($this->regionCollection->getData() as $label) {
+        foreach ($regionCollection->getData() as $label) {
             $region = $regionModel->load($label['region_id']);
-            
+
             if ($region !== null) {
                 $result[$label['code']] = $label['name'];
             }
         }
-       
+
         return $result;
     }
 }
