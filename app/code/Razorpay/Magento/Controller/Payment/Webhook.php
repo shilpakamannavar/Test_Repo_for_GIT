@@ -320,12 +320,10 @@ class Webhook extends \Razorpay\Magento\Controller\BaseController
             $this->logger->info(
                 __(
                     self::WEBHOOK_IN_MESSAGE ." $quoteId and Razorpay payment_id(:$paymentId) with Maze OrderID (:%1)",
-                $orderLink['increment_order_id']
+                    $orderLink['increment_order_id']
                 )
             );
-
             return;
-
         }
 
         //Now start processing the new order creation through webhook
