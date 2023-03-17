@@ -18,8 +18,6 @@ class AddDataTest extends TestCase
     protected function setUp(): void
     {
         $this->moduleDataSetup = $this->createMock(ModuleDataSetupInterface::class);
-        // $this->regionFactory = $this->createMock(RegionFactory::class);
-
         $this->regionFactory = $this->getMockBuilder(RegionFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
