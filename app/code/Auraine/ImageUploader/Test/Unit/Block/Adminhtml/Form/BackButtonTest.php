@@ -33,7 +33,7 @@ class BackButtonTest extends TestCase
         $this->assertArrayHasKey('class', $buttonData);
         $this->assertArrayHasKey('sort_order', $buttonData);
         $this->assertEquals('Back', $buttonData['label']);
-        $this->assertEquals("location.href = ".self::URL.";", $buttonData['on_click']);
+        $this->assertEquals("location.href = '".self::URL."';", $buttonData['on_click']);
         $this->assertEquals('back', $buttonData['class']);
         $this->assertEquals(10, $buttonData['sort_order']);
     }
