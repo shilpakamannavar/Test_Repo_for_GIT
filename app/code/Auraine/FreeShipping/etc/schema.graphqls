@@ -1,0 +1,8 @@
+type Cart {
+    free_shipping: FreeShipping @doc(description: "Free Shipping Check") @resolver(class: "Auraine\\FreeShipping\\Model\\Resolver\\FreeShipping")
+}
+
+type FreeShipping {
+    status: Boolean  @doc(description: "Free shipping available")
+    amount: Float @doc(description: "Remaining amount for applicable free shipping")
+}
