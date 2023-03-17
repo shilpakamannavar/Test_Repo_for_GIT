@@ -59,7 +59,7 @@ class Order
             'number' => $orderModel->getIncrementId(),
             'order_date' => $createdAt->format('Y-m-d H:i:s'),
             'order_number' => $orderModel->getIncrementId(),
-            'status' => $orderModel->getStatusLabel(),
+            'status' => $orderModel->getStatus(),
             'shipping_method' => $orderModel->getShippingDescription(),
             'shipping_address' => $this->orderAddress->getOrderShippingAddress($orderModel),
             'billing_address' => $this->orderAddress->getOrderBillingAddress($orderModel),

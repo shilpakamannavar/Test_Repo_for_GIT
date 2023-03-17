@@ -48,41 +48,17 @@ class Quantity implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if (!array_key_exists('model', $value) || !$value['model'] instanceof ProductInterface) {
-            throw new LocalizedException(__('"model" value should be specified'));
-        }
-
         /* @var $product ProductInterface */
+     
         $product = $value['model'];
-        return $this->getOnlyXLeftQty($product);
-    }
-
-    /**
-     * Get product qty left when "Catalog > Inventory > Stock Options > Only X left Threshold" is greater than 0
-     *
-     * @param ProductInterface $product
-     *
-     * @return null|float
-     */
-    private function getOnlyXLeftQty(ProductInterface $product): ?float
-    {
-        $thresholdQty = (float)$this->scopeConfig->getValue(
-            Configuration::XML_PATH_STOCK_THRESHOLD_QTY,
-            ScopeInterface::SCOPE_STORE
-        );
-        if ($thresholdQty === 0) {
-            return null;
-        }
-
+        $stockCurrentQty = 0;
         $stockCurrentQty = $this->stockRegistry->getStockStatus(
             $product->getId(),
             $product->getStore()->getWebsiteId()
         )->getQty();
 
-        if ($stockCurrentQty >= 0) {
-            return (float)$stockCurrentQty;
-        }
-
-        return null;
+        return (float)$stockCurrentQty;
+     
     }
+
 }
