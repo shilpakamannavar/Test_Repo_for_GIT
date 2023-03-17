@@ -7,12 +7,17 @@ use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Model\Entity\Attribute;
 use Magento\Catalog\Model\Category;
 use PHPUnit\Framework\TestCase;
-use Auraine\Category\Setup\Patch\Data\AddCategoryOurExclusivesSliderAttribute;
+use Auraine\Category\Setup\Patch\Data\AddCategoryImage2CategoryAttribute;
 
-class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
+use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Framework\Setup\Patch\PatchRevertableInterface;
+
+class AddCategoryImage2CategoryAttributeTest extends TestCase
 {
+
     /**
-     * @var AddCategoryOurExclusivesSliderAttribute
+     * @var AddCategoryImage2CategoryAttribute
      */
     private $patch;
 
@@ -50,7 +55,7 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->patch = new AddCategoryOurExclusivesSliderAttribute($this->moduleDataSetupMock, $this->eavSetupFactoryMock);
+        $this->patch = new AddCategoryImage2CategoryAttribute($this->moduleDataSetupMock, $this->eavSetupFactoryMock);
     }
 
     /**
@@ -71,7 +76,7 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
 
         $eavSetupMock->expects($this->once())
             ->method('removeAttribute')
-            ->with(Category::ENTITY, AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER)
+            ->with(Category::ENTITY, AddCategoryImage2CategoryAttribute::CATEGORY_IMAGE2_SLIDER)
             ->willReturn($this->attributeMock);
 
         $this->moduleDataSetupMock->expects($this->any())
@@ -83,11 +88,11 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
     }
 
     /**
-     * testApplyAddOurExclusivesSliderAttributeToCategoryEntity
+     * testApplyAddBannerSliderAttributeToCategoryEntity
      *
      * @return void
      */
-    public function testApplyAddsAddOurExclusivesSliderAttributeToCategoryEntity()
+    public function testApplyAddsCategoryImage2AttributeToCategoryEntity()
     {
         $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
             ->disableOriginalConstructor()
@@ -102,39 +107,27 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
             ->method('create')
             ->with(['setup' => $moduleDataSetup])
             ->willReturn($eavSetup);
-        $eavSetup->expects($this->once())
-            ->method('getAttributeId')
-            ->with(Category::ENTITY, AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER)
-            ->willReturn(false);
         $eavSetup->expects($this->any())
             ->method('removeAttribute')
-            ->with(Category::ENTITY, AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER);
+            ->with(Category::ENTITY, AddCategoryImage2CategoryAttribute::CATEGORY_IMAGE2_SLIDER);
         $eavSetup->expects($this->once())
             ->method('addAttribute')
             ->with(
                 Category::ENTITY,
-                AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER,
+                AddCategoryImage2CategoryAttribute::CATEGORY_IMAGE2_SLIDER,
                 [
-                'group' => 'General Information',
-                'type' => 'int',
-                'backend' => '',
-                'frontend' => '',
-                'label' => 'Our Exclusives Slider',
-                'input' => 'select',
-                'class' => '',
+                'type' => 'varchar',
+                'label' => 'Category image 2',
+                'input' => 'image',
+                'sort_order' => 333,
                 'source' => '',
+                'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
                 'visible' => true,
                 'required' => false,
                 'user_defined' => false,
-                'default' => '',
-                'searchable' => true,
-                'filterable' => true,
-                'comparable' => false,
-                'is_used_in_grid' => true,
-                'visible_on_front' => false,
-                'used_in_product_listing' => true,
-                'unique' => false,
-                'option' => ''
+                'default' => null,
+                'group' => 'General Information',
+                'backend' => 'Magento\Catalog\Model\Category\Attribute\Backend\Image'
                 ]
             );
 
@@ -146,7 +139,7 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
         $moduleDataSetup->expects($this->exactly(1))
             ->method('endSetup');
 
-        $object = new AddCategoryOurExclusivesSliderAttribute($moduleDataSetup, $eavSetupFactory);
+        $object = new AddCategoryImage2CategoryAttribute($moduleDataSetup, $eavSetupFactory);
         $object->apply();
     }
 
@@ -170,39 +163,27 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
             ->method('create')
             ->with(['setup' => $moduleDataSetup])
             ->willReturn($eavSetup);
-        $eavSetup->expects($this->once())
-            ->method('getAttributeId')
-            ->with(Category::ENTITY, AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER)
-            ->willReturn(false);
         $eavSetup->expects($this->any())
             ->method('removeAttribute')
-            ->with(Category::ENTITY, AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER);
+            ->with(Category::ENTITY, AddCategoryImage2CategoryAttribute::CATEGORY_IMAGE2_SLIDER);
         $eavSetup->expects($this->once())
             ->method('addAttribute')
             ->with(
                 Category::ENTITY,
-                AddCategoryOurExclusivesSliderAttribute::CATEGORY_OUR_EXCLUSIVES_SLIDER,
+                AddCategoryImage2CategoryAttribute::CATEGORY_IMAGE2_SLIDER,
                 [
-                'group' => 'General Information',
-                'type' => 'int',
-                'backend' => '',
-                'frontend' => '',
-                'label' => 'Our Exclusives Slider',
-                'input' => 'select',
-                'class' => '',
+                'type' => 'varchar',
+                'label' => 'Category image 2',
+                'input' => 'image',
+                'sort_order' => 333,
                 'source' => '',
+                'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
                 'visible' => true,
                 'required' => false,
                 'user_defined' => false,
-                'default' => '',
-                'searchable' => true,
-                'filterable' => true,
-                'comparable' => false,
-                'is_used_in_grid' => true,
-                'visible_on_front' => false,
-                'used_in_product_listing' => true,
-                'unique' => false,
-                'option' => ''
+                'default' => null,
+                'group' => 'General Information',
+                'backend' => 'Magento\Catalog\Model\Category\Attribute\Backend\Image'
                 ]
             );
 
@@ -214,7 +195,7 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
         $moduleDataSetup->expects($this->exactly(1))
             ->method('endSetup');
 
-        $patch = new AddCategoryOurExclusivesSliderAttribute($moduleDataSetup, $eavSetupFactory);
+        $patch = new AddCategoryImage2CategoryAttribute($moduleDataSetup, $eavSetupFactory);
 
         $patch->apply();
     }
@@ -229,7 +210,7 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $patch = new AddCategoryOurExclusivesSliderAttribute($moduleDataSetup, $eavSetupFactory);
+        $patch = new AddCategoryImage2CategoryAttribute($moduleDataSetup, $eavSetupFactory);
 
         $this->assertEquals([], $patch->getAliases());
     }
@@ -244,7 +225,7 @@ class AddCategoryOurExclusivesSliderAttributeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $patch = new AddCategoryOurExclusivesSliderAttribute($moduleDataSetup, $eavSetupFactory);
+        $patch = new AddCategoryImage2CategoryAttribute($moduleDataSetup, $eavSetupFactory);
 
         $this->assertEquals([], $patch->getAliases());
     }

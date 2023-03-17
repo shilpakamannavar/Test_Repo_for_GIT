@@ -12,13 +12,19 @@ class CategoryDataProvider
     protected $categoryHelper;
 
     /**
+     * Constructor creating
+     *
      * @param CategoryHelper $categoryHelper
      */
     public function __construct(CategoryHelper $categoryHelper)
     {
         $this->categoryHelper = $categoryHelper;
     }
-
+    /**
+     * Constructor creating
+     *
+     * @param CategoryHelper $categoryHelper,DataProvider $subject,Result $result
+     */
     public function afterGetData(DataProvider $subject, $result)
     {
         $mediaUrl = $subject->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);

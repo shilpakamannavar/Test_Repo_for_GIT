@@ -13,15 +13,27 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\UrlInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Resolve rendered content for category attributes where HTML content is allowed
  */
 class CategoryResolver implements ResolverInterface
 {
+    /**
+     * @var CategoryRepository
+     */
     protected $categoryRepository;
+    /**
+     * @var UrlInterface
+     */
     protected $urlBuilder;
-
+    /**
+     * Constructing
+     *
+     * @param CategoryRepository $categoryRepository, UrlInterface $urlBuilder
+     *
+     */
     public function __construct(
         CategoryRepository $categoryRepository,
         UrlInterface $urlBuilder
@@ -29,7 +41,11 @@ class CategoryResolver implements ResolverInterface
         $this->categoryRepository = $categoryRepository;
         $this->urlBuilder = $urlBuilder;
     }
-
+    /**
+     * Resolver function
+     *
+     * @param Field $field, $context, ResolveInfo $info, array $value = null, array $args = null
+     */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
         $category = $value['model'];

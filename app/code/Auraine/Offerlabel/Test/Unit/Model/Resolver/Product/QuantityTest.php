@@ -136,7 +136,8 @@ class QuantityTest extends TestCase
            $this->fieldMock,
            $this->contextMock,
            $this->resolveInfoMock,
-        ['model' => $this->productModelMock]);
+        ['model' => $this->productModelMock]
+    );
 
         $this->assertSame(0.0, $result);
     }

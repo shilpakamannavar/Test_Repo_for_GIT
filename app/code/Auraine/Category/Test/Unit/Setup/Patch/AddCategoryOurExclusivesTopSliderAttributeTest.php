@@ -83,11 +83,11 @@ class AddCategoryOurExclusivesTopSliderAttributeTest extends TestCase
     }
 
     /**
-     * testApplyAddBannerSliderAttributeToCategoryEntity
+     * testApplyAddOurExclusivesTopSliderAttributeToCategoryEntity
      *
      * @return void
      */
-    public function testApplyAddsAddBannerSliderAttributeToCategoryEntity()
+    public function testApplyAddsAddOurExclusivesTopSliderAttributeToCategoryEntity()
     {
         $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
             ->disableOriginalConstructor()

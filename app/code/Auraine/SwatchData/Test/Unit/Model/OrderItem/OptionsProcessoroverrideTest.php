@@ -6,6 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 class OptionsProcessoroverrideTest extends TestCase
 {
+    /**
+     * File Path argument constant
+     */
+    const TEST_CUSTOME = 'Test customization';
+
     public function testGetItemOptionsWithNoOptions()
     {
         $orderItem = $this->getMockBuilder(OrderItemInterface::class)
@@ -35,7 +40,7 @@ class OptionsProcessoroverrideTest extends TestCase
             [
                 'option_type' => 'field',
                 'label' => 'Customization',
-                'value' => 'Test customization',
+                'value' => self::TEST_CUSTOME,
             ],
         ],
     ];
@@ -54,8 +59,8 @@ class OptionsProcessoroverrideTest extends TestCase
     
     $selectedOption = $options['selected_options'][0];
     $this->assertEquals('Customization', $selectedOption['label']);
-    $this->assertEquals('Test customization', $selectedOption['value']);
-    $this->assertEquals('Test customization', $selectedOption['value_label']);
+    $this->assertEquals(self::TEST_CUSTOME, $selectedOption['value']);
+    $this->assertEquals(self::TEST_CUSTOME, $selectedOption['value_label']);
     
     $enteredOption = $options['entered_options'][0];
     $this->assertEquals('Color', $enteredOption['label']);
