@@ -26,8 +26,6 @@ class CategoryImageResolver implements ResolverInterface
      * @var ScopeConfigInterface
      */
     protected $scopeConfig;
-
-
     /**
      * CategoryImageResolver constructor.
      *
@@ -46,7 +44,9 @@ class CategoryImageResolver implements ResolverInterface
     }
 
     /**
-     * @param Category $category
+     * Resolver Function
+     *
+     * @param Category $category , Field $field , ResolveInfo $info
      *
      * @return string|null
      */
@@ -57,11 +57,10 @@ class CategoryImageResolver implements ResolverInterface
         $category = $value['model'];
         $imagePath = $category->getData('category_image_2');
 
-       if ($imagePath) {
+        if ($imagePath) {
             $mediaUrl = $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]);
             $imageUrl = $mediaUrl . $imagePath;
         }
         return $imageUrl;
     }
 }
-
