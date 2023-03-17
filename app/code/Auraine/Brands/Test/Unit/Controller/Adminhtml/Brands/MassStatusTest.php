@@ -7,7 +7,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Auraine\Brands\Controller\Adminhtml\Brands\MassStatus
- * @codingStandardsIgnoreFile
  */
 class MassStatusTest extends TestCase
 {
