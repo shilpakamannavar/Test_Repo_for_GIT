@@ -44,9 +44,6 @@ use Magento\Catalog\Model\ResourceModel\Product;
 use Magento\CatalogInventory\Block\Adminhtml\Form\Field\Stock as StockField;
 use Magento\Eav\Model\Entity\Attribute\Backend\Datetime;
 use Magento\Eav\Model\Entity\Attribute\Source\Boolean;
-use Magento\Eav\Model\Entity\Setup\Context;
-use Magento\Eav\Setup\EavSetup;
-use Magento\Framework\App\ResourceConnection;
 use Magento\Theme\Model\Theme\Source\Theme;
 
 class CategorySetupTest extends TestCase
@@ -60,6 +57,34 @@ class CategorySetupTest extends TestCase
      * This should be set explicitly
      */
     public const CATALOG_PRODUCT_ENTITY_TYPE_ID = 4;
+    /**
+     * This should be set explicitly for 'Meta Description'
+     */
+    public const META_DESCRIPTION = 'Meta Description';
+    /**
+     * This should be set explicitly for 'Meta Keywords'
+     */
+    public const META_KEYWORDS = 'Meta Keywords';
+    /**
+     * This should be set explicitly for 'Active From'
+     */
+    public const ACTIVE_FROM = 'Active From';
+    /**
+     * This should be set explicitly for 'Active To'
+     */
+    public const ACTIVE_TO = 'Active To';
+    /**
+     * This should be set explicitly for 'Page Layout'
+     */
+    public const PAGE_LAYOUT = 'Page Layout';
+    /**
+     * This should be set explicitly for 'Custom Layout Update'
+     */
+    public const CUSTOM_LAYOUT_UPDATE = 'Custom Layout Update';
+    /**
+     * This should be set explicitly for 'validate-length maximum-length-255'
+     */
+    public const MAX_LENGTH_255 = 'validate-length maximum-length-255';
     /**
      * @var ObjectManager
      */
@@ -177,7 +202,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_keywords' => [
                         'type' => 'text',
-                        'label' => 'Meta Keywords',
+                        'label' => self::META_KEYWORDS,
                         'input' => 'textarea',
                         'required' => false,
                         'sort_order' => 7,
@@ -186,7 +211,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_description' => [
                         'type' => 'text',
-                        'label' => 'Meta Description',
+                        'label' => self::META_DESCRIPTION,
                         'input' => 'textarea',
                         'required' => false,
                         'sort_order' => 8,
@@ -271,7 +296,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_from' => [
                         'type' => 'datetime',
-                        'label' => 'Active From',
+                        'label' => self::ACTIVE_FROM,
                         'input' => 'date',
                         'backend' => Startdate::class,
                         'required' => false,
@@ -281,7 +306,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_to' => [
                         'type' => 'datetime',
-                        'label' => 'Active To',
+                        'label' => self::ACTIVE_TO,
                         'input' => 'date',
                         'backend' => Datetime::class,
                         'required' => false,
@@ -291,7 +316,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'page_layout' => [
                         'type' => 'varchar',
-                        'label' => 'Page Layout',
+                        'label' => self::PAGE_LAYOUT,
                         'input' => 'select',
                         'source' => Layout::class,
                         'required' => false,
@@ -301,7 +326,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_layout_update' => [
                         'type' => 'text',
-                        'label' => 'Custom Layout Update',
+                        'label' => self::CUSTOM_LAYOUT_UPDATE,
                         'input' => 'textarea',
                         'backend' => Customlayoutupdate::class,
                         'required' => false,
@@ -457,7 +482,7 @@ class CategorySetupTest extends TestCase
                         'type' => 'varchar',
                         'label' => 'Name',
                         'input' => 'text',
-                        'frontend_class' => 'validate-length maximum-length-255',
+                        'frontend_class' => self::MAX_LENGTH_255,
                         'sort_order' => 1,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'searchable' => true,
@@ -621,7 +646,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_keyword' => [
                         'type' => 'text',
-                        'label' => 'Meta Keywords',
+                        'label' => self::META_KEYWORDS,
                         'input' => 'textarea',
                         'required' => false,
                         'sort_order' => 30,
@@ -633,11 +658,11 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_description' => [
                         'type' => 'varchar',
-                        'label' => 'Meta Description',
+                        'label' => self::META_DESCRIPTION,
                         'input' => 'textarea',
                         'required' => false,
                         'note' => 'Maximum 255 chars',
-                        'class' => 'validate-length maximum-length-255',
+                        'class' => self::MAX_LENGTH_255,
                         'sort_order' => 40,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'group' =>$meta,
@@ -792,7 +817,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_from' => [
                         'type' => 'datetime',
-                        'label' => 'Active From',
+                        'label' => self::ACTIVE_FROM,
                         'input' => 'date',
                         'backend' => Startdate::class,
                         'required' => false,
@@ -805,7 +830,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_to' => [
                         'type' => 'datetime',
-                        'label' => 'Active To',
+                        'label' => self::ACTIVE_TO,
                         'input' => 'date',
                         'backend' => Datetime::class,
                         'required' => false,
@@ -818,7 +843,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_layout_update' => [
                         'type' => 'text',
-                        'label' => 'Custom Layout Update',
+                        'label' => self::CUSTOM_LAYOUT_UPDATE,
                         'input' => 'textarea',
                         'backend' => Customlayoutupdate::class,
                         'required' => false,
@@ -828,7 +853,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'page_layout' => [
                         'type' => 'varchar',
-                        'label' => 'Page Layout',
+                        'label' => self::PAGE_LAYOUT,
                         'input' => 'select',
                         'source' => LayoutModel::class,
                         'required' => false,
@@ -1042,7 +1067,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_keywords' => [
                         'type' => 'text',
-                        'label' => 'Meta Keywords',
+                        'label' => self::META_KEYWORDS,
                         'input' => 'textarea',
                         'required' => false,
                         'sort_order' => 7,
@@ -1051,7 +1076,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_description' => [
                         'type' => 'text',
-                        'label' => 'Meta Description',
+                        'label' => self::META_DESCRIPTION,
                         'input' => 'textarea',
                         'required' => false,
                         'sort_order' => 8,
@@ -1136,7 +1161,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_from' => [
                         'type' => 'datetime',
-                        'label' => 'Active From',
+                        'label' => self::ACTIVE_FROM,
                         'input' => 'date',
                         'backend' => Startdate::class,
                         'required' => false,
@@ -1146,7 +1171,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_to' => [
                         'type' => 'datetime',
-                        'label' => 'Active To',
+                        'label' => self::ACTIVE_TO,
                         'input' => 'date',
                         'backend' => Datetime::class,
                         'required' => false,
@@ -1156,7 +1181,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'page_layout' => [
                         'type' => 'varchar',
-                        'label' => 'Page Layout',
+                        'label' => self::PAGE_LAYOUT,
                         'input' => 'select',
                         'source' => Layout::class,
                         'required' => false,
@@ -1166,7 +1191,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_layout_update' => [
                         'type' => 'text',
-                        'label' => 'Custom Layout Update',
+                        'label' => self::CUSTOM_LAYOUT_UPDATE,
                         'input' => 'textarea',
                         'backend' => Customlayoutupdate::class,
                         'required' => false,
@@ -1322,7 +1347,7 @@ class CategorySetupTest extends TestCase
                         'type' => 'varchar',
                         'label' => 'Name',
                         'input' => 'text',
-                        'frontend_class' => 'validate-length maximum-length-255',
+                        'frontend_class' => self::MAX_LENGTH_255,
                         'sort_order' => 1,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'searchable' => true,
@@ -1486,7 +1511,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_keyword' => [
                         'type' => 'text',
-                        'label' => 'Meta Keywords',
+                        'label' => self::META_KEYWORDS,
                         'input' => 'textarea',
                         'required' => false,
                         'sort_order' => 30,
@@ -1498,11 +1523,11 @@ class CategorySetupTest extends TestCase
                     ],
                     'meta_description' => [
                         'type' => 'varchar',
-                        'label' => 'Meta Description',
+                        'label' => self::META_DESCRIPTION,
                         'input' => 'textarea',
                         'required' => false,
                         'note' => 'Maximum 255 chars',
-                        'class' => 'validate-length maximum-length-255',
+                        'class' => self::MAX_LENGTH_255,
                         'sort_order' => 40,
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'group' =>$meta,
@@ -1657,7 +1682,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_from' => [
                         'type' => 'datetime',
-                        'label' => 'Active From',
+                        'label' => self::ACTIVE_FROM,
                         'input' => 'date',
                         'backend' => Startdate::class,
                         'required' => false,
@@ -1670,7 +1695,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_design_to' => [
                         'type' => 'datetime',
-                        'label' => 'Active To',
+                        'label' => self::ACTIVE_TO,
                         'input' => 'date',
                         'backend' => Datetime::class,
                         'required' => false,
@@ -1683,7 +1708,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'custom_layout_update' => [
                         'type' => 'text',
-                        'label' => 'Custom Layout Update',
+                        'label' => self::CUSTOM_LAYOUT_UPDATE,
                         'input' => 'textarea',
                         'backend' => Customlayoutupdate::class,
                         'required' => false,
@@ -1693,7 +1718,7 @@ class CategorySetupTest extends TestCase
                     ],
                     'page_layout' => [
                         'type' => 'varchar',
-                        'label' => 'Page Layout',
+                        'label' => self::PAGE_LAYOUT,
                         'input' => 'select',
                         'source' => LayoutModel::class,
                         'required' => false,
