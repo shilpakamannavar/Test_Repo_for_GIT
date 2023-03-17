@@ -130,19 +130,8 @@ class QuantityTest extends TestCase
     
     public function testResolve(): void
     {
-        $stockCurrentQty = 10.0;
-        $minQty = 2;
-
-
-        // $this->stockItemMock->expects($this->once())->method('getMinQty')
-        //     ->willReturn($minQty);
-        // $this->stockStatusMock->expects($this->once())->method('getQty')
-        //     ->willReturn($stockCurrentQty);
-            
-        // $this->stockRegistryMock->expects($this->once())->method('getStockItem')
-        //     ->willReturn($this->stockItemMock);
       
-        
+
         $result = $this->resolver->resolve(
            $this->fieldMock,
            $this->contextMock,
