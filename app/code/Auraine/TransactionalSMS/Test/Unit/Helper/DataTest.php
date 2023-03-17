@@ -8,6 +8,9 @@ use Magento\Store\Model\ScopeInterface;
 use Magento\Sales\Model\Order;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Summary of DataTest
+ */
 class DataTest extends TestCase
 {
     /**
@@ -304,4 +307,121 @@ class DataTest extends TestCase
         $dataHelper->customerAbandonedCartSMS(Data::OTP_STATUS_PATH, $mobile, $customerName);
     }
 
+    /**
+     * testShipmentShippedSMS
+     *
+     * @return void
+     */
+    public function testShipmentShippedSMS()
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $orderId = 123;
+        $mobile = '1234567890';
+        $quantity = 2;
+        $description = 'Test product';
+
+        $order = $this->createMock(Order::class);
+
+        $order->expects($this->once())
+            ->method('getIncrementId')
+            ->willReturn($orderId);
+
+        $shippingAddress = $this->createMock(\Magento\Sales\Model\Order\Address::class);
+
+        $order->expects($this->once())
+            ->method('getShippingAddress')
+            ->willReturn($shippingAddress);
+
+        $shippingAddress->expects($this->once())
+            ->method('getTelephone')
+            ->willReturn($mobile);
+
+        $order->expects($this->any())
+            ->method('getTotalItemCount')
+            ->willReturn($quantity);
+
+        $orderItem = $this->createMock(\Magento\Sales\Model\Order\Item::class);
+
+        $order->expects($this->once())
+            ->method('getAllItems')
+            ->willReturn([$orderItem]);
+
+        $orderItem->expects($this->once())
+            ->method('getName')
+            ->willReturn($description);
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->shipmentShippedSMS(Data::OTP_STATUS_PATH, $order);
+    }
+
+    /**
+     * testOrderDeliveredSMS
+     * @return void
+     */
+    public function testOrderDeliveredSMS()
+    {
+        $this->privateTestLogic('orderDeliveredSMS');
+    }
+
+    /**
+     * testshipmentCancelledSMS
+     * @return void
+     */
+    public function testShipmentCancelledSMS()
+    {
+        $this->privateTestLogic('shipmentCancelledSMS');
+    }
+
+    public function testReturnInitiatedSMS()
+    {
+        $this->privateTestLogic('returnInitiatedSMS');
+    }
+
+    public function privateTestLogic($functionName)
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $orderId = 123;
+        $mobile = '1234567890';
+        $quantity = 2;
+        $description = 'Test product';
+
+        $order = $this->createMock(Order::class);
+
+        $order->expects($this->once())
+            ->method('getIncrementId')
+            ->willReturn($orderId);
+
+        $order->expects($this->any())
+            ->method('getTotalItemCount')
+            ->willReturn($quantity);
+
+        $orderItem = $this->createMock(\Magento\Sales\Model\Order\Item::class);
+
+        $order->expects($this->once())
+            ->method('getAllItems')
+            ->willReturn([$orderItem]);
+
+        $orderItem->expects($this->once())
+            ->method('getName')
+            ->willReturn($description);
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->{$functionName}(Data::OTP_STATUS_PATH, $mobile, $order);
+    }
+
+    
 }
