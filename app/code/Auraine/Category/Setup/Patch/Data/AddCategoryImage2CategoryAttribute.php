@@ -39,11 +39,12 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
+
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->addAttribute(
@@ -67,7 +68,9 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
-
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
@@ -79,7 +82,7 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -87,7 +90,7 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
