@@ -38,7 +38,7 @@ class Data
     private $scopeConfig;
 
     /**
-     * Constructor to get object of MageComp Mobilelogin helper.
+     * Constructor to get object of Alternativetechlab Mobilelogin helper.
      *
      * @param \Alternativetechlab\Mobilelogin\Helper\Data $helperData
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig

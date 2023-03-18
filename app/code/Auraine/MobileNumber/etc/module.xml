@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
 	<module name="Auraine_MobileNumber">
 		<sequence>
-			<module name="Magecomp_Mobilelogin"/>
+			<module name="Alternativetechlab_Mobilelogin"/>
 			<module name="Magento_Customer"/>
 		</sequence>
 	</module>
