@@ -5,7 +5,7 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Auraine\CsvUploader\Model\Csv;
 use Auraine\CsvUploader\Model\ResourceModel\Csv as ResourceModelCsv;
 
-  // @codeCoverageIgnoreStart
+// @codeCoverageIgnoreStart
 class Collection extends AbstractCollection
 {
     /**
@@ -18,5 +18,4 @@ class Collection extends AbstractCollection
         $this->_init(Csv::class, ResourceModelCsv::class);
     }
 }
-  // @codeCoverageIgnoreEnd
-  
+// @codeCoverageIgnoreEnd
