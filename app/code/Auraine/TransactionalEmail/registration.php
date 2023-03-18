@@ -7,5 +7,3 @@
 use Magento\Framework\Component\ComponentRegistrar;
 
 ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Auraine_TransactionalEmail', __DIR__);
-
-
