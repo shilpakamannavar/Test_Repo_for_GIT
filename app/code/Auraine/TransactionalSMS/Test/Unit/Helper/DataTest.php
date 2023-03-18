@@ -125,8 +125,6 @@ class DataTest extends TestCase
     {
         $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
         $mobile = '913456789012'; // 12 digits mobile number
-        $customerName = 'John Doe';
-        $message = 'Welcome, John Doe!';
         $deliveryDate = '16/03/2023';
         $orderId = 000001234;
 
@@ -423,5 +421,4 @@ class DataTest extends TestCase
         $this->helper->{$functionName}(Data::OTP_STATUS_PATH, $mobile, $order);
     }
 
-    
 }
