@@ -78,7 +78,7 @@ class CustomerOrdersTest extends TestCase
 
     public function testResolveThrowsExceptionWhencustomerisnotautorized(): void
     {
-        $this->assertEquals(1,1)
+        $this->assertEquals(1,1);
     }
    
 }
