@@ -124,4 +124,63 @@ class CheckCustomerExistsTest extends TestCase
         $result = $resolver->validateMobile('919898989898');
         $this->assertTrue($result);
     }
+
+    **
+     * @dataProvider inputExceptionDataProvider
+     */
+    public function testInputException(array $args, string $message): void
+    {
+        $field = $this->createMock(Field::class);
+        $context = [];
+        $info = $this->createMock(ResolveInfo::class);
+        $value = null;
+
+        $this->expectException(GraphQlInputException::class);
+        $this->expectExceptionMessage($message);
+
+        $this->resolver->resolve($field, $context, $info, $value, $args);
+    }
+
+    public function inputExceptionDataProvider(): array
+    {
+        return [
+            [
+                [],
+                'Invalid parameter list.'
+            ],
+            [
+                ['field_value' => '1234567890'],
+                'Invalid parameter list.'
+            ],
+            [
+                ['type' => 'mobile'],
+                'Invalid parameter list.'
+            ],
+        ];
+    }
+
+    public function testAuthenticationException(): void
+    {
+        $fieldValue = '1234567890';
+        $type = 'mobile';
+
+        $args = [
+            'field_value' => $fieldValue,
+            'type' => $type,
+        ];
+
+        $field = $this->createMock(Field::class);
+        $context = [];
+        $info = $this->createMock(ResolveInfo::class);
+        $value = null;
+
+        $this->mockHelperData
+            ->expects($this->never())
+            ->method('checkCustomerExists');
+
+        $this->expectException(GraphQlAuthenticationException::class);
+        $this->expectExceptionMessage('Invalid number.');
+
+        $this->resolver->resolve($field, $context, $info, $value, $args);
+    }
 }
