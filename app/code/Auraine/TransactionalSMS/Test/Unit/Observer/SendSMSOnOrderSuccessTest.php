@@ -10,6 +10,11 @@ use PHPUnit\Framework\TestCase;
 class SendSMSOnOrderSuccessTest extends TestCase
 {
     /**
+     * const MAGIC_CALL
+     */
+    private const MAGIC_CALL = '__call';
+
+    /**
      * @var Data|\PHPUnit\Framework\MockObject\MockObject
      */
     private $helperDataMock;
@@ -53,7 +58,7 @@ class SendSMSOnOrderSuccessTest extends TestCase
             ->willReturnSelf();
 
         $this->orderMock->getShippingAddress()->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getTelephone')
             ->willReturn(null);
 
@@ -62,7 +67,7 @@ class SendSMSOnOrderSuccessTest extends TestCase
             ->willReturnSelf();
 
         $this->observerMock->getEvent()->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getOrder')
             ->willReturn($this->orderMock);
 
@@ -79,7 +84,7 @@ class SendSMSOnOrderSuccessTest extends TestCase
             ->willReturnSelf();
 
         $this->orderMock->getShippingAddress()->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getTelephone')
             ->willReturn('1234567890');
 
@@ -92,7 +97,7 @@ class SendSMSOnOrderSuccessTest extends TestCase
             ->willReturnSelf();
 
         $this->observerMock->getEvent()->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getOrder')
             ->willReturn($this->orderMock);
 

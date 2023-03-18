@@ -14,6 +14,16 @@ use PHPUnit\Framework\TestCase;
 class SendSMSOnOrderStatusChangeTest extends TestCase
 {
     /**
+     * const MAGIC_CALL
+     */
+    private const MAGIC_CALL = '__call';
+
+    /**
+     * const MAGIC_CALL
+     */
+    private const MOBILE = '1234567890';
+
+    /**
      * @var Data
      */
     private $helperDataMock;
@@ -55,14 +65,14 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
             ->method('getShippingAddress')
             ->willReturnSelf();
         $this->orderMock->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getTelephone')
             ->willReturn(null);
         $this->observerMock->expects($this->once())
             ->method('getEvent')
             ->willReturnSelf();
         $this->observerMock->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getOrder')
             ->willReturn($this->orderMock);
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
@@ -79,9 +89,9 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
             ->method('getShippingAddress')
             ->willReturnSelf();
         $this->orderMock->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getTelephone')
-            ->willReturn('1234567890');
+            ->willReturn(self::MOBILE);
         $this->orderMock->expects($this->once())
             ->method('getState')
             ->willReturn(Order::STATE_PROCESSING);
@@ -89,7 +99,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
             ->method('getEvent')
             ->willReturnSelf();
         $this->observerMock->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getOrder')
             ->willReturn($this->orderMock);
         $this->helperDataMock->expects($this->once())
@@ -111,7 +121,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
 
         $this->helperDataMock->expects($this->once())
             ->method('orderDeliveredSMS')
-            ->with("transaction_sms_control/delivered_sms/message", '1234567890', $this->orderMock);
+            ->with("transaction_sms_control/delivered_sms/message", self::MOBILE, $this->orderMock);
 
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
 
@@ -128,7 +138,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
 
         $this->helperDataMock->expects($this->once())
             ->method('shipmentNotDelivered')
-            ->with("transaction_sms_control/not_delivered_sms/message", '1234567890', null);
+            ->with("transaction_sms_control/not_delivered_sms/message", self::MOBILE, null);
 
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
 
@@ -145,7 +155,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
 
         $this->helperDataMock->expects($this->once())
             ->method('shipmentCancelledSMS')
-            ->with("transaction_sms_control/cancelled_sms/message", '1234567890', $this->orderMock);
+            ->with("transaction_sms_control/cancelled_sms/message", self::MOBILE, $this->orderMock);
 
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
 
@@ -162,7 +172,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
 
         $this->helperDataMock->expects($this->once())
             ->method('returnInitiatedSMS')
-            ->with("transaction_sms_control/return_inititated_sms/message", '1234567890', $this->orderMock);
+            ->with("transaction_sms_control/return_inititated_sms/message", self::MOBILE, $this->orderMock);
 
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
 
@@ -179,7 +189,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
 
         $this->helperDataMock->expects($this->once())
             ->method('transactionSMS')
-            ->with("transaction_sms_control/return_picked_sms/message", '1234567890', ' ', null);
+            ->with("transaction_sms_control/return_picked_sms/message", self::MOBILE, ' ', null);
 
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
 
@@ -196,7 +206,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
 
         $this->helperDataMock->expects($this->once())
             ->method('transactionSMS')
-            ->with("transaction_sms_control/refund_success/message", '1234567890', null, null);
+            ->with("transaction_sms_control/refund_success/message", self::MOBILE, null, null);
 
         $sendSMSOnOrderStatusChange = new SendSMSOnOrderStatusChange($this->helperDataMock);
 
@@ -228,9 +238,9 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
             ->willReturnSelf();
 
         $this->orderMock->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getTelephone')
-            ->willReturn('1234567890');
+            ->willReturn(self::MOBILE);
 
         $this->orderMock->expects($this->once())
             ->method('getState')
@@ -241,7 +251,7 @@ class SendSMSOnOrderStatusChangeTest extends TestCase
             ->willReturnSelf();
 
         $this->observerMock->expects($this->once())
-            ->method('__call')
+            ->method(self::MAGIC_CALL)
             ->with('getOrder')
             ->willReturn($this->orderMock);
     }

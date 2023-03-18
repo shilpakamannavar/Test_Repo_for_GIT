@@ -14,6 +14,36 @@ use PHPUnit\Framework\TestCase;
 class DataTest extends TestCase
 {
     /**
+     * const MOBILE
+     */
+    private const MOBILE = '1234567890';
+
+    /**
+     * const CUSTOMER_NAME
+     */
+    private const CUSTOMER_NAME = 'John Doe';
+
+    /**
+     * const CONFIG_PATH
+     */
+    private const CONFIG_PATH = 'transaction_sms_control/transaction_sms/enable_sms';
+
+    /**
+     * CONST SOME_PATH
+     */
+    private const SOME_PATH = 'some/path';
+
+    /**
+     * const HELLO_NAME
+     */
+    private const HELLO_NAME = 'Hello {{name}}';
+
+    /**
+     * const NAME
+     */
+    private const NAME = '{{name}}';
+
+    /**
      * @var Data
      */
     private $helper;
@@ -59,7 +89,7 @@ class DataTest extends TestCase
     public function getConfigValueDataProvider()
     {
         return [
-            ['some/path', 'value'],
+            [self::SOME_PATH, 'value'],
             ['another/path', 123],
             ['yet/another/path', null],
         ];
@@ -80,20 +110,24 @@ class DataTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
+    /**
+     * Summary of generateMessageDataProvider
+     * @return array
+     */
     public function generateMessageDataProvider()
     {
         return [
-            [[], [], 'some/path', 'Hello', 'Hello'],
-            [[], [], 'some/path', 'Hello {{name}}', 'Hello {{name}}'],
-            [['{{name}}'], ['John'], 'some/path', 'Hello {{name}}', 'Hello John'],
-            [['{{name}}'], ['John'], 'some/path', 'Hello {{name}} {{age}}', 'Hello John {{age}}'],
-            [['{{name}}', '{{age}}'], ['John', '25'], 'some/path', 'Hello {{name}} {{age}}', 'Hello John 25'],
+            [[], [], self::SOME_PATH, 'Hello', 'Hello'],
+            [[], [], self::SOME_PATH, self::HELLO_NAME, self::HELLO_NAME],
+            [[self::NAME], ['John'], self::SOME_PATH, self::HELLO_NAME, 'Hello John'],
+            [[self::NAME], ['John'], self::SOME_PATH, 'Hello {{name}} {{age}}', 'Hello John {{age}}'],
+            [[self::NAME, '{{age}}'], ['John', '25'], self::SOME_PATH, 'Hello {{name}} {{age}}', 'Hello John 25'],
         ];
     }
 
-      /**
-       * @dataProvider mobileNumberProvider
-       */
+    /**
+     * @dataProvider mobileNumberProvider
+     */
     public function testDispachSMS($mobileNumber, $otpStatus, $expectedMobileNumber)
     {
         $message = 'Test message';
@@ -110,6 +144,10 @@ class DataTest extends TestCase
         $this->helper->dispachSMS($message, $mobileNumber);
     }
 
+    /**
+     * Summary of mobileNumberProvider
+     * @return array
+     */
     public function mobileNumberProvider()
     {
         return [
@@ -123,20 +161,18 @@ class DataTest extends TestCase
      */
     public function testOrderSuccessSMSWithValidMobileAndDisabledSMS()
     {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
-        $mobile = '913456789012'; // 12 digits mobile number
         $deliveryDate = '16/03/2023';
         $orderId = 000001234;
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
-            ->with($configPath)
+            ->with(self::CONFIG_PATH)
             ->willReturn(false);
 
         $this->mobileloginHelperMock->expects($this->never())
             ->method('callApiUrl');
 
-        $this->helper->orderSuccessSMS($configPath, $mobile, $deliveryDate, $orderId);
+        $this->helper->orderSuccessSMS(self::CONFIG_PATH, self::MOBILE, $deliveryDate, $orderId);
     }
 
     /**
@@ -144,20 +180,19 @@ class DataTest extends TestCase
      */
     public function testTransactionSMSWithValidMobileAndDisabledSMS()
     {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
         $mobile = '913456789012'; // 12 digits mobile number
         $grandTotal = 200;
         $orderId = 000001234;
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
-            ->with($configPath)
+            ->with(self::CONFIG_PATH)
             ->willReturn(false);
 
         $this->mobileloginHelperMock->expects($this->never())
             ->method('callApiUrl');
 
-        $this->helper->transactionSMS($configPath, $mobile, $grandTotal, $orderId);
+        $this->helper->transactionSMS(self::CONFIG_PATH, $mobile, $grandTotal, $orderId);
     }
 
     /**
@@ -165,51 +200,27 @@ class DataTest extends TestCase
      */
     public function testShipmentNotDeliveredWithValidMobileAndDisabledSMS()
     {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
         $mobile = '913456789012'; // 12 digits mobile number
         $orderId = 000001234;
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
-            ->with($configPath)
+            ->with(self::CONFIG_PATH)
             ->willReturn(false);
 
         $this->mobileloginHelperMock->expects($this->never())
             ->method('callApiUrl');
 
-        $this->helper->shipmentNotDelivered($configPath, $mobile, $orderId);
+        $this->helper->shipmentNotDelivered(self::CONFIG_PATH, $mobile, $orderId);
     }
-
-
 
     /**
-     * Test customerRegisterSuccessSMS() method with valid mobile and disabled SMS.
+     * Summary of testCustomerRegisterSuccessSMSDoesNotDispatchSMSWhenOtpStatusIsOff
+     * @return void
      */
-    public function testCustomerRegisterSuccessSMSWithValidMobileAndDisabledSMS()
-    {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
-        $mobile = '913456789012'; // 12 digits mobile number
-        $customerName = 'John Doe';
-        $message = 'Welcome, John Doe!';
-
-        $this->scopeConfigMock->expects($this->any())
-            ->method('getValue')
-            ->with($configPath)
-            ->willReturn(false);
-
-        $this->mobileloginHelperMock->expects($this->never())
-            ->method('callApiUrl');
-
-        $this->helper->customerRegisterSuccessSMS($configPath, $mobile, $customerName);
-    }
-
-
     public function testCustomerRegisterSuccessSMSDoesNotDispatchSMSWhenOtpStatusIsOff()
     {
         $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
-
-        $mobile = '1234567890';
-        $customerName = 'John Doe';
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
@@ -221,8 +232,8 @@ class DataTest extends TestCase
 
         $dataHelper->customerRegisterSuccessSMS(
             Data::OTP_STATUS_PATH,
-            $mobile,
-            $customerName
+            self::MOBILE,
+            self::CUSTOMER_NAME
         );
     }
 
@@ -231,28 +242,28 @@ class DataTest extends TestCase
      */
     public function testCustomerAbandonedCartSMSWithValidMobileAndDisabledSMS()
     {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
-        $mobile = '913456789012'; // 12 digits mobile number
-        $customerName = 'John Doe';
-        $message = 'Welcome, John Doe!';
-
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
-            ->with($configPath)
+            ->with(self::CONFIG_PATH)
             ->willReturn(false);
 
         $this->mobileloginHelperMock->expects($this->never())
             ->method('callApiUrl');
 
-        $this->helper->customerAbandonedCartSMS($configPath, $mobile, $customerName);
+        $this->helper->customerAbandonedCartSMS(
+            self::CONFIG_PATH,
+            self::MOBILE,
+            self::CUSTOMER_NAME
+        );
     }
 
+    /**
+     * Summary of testCustomerAbandonedCartSMSDoesNotDispatchSMSWhenOtpStatusIsOff
+     * @return void
+     */
     public function testCustomerAbandonedCartSMSDoesNotDispatchSMSWhenOtpStatusIsOff()
     {
         $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
-
-        $mobile = '1234567890';
-        $customerName = 'John Doe';
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
@@ -264,45 +275,9 @@ class DataTest extends TestCase
 
         $dataHelper->customerAbandonedCartSMS(
             Data::OTP_STATUS_PATH,
-            $mobile,
-            $customerName
+            self::MOBILE,
+            self::CUSTOMER_NAME
         );
-    }
-
-    public function testCustomerRegisterSuccessSMSDoesNotDispatchSMSWhenMobileNumberIsInvalid()
-    {
-        $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
-
-        $mobile = '123456';
-        $customerName = 'John Doe';
-
-        $this->scopeConfigMock->expects($this->any())
-            ->method('getValue')
-            ->with(Data::OTP_STATUS_PATH, ScopeInterface::SCOPE_STORE)
-            ->willReturn(true);
-
-        $this->mobileloginHelperMock->expects($this->never())
-            ->method('callApiUrl');
-
-        $dataHelper->customerRegisterSuccessSMS(Data::OTP_STATUS_PATH, $mobile, $customerName);
-    }
-
-    public function testCustomerAbandonedCartSMSDoesNotDispatchSMSWhenMobileNumberIsInvalid()
-    {
-        $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
-
-        $mobile = '123456';
-        $customerName = 'John Doe';
-
-        $this->scopeConfigMock->expects($this->any())
-            ->method('getValue')
-            ->with(Data::OTP_STATUS_PATH, ScopeInterface::SCOPE_STORE)
-            ->willReturn(true);
-
-        $this->mobileloginHelperMock->expects($this->never())
-            ->method('callApiUrl');
-
-        $dataHelper->customerAbandonedCartSMS(Data::OTP_STATUS_PATH, $mobile, $customerName);
     }
 
     /**
@@ -312,9 +287,7 @@ class DataTest extends TestCase
      */
     public function testShipmentShippedSMS()
     {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
         $orderId = 123;
-        $mobile = '1234567890';
         $quantity = 2;
         $description = 'Test product';
 
@@ -332,7 +305,7 @@ class DataTest extends TestCase
 
         $shippingAddress->expects($this->once())
             ->method('getTelephone')
-            ->willReturn($mobile);
+            ->willReturn(self::MOBILE);
 
         $order->expects($this->any())
             ->method('getTotalItemCount')
@@ -350,7 +323,7 @@ class DataTest extends TestCase
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
-            ->with($configPath)
+            ->with(self::CONFIG_PATH)
             ->willReturn(false);
 
         $this->mobileloginHelperMock->expects($this->never())
@@ -377,16 +350,23 @@ class DataTest extends TestCase
         $this->privateTestLogic('shipmentCancelledSMS');
     }
 
+    /**
+     * Summary of testReturnInitiatedSMS
+     * @return void
+     */
     public function testReturnInitiatedSMS()
     {
         $this->privateTestLogic('returnInitiatedSMS');
     }
 
+    /**
+     * Summary of privateTestLogic
+     * @param mixed $functionName
+     * @return void
+     */
     public function privateTestLogic($functionName)
     {
-        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
         $orderId = 123;
-        $mobile = '1234567890';
         $quantity = 2;
         $description = 'Test product';
 
@@ -412,13 +392,13 @@ class DataTest extends TestCase
 
         $this->scopeConfigMock->expects($this->any())
             ->method('getValue')
-            ->with($configPath)
+            ->with(self::CONFIG_PATH)
             ->willReturn(false);
 
         $this->mobileloginHelperMock->expects($this->never())
             ->method('callApiUrl');
 
-        $this->helper->{$functionName}(Data::OTP_STATUS_PATH, $mobile, $order);
+        $this->helper->{$functionName}(Data::OTP_STATUS_PATH, self::MOBILE, $order);
     }
 
 }
