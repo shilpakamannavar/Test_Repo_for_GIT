@@ -63,7 +63,12 @@ class CustomerDataProviderTest extends TestCase
      * @param string|null $baseUrl
      * @param array $expectedResult
      */
-    public function testResolve(array $value, string $typeName, string $hexCode, ?string $baseUrl, array $expectedResult): void
+    public function testResolve(
+        array $value,
+        string $typeName,
+        string $hexCode,
+        ?string $baseUrl,
+        array $expectedResult): void
     {
         $field = $this->getMockBuilder(Field::class)
             ->disableOriginalConstructor()
@@ -167,6 +172,14 @@ class CustomerDataProviderTest extends TestCase
     
         $result = $resolver->getswatchType($valueType);
         $this->assertSame($expectedResult, $result);
+
+         // Test case for getSwatchType() method with value type = 3
+         $valueType = 3;
+
+         $result = $resolver->getSwatchType($valueType);
+ 
+         // Asserts the output value of the method
+         $this->assertEquals(null, $result);
     }
     
     /**

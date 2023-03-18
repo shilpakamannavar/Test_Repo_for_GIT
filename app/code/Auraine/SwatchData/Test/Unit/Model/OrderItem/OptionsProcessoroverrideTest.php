@@ -49,11 +49,21 @@ class OptionsProcessoroverrideTest extends TestCase
                 'value' => self::TEST_CUSTOME,
             ],
         ],
+        'attributes_info' => [
+                    'option_type' => 'drop_down',
+                    'label' => 'Color',
+                    'value' => 'Blue',
+                    'print_value' => 'Blue',
+                    'option_value' => 'blue',
+                    'attributes_info' => true,
+                    'value_label' => 'dadf'
+                ],
     ];
     
     $orderItem = $this->getMockBuilder(OrderItemInterface::class)
                       ->addMethods(['getProductOptions'])
                       ->getMockForAbstractClass();
+
     $orderItem->method('getProductOptions')->willReturn($options);
     
     $optionsProcessor = new OptionsProcessoroverride();
@@ -74,5 +84,6 @@ class OptionsProcessoroverrideTest extends TestCase
     $this->assertArrayNotHasKey('value_label1', $enteredOption);
 
 }
+
 
 }
