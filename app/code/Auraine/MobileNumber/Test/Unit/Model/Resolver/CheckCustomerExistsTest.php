@@ -7,7 +7,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlAuthenticationException;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Auraine\MobileNumber\Model\Resolver\CheckCustomerExists;
-use Magecomp\Mobilelogin\Helper\Data;
+use Alternativetechlab\Mobilelogin\Helper\Data;
 use Magento\Framework\GraphQl\Config\Element\Field;
 
 class CheckCustomerExistsTest extends TestCase

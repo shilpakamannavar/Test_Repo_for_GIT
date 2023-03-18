@@ -2,7 +2,7 @@
 namespace Auraine\TransactionalSMS\Test\Unit\Helper;
 
 use Auraine\TransactionalSMS\Helper\Data;
-use Magecomp\Mobilelogin\Helper\Data as MobileloginHelper;
+use Alternativetechlab\Mobilelogin\Helper\Data as MobileloginHelper;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Sales\Model\Order;
