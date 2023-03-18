@@ -142,8 +142,11 @@ public function testResolveWhenShippingAddressIsNotEmpty()
     $firstName = 'John';
     $lastName = 'Doe';
     $email = 'john.doe@example.com';
-    $countryId = 'US';
-    $countryName = 'United States';
+    $telephone = '+1-123-456-7890';
+    $countryId = 'IN';
+    $countryName = 'India';
+    $city = 'Bengaluru';
+    $region = 'Bengaluru';
     $streetName = ['St. Nicholas Greek Orthodox Church' ];
 
     $value = ['order_number' => $orderNumber];
@@ -151,56 +154,121 @@ public function testResolveWhenShippingAddressIsNotEmpty()
         ->method('loadByIncrementId')
         ->with($orderNumber)
         ->willReturnSelf();
-    $this->orderMock->expects($this->once())
-        ->method('getShippingAddress')
-        ->willReturn($this->shippingAddressMock);
-    $this->shippingAddressMock->expects($this->once())
+        $this->shippingAddressMock->expects($this->once())
         ->method('getData')
         ->willReturn([
+            'firstName' => $firstName,
+            'lastname' => $lastName,
+            'email' => $email,
+        ]);
+
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getFirstName')
+        ->willReturn($firstName);
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getLastName')
+        ->willReturn($lastName);
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getTelephone')
+        ->willReturn($telephone);
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getCity')
+        ->willReturn($city);
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getRegion')
+        ->willReturn($region);
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getStreet')
+        ->willReturn($streetName);
+        $this->shippingAddressMock->expects($this->once())
+        ->method('getCountryId')
+        ->willReturn($countryId);
+        $this->orderMock->expects($this->once())
+        ->method('getCustomerEmail')
+        ->willReturn($email);
+         $this->orderMock->expects($this->once())
+        ->method('getShippingAddress')
+        ->willReturn($this->shippingAddressMock);
+
+
+        $countryMock = $this->getMockBuilder(\Magento\Directory\Model\Country::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        $countryMock->expects($this->any())
+                    ->method('getName')
+                    ->willReturn($countryName);
+      
+        $this->countryFactoryMock->expects($this->once())
+        ->method('create')
+        ->willReturn($countryMock);
+        
+
+        $result = $this->resolver->resolve(
+            $this->getMockBuilder(Field::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+            $this->createMock(ContextInterface::class),
+            $this->createMock(ResolveInfo::class),
+            $value
+        );
+
+        $expectedResult = [
             'firstname' => $firstName,
             'lastname' => $lastName,
             'email' => $email,
-            'telephone' => '+1-123-456-7890',
-            'city' => 'New York',
-            'region' => 'New York',
-            'country_id' => $countryId
-        ]);
+            'mobile' => '+1-123-456-7890',
+            'address' => [
+                'street' => implode(', ', $streetName),
+                'city' => $city,
+                'region' => $region,
+                'country' => $countryName
+                    
+            ]
+        ];
+        $this->assertEquals($expectedResult, $result);
+     
+        }
 
-        $this->shippingAddressMock->expects($this->any())
-                ->method('getStreet')
-                ->willReturn($streetName);
-
-    $countryMock = $this->getMockBuilder(\Magento\Directory\Model\Country::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-    $countryMock->expects($this->once())
-        ->method('getName')
-->willReturn($countryName);
-$this->countryFactoryMock->expects($this->once())
-->method('create')
-->willReturn($countryMock);
-
-$result = $this->resolver->resolve(
-    $this->getMockBuilder(Field::class)
-        ->disableOriginalConstructor()
-        ->getMock(),
-    $this->createMock(ContextInterface::class),
-    $this->createMock(ResolveInfo::class),
-    $value
-);
-
-$expectedResult = [
-    'first_name' => $firstName,
-    'last_name' => $lastName,
-    'email' => $email,
-    'telephone' => '+1-123-456-7890',
-    'street' => '123, Test Street',
-    'city' => 'New York',
-    'region' => 'New York',
-    'country' => $countryName
-];
-$this->assertEquals($expectedResult, $result);
-}
+        public function testEmptyShippingAddressDataReturnsNull() {
+            // Create a mock shipping address object with no data
+    
+            $orderNumber = '100000001';
+            $firstName = 'John';
+            $lastName = 'Doe';
+            $email = 'john.doe@example.com';
+            $countryId = 'IN';
+            $countryName = 'India';
+            $telephone = '+1-123-456-7890';
+            $region = 'New York';
+            $city = 'New York';
+            $streetName = ['St. Nicholas Greek Orthodox Church'];
+        
+            $value = ['order_number' => $orderNumber];
+            $this->orderMock->expects($this->once())
+            ->method('loadByIncrementId')
+            ->with($orderNumber)
+            ->willReturnSelf();
+            
+            $this->shippingAddressMock->expects($this->any())
+                             ->method('getData')
+                             ->willReturn(array());
+            $this->orderMock->expects($this->once())
+            ->method('getShippingAddress')
+            ->willReturn($this->shippingAddressMock);                
+        
+                             $result = $this->resolver->resolve(
+                                $this->getMockBuilder(Field::class)
+                                    ->disableOriginalConstructor()
+                                    ->getMock(),
+                                $this->createMock(ContextInterface::class),
+                                $this->createMock(ResolveInfo::class),
+                                $value
+                            );
+        
+                            
+            // Assert that the result is null
+            $this->assertNull($result);
+        }
 }
 
 
