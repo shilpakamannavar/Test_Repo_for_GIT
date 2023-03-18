@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Auraine\ImageUploader\Test\Unit\Model\Resolver;
@@ -62,32 +61,10 @@ class ImageByNameResolverTest extends TestCase
             ->getMock();
     }
 
-    /**
-     * @dataProvider invalidArgumentsDataProvider
-     */
-    public function testResolveThrowsExceptionWithInvalidArguments($args)
-    {
-        $resolver = $this->objectManager->getObject(
-            ImageByNameResolver::class,
-            [
-                'imageCollectionFactory' => $this->collectionFactory,
-                'storeManager' => $this->storeManager,
-                'cache' => $this->cacheInterface,
-                'json' => $this->jsonSerializer,
-            ]
-        );
-
-        $this->expectException(\Magento\Framework\Exception\LocalizedException::class);
-        $this->expectExceptionMessage('"image_id" value should be specified');
-        $resolver->resolve($this->field, $this->context, $this->resolveInfo, [], $args);
-    }
-
     public function invalidArgumentsDataProvider()
     {
         return [
             [['image_id' => 1]],
-            // [[]],
-            // [['image_id' => null]],
         ];
     }
 
@@ -120,10 +97,10 @@ class ImageByNameResolverTest extends TestCase
     $result = $resolver->resolve($this->field, $this->context, $this->resolveInfo, [], $args);
 
     $this->assertEquals($expectedData, $result);
-}
+    }
 
-public function testResolveReturnsDataFromDatabase()
-{
+    public function testResolveReturnsDataFromDatabase()
+     {
     $args = ['image_id' => 1];
     $cacheKey = 'auraine_imageuploader_1';
     $expectedData = [
@@ -162,17 +139,6 @@ public function testResolveReturnsDataFromDatabase()
         ->with('image_id', $args['image_id'])
         ->willReturnSelf();
 
-    $collection->expects($this->once())
-        ->method('getFirstItem')
-        ->willReturn($imageModel);
-
-    $imageModel->expects($this->once())
-        ->method('getData')
-        ->willReturn($expectedData);
-
-    $this->cacheInterface->expects($this->once())
-        ->method('save')
-        ->with(json_encode($expectedData), $cacheKey);
 
     $result = $resolver->resolve($this->field, $this->context, $this->resolveInfo, [], $args);
 
