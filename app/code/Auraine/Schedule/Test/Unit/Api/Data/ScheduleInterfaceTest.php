@@ -6,7 +6,6 @@ namespace Auraine\Schedule\Api\Data;
 
 use PHPUnit\Framework\TestCase;
 
-// ch
 
 class ScheduleInterfaceTest extends TestCase
 {
