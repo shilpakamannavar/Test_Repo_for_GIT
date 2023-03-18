@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Controller\Account\CreatePost">
+        <plugin name="Alternativetechlab_Mobilelogin::mobileloginbeforeotp" type="Alternativetechlab\Mobilelogin\Plugin\Pluginconfirmregistration"/>
+    </type>
+    <type name="Magento\Ui\DataProvider\EavValidationRules">
+        <plugin name="custom_attribute_validation" type="Alternativetechlab\Mobilelogin\Plugin\EavValidationRules" sortOrder="10" disabled="false"  />
+    </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Save">
+        <plugin name="Customerattr_Plugin" type="Alternativetechlab\Mobilelogin\Plugin\Checkattribute" sortOrder="10" disabled="false"  />
+    </type>
+    <preference for="Alternativetechlab\Mobilelogin\Api\MobilePostInterface" type="Alternativetechlab\Mobilelogin\Model\MobilePost" />
+</config>

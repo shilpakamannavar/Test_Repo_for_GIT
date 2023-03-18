@@ -1,0 +1,19 @@
+{{template config_path="design/email/header_template"}}
+<table>
+    <caption>Login Notify</caption>
+    <th>
+    <tr class="email-intro">
+        <td>Ip: {{var ip}}</td>
+    </tr>
+     <tr class="email-intro">
+        <td>Email: {{var email}}</td>
+    </tr>
+    <tr class="email-intro">
+        <td>Datetime: {{var datetime}}</td>
+    </tr>
+    <tr class="email-intro">
+        <td>Browser: {{var browser}}</td>
+    </tr>
+    </th>
+</table>
+{{template config_path="design/email/footer_template"}}

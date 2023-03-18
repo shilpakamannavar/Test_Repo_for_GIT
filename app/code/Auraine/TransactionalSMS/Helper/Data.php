@@ -8,7 +8,7 @@ class Data
      * @var string const
      */
     private const DESCRIPTION = '{{description}}';
-    
+
     /**
      * Quantity
      * @var string const
@@ -28,7 +28,7 @@ class Data
     public const OTP_STATUS_PATH = "transaction_sms_control/transaction_sms/enable_sms";
 
     /**
-     * @var \Magecomp\Mobilelogin\Helper\Data
+     * @var \Alternativetechlab\Mobilelogin\Helper\Data
      */
     private $helperData;
 
@@ -40,11 +40,11 @@ class Data
     /**
      * Constructor to get object of MageComp Mobilelogin helper.
      *
-     * @param \Magecomp\Mobilelogin\Helper\Data $helperData
+     * @param \Alternativetechlab\Mobilelogin\Helper\Data $helperData
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        \Magecomp\Mobilelogin\Helper\Data $helperData,
+        \Alternativetechlab\Mobilelogin\Helper\Data $helperData,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->helperData = $helperData;
@@ -66,9 +66,9 @@ class Data
     ) {
         $codes = ['{{customer_name}}'];
         $accurate = [$customerName];
-        
+
         $message = $this->generateMessage($codes, $accurate, $configPath);
-        
+
         $this->dispachSMS($message, $mobile);
     }
 
@@ -132,7 +132,7 @@ class Data
         $mobile = $order->getShippingAddress()->getTelephone();
         $link = "https://www.glamourbook.com/";
         $quantity = $order->getTotalItemCount() < 2 ? '' : '+ ' . ($order->getTotalItemCount() - 1);
-        
+
         $description = $this->getFirstFourWords($order->getAllItems()[0]->getName());
 
         $codes = [self::ORDER_ID, self::DESCRIPTION, self::QUANTITY, '{{delivery_date}}', '{{link}}'];
@@ -264,7 +264,7 @@ class Data
 
     /**
      * Generate message string.
-     * 
+     *
      * @param array $codes
      * @param array $accurate
      * @param string $configPath
@@ -277,7 +277,7 @@ class Data
         if (empty($codes) && empty($accurate)) {
             return $message;
         }
-        
+
         return str_replace($codes, $accurate, $message);
     }
 
