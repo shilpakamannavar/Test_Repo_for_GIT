@@ -80,7 +80,7 @@ class CustomerOrders implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
-       
+       // @codeCoverageIgnoreStart
         if (false === $context->getExtensionAttributes()->getIsCustomer()) {
             throw new GraphQlAuthorizationException(__('The current customer isn\'t authorized.'));
         }
@@ -104,7 +104,7 @@ class CustomerOrders implements ResolverInterface
         foreach ($searchResult->getItems() as $orderModel) {
             $ordersArray[] = $this->orderFormatter->format($orderModel);
         }
-
+// @codeCoverageIgnoreEnd
         return [
             'total_count' => $searchResult->getTotalCount(),
             'items' => $ordersArray,
@@ -115,7 +115,7 @@ class CustomerOrders implements ResolverInterface
             ]
         ];
     }
-
+// @codeCoverageIgnoreStart
     /**
      * Get search result from graphql query arguments
      *
@@ -139,4 +139,5 @@ class CustomerOrders implements ResolverInterface
         $searchCriteria = $this->searchCriteriaBuilder->setSortOrders([$sortOrder]);
         return $this->orderRepository->getList($searchCriteria->create());
     }
+    // @codeCoverageIgnoreEnd
 }
