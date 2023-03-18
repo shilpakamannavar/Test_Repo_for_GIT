@@ -48,6 +48,9 @@ class DataProviderAggregationPluginTest extends TestCase
         );
     }
 
+    /**
+     * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::build
+     */
     public function testBuild()
     {
         // Test case for build() method
@@ -60,6 +63,9 @@ class DataProviderAggregationPluginTest extends TestCase
         $this->assertIsArray($result);
     }
 
+    /**
+     * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::getSwatchType
+     */
     public function testGetSwatchType()
     {
         // Test case for getSwatchType() method

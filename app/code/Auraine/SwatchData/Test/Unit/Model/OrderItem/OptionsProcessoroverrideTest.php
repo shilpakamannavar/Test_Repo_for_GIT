@@ -10,7 +10,10 @@ class OptionsProcessoroverrideTest extends TestCase
      * File Path argument constant
      */
     const TEST_CUSTOME = 'Test customization';
-
+    
+    /**
+     * @covers \Auraine\SwatchData\Model\OrderItem\OptionsProcessoroverride::getItemOptions
+     */
     public function testGetItemOptionsWithNoOptions()
     {
         $orderItem = $this->getMockBuilder(OrderItemInterface::class)
@@ -26,6 +29,9 @@ class OptionsProcessoroverrideTest extends TestCase
         $this->assertEmpty($options['entered_options']);
     }
     
+    /**
+     * @covers \Auraine\SwatchData\Model\OrderItem\OptionsProcessoroverride::getItemOptions
+     */
     public function testGetItemOptionsWithOptions()
 {
     $options = [

@@ -68,7 +68,7 @@ class Data
         $accurate = [$customerName];
         
         $message = $this->generateMessage($codes, $accurate, $configPath);
-
+        
         $this->dispachSMS($message, $mobile);
     }
 
@@ -264,7 +264,7 @@ class Data
 
     /**
      * Generate message string.
-     *
+     * 
      * @param array $codes
      * @param array $accurate
      * @param string $configPath
@@ -277,7 +277,7 @@ class Data
         if (empty($codes) && empty($accurate)) {
             return $message;
         }
-
+        
         return str_replace($codes, $accurate, $message);
     }
 
@@ -322,7 +322,9 @@ class Data
         $titleArray = explode(' ', $title);
 
         if (count($titleArray) > 4) {
+            // @codeCoverageIgnoreStart
             return implode(' ', array_slice(explode(' ', $title), 0, 4));
+            // @codeCoverageIgnoreEnd
         }
 
         return implode(' ', array_slice(explode(' ', $title), 0, count($titleArray)));

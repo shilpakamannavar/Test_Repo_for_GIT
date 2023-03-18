@@ -85,7 +85,7 @@ class CustomerDataProvider implements ResolverInterface
      * @param id $valueType
      * @return string
      */
-    private function getswatchType($valueType)
+    public function getswatchType($valueType)
     {
         $value = null ;
         switch ($valueType) {
