@@ -13,6 +13,10 @@ use Auraine\MobileNumber\Model\Resolver\GetMobileUsingEmail;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\Api\AttributeInterface ;
 use Magento\Customer\Api\Data\CustomerInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
+
 
 class GetMobileUsingEmailTest extends TestCase
 {
@@ -91,5 +95,80 @@ class GetMobileUsingEmailTest extends TestCase
 
         $result = $this->resolver->resolve($field, $context, $info, null, ['email' => '']);
         $this->assertNull($result);
+    }
+
+    /**
+     * @dataProvider inputExceptionDataProvider
+     */
+    public function testInputException($args)
+    {
+        $this->expectException(GraphQlInputException::class);
+        $this->expectExceptionMessage('Invalid parameter list.');
+
+        $this->resolver->resolve(
+            $this->createMock(\Magento\Framework\GraphQl\Config\Element\Field::class),
+            [],
+            $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class),
+            null,
+            $args
+        );
+    }
+
+    public function inputExceptionDataProvider()
+    {
+        return [
+            'missing email' => [
+                ['email' => null],
+            ],
+            'empty email' => [
+                ['email' => ''],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider noSuchEntityExceptionDataProvider
+     */
+    public function testNoSuchEntityException($customerEmail)
+    {
+        $this->expectException(GraphQlNoSuchEntityException::class);
+        $this->expectExceptionMessage('Customer with email "' . $customerEmail . '" does not exist.');
+
+        $this->customerRepositoryMock
+            ->method('get')
+            ->willThrowException(new NoSuchEntityException());
+
+        $this->resolver->resolve(
+            $this->createMock(\Magento\Framework\GraphQl\Config\Element\Field::class),
+            [],
+            $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class),
+            null,
+            ['email' => $customerEmail]
+        );
+    }
+
+    public function noSuchEntityExceptionDataProvider()
+    {
+        return [
+            'non-existent customer' => ['nonexistent@example.com'],
+        ];
+    }
+
+    public function testLocalizedException()
+    {
+        $this->expectException(GraphQlInputException::class);
+        $this->expectExceptionMessage('Localized Exception Message');
+
+        $this->customerRepositoryMock
+            ->method('get')
+            ->willThrowException(new LocalizedException(__('Localized Exception Message')));
+
+        $this->resolver->resolve(
+            $this->createMock(\Magento\Framework\GraphQl\Config\Element\Field::class),
+            [],
+            $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class),
+            null,
+            ['email' => 'customer@example.com']
+        );
     }
 }
