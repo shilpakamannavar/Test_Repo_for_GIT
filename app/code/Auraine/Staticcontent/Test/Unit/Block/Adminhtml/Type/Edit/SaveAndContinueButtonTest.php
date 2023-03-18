@@ -1,5 +1,4 @@
 <?php
-// @codingStandardsIgnoreFile
 namespace Auraine\Staticcontent\Test\Unit\Block\Adminhtml\Type\Edit;
 
 use Auraine\Staticcontent\Block\Adminhtml\Type\Edit\SaveAndContinueButton;

@@ -1,87 +1,42 @@
 <?php
+
 namespace Auraine\SwatchData\Test\Unit\DataProvider\Product\LayeredNavigation;
 
 use Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin;
-use Auraine\SwatchData\Model\Resolver\DataProvider;
+use Magento\Eav\Model\Config;
+use Magento\Framework\Api\Search\AggregationInterface;
+use Magento\Swatches\Block\LayeredNavigation\RenderLayered;
+use Magento\Swatches\Helper\Data;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin
- */
 class DataProviderAggregationPluginTest extends TestCase
 {
-    /**
-     * Mock builders
-     *
-     * @var \array|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $builders;
-
-    /**
-     * Mock logger
-     *
-     * @var \Psr\Log\LoggerInterface|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $logger;
-
-    /**
-     * Mock eavConfig
-     *
-     * @var \Magento\Eav\Model\Config|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $eavConfig;
-
-    /**
-     * Mock swatchHelper
-     *
-     * @var \Magento\Swatches\Helper\Data|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $swatchHelper;
-
-    /**
-     * Mock renderLayered
-     *
-     * @var \Magento\Swatches\Block\LayeredNavigation\RenderLayered|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $renderLayered;
-
-    /**
-     * Mock scopeConfig
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $scopeConfig;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
     private $objectManager;
+    private $builders;
+    private $logger;
+    private $eavConfig;
+    private $swatchHelper;
+    private $renderLayered;
+    private $scopeConfig;
+    private $dataProviderAggregationPlugin;
 
-    /**
-     * Object to test
-     *
-     * @var \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
         $this->builders = [];
-        $this->logger = $this->createMock(\Psr\Log\LoggerInterface::class);
-        $this->eavConfig = $this->createMock(\Magento\Eav\Model\Config::class);
-        $this->swatchHelper = $this->createMock(\Magento\Swatches\Helper\Data::class);
-        $this->renderLayered = $this->createMock(\Magento\Swatches\Block\LayeredNavigation\RenderLayered::class);
-        $this->scopeConfig = $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::class,
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+        $this->eavConfig = $this->getMockBuilder(Config::class)->disableOriginalConstructor()->getMock();
+        $this->swatchHelper = $this->getMockBuilder(Data::class)->disableOriginalConstructor()->getMock();
+        $this->renderLayered = $this->getMockBuilder(RenderLayered::class)->disableOriginalConstructor()->getMock();
+        $this->scopeConfig = $this->getMockBuilder(
+            \Magento\Framework\App\Config\ScopeConfigInterface::class
+            )->getMock();
+
+        $this->dataProviderAggregationPlugin = $this->objectManager->getObject(
+            DataProviderAggregationPlugin::class,
             [
                 'builders' => $this->builders,
                 'logger' => $this->logger,
@@ -94,69 +49,32 @@ class DataProviderAggregationPluginTest extends TestCase
     }
 
     /**
-     * @return array
+     * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::build
      */
-    public function dataProviderForTestBuild()
+    public function testBuild()
     {
-        $value['option_label'] = 'Color';
-        if ($value['option_label'] == 'Color') {
-            $typeName = $this->getswatchTypeTest(1);
+        // Test case for build() method
+        $aggregation = $this->getMockBuilder(AggregationInterface::class)->getMock();
+        $storeId = 1;
 
-            return [
-                'Testcase 1' => [
-                    'prerequisites' => ['param' => $typeName],
-                    'expectedResult' => ['param' => 'ColorSwatchData']
-                ]
-            ];
-        }
+        $result = $this->dataProviderAggregationPlugin->build($aggregation, $storeId);
+
+        // Asserts the output value of the method
+        $this->assertIsArray($result);
     }
 
     /**
-     * @dataProvider dataProviderForTestBuild
+     * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::getSwatchType
      */
-    public function testBuild(array $prerequisites, array $expectedResult)
+    public function testGetSwatchType()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        // Test case for getSwatchType() method
+        $valueType = 1;
 
-    public function getswatchTypeTest($valueType)
-    {
-        $value = null ;
-        switch ($valueType) {
-            case 0:
-                $value = 'TextSwatchData';
-                break;
-            case 1:
-                $value = 'ColorSwatchData';
-                break;
-            case 2:
-                $value = 'ImageSwatchData';
-                break;
-            default:
-                break;
-        }
-        return $value ;
-    }
+        $result = $this->dataProviderAggregationPlugin->getSwatchType($valueType);
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetswatchType()
-    {
-        $prerequisitesSwatchType = $this->getswatchTypeTest(1);
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $prerequisitesSwatchType],
-                'expectedResult' => ['param' => 'ColorSwatchData']
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetswatchType
-     */
-    public function testGetswatchType(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        // Asserts the output value of the method
+        $this->assertIsString($result);
+        $this->assertEquals('ColorSwatchData', $result);
     }
 }

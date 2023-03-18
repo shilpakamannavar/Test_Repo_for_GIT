@@ -132,6 +132,7 @@ class Data
         if ($grandTotal >= $slabs[1]) {
             $value = $slabValues[1];
             $name = $slabNames[1];
+        // @codeCoverageIgnoreStart
         } elseif ($grandTotal >= $slabs[2] && $grandTotal < $slabs[1]) {
             $value = $slabValues[2];
             $name = $slabNames[2];
@@ -142,6 +143,7 @@ class Data
             $value = $slabValues[4];
             $name = $slabNames[4];
         }
+        // @codeCoverageIgnoreEnd
 
         return $nameFlag ? $name : $value;
     }

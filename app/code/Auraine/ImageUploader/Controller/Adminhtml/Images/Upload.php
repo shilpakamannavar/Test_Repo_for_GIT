@@ -38,3 +38,4 @@ class Upload extends \Magento\Backend\App\Action
         return $resultPage;
     }
 }
+

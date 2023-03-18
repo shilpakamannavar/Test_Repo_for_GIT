@@ -29,3 +29,4 @@ class UploadButtonTest extends TestCase
         $this->assertEquals(90, $buttonData['sort_order']);
     }
 }
+

@@ -1,5 +1,4 @@
-<?php \Magento\Framework\Component\ComponentRegistrar::register(
-    \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Auraine_LoyaltyPoint',
-    __DIR__
-);
+<?php
+use \Magento\Framework\Component\ComponentRegistrar;
+
+ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Auraine_LoyaltyPoint', __DIR__);
