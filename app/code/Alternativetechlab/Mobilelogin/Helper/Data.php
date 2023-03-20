@@ -70,7 +70,7 @@ class Data extends AbstractHelper
     const LOGIN_OTP_TYPE = "LOGIN";
     const FORGOTPASSWORD_OTP_TYPE = "FORGOT";
 
-    const INCORRECT_OTP = "Incorrect OTP";
+    const INCORRECT_OTP = "Verification Code Invalid";
     const CUSTOMER_EXISTS = "Customer already exists.";
 
     const CUSTOMER_NOT_EXISTS = "Customer does not exists.";
