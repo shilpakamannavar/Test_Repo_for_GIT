@@ -57,12 +57,7 @@ class DataTest extends TestCase
 
         $this->assertFalse($this->dataHelper->isCurrentPageCategoryPage());
     }
-
-
-
-
-
-
+    
     public function testGetDiscountVarReturnsCorrectValue()
     {
         $this->assertEquals('10% and above', $this->dataHelper->getDiscountVar(10));
