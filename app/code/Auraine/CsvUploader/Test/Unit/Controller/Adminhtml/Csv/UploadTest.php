@@ -45,26 +45,5 @@ class UploadTest extends TestCase
     public function testExecute()
     {
         $this->assertEquals(1,1);
-        // $this->pageFactoryMock->expects($this->once())
-        //     ->method('create')
-        //     ->willReturnSelf();
-        // $this->resultPageMock->expects($this->once())
-        //     ->method('setActiveMenu')
-        //     ->with('Auraine_CsvUploader::csv_uploader')
-        //     ->willReturnSelf();
-        // $this->resultPageMock->expects($this->once())
-        //     ->method('getConfig')
-        //     ->willReturnSelf();
-        // $this->pageFactoryMock->expects($this->once())
-        //     ->method('getTitle')
-        //     ->willReturnSelf();
-        // $this->pageFactoryMock->expects($this->once())
-        //     ->method('prepend')
-        //     ->with('Bulk Upload Size And Color Attribute')
-        //     ->willReturnSelf();
-
-        // $result = $this->uploadController->execute();
-        
-        // $this->assertInstanceOf(\Magento\Backend\Model\View\Result\Page::class, $result);
     }
 }
