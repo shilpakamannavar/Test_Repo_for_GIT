@@ -116,7 +116,7 @@ class ImportOptionsTest extends TestCase
         $this->optionFactory = $this->createMock(\Magento\Eav\Api\Data\AttributeOptionInterfaceFactory::class);
         $this->optionFactory->method('create')->willReturn($this->optionFactoryInstance);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CsvUploader\Console\Command\ImportOptions::class,
+            \Auraine\CsvUploader\Console\Command\ImportOptions::class,
             [
                 'csvProcessor' => $this->csvProcessor,
                 'directoryList' => $this->directoryList,

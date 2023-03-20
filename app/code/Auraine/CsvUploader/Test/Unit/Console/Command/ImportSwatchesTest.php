@@ -105,7 +105,7 @@ class ImportSwatchesTest extends TestCase
 
        // Call the execute method and assert that it returns null
         $result = $this->testObject->execute($input, $output);
-        $this->assertEquals(false,$result);
+        $this->assertEquals(false, $result);
     }
     
     

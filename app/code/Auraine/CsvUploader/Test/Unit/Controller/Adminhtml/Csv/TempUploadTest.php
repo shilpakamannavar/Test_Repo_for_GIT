@@ -72,7 +72,7 @@ class TempUploadTest extends TestCase
         $this->filesystem = $this->createMock(\Magento\Framework\Filesystem::class);
         $this->storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CsvUploader\Controller\Adminhtml\Csv\TempUpload::class,
+            \Auraine\CsvUploader\Controller\Adminhtml\Csv\TempUpload::class,
             [
                 'context' => $this->context,
                 'uploaderFactory' => $this->uploaderFactory,
