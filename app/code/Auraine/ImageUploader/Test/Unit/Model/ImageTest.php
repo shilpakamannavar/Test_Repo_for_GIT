@@ -68,3 +68,4 @@ class ImageTest extends TestCase
         $this->assertEquals($name, $this->model->getData('name'));
     }
 }
+
