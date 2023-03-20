@@ -50,36 +50,6 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Get Current Category Name
-     *
-     * @return void
-     */
-    public function getCurrentCategoryName()
-    {
-        return $this->getCurrentCategory()->getName();
-    }
-
-    /**
-     * Get Sub Categories
-     *
-     * @return void
-     */
-    public function getSubCategories()
-    {
-        return $this->getCurrentCategory()->getChildrenCategories();
-    }
-
-    /**
-     * Get Current Category
-     *
-     * @return void
-     */
-    public function getCurrentCategory()
-    {
-        return $this->resolver->get()->getCurrentCategory();
-    }
-
-    /**
      * Get Discount Variable
      *
      * @param [type] $discountPercentage
