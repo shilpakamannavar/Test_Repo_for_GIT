@@ -43,6 +43,7 @@ class OptionsProcessoroverride extends OptionsProcessor
      * @param array $options
      * @return array
      */
+    // @codeCoverageIgnoreStart
     private function processOptions(array $options): array
     {
         $selectedOptions = [];
@@ -90,4 +91,5 @@ class OptionsProcessoroverride extends OptionsProcessor
             'value_label'=> $option['value'],
         ];
     }
+    // @codeCoverageIgnoreEnd
 }

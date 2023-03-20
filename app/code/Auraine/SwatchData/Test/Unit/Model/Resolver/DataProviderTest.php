@@ -59,7 +59,13 @@ class DataProviderTest extends TestCase
      * @param string|null $baseUrl
      * @param array $expectedResult
      */
-    public function testResolve(array $value, string $typeName, string $hexCode, ?string $baseUrl, array $expectedResult): void
+    public function testResolve(
+        array $value,
+        string $typeName,
+        string $hexCode,
+        ?string $baseUrl,
+        array $expectedResult
+        ): void
     {
         $field = $this->getMockBuilder(Field::class)
             ->disableOriginalConstructor()
@@ -113,6 +119,14 @@ class DataProviderTest extends TestCase
     {
         $result = $this->dataProvider->getSwatchType($valueType);
         $this->assertEquals($expectedResult, $result);
+
+        // Test case for getSwatchType() method with value type = 3
+        $valueType = 3;
+
+        $result = $this->dataProvider->getSwatchType($valueType);
+
+        // Asserts the output value of the method
+        $this->assertEquals(null, $result);
     }
 
    /**
@@ -144,6 +158,7 @@ class DataProviderTest extends TestCase
             0 => 'TextSwatchData',
             1 => 'ColorSwatchData',
             2 => 'ImageSwatchData',
+            3 => null,
         ];
 
         return $types[$valueType] ?? 'UnknownSwatchType';

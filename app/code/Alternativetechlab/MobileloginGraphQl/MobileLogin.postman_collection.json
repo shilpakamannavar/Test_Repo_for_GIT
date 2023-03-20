@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "49ac8aa9-1761-4d09-9e1b-e858b41047bd",
+		"name": "MobileLogin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  loginOTP(\n      mobileNumber:\"+919601276800\"\n      websiteId:1\n  ) {\n    status\n    message\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OTP Verify",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n  loginOTPVerify(\n    mobileNumber:\"+919601276800\"\n    otp:\"74251\"\n    websiteId:1\n  ) {\n    message\n    status\n    token\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer d34d5ua1y9dte8f1bj434fs59i26568y",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n  customer {\n    firstname\n    middlename\n    lastname\n    email\n    gender\n    prefix\n    \n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forgot Password OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\n  forgotPassworOTP(\n    mobileNumber:\"+919601276800\"\n    websiteId:1\n  ) {\n    message\n    status\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forgot Password OTP Verify",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n  forgotPassworOTPVerify(\n    mobileNumber:\"+919601276800\"\n    otp:\"89510\"\n    websiteId:1\n  ) {\n    message\n    status\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\n  resetPasswordOtp (\n    mobileNumber:\"+919601276800\"\n    password:\"vishal@123\"\n    otp:\"89510\"\n    websiteId:1\n  ) {\n    message\n    status\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Account OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\n  createAccountOTP (\n    mobileNumber:\"+919601276802\"\n    websiteId:1\n  ) {\n    message\n    status\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Account OTP Verify",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n  createAccountOTPVerify (\n    mobileNumber:\"+919601276802\"\n    otp:\"28704\"\n    websiteId:1\n  ) {\n    message\n    status\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer Account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\n  createCustomerAccount (\n    input: {\n      firstname:\"Test\"\n      middlename:\"@\"\n      lastname:\"Test\"\n      email:\"test@test2.com\"\n      password:\"Test@123\"\n    }\n    mobileNumber:\"+919601276803\"\n    otp:\"37215\"\n    websiteId:1\n  ) {\n   customer {\n    email\n    firstname\n    lastname\n  } \n    status\n    message\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://local.m234.com/graphql/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"m234",
+						"com"
+					],
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

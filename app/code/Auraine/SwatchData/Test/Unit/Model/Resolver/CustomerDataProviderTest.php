@@ -27,7 +27,7 @@ class CustomerDataProviderTest extends TestCase
      * @var ScopeConfigInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $scopeConfigMock;
-    
+
     /**
      * @var ObjectManager
      */
@@ -63,7 +63,13 @@ class CustomerDataProviderTest extends TestCase
      * @param string|null $baseUrl
      * @param array $expectedResult
      */
-    public function testResolve(array $value, string $typeName, string $hexCode, ?string $baseUrl, array $expectedResult): void
+    public function testResolve(
+        array $value,
+        string $typeName,
+        string $hexCode,
+        ?string $baseUrl,
+        array $expectedResult
+    ): void
     {
         $field = $this->getMockBuilder(Field::class)
             ->disableOriginalConstructor()
@@ -110,7 +116,7 @@ class CustomerDataProviderTest extends TestCase
         ];
     }
 
-    
+
     /**
      * Test for CustomerDataProvider::resolve method with incorrect input data.
      *
@@ -131,10 +137,10 @@ class CustomerDataProviderTest extends TestCase
             $result = $resolver->resolve($inputData);
             $this->assertEquals($expectedResult, $result);
         }
-        
+
     }
 
-    
+
     /**
      * Data provider for testResolveMethodWithIncorrectInputData test case.
      *
@@ -150,7 +156,7 @@ class CustomerDataProviderTest extends TestCase
             [['label' => 'Color', 'value' => '']],
         ];
     }
-    
+
     /**
      * Test for CustomerDataProvider::getswatchType method.
      *
@@ -164,11 +170,19 @@ class CustomerDataProviderTest extends TestCase
             'swatchHelper' => $this->swatchHelperMock,
             'scopeConfig' => $this->scopeConfigMock,
         ]);
-    
+
         $result = $resolver->getswatchType($valueType);
         $this->assertSame($expectedResult, $result);
+
+         // Test case for getSwatchType() method with value type = 3
+         $valueType = 3;
+
+         $result = $resolver->getSwatchType($valueType);
+
+         // Asserts the output value of the method
+         $this->assertEquals(null, $result);
     }
-    
+
     /**
      * Data provider for testGetSwatchTypeMethod test case.
      *

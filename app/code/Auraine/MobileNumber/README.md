@@ -10,7 +10,7 @@
 
 
 ## Main Functionalities
-Extended Magecomp Mobile Login module for achieving bellow graphql results
+Extended Alternativetechlab Mobile Login module for achieving bellow graphql results
 1. mobilenumber in customer query 
 ```graphql
 {

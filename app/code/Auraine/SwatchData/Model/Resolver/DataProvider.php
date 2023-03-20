@@ -54,7 +54,6 @@ class DataProvider implements ResolverInterface
      * @throws LocalizedException
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    // @codeCoverageIgnoreStart
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
         if (isset($value['option_label']) && $value['option_label'] == 'Color') {
@@ -83,7 +82,6 @@ class DataProvider implements ResolverInterface
         }
         return null;
     }
-   // @codeCoverageIgnoreEnd
     /**
      * This will return type of swatch by id
      *

@@ -16,7 +16,7 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
     private $helperData;
 
     /**
-     * Constructor to get object of MageComp Mobilelogin helper.
+     * Constructor to get object of Alternativetechlab Mobilelogin helper.
      *
      * @param \Auraine\TransactionalSMS\Helper\Data $helperData
      */
@@ -35,7 +35,7 @@ class SendSMSOnOrderSuccess implements \Magento\Framework\Event\ObserverInterfac
 
         $mobile = $order->getShippingAddress()->getTelephone();
         $deliveryDate = date("d-m-Y", strtotime(date("d-m-Y"). "+4 days"));
-
+        
         if ($mobile !== null) {
             $this->helperData->orderSuccessSMS(
                 self::CONFIG_PATH,
