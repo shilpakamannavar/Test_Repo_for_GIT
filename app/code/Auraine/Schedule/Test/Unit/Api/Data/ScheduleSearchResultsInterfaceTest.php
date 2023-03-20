@@ -15,12 +15,24 @@ class ScheduleSearchResultsInterfaceTest extends TestCase
     protected function setUp(): void
     {
         $this->scheduleSearchResults = new class implements ScheduleSearchResultsInterface {
-            public function getItems() {}
-            public function setItems(array $items) {}
-            public function getSearchCriteria() {}
-            public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null) {}
-            public function getTotalCount() {}
-            public function setTotalCount($totalCount) {}
+            public function getItems()
+            {
+            }
+            public function setItems(array $items)
+            {
+            }
+            public function getSearchCriteria()
+            {
+            }
+            public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
+            {
+            }
+            public function getTotalCount()
+            {
+            }
+            public function setTotalCount($totalCount)
+            {
+            }
         };
     }
 

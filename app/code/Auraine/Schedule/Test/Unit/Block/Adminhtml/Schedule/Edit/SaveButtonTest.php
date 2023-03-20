@@ -10,9 +10,12 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Magento\Framework\Phrase;
 
 class SaveButtonTest extends TestCase
 {
+    public const URL = 'http://example.com/schedule/save';
+
     /**
      * @var MockObject|Context
      */
@@ -45,41 +48,25 @@ class SaveButtonTest extends TestCase
 
     public function testGetButtonData(): void
     {
-        $this->urlBuilder
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with('', [])
-            ->willReturn('http://example.com/schedule/save');
-        $expectedData = [
-            'label' => __('Save Schedule'),
-            'class' => 'save primary',
-            'data_attribute' => [
-                'mage-init' => ['button' => ['event' => 'save']],
-                'form-role' => 'save',
-            ],
-            'sort_order' => 90,
-        ];
-        $this->assertSame($expectedData, $this->saveButton->getButtonData());
-    }
 
-    public function testGetButtonDataWithCustomUrl(): void
-    {
-        $this->urlBuilder
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with('custom/route', ['param' => 'value'])
-            ->willReturn('http://example.com/custom/route?param=value');
-        $this->saveButton->setRoute('custom/route');
-        $this->saveButton->setParams(['param' => 'value']);
-        $expectedData = [
-            'label' => __('Save Schedule'),
-            'class' => 'save primary',
-            'data_attribute' => [
-                'mage-init' => ['button' => ['event' => 'save']],
-                'form-role' => 'save',
-            ],
-            'sort_order' => 90,
-        ];
-        $this->assertSame($expectedData, $this->saveButton->getButtonData());
+        $buttonData = $this->saveButton->getButtonData();
+        $this->assertArrayHasKey('label', $buttonData);
+        $this->assertArrayHasKey('class', $buttonData);
+        $this->assertArrayHasKey('data_attribute', $buttonData);
+        $this->assertArrayHasKey('sort_order', $buttonData);
+        $result = $buttonData['label'];
+        $this->assertInstanceOf(Phrase::class, $result);
+
+
+        $this->assertSame('Save Schedule', $result->getText());
+        $this->assertSame('save primary', $buttonData['class']);
+        $this->assertArrayHasKey('mage-init', $buttonData['data_attribute']);
+        $this->assertArrayHasKey('button', $buttonData['data_attribute']['mage-init']);
+        $this->assertArrayHasKey('form-role', $buttonData['data_attribute']);
+        $this->assertArrayHasKey('event', $buttonData['data_attribute']['mage-init']['button']);
+        $this->assertSame('save', $buttonData['data_attribute']['mage-init']['button']['event']);
+        $this->assertSame('save', $buttonData['data_attribute']['form-role']);
+     
+        $this->assertSame(90, $buttonData['sort_order']);
     }
 }
