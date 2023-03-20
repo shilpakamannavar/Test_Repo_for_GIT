@@ -9,6 +9,9 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Sales\Model\Order;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Summary of DataTest
+ */
 class DataTest extends TestCase
 {
     /**
@@ -36,6 +39,10 @@ class DataTest extends TestCase
      */
     private $orderCollectionMock;
 
+    /**
+     * Summary of setUp
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
@@ -50,6 +57,10 @@ class DataTest extends TestCase
         ]);
     }
 
+    /**
+     * Summary of testGetYearOldGrandTotalReturnsCorrectValue
+     * @return void
+     */
     public function testGetYearOldGrandTotalReturnsCorrectValue()
     {
         $customerId = 1;
@@ -85,14 +96,13 @@ class DataTest extends TestCase
         $this->assertEquals(300, $this->dataHelper->getYearOldGrandTotal($customerId));
     }
 
+    /**
+     * Summary of testGetSlabValueOrNameWithLowGrandTotal
+     * @return void
+     */
     public function testGetSlabValueOrNameWithLowGrandTotal()
     {
-        $dataHelper = new \Auraine\LoyaltyPoint\Helper\Data(
-            $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class),
-            $this->createMock(\Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class)
-        );
-        
-        $slabValue = $dataHelper->getSlabValueOrName(100);
+        $slabValue = $this->dataHelper->getSlabValueOrName(100);
         
         $this->assertNull($slabValue, 'Slab value should be null for a grand total less than all slabs');
     }
