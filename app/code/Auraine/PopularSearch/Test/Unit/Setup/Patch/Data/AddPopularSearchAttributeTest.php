@@ -84,92 +84,19 @@ class AddPopularSearchAttributeTest extends TestCase
     }
 
     /**
-     * testApplyAddsPopularSearchAttributeToCategoryEntity
-     *
-     * @return void
-     */
-    public function testApplyAddsPopularSearchAttributeToCategoryEntity()
-    {
-        $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eavSetup = $this->getMockBuilder(EavSetup::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eavSetupFactory = $this->getMockBuilder(EavSetupFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eavSetupFactory->expects($this->once())
-            ->method('create')
-            ->with(['setup' => $moduleDataSetup])
-            ->willReturn($eavSetup);
-        $eavSetup->expects($this->once())
-            ->method('getAttributeId')
-            ->with(Category::ENTITY, AddPopularSearchAttribute::POPULAR_SEARCH)
-            ->willReturn(false);
-        $eavSetup->expects($this->any())
-            ->method('removeAttribute')
-            ->with(Category::ENTITY, AddPopularSearchAttribute::POPULAR_SEARCH);
-        $eavSetup->expects($this->once())
-            ->method('addAttribute')
-            ->with(
-                Category::ENTITY,
-                AddPopularSearchAttribute::POPULAR_SEARCH,
-                [
-                    'group' => 'General Information',
-                    'type' => 'int',
-                    'backend' => '',
-                    'frontend' => '',
-                    'label' => 'Enable Popular Search',
-                    'input' => 'select',
-                    'class' => '',
-                    'source' => '',
-                    'visible' => true,
-                    'required' => false,
-                    'user_defined' => false,
-                    'default' => '',
-                    'searchable' => true,
-                    'filterable' => true,
-                    'comparable' => false,
-                    'is_used_in_grid' => true,
-                    'visible_on_front' => false,
-                    'used_in_product_listing' => true,
-                    'unique' => false,
-                    'option' => ''
-                ]
-            );
-
-        $moduleDataSetup->expects($this->exactly(2))
-            ->method('getConnection')
-            ->willReturnSelf();
-        $moduleDataSetup->expects($this->exactly(1))
-            ->method('startSetup');
-        $moduleDataSetup->expects($this->exactly(1))
-            ->method('endSetup');
-
-        $object = new AddPopularSearchAttribute($moduleDataSetup, $eavSetupFactory);
-        $object->apply();
-    }
-
-    /**
      * testApply
      *
      * @return void
      */
     public function testApply()
     {
-        $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $eavSetup = $this->getMockBuilder(EavSetup::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $eavSetupFactory = $this->getMockBuilder(EavSetupFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eavSetupFactory->expects($this->once())
+     
+        $this->eavSetupFactoryMock->expects($this->once())
             ->method('create')
-            ->with(['setup' => $moduleDataSetup])
+            ->with(['setup' => $this->moduleDataSetupMock])
             ->willReturn($eavSetup);
         $eavSetup->expects($this->once())
             ->method('getAttributeId')
@@ -207,30 +134,24 @@ class AddPopularSearchAttributeTest extends TestCase
                 ]
             );
 
-        $moduleDataSetup->expects($this->exactly(2))
+        $this->moduleDataSetupMock->expects($this->exactly(2))
             ->method('getConnection')
             ->willReturnSelf();
-        $moduleDataSetup->expects($this->exactly(1))
+        $this->moduleDataSetupMock->expects($this->exactly(1))
             ->method('startSetup');
-        $moduleDataSetup->expects($this->exactly(1))
+        $this->moduleDataSetupMock->expects($this->exactly(1))
             ->method('endSetup');
 
-        $patch = new AddPopularSearchAttribute($moduleDataSetup, $eavSetupFactory);
-
-        $patch->apply();
+        $this->patch->apply();
     }
 
     public function testGetAliases()
     {
-        $patch = new AddPopularSearchAttribute($this->moduleDataSetupMock, $this->eavSetupFactoryMock);
-
-        $this->assertEquals([], $patch->getAliases());
+        $this->assertEquals([], $this->patch->getAliases());
     }
 
     public function testGetDependencies()
     {
-        $patch = new AddPopularSearchAttribute($this->moduleDataSetupMock, $this->eavSetupFactoryMock);
-
-        $this->assertEquals([], $patch->getDependencies());
+        $this->assertEquals([], $this->patch->getDependencies());
     }
 }
