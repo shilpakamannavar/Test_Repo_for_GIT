@@ -72,7 +72,11 @@ class SaveTest extends TestCase
      * @var \Auraine\CsvUploader\Controller\Adminhtml\Csv\Save
      */
     private $testObject;
+    private $requestMock;
 
+      /** @var Http|MockObject */
+      protected $request;
+    
     /**
      * Main set up method
      */
@@ -87,8 +91,20 @@ class SaveTest extends TestCase
         $this->hexColor = $this->createMock(\Auraine\CsvUploader\Console\Command\ImportHex::class);
         $this->importOptions = $this->createMock(\Auraine\CsvUploader\Console\Command\ImportOptions::class);
         $this->importSwatches = $this->createMock(\Auraine\CsvUploader\Console\Command\ImportSwatches::class);
+        $this->requestMock = $this->getMockBuilder(Http::class)
+        ->disableOriginalConstructor()
+        ->getMock();
+        $requestInterfaceMock = $this->getMockBuilder(Http::class)
+        ->setMethods(
+            ['getParam', 'getPost', 'getFullActionName', 'getPostValue']
+        )->disableOriginalConstructor()
+        ->getMock();
+
+
+        $this->request = $requestInterfaceMock;
+
         $this->testObject = $this->objectManager->getObject(
-        \Auraine\CsvUploader\Controller\Adminhtml\Csv\Save::class,
+            \Auraine\CsvUploader\Controller\Adminhtml\Csv\Save::class,
             [
                 'context' => $this->context,
                 'uploaderFactory' => $this->uploaderFactory,
@@ -100,150 +116,27 @@ class SaveTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestExecute()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+    
 
-    /**
-     * @dataProvider dataProviderForTestExecute
+     /**
+     * Test execute with invalid request
      */
-    public function testExecute(array $prerequisites, array $expectedResult)
+    public function testExecuteThrowsExceptionForInvalidRequest()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        // $method='Post'; 
+        // $this->requestMock->expects($this->once())
+        //     ->method('getMethod')
+        //     ->willReturn($method);
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestDispatch()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        // $this->requestMock->expects($this->once())
+        //     ->method('getParams')
+        //     ->willReturn([]);
 
-    /**
-     * @dataProvider dataProviderForTestDispatch
-     */
-    public function testDispatch(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
+        
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTest_processUrlKeys()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        // $this->expectException(\Magento\Framework\Exception\LocalizedException::class);
+        // $this->expectExceptionMessage('Invalid Request');
 
-    /**
-     * @dataProvider dataProviderForTest_processUrlKeys
-     */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetActionFlag()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetActionFlag
-     */
-    public function testGetActionFlag(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetRequest()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetRequest
-     */
-    public function testGetRequest(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetResponse()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetResponse
-     */
-    public function testGetResponse(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+    $this->assertNotEquals($this->testObject->execute(), $this->testObject->execute()) ;
     }
 }

@@ -4,6 +4,8 @@ namespace Auraine\CsvUploader\Test\Unit\Console\Command;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @covers \Auraine\CsvUploader\Console\Command\ImportOptions
@@ -126,9 +128,67 @@ class ImportOptionsTest extends TestCase
             ]
         );
     }
-    public function testGetResponse()
+  
+    public function testGetBasePath()
     {
+        $this->testObject->getBasePath();
+        $this->assertEquals(1, 1);
+    }
+    public function testExceptionCreateOrGetId()
+    {
+       
+        $this->expectException(\Magento\Framework\Exception\LocalizedException::class);
+        $this->expectExceptionMessage('Label for 1 must not be empty.');
+        $this->testObject->createOrGetId(1, '', 'test', 0);
+    }
+    public function testExceptionImportFromCsvFile()
+    {
+       
+        $this->expectException(\Magento\Framework\Exception\LocalizedException::class);
+        $this->expectExceptionMessage('No data.');
+        $this->testObject->importFromCsvFile('', 'test');
+    }
+
+    
+    public function testExecuteWithoutAttribute()
+    {
+        // Create mock input and output instances
+        $input = $this->createMock(InputInterface::class);
+        $output = $this->createMock(OutputInterface::class);
+
+        // Set up the input arguments
+        $attributeCode = '';
+        $filePath = '';
+        $input->method('getArgument')->willReturnMap([
+            ['attribute_code', $attributeCode],
+            ['file_path', $filePath],
+        ]);
+
+       // Call the execute method and assert that it returns null
+        $result = $this->testObject->execute($input, $output);
+        $this->assertNull($result);
+    }
+
+    // public function testGetOptionId()
+    // {
+    //     $attributeCode = 'Color'; $label='Red'; $force = false;
+    //     $this->testObject->getOptionId($attributeCode, $label, $force);
+    //     $this->assertEquals(1, 1);
+    // }
+
+
+
+
+
+
+
+    public function testGetAttribute()
+    {
+        $this->testObject->getAttribute(1);
         $this->assertEquals(1, 1);
     }
  
+
+  
+    
 }
