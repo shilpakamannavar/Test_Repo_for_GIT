@@ -222,31 +222,15 @@ class AddPopularSearchAttributeTest extends TestCase
 
     public function testGetAliases()
     {
-        $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $eavSetupFactory = $this->getMockBuilder(EavSetupFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $patch = new AddPopularSearchAttribute($moduleDataSetup, $eavSetupFactory);
+        $patch = new AddPopularSearchAttribute($this->moduleDataSetupMock, $this->eavSetupFactoryMock);
 
         $this->assertEquals([], $patch->getAliases());
     }
 
     public function testGetDependencies()
     {
-        $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $eavSetupFactory = $this->getMockBuilder(EavSetupFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $patch = new AddPopularSearchAttribute($this->moduleDataSetupMock, $this->eavSetupFactoryMock);
 
-        $patch = new AddPopularSearchAttribute($moduleDataSetup, $eavSetupFactory);
-
-        $this->assertEquals([], $patch->getAliases());
+        $this->assertEquals([], $patch->getDependencies());
     }
 }

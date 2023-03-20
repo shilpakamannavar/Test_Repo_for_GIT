@@ -1,124 +1,152 @@
 <?php
+declare(strict_types=1);
+
 namespace Auraine\SwatchData\Test\Unit\Model\Resolver;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use PHPUnit\Framework\TestCase;
+use Auraine\SwatchData\Model\Resolver\DataProvider;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Swatches\Helper\Data;
+use Magento\Store\Model\ScopeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * @covers \Auraine\SwatchData\Model\Resolver\DataProvider
- */
 class DataProviderTest extends TestCase
 {
-    /**
-     * Mock swatchHelper
-     *
-     * @var \Magento\Swatches\Helper\Data|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $swatchHelper;
+    /** @var DataProvider */
+    private $dataProvider;
 
     /**
-     * Mock scopeConfig
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface|PHPUnit\Framework\MockObject\MockObject
+     * @var Data|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $scopeConfig;
+    private $swatchHelperMock;
 
     /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
+     * @var ScopeConfigInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $scopeConfigMock;
+    
+    /**
+     * @var ObjectManager
      */
     private $objectManager;
 
-    /**
-     * Object to test
-     *
-     * @var \Auraine\SwatchData\Model\Resolver\DataProvider
-     */
-    private $testObject;
 
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
+        $this->swatchHelperMock = $this->createMock(Data::class);
+        $this->scopeConfigMock = $this->createMock(ScopeConfigInterface::class);
         $this->objectManager = new ObjectManager($this);
-        $this->swatchHelper = $this->createMock(\Magento\Swatches\Helper\Data::class);
-        $this->scopeConfig = $this->createMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\SwatchData\Model\Resolver\DataProvider::class,
+        $this->dataProvider = $this->objectManager->getObject(
+            DataProvider::class,
             [
-                'swatchHelper' => $this->swatchHelper,
-                'scopeConfig' => $this->scopeConfig,
+                'swatchHelper' => $this->swatchHelperMock,
+                'scopeConfig' => $this->scopeConfigMock,
             ]
         );
     }
 
     /**
-     * @return array
+     * @dataProvider resolveDataProvider
+     *
+     * @param array $value
+     * @param string $typeName
+     * @param string $hexCode
+     * @param string|null $baseUrl
+     * @param array $expectedResult
      */
-    public function dataProviderForTestResolve()
+    public function testResolve(array $value, string $typeName, string $hexCode, ?string $baseUrl, array $expectedResult): void
     {
-        $value['option_label'] = 'Color';
-        if ($value['option_label'] == 'Color') {
-            $typeName = $this->getswatchTypesTest(1);
+        $field = $this->getMockBuilder(Field::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-            return [
-                'Testcase 1' => [
-                    'prerequisites' => ['param' => $typeName],
-                    'expectedResult' => ['param' => 'ColorSwatchData']
-                ]
-            ];
+        $context = [];
+
+        $resolveInfo = $this->getMockBuilder(ResolveInfo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $args = [];
+
+        
+        if ($baseUrl) {
+            $this->scopeConfigMock->expects($this->once())
+                ->method('getValue')
+                ->with(
+                    'swatch_data/general/swatch_data_base_url',
+                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                )
+                ->willReturn($baseUrl);
         }
-    }
+        $this->dataProvider->resolve($field, $context, $resolveInfo, $value, $args);
 
-    public function getswatchTypesTest($valueType)
-    {
-        $value = null ;
-        switch ($valueType) {
-            case 0:
-                $value = 'TextSwatchData';
-                break;
-            case 1:
-                $value = 'ColorSwatchData';
-                break;
-            case 2:
-                $value = 'ImageSwatchData';
-                break;
-            default:
-                break;
-        }
-        return $value ;
     }
-
-    /**
-     * @dataProvider dataProviderForTestResolve
-     */
-    public function testResolve(array $prerequisites, array $expectedResult)
+    
+    public function resolveDataProvider(): array
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetswatchType()
-    {
-        $swatchType = 2;
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => $swatchType],
-                'expectedResult' => ['param' => 2]
+            'color text swatch' => [
+                ['label' => 'Color', 'value' => 123],
+                'ColorSwatchData',
+                'FFFFFF',
+                null,
+                ['type' => 'ColorSwatchData', 'value' => 'FFFFFF'],
             ]
         ];
     }
 
+
+
     /**
-     * @dataProvider dataProviderForTestGetswatchType
+     * @dataProvider getSwatchTypeDataProvider
+     * @covers \Auraine\SwatchData\Model\Resolver\DataProvider::getSwatchType
+     *
+     * @param int $valueType
+     * @param string $expectedResult
      */
-    public function testGetswatchType(array $prerequisites, array $expectedResult)
+    public function testGetSwatchType(int $valueType, string $expectedResult): void
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $result = $this->dataProvider->getSwatchType($valueType);
+        $this->assertEquals($expectedResult, $result);
     }
+
+   /**
+     * Data provider for testGetSwatchTypeMethod test case.
+     *
+     * @return array
+     */
+    public function getSwatchTypeDataProvider(): array
+    {
+        return [
+            [0, 'TextSwatchData'],
+            [1, 'ColorSwatchData'],
+            [2, 'ImageSwatchData']
+        ];
+    }
+
+
+
+
+    /**
+     * This will return type of swatch by id
+     *
+     * @param int $valueType
+     * @return string
+     */
+    public function getSwatchType(int $valueType): string
+    {
+        $types = [
+            0 => 'TextSwatchData',
+            1 => 'ColorSwatchData',
+            2 => 'ImageSwatchData',
+        ];
+
+        return $types[$valueType] ?? 'UnknownSwatchType';
+    }
+
 }

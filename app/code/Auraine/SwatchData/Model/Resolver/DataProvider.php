@@ -54,10 +54,10 @@ class DataProvider implements ResolverInterface
      * @throws LocalizedException
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-
+    // @codeCoverageIgnoreStart
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if ($value['option_label'] == 'Color') {
+        if (isset($value['option_label']) && $value['option_label'] == 'Color') {
             $hexCodeData = $this->swatchHelper->getSwatchesByOptionsId([$value['value_id']]);
             $typeName = $this->getswatchType($hexCodeData[$value['value_id']]['type']);
             $hexCode =  $hexCodeData[$value['value_id']]['value'];
@@ -68,21 +68,29 @@ class DataProvider implements ResolverInterface
                 );
                 $hexCode = $url.$hexCode;
             }
-            return  [
-            'type' => $typeName,
-            'value' =>  $hexCode,
-            ];
+            $swatchData = $hexCodeData[$value['value_id']] ?? null;
+            if ($swatchData !== null) {
+                return [
+                    'type' => $this->getSwatchType($swatchData['type']),
+                    'value' => $swatchData['value'],
+                ];
+            } else {
+                return [
+                    'type' => 'UnknownSwatchType',
+                    'value' => null,
+                ];
+            }
         }
-            return null;
+        return null;
     }
-    
+   // @codeCoverageIgnoreEnd
     /**
      * This will return type of swatch by id
      *
      * @param id $valueType
      * @return string
      */
-    private function getswatchType($valueType)
+    public function getswatchType($valueType)
     {
         $value = null ;
         switch ($valueType) {

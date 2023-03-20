@@ -54,7 +54,7 @@ class LoyaltyPointCreationTest extends TestCase
 
     /**
      * @dataProvider orderDataProvider
-     * 
+     *
      * @return void
      */
     public function testExecute(Order $order, $expectedAddPointsCall)

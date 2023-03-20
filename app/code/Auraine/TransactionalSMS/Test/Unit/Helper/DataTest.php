@@ -2,12 +2,15 @@
 namespace Auraine\TransactionalSMS\Test\Unit\Helper;
 
 use Auraine\TransactionalSMS\Helper\Data;
-use GraphQL\Mutation;
 use Magecomp\Mobilelogin\Helper\Data as MobileloginHelper;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Sales\Model\Order;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Summary of DataTest
+ */
 class DataTest extends TestCase
 {
     /**
@@ -36,6 +39,7 @@ class DataTest extends TestCase
 
         $this->helper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
     }
+
 
     /**
      * @dataProvider getConfigValueDataProvider
@@ -90,7 +94,7 @@ class DataTest extends TestCase
       /**
        * @dataProvider mobileNumberProvider
        */
-    public function testDispatchSMS($mobileNumber, $otpStatus, $expectedMobileNumber)
+    public function testDispachSMS($mobileNumber, $otpStatus, $expectedMobileNumber)
     {
         $message = 'Test message';
 
@@ -115,6 +119,72 @@ class DataTest extends TestCase
     }
 
     /**
+     * Test orderSuccessSMS() method with valid mobile and disabled SMS.
+     */
+    public function testOrderSuccessSMSWithValidMobileAndDisabledSMS()
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $mobile = '913456789012'; // 12 digits mobile number
+        $customerName = 'John Doe';
+        $message = 'Welcome, John Doe!';
+        $deliveryDate = '16/03/2023';
+        $orderId = 000001234;
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->orderSuccessSMS($configPath, $mobile, $deliveryDate, $orderId);
+    }
+
+    /**
+     * Test transactionSMS() method with valid mobile and disabled SMS.
+     */
+    public function testTransactionSMSWithValidMobileAndDisabledSMS()
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $mobile = '913456789012'; // 12 digits mobile number
+        $grandTotal = 200;
+        $orderId = 000001234;
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->transactionSMS($configPath, $mobile, $grandTotal, $orderId);
+    }
+
+    /**
+     * Test shipmentNotDelivered() method with valid mobile and disabled SMS.
+     */
+    public function testShipmentNotDeliveredWithValidMobileAndDisabledSMS()
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $mobile = '913456789012'; // 12 digits mobile number
+        $orderId = 000001234;
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->shipmentNotDelivered($configPath, $mobile, $orderId);
+    }
+
+
+
+    /**
      * Test customerRegisterSuccessSMS() method with valid mobile and disabled SMS.
      */
     public function testCustomerRegisterSuccessSMSWithValidMobileAndDisabledSMS()
@@ -134,6 +204,7 @@ class DataTest extends TestCase
 
         $this->helper->customerRegisterSuccessSMS($configPath, $mobile, $customerName);
     }
+
 
     public function testCustomerRegisterSuccessSMSDoesNotDispatchSMSWhenOtpStatusIsOff()
     {
@@ -157,6 +228,49 @@ class DataTest extends TestCase
         );
     }
 
+     /**
+     * Test customerAbandonedCartSMS() method with valid mobile and disabled SMS.
+     */
+    public function testCustomerAbandonedCartSMSWithValidMobileAndDisabledSMS()
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $mobile = '913456789012'; // 12 digits mobile number
+        $customerName = 'John Doe';
+        $message = 'Welcome, John Doe!';
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->customerAbandonedCartSMS($configPath, $mobile, $customerName);
+    }
+
+    public function testCustomerAbandonedCartSMSDoesNotDispatchSMSWhenOtpStatusIsOff()
+    {
+        $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
+
+        $mobile = '1234567890';
+        $customerName = 'John Doe';
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($this->equalTo(Data::OTP_STATUS_PATH))
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $dataHelper->customerAbandonedCartSMS(
+            Data::OTP_STATUS_PATH,
+            $mobile,
+            $customerName
+        );
+    }
+
     public function testCustomerRegisterSuccessSMSDoesNotDispatchSMSWhenMobileNumberIsInvalid()
     {
         $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
@@ -174,4 +288,140 @@ class DataTest extends TestCase
 
         $dataHelper->customerRegisterSuccessSMS(Data::OTP_STATUS_PATH, $mobile, $customerName);
     }
+
+    public function testCustomerAbandonedCartSMSDoesNotDispatchSMSWhenMobileNumberIsInvalid()
+    {
+        $dataHelper = new Data($this->mobileloginHelperMock, $this->scopeConfigMock);
+
+        $mobile = '123456';
+        $customerName = 'John Doe';
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with(Data::OTP_STATUS_PATH, ScopeInterface::SCOPE_STORE)
+            ->willReturn(true);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $dataHelper->customerAbandonedCartSMS(Data::OTP_STATUS_PATH, $mobile, $customerName);
+    }
+
+    /**
+     * testShipmentShippedSMS
+     *
+     * @return void
+     */
+    public function testShipmentShippedSMS()
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $orderId = 123;
+        $mobile = '1234567890';
+        $quantity = 2;
+        $description = 'Test product';
+
+        $order = $this->createMock(Order::class);
+
+        $order->expects($this->once())
+            ->method('getIncrementId')
+            ->willReturn($orderId);
+
+        $shippingAddress = $this->createMock(\Magento\Sales\Model\Order\Address::class);
+
+        $order->expects($this->once())
+            ->method('getShippingAddress')
+            ->willReturn($shippingAddress);
+
+        $shippingAddress->expects($this->once())
+            ->method('getTelephone')
+            ->willReturn($mobile);
+
+        $order->expects($this->any())
+            ->method('getTotalItemCount')
+            ->willReturn($quantity);
+
+        $orderItem = $this->createMock(\Magento\Sales\Model\Order\Item::class);
+
+        $order->expects($this->once())
+            ->method('getAllItems')
+            ->willReturn([$orderItem]);
+
+        $orderItem->expects($this->once())
+            ->method('getName')
+            ->willReturn($description);
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->shipmentShippedSMS(Data::OTP_STATUS_PATH, $order);
+    }
+
+    /**
+     * testOrderDeliveredSMS
+     * @return void
+     */
+    public function testOrderDeliveredSMS()
+    {
+        $this->privateTestLogic('orderDeliveredSMS');
+    }
+
+    /**
+     * testshipmentCancelledSMS
+     * @return void
+     */
+    public function testShipmentCancelledSMS()
+    {
+        $this->privateTestLogic('shipmentCancelledSMS');
+    }
+
+    public function testReturnInitiatedSMS()
+    {
+        $this->privateTestLogic('returnInitiatedSMS');
+    }
+
+    public function privateTestLogic($functionName)
+    {
+        $configPath = 'transaction_sms_control/transaction_sms/enable_sms';
+        $orderId = 123;
+        $mobile = '1234567890';
+        $quantity = 2;
+        $description = 'Test product';
+
+        $order = $this->createMock(Order::class);
+
+        $order->expects($this->once())
+            ->method('getIncrementId')
+            ->willReturn($orderId);
+
+        $order->expects($this->any())
+            ->method('getTotalItemCount')
+            ->willReturn($quantity);
+
+        $orderItem = $this->createMock(\Magento\Sales\Model\Order\Item::class);
+
+        $order->expects($this->once())
+            ->method('getAllItems')
+            ->willReturn([$orderItem]);
+
+        $orderItem->expects($this->once())
+            ->method('getName')
+            ->willReturn($description);
+
+        $this->scopeConfigMock->expects($this->any())
+            ->method('getValue')
+            ->with($configPath)
+            ->willReturn(false);
+
+        $this->mobileloginHelperMock->expects($this->never())
+            ->method('callApiUrl');
+
+        $this->helper->{$functionName}(Data::OTP_STATUS_PATH, $mobile, $order);
+    }
+
+    
 }
