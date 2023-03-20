@@ -169,26 +169,10 @@ class ImportOptionsTest extends TestCase
         $this->assertNull($result);
     }
 
-    // public function testGetOptionId()
-    // {
-    //     $attributeCode = 'Color'; $label='Red'; $force = false;
-    //     $this->testObject->getOptionId($attributeCode, $label, $force);
-    //     $this->assertEquals(1, 1);
-    // }
-
-
-
-
-
-
-
     public function testGetAttribute()
     {
         $this->testObject->getAttribute(1);
         $this->assertEquals(1, 1);
     }
- 
-
-  
     
 }
