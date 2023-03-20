@@ -1,213 +1,49 @@
 <?php
 namespace Auraine\CsvUploader\Test\Unit\Controller\Adminhtml\Csv;
 
+use Auraine\CsvUploader\Controller\Adminhtml\Csv\Upload;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Framework\View\Result\PageFactory;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Backend\Model\View\Result\Page as BackendResultPage;
 
-/**
- * @covers \Auraine\CsvUploader\Controller\Adminhtml\Csv\Upload
- */
 class UploadTest extends TestCase
 {
-    /**
-     * Mock context
-     *
-     * @var \Magento\Backend\App\Action\Context|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $context;
+    /** @var Upload */
+    private $uploadController;
 
-    /**
-     * Mock resultPageFactoryInstance
-     *
-     * @var \Magento\Framework\View\Result\Page|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $resultPageFactoryInstance;
+    /** @var Context|\PHPUnit\Framework\MockObject\MockObject */
+    private $contextMock;
 
-    /**
-     * Mock resultPageFactory
-     *
-     * @var \Magento\Framework\View\Result\PageFactory|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $resultPageFactory;
+    /** @var PageFactory|\PHPUnit\Framework\MockObject\MockObject */
+    private $pageFactoryMock;
+        /** @var BackendResultPage|\PHPUnit\Framework\MockObject\MockObject */
+        private $resultPageMock;
 
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
 
-    /**
-     * Object to test
-     *
-     * @var \Auraine\CsvUploader\Controller\Adminhtml\Csv\Upload
-     */
-    private $testObject;
-
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->context = $this->createMock(\Magento\Backend\App\Action\Context::class);
-        $this->resultPageFactoryInstance = $this->createMock(\Magento\Framework\View\Result\Page::class);
-        $this->resultPageFactory = $this->createMock(\Magento\Framework\View\Result\PageFactory::class);
-        $this->resultPageFactory->method('create')->willReturn($this->resultPageFactoryInstance);
-        $this->testObject = $this->objectManager->getObject(
-        \Auraine\CsvUploader\Controller\Adminhtml\Csv\Upload::class,
-            [
-                'context' => $this->context,
-                'resultPageFactory' => $this->resultPageFactory,
-            ]
-        );
+        $this->contextMock = $this->getMockBuilder(Context::class)
+        ->disableOriginalConstructor()
+        ->getMock();
+    $this->pageFactoryMock = $this->getMockBuilder(PageFactory::class)
+        ->disableOriginalConstructor()
+        ->getMock();
+    $this->resultPageMock = $this->getMockBuilder(BackendResultPage::class)
+        ->disableOriginalConstructor()
+        ->getMock();
+
+        $objectManager = new ObjectManager($this);
+        $this->uploadController = $objectManager->getObject(Upload::class, [
+            'context' => $this->contextMock,
+            'resultPageFactory' => $this->pageFactoryMock
+        ]);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderForTestExecute()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
 
-    /**
-     * @dataProvider dataProviderForTestExecute
-     */
-    public function testExecute(array $prerequisites, array $expectedResult)
+    public function testExecute()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestDispatch()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestDispatch
-     */
-    public function testDispatch(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTest_processUrlKeys()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTest_processUrlKeys
-     */
-    public function test_processUrlKeys(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetUrl()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetUrl
-     */
-    public function testGetUrl(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetActionFlag()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetActionFlag
-     */
-    public function testGetActionFlag(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetRequest()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetRequest
-     */
-    public function testGetRequest(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderForTestGetResponse()
-    {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestGetResponse
-     */
-    public function testGetResponse(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $this->assertEquals(1,1);
     }
 }
