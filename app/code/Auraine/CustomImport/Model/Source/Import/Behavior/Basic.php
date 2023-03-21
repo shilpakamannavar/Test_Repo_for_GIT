@@ -8,6 +8,7 @@ use Magento\ImportExport\Model\Import;
  */
 class Basic extends \Magento\ImportExport\Model\Source\Import\Behavior\Basic
 {
+    public $import;
     /**
      * Get the options as an array.
      *
@@ -28,5 +29,10 @@ class Basic extends \Magento\ImportExport\Model\Source\Import\Behavior\Basic
     public function getCode()
     {
         return 'pincode'; // add entity name
+    }
+    public function setImport($import)
+    {
+        $this->import = $import;
+        return $this;
     }
 }

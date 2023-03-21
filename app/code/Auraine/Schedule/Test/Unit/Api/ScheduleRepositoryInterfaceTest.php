@@ -97,54 +97,54 @@ class ScheduleRepositoryInterfaceTest extends TestCase
     }
 
     /**
-    * @covers \Auraine\Schedule\Api\ScheduleRepositoryInterface::getList
-    */
+     * @covers \Auraine\Schedule\Api\ScheduleRepositoryInterface::getList
+     */
     public function testScheduleSearch(): void
     {
     // create and save schedules
-    $schedule1 = $this->scheduleFactory->create();
-    $schedule1->setData([
-    'schedule_id' => '123',
-    'name' => 'Test Schedule 1',
+        $schedule1 = $this->scheduleFactory->create();
+        $schedule1->setData([
+        'schedule_id' => '123',
+        'name' => 'Test Schedule 1',
     // add other required data for ScheduleInterface
-    ]);
-    $this->scheduleRepository->save($schedule1);
+        ]);
+        $this->scheduleRepository->save($schedule1);
 
 
-    $schedule2 = $this->scheduleFactory->create();
-    $schedule2->setData([
+        $schedule2 = $this->scheduleFactory->create();
+        $schedule2->setData([
         'schedule_id' => '456',
         'name' => 'Test Schedule 2',
         // add other required data for ScheduleInterface
-    ]);
-    $this->scheduleRepository->save($schedule2);
+        ]);
+        $this->scheduleRepository->save($schedule2);
 
     // search by name
-    $searchCriteriaBuilder = $this->searchCriteriaBuilderFactory->create();
-    $searchCriteria = $searchCriteriaBuilder
+        $searchCriteriaBuilder = $this->searchCriteriaBuilderFactory->create();
+        $searchCriteria = $searchCriteriaBuilder
         ->addFilter('name', 'Test Schedule 1')
         ->create();
 
-    $searchResults = $this->scheduleRepository->getList($searchCriteria);
-    $this->assertInstanceOf(SearchResultsInterface::class, $searchResults);
-    $this->assertEquals(1, $searchResults->getTotalCount());
+        $searchResults = $this->scheduleRepository->getList($searchCriteria);
+        $this->assertInstanceOf(SearchResultsInterface::class, $searchResults);
+        $this->assertEquals(1, $searchResults->getTotalCount());
 
-    $items = $searchResults->getItems();
-    $this->assertCount(1, $items);
-    $this->assertInstanceOf(ScheduleInterface::class, $items[0]);
-    $this->assertEquals('Test Schedule 1', $items[0]->getName());
+        $items = $searchResults->getItems();
+        $this->assertCount(1, $items);
+        $this->assertInstanceOf(ScheduleInterface::class, $items[0]);
+        $this->assertEquals('Test Schedule 1', $items[0]->getName());
 
     // search all
-    $searchCriteriaBuilder = $this->searchCriteriaBuilderFactory->create();
-    $searchCriteria = $searchCriteriaBuilder->create();
+        $searchCriteriaBuilder = $this->searchCriteriaBuilderFactory->create();
+        $searchCriteria = $searchCriteriaBuilder->create();
 
-    $searchResults = $this->scheduleRepository->getList($searchCriteria);
-    $this->assertInstanceOf(SearchResultsInterface::class, $searchResults);
-    $this->assertEquals(2, $searchResults->getTotalCount());
+        $searchResults = $this->scheduleRepository->getList($searchCriteria);
+        $this->assertInstanceOf(SearchResultsInterface::class, $searchResults);
+        $this->assertEquals(2, $searchResults->getTotalCount());
 
-    $items = $searchResults->getItems();
-    $this->assertCount(2, $items);
-    $this->assertInstanceOf(ScheduleInterface::class, $items[0]);
-    $this->assertInstanceOf(ScheduleInterface::class, $items[1]);
-}
+        $items = $searchResults->getItems();
+        $this->assertCount(2, $items);
+        $this->assertInstanceOf(ScheduleInterface::class, $items[0]);
+        $this->assertInstanceOf(ScheduleInterface::class, $items[1]);
+    }
 }

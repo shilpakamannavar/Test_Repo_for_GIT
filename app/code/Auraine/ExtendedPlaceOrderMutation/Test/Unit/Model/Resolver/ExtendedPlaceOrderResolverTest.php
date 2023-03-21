@@ -138,7 +138,7 @@ class ExtendedPlaceOrderResolverTest extends \PHPUnit\Framework\TestCase
 
 public function testResolveWhenShippingAddressIsNotEmpty()
 {
-    $orderNumber = '100000001';
+    $orderNumber = '100000002';
     $firstName = 'John';
     $lastName = 'Doe';
     $email = 'john.doe@example.com';
@@ -216,7 +216,7 @@ public function testResolveWhenShippingAddressIsNotEmpty()
             'firstname' => $firstName,
             'lastname' => $lastName,
             'email' => $email,
-            'mobile' => '+1-123-456-7890',
+            'mobile' => $telephone,
             'address' => [
                 'street' => implode(', ', $streetName),
                 'city' => $city,
@@ -229,46 +229,38 @@ public function testResolveWhenShippingAddressIsNotEmpty()
      
         }
 
-        public function testEmptyShippingAddressDataReturnsNull() {
-            // Create a mock shipping address object with no data
+    public function testEmptyShippingAddressDataReturnsNull()
+    {
+        // Create a mock shipping address object with no data
+
+        $orderNumber = '100000001';
     
-            $orderNumber = '100000001';
-            $firstName = 'John';
-            $lastName = 'Doe';
-            $email = 'john.doe@example.com';
-            $countryId = 'IN';
-            $countryName = 'India';
-            $telephone = '+1-123-456-7890';
-            $region = 'New York';
-            $city = 'New York';
-            $streetName = ['St. Nicholas Greek Orthodox Church'];
+        $value = ['order_number' => $orderNumber];
+        $this->orderMock->expects($this->once())
+        ->method('loadByIncrementId')
+        ->with($orderNumber)
+        ->willReturnSelf();
         
-            $value = ['order_number' => $orderNumber];
-            $this->orderMock->expects($this->once())
-            ->method('loadByIncrementId')
-            ->with($orderNumber)
-            ->willReturnSelf();
-            
-            $this->shippingAddressMock->expects($this->any())
-                             ->method('getData')
-                             ->willReturn(array());
-            $this->orderMock->expects($this->once())
-            ->method('getShippingAddress')
-            ->willReturn($this->shippingAddressMock);                
-        
-                             $result = $this->resolver->resolve(
-                                $this->getMockBuilder(Field::class)
-                                    ->disableOriginalConstructor()
-                                    ->getMock(),
-                                $this->createMock(ContextInterface::class),
-                                $this->createMock(ResolveInfo::class),
-                                $value
-                            );
-        
-                            
-            // Assert that the result is null
-            $this->assertNull($result);
-        }
+        $this->shippingAddressMock->expects($this->any())
+                            ->method('getData')
+                            ->willReturn(array());
+        $this->orderMock->expects($this->once())
+        ->method('getShippingAddress')
+        ->willReturn($this->shippingAddressMock);
+    
+        $result = $this->resolver->resolve(
+            $this->getMockBuilder(Field::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+            $this->createMock(ContextInterface::class),
+            $this->createMock(ResolveInfo::class),
+            $value
+        );
+    
+                        
+        // Assert that the result is null
+        $this->assertNull($result);
+    }
 }
 
 

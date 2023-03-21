@@ -59,7 +59,7 @@ class ScheduleActionsTest extends TestCase
     }
 
     /**
-     * @dataProvider prepareDataSourceProvider
+     * @dataProvider prepareDataSource
      *
      * @param array $dataSource
      * @param array $expectedResult
@@ -72,13 +72,72 @@ class ScheduleActionsTest extends TestCase
                 return 'http://example.com/' . $path . '?' . http_build_query($params);
             });
 
-        $this->assertSame($expectedResult, $this->scheduleActions->prepareDataSource($dataSource));
+
+            $expectedResult = [
+                [
+                    [
+                        'data' => [
+                            'items' => [
+                                [
+                                    'schedule_id' => 1,
+                                ],
+                                [
+                                    'schedule_id' => 2,
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'data' => [
+                            'items' => [
+                                [
+                                    'schedule_id' => 1,
+                                    'schedule_actions' => [
+                                        'edit' => [
+                                            'href' => 'http://example.com/auraine_schedule/schedule/edit?schedule_id=1',
+                                            'label' => 'Edit',
+                                        ],
+                                        'delete' => [
+                                            'href' => 'http://example.com/auraine_schedule/schedule/delete?schedule_id=1',
+                                            'label' => 'Delete',
+                                            'confirm' => [
+                                                'title' => 'Delete schedule id 1',
+                                                'message' => 'Are you sure you want to delete a schedule id 1 record?',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'schedule_id' => 2,
+                                    'schedule_actions' => [
+                                        'edit' => [
+                                            'href' => 'http://example.com/auraine_schedule/schedule/edit?schedule_id=2',
+                                            'label' => 'Edit',
+                                        ],
+                                        'delete' => [
+                                            'href' => 'http://example.com/auraine_schedule/schedule/delete?schedule_id=2',
+                                            'label' => 'Delete',
+                                            'confirm' => [
+                                                'title' => 'Delete schedule id 2',
+                                                'message' => 'Are you sure you want to delete a schedule id 2 record?',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+
+
+            $this->assertSame($expectedResult, $this->scheduleActions->prepareDataSource($dataSource));
     }
 
     /**
      * @return array
      */
-    public function prepareDataSourceProvider()
+    public function prepareDataSource()
     {
         return [
             [
@@ -133,10 +192,9 @@ class ScheduleActionsTest extends TestCase
                             ],
                         ],
                     ],
-                ],  
+                ],
 
             ],
-        ];  
-        
+        ];
     }
-} 
+}

@@ -130,14 +130,12 @@ class QuantityTest extends TestCase
     
     public function testResolve(): void
     {
-      
-
         $result = $this->resolver->resolve(
-           $this->fieldMock,
-           $this->contextMock,
-           $this->resolveInfoMock,
-        ['model' => $this->productModelMock]
-    );
+            $this->fieldMock,
+            $this->contextMock,
+            $this->resolveInfoMock,
+            ['model' => $this->productModelMock]
+        );
 
         $this->assertSame(0.0, $result);
     }

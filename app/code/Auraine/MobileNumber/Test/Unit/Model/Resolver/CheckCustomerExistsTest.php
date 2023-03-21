@@ -53,7 +53,7 @@ class CheckCustomerExistsTest extends TestCase
         $this->contextMock = $this->createMock(ContextInterface::class);
         $this->resolveInfoMock = $this->createMock(ResolveInfo::class);
         $this->fieldMock = $this->createMock(Field::class);
-      
+
         $this->resolver = new CheckCustomerExists(
             $this->helperDataMock,
             $this->contextMock,
@@ -130,15 +130,15 @@ class CheckCustomerExistsTest extends TestCase
         return [
             [
                 [],
-                'Invalid parameter list.'
+                'Invalid parameter list1.'
             ],
             [
                 ['field_value' => '1234567890'],
-                'Invalid parameter list.'
+                'Invalid parameter list2.'
             ],
             [
                 ['type' => 'mobile'],
-                'Invalid parameter list.'
+                'Invalid parameter list3.'
             ],
         ];
     }

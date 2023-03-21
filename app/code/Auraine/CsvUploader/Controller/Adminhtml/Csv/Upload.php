@@ -38,6 +38,7 @@ class Upload extends \Magento\Backend\App\Action
         return $resultPage;
     }
 
+    //@codeCoverageIgnoreStart
     /**Is allowes
      *
      * @return bool
@@ -46,4 +47,5 @@ class Upload extends \Magento\Backend\App\Action
     {
         return $this->_authorization->isAllowed('Auraine_CsvUploader::csv_upload');
     }
+    //@codeCoverageIgnoreEnd
 }
