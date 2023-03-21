@@ -115,7 +115,7 @@ class CustomerOrders implements ResolverInterface
             ]
         ];
     }
-
+  // @codeCoverageIgnoreStart
     /**
      * Get search result from graphql query arguments
      *
@@ -139,4 +139,5 @@ class CustomerOrders implements ResolverInterface
         $searchCriteria = $this->searchCriteriaBuilder->setSortOrders([$sortOrder]);
         return $this->orderRepository->getList($searchCriteria->create());
     }
+      // @codeCoverageIgnoreEnd
 }

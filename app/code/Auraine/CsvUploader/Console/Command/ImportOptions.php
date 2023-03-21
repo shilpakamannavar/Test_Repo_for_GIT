@@ -119,7 +119,7 @@ class ImportOptions extends Command
      * @return int|null
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $attributeCode = $input->getArgument(self::ATTRIBUTE_CODE_ARGUMENT);
         $filePath = $input->getArgument(self::FILE_PATH_ARGUMENT);
@@ -142,6 +142,11 @@ class ImportOptions extends Command
         $ds = DIRECTORY_SEPARATOR;
         $importProductRawData = $this->csvProcessor->getData($this->getBasePath() . $ds . $filePath);
         $sortOrder = 0;
+        if ($importProductRawData == null) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('No data.')
+            );
+        }
         foreach ($importProductRawData as $dataRow) {
             $storeLabel = null;
             if (isset($dataRow[1])) {
@@ -180,7 +185,6 @@ class ImportOptions extends Command
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute */
         $attribute = $this->getAttribute($attributeCode);
-
         // Build option array if necessary
         if ($force === true || !isset($this->attributeValues[$attribute->getAttributeId()])) {
             $this->attributeValues[$attribute->getAttributeId()] = [];

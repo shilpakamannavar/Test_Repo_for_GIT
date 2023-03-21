@@ -83,11 +83,11 @@ class AddCategoryPopularBrandsSliderAttributeTest extends TestCase
     }
 
     /**
-     * testApplyAddBannerSliderAttributeToCategoryEntity
+     * testApplyAddPopularBrandsSliderAttributeToCategoryEntity
      *
      * @return void
      */
-    public function testApplyAddsAddBannerSliderAttributeToCategoryEntity()
+    public function testApplyAddsAddPopularBrandsSliderAttributeToCategoryEntity()
     {
         $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
             ->disableOriginalConstructor()

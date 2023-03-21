@@ -4,6 +4,7 @@ namespace Auraine\CustomImport\Model\Import;
 use Auraine\CustomImport\Model\Import\CustomImport\RowValidatorInterface as ValidatorInterface;
 use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class CustomImport extends \Magento\ImportExport\Model\Import\Entity\AbstractEntity
 {

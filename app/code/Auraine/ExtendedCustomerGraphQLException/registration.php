@@ -1,7 +1,4 @@
 <?php
+use Magento\Framework\Component\ComponentRegistrar;
 
-\Magento\Framework\Component\ComponentRegistrar::register(
-    \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Auraine_ExtendedCustomerGraphQLException',
-    __DIR__
-);
+ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Auraine_ExtendedCustomerGraphQLException', __DIR__);

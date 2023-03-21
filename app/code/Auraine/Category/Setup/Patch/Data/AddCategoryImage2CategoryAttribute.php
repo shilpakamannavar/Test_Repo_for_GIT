@@ -39,16 +39,17 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
+
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Category::ENTITY,
-            'category_image_2',
+            self::CATEGORY_IMAGE2_SLIDER,
             [
                 'type' => 'varchar',
                 'label' => 'Category image 2',
@@ -67,19 +68,21 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
-
+    /**
+     * @inheritdoc
+     */
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, CATEGORY_IMAGE2_SLIDER);
+        $eavSetup->removeAttribute(\Magento\Catalog\Model\Category::ENTITY, self::CATEGORY_IMAGE2_SLIDER);
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -87,7 +90,7 @@ class AddCategoryImage2CategoryAttribute implements DataPatchInterface, PatchRev
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {

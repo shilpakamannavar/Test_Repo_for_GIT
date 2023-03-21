@@ -12,6 +12,9 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin
+ */
 class DataProviderAggregationPluginTest extends TestCase
 {
     private $objectManager;
@@ -33,7 +36,7 @@ class DataProviderAggregationPluginTest extends TestCase
         $this->renderLayered = $this->getMockBuilder(RenderLayered::class)->disableOriginalConstructor()->getMock();
         $this->scopeConfig = $this->getMockBuilder(
             \Magento\Framework\App\Config\ScopeConfigInterface::class
-            )->getMock();
+        )->getMock();
 
         $this->dataProviderAggregationPlugin = $this->objectManager->getObject(
             DataProviderAggregationPlugin::class,
@@ -48,6 +51,9 @@ class DataProviderAggregationPluginTest extends TestCase
         );
     }
 
+    /**
+     * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::build
+     */
     public function testBuild()
     {
         // Test case for build() method
@@ -60,9 +66,12 @@ class DataProviderAggregationPluginTest extends TestCase
         $this->assertIsArray($result);
     }
 
+    /**
+     * @covers \Auraine\SwatchData\DataProvider\Product\LayeredNavigation\DataProviderAggregationPlugin::getSwatchType
+     */
     public function testGetSwatchType()
     {
-        // Test case for getSwatchType() method
+        // Test case for getSwatchType() method with value type = 1
         $valueType = 1;
 
         $result = $this->dataProviderAggregationPlugin->getSwatchType($valueType);
@@ -70,5 +79,31 @@ class DataProviderAggregationPluginTest extends TestCase
         // Asserts the output value of the method
         $this->assertIsString($result);
         $this->assertEquals('ColorSwatchData', $result);
+
+        // Test case for getSwatchType() method with value type = 0
+        $valueType = 0;
+
+        $result = $this->dataProviderAggregationPlugin->getSwatchType($valueType);
+
+        // Asserts the output value of the method
+        $this->assertIsString($result);
+        $this->assertEquals('TextSwatchData', $result);
+
+        // Test case for getSwatchType() method with value type = 2
+        $valueType = 2;
+
+        $result = $this->dataProviderAggregationPlugin->getSwatchType($valueType);
+
+        // Asserts the output value of the method
+        $this->assertIsString($result);
+        $this->assertEquals('ImageSwatchData', $result);
+
+        // Test case for getSwatchType() method with value type = 3
+        $valueType = 3;
+
+        $result = $this->dataProviderAggregationPlugin->getSwatchType($valueType);
+
+        // Asserts the output value of the method
+        $this->assertEquals(null, $result);
     }
 }

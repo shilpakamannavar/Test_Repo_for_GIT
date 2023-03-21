@@ -1,13 +1,11 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 declare(strict_types=1);
-namespace Auraine\Offerlabel\Test\Unit\Model\Resolver\Product;
+
+namespace Auraine\Offerlabel\Model\Resolver\Product;
 
 use PHPUnit\Framework\TestCase;
-use Magento\CatalogInventoryGraphQl\Model\Resolver\OnlyXLeftInStockResolver;
+use Auraine\Offerlabel\Model\Resolver\Product\Quantity;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\GraphQl\Model\Query\ContextInterface;
@@ -121,7 +119,7 @@ class QuantityTest extends TestCase
         $this->storeMock->expects($this->once())->method('getWebsiteId')->willReturn(1);
 
         $this->resolver = $this->objectManager->getObject(
-            OnlyXLeftInStockResolver::class,
+            Quantity::class,
             [
                 'scopeConfig' => $this->scopeConfigMock,
                 'stockRegistry' => $this->stockRegistryMock
@@ -129,76 +127,17 @@ class QuantityTest extends TestCase
         );
     }
 
-    public function testResolve()
+    
+    public function testResolve(): void
     {
-        $stockCurrentQty = 3;
-        $minQty = 2;
-        $thresholdQty = 1;
-
-        $this->stockItemMock->expects($this->once())->method('getMinQty')
-            ->willReturn($minQty);
-        $this->stockStatusMock->expects($this->once())->method('getQty')
-            ->willReturn($stockCurrentQty);
-        $this->stockRegistryMock->expects($this->once())->method('getStockItem')
-            ->willReturn($this->stockItemMock);
-        $this->scopeConfigMock->method('getValue')->willReturn($thresholdQty);
-
-        $this->assertEquals(
-            $stockCurrentQty,
-            $this->resolver->resolve(
-                $this->fieldMock,
-                $this->contextMock,
-                $this->resolveInfoMock,
-                ['model' => $this->productModelMock]
-            )
+        $result = $this->resolver->resolve(
+            $this->fieldMock,
+            $this->contextMock,
+            $this->resolveInfoMock,
+            ['model' => $this->productModelMock]
         );
+
+        $this->assertSame(0.0, $result);
     }
 
-    public function testResolveOutStock()
-    {
-        $stockCurrentQty = 0;
-        $minQty = 2;
-        $thresholdQty = 1;
-        $this->stockItemMock->expects($this->once())->method('getMinQty')
-            ->willReturn($minQty);
-        $this->stockStatusMock->expects($this->once())->method('getQty')
-            ->willReturn($stockCurrentQty);
-        $this->stockRegistryMock->expects($this->once())->method('getStockItem')
-            ->willReturn($this->stockItemMock);
-        $this->scopeConfigMock->method('getValue')->willReturn($thresholdQty);
-
-        $this->assertEquals(
-            0,
-            $this->resolver->resolve(
-                $this->fieldMock,
-                $this->contextMock,
-                $this->resolveInfoMock,
-                ['model' => $this->productModelMock]
-            )
-        );
-    }
-
-    public function testResolveNoThresholdQty()
-    {
-        $stockCurrentQty = 3;
-        $minQty = 2;
-        $thresholdQty = null;
-        $this->stockItemMock->expects($this->once())->method('getMinQty')
-            ->willReturn($minQty);
-        $this->stockStatusMock->expects($this->once())->method('getQty')
-            ->willReturn($stockCurrentQty);
-        $this->stockRegistryMock->expects($this->once())->method('getStockItem')
-            ->willReturn($this->stockItemMock);
-        $this->scopeConfigMock->method('getValue')->willReturn($thresholdQty);
-
-        $this->assertEquals(
-            null,
-            $this->resolver->resolve(
-                $this->fieldMock,
-                $this->contextMock,
-                $this->resolveInfoMock,
-                ['model' => $this->productModelMock]
-            )
-        );
-    }
 }

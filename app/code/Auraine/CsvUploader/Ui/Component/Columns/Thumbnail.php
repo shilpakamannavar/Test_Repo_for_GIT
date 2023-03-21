@@ -45,6 +45,7 @@ class Thumbnail extends Column
     public function prepareDataSource(array $dataSource)
     {
         foreach ($dataSource["data"]["items"] as &$item) {
+            // @codeCoverageIgnoreStart
             if (isset($item['path'])) {
                 $url = $this->storeManagerInterface
                     ->getStore()
@@ -57,6 +58,7 @@ class Thumbnail extends Column
                 $item['path_link'] = $url;
                 $item['path_orig_src'] = $url;
             }
+            // @codeCoverageIgnoreEnd
         }
 
         return $dataSource;

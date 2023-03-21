@@ -1,0 +1,13 @@
+diff --git a/vendor/magento/module-reports/view/adminhtml/templates/grid.phtml b/vendor/magento/module-reports/view/adminhtml/templates/grid.phtml
+index 4f6e3c4a9a02..36f9c624003c 100644
+--- a/vendor/magento/module-reports/view/adminhtml/templates/grid.phtml
++++ b/vendor/magento/module-reports/view/adminhtml/templates/grid.phtml
+@@ -76,7 +76,7 @@
+ 
+                                     $("#{$block->escapeJs($block->getSuffixId('period_date_range'))}").dateRange({
+                                         dateFormat:"{$block->escapeJs($block->getDateFormat())}",
+-                                        buttonText:"{$block->escapeJs(__('Select Date'))}",
++                                        buttonText:"",
+                                         from:{
+                                             id:"{$block->escapeJs($block->getSuffixId('period_date_from'))}"
+                                         },

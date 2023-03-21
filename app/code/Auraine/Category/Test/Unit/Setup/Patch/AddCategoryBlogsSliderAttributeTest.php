@@ -83,11 +83,11 @@ class AddCategoryBlogsSliderAttributeTest extends TestCase
     }
 
     /**
-     * testApplyAddBannerSliderAttributeToCategoryEntity
+     * testApplyAddsAddBlogsSliderAttributeToCategoryEntity
      *
      * @return void
      */
-    public function testApplyAddsAddBannerSliderAttributeToCategoryEntity()
+    public function testApplyAddsAddBlogsSliderAttributeToCategoryEntity()
     {
         $moduleDataSetup = $this->getMockBuilder(ModuleDataSetupInterface::class)
             ->disableOriginalConstructor()

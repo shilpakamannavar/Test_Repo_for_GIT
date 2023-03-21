@@ -7,7 +7,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlAuthenticationException;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Auraine\MobileNumber\Model\Resolver\CheckCustomerExists;
-use Magecomp\Mobilelogin\Helper\Data;
+use Alternativetechlab\Mobilelogin\Helper\Data;
 use Magento\Framework\GraphQl\Config\Element\Field;
 
 class CheckCustomerExistsTest extends TestCase
@@ -53,7 +53,7 @@ class CheckCustomerExistsTest extends TestCase
         $this->contextMock = $this->createMock(ContextInterface::class);
         $this->resolveInfoMock = $this->createMock(ResolveInfo::class);
         $this->fieldMock = $this->createMock(Field::class);
-      
+
         $this->resolver = new CheckCustomerExists(
             $this->helperDataMock,
             $this->contextMock,
@@ -123,5 +123,23 @@ class CheckCustomerExistsTest extends TestCase
         $resolver = new CheckCustomerExists($this->helperDataMock);
         $result = $resolver->validateMobile('919898989898');
         $this->assertTrue($result);
+    }
+
+    public function inputExceptionDataProvider(): array
+    {
+        return [
+            [
+                [],
+                'Invalid parameter list1.'
+            ],
+            [
+                ['field_value' => '1234567890'],
+                'Invalid parameter list2.'
+            ],
+            [
+                ['type' => 'mobile'],
+                'Invalid parameter list3.'
+            ],
+        ];
     }
 }

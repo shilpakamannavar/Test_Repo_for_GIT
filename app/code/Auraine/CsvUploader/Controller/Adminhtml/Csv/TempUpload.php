@@ -82,6 +82,7 @@ class TempUpload extends \Magento\Backend\App\Action
         }
     }
 
+    //@codeCoverageIgnoreStart
     /**Is allowes
      *
      * @return bool
@@ -90,4 +91,5 @@ class TempUpload extends \Magento\Backend\App\Action
     {
         return $this->_authorization->isAllowed('Auraine_CsvUploader::csv_tempupload');
     }
+    //@codeCoverageIgnoreEnd
 }

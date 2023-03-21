@@ -83,7 +83,7 @@ class ImportHex extends Command
      * @param OutputInterface $output
      * @return bool|int|void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $attributeCode = $input->getArgument(self::ATTRIBUTE_CODE_ARGUMENT);
         $filePath = $input->getArgument(self::FILE_PATH_ARGUMENT);
