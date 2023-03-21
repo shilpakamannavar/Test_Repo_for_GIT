@@ -1,117 +1,132 @@
 <?php
+
 namespace Auraine\DiscountPercentageFilter\Test\Unit\Observer;
 
+use Auraine\DiscountPercentageFilter\Observer\UpdateDiscountPercentage;
+use Auraine\DiscountPercentageFilter\Helper\Data;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Event\Observer;
+use Magento\Catalog\Model\ResourceModel\Product\Action;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Auraine\DiscountPercentageFilter\Observer\UpdateDiscountPercentage
- */
 class UpdateDiscountPercentageTest extends TestCase
 {
     /**
-     * Mock dataHelper
-     *
-     * @var \Auraine\DiscountPercentageFilter\Helper\Data|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $dataHelper;
-
-    /**
-     * Mock action
-     *
-     * @var \Magento\Catalog\Model\ResourceModel\Product\Action|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $action;
-
-    /**
-     * Mock productRepository
-     *
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $productRepository;
-
-    /**
-     * Mock storeManager
-     *
-     * @var \Magento\Store\Model\StoreManagerInterface|PHPUnit\Framework\MockObject\MockObject
-     */
-    private $storeManager;
-
-    /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
+     * @var ObjectManager
      */
     private $objectManager;
 
     /**
-     * Object to test
-     *
-     * @var \Auraine\DiscountPercentageFilter\Observer\UpdateDiscountPercentage
+     * @var UpdateDiscountPercentage
      */
-    private $testObject;
+    private $observer;
 
     /**
-     * Main set up method
+     * @var Data|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function setUp() : void
+    private $dataHelperMock;
+
+    /**
+     * @var Action|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $actionMock;
+
+    /**
+     * @var ProductRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $productRepositoryMock;
+
+    /**
+     * @var StoreManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $storeManagerMock;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
-        $this->dataHelper = $this->createMock(\Auraine\DiscountPercentageFilter\Helper\Data::class);
-        $this->action = $this->createMock(\Magento\Catalog\Model\ResourceModel\Product\Action::class);
-        $this->productRepository = $this->createMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-        $this->storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\DiscountPercentageFilter\Observer\UpdateDiscountPercentage::class,
+        $this->dataHelperMock = $this->getMockBuilder(Data::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->actionMock = $this->getMockBuilder(Action::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->productRepositoryMock = $this->getMockBuilder(ProductRepositoryInterface::class)
+            ->getMock();
+        $this->storeManagerMock = $this->getMockBuilder(StoreManagerInterface::class)
+            ->getMock();
+        $this->observer = $this->objectManager->getObject(
+            UpdateDiscountPercentage::class,
             [
-                'dataHelper' => $this->dataHelper,
-                'action' => $this->action,
-                'productRepository' => $this->productRepository,
-                'storeManager' => $this->storeManager,
+                'dataHelper' => $this->dataHelperMock,
+                'action' => $this->actionMock,
+                'productRepository' => $this->productRepositoryMock,
+                'storeManager' => $this->storeManagerMock,
             ]
         );
     }
 
     /**
-     * @return array
+     * Test observer instance
      */
-    public function dataProviderForTestExecute()
+    public function testInstanceOfObserverInterface()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
+        $this->assertInstanceOf(ObserverInterface::class, $this->observer);
     }
 
     /**
-     * @dataProvider dataProviderForTestExecute
+     * Test execute method with a product that doesn't have a SKU
      */
-    public function testExecute(array $prerequisites, array $expectedResult)
+    public function testExecuteWithNoSkuProduct()
     {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $productMock->expects($this->once())
+            ->method('getTypeId')
+            ->willReturn('simple');
+        
+        // Set the SKU property directly on the product mock
+        $productMock->sku = null;
+    
+        $observer = new Observer(['product' => $productMock]);
+        $this->actionMock->expects($this->never())
+            ->method('updateAttributes');
+        $this->observer->execute($observer);
     }
 
     /**
-     * @return array
+     * Test execute method with a product that has a SKU
      */
-    public function dataProviderForTestGetStoreIds()
+    public function testExecuteWithSkuProduct()
     {
-        return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
-        ];
-    }
+        $typeId = 'simple';
+        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $productMock->expects($this->once())
+                ->method('getTypeId')
+                ->willReturn('simple');
+        
+        // Set the SKU property directly on the product mock
+        $productMock->sku = 'test_sku';
+        $productMock->price = 100;
+        $productMock->special_price = 80;
 
-    /**
-     * @dataProvider dataProviderForTestGetStoreIds
-     */
-    public function testGetStoreIds(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
+        $productMock->expects($this->once())->method('getTypeId')->willReturn($typeId);
+
+        $productRepoMock = $this->createMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+
+        $productRepoMock->method('get')->with('test_sku')->willReturn($productMock);
+
+        $observer = new Observer(['product' => $productMock]);
+        $this->actionMock->expects($this->never())
+            ->method('updateAttributes');
+        $this->observer->execute($observer);
     }
 }
