@@ -38,7 +38,9 @@ class CheckoutCouponApplyTest extends TestCase
     /**
      * @dataProvider couponCodeProvider
      */
-    public function testBeforeSetWithMobileCouponCode(string $couponCode, bool $headerStatus, bool $isMobileSpecific, bool $expectException)
+    public function testBeforeSetWithMobileCouponCode(
+        string $couponCode, bool $headerStatus, bool $isMobileSpecific, bool $expectException
+        )
     {
         $cartId = 1;
         $this->helperMock->expects($this->once())->method('getMobileHeaderStatus')->willReturn($headerStatus);
@@ -47,7 +49,8 @@ class CheckoutCouponApplyTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $collectionMock->method('addFieldToFilter')->willReturn($collectionMock);
-        $collectionMock->method('getData')->willReturn([['code' => $couponCode, 'is_mobile_specific' => $isMobileSpecific]]);
+        $collectionMock->method('getData')
+        ->willReturn([['code' => $couponCode, 'is_mobile_specific' => $isMobileSpecific]]);
 
         $this->helperMock->expects($this->once())->method('getCurrentCouponRule')->willReturn($collectionMock);
 
@@ -64,10 +67,7 @@ class CheckoutCouponApplyTest extends TestCase
     public function couponCodeProvider(): array
     {
         return [
-            // ['coupon_code_1', true, false, false], // mobile coupon code with mobile header enabled
-            // ['coupon_code_2', false, false, false], // non-mobile coupon code with mobile header disabled
-            ['coupon_code_3', false, true, true], // mobile coupon code with mobile header disabled
-            // ['coupon_code_4', true, true, false], // mobile coupon code with mobile header enabled
+           ['coupon_code_3', false, true, true], // mobile coupon code with mobile header disabled
         ];
     }
 }
