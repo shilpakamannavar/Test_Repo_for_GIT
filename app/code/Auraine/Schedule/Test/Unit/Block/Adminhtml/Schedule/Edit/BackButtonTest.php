@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 class BackButtonTest extends TestCase
 {
+
+    public const URL = 'http://example.com';
+
     /**
      * @var BackButton
      */
@@ -38,7 +41,8 @@ class BackButtonTest extends TestCase
             ->getMock();
 
         $this->urlBuilderMock = $this->getMockBuilder(UrlInterface::class)
-            ->getMockForAbstractClass();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->backButton = $objectManager->getObject(
             BackButton::class,
@@ -54,25 +58,22 @@ class BackButtonTest extends TestCase
      */
     public function testGetButtonData(): void
     {
-        $backUrl = 'http://localhost/admin/schedule/index';
 
-        $this->genericButtonMock->expects($this->once())
+        $this->urlBuilderMock->expects($this->once())
             ->method('getUrl')
             ->with('*/*/')
-            ->willReturn($backUrl);
+            ->willReturn(self::URL);
 
         $buttonData = $this->backButton->getButtonData();
 
+        $this->assertIsArray($buttonData);
         $this->assertArrayHasKey('label', $buttonData);
-        $this->assertEquals('Back', $buttonData['label']);
-
         $this->assertArrayHasKey('on_click', $buttonData);
-        $this->assertEquals(sprintf("location.href = '%s';", $backUrl), $buttonData['on_click']);
-
         $this->assertArrayHasKey('class', $buttonData);
-        $this->assertEquals('back', $buttonData['class']);
-
         $this->assertArrayHasKey('sort_order', $buttonData);
+        $this->assertEquals('Back', $buttonData['label']);
+        $this->assertEquals("location.href = '".self::URL."';", $buttonData['on_click']);
+        $this->assertEquals('back', $buttonData['class']);
         $this->assertEquals(10, $buttonData['sort_order']);
     }
 
@@ -81,13 +82,12 @@ class BackButtonTest extends TestCase
      */
     public function testGetBackUrl(): void
     {
-        $backUrl = 'http://localhost/admin/schedule/index';
 
-        $this->genericButtonMock->expects($this->once())
+        $this->urlBuilderMock->expects($this->once())
             ->method('getUrl')
             ->with('*/*/')
-            ->willReturn($backUrl);
+            ->willReturn(self::URL);
 
-        $this->assertEquals($backUrl, $this->backButton->getBackUrl());
+        $this->assertEquals(self::URL, $this->backButton->getBackUrl());
     }
 }
