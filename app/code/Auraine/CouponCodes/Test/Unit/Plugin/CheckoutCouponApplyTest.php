@@ -1,69 +1,73 @@
 <?php
 namespace Auraine\CouponCodes\Test\Unit\Plugin;
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+namespace Auraine\CouponCodes\Test\Unit\Plugin;
 
-/**
- * @covers \Auraine\CouponCodes\Plugin\CheckoutCouponApply
- */
+use Auraine\CouponCodes\Helper\Data;
+use Auraine\CouponCodes\Plugin\CheckoutCouponApply;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Quote\Model\CouponManagement;
+use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
+
 class CheckoutCouponApplyTest extends TestCase
 {
     /**
-     * Mock helperData
-     *
-     * @var \Auraine\CouponCodes\Helper\Data|PHPUnit\Framework\MockObject\MockObject
+     * @var CheckoutCouponApply
      */
-    private $helperData;
+    private $plugin;
 
     /**
-     * Object Manager instance
-     *
-     * @var \Magento\Framework\ObjectManagerInterface
+     * @var Data|MockObject
      */
-    private $objectManager;
+    private $helperMock;
 
     /**
-     * Object to test
-     *
-     * @var \Auraine\CouponCodes\Plugin\CheckoutCouponApply
+     * @var CouponManagement|MockObject
      */
-    private $testObject;
+    private $subjectMock;
 
-    /**
-     * Main set up method
-     */
-    public function setUp() : void
+    protected function setUp(): void
     {
-        $this->objectManager = new ObjectManager($this);
-        $this->helperData = $this->createMock(\Auraine\CouponCodes\Helper\Data::class);
-        $this->testObject = $this->objectManager->getObject(
-            \Auraine\CouponCodes\Plugin\CheckoutCouponApply::class,
-            [
-                'helperData' => $this->helperData,
-            ]
-        );
+        $this->helperMock = $this->createMock(Data::class);
+        $this->subjectMock = $this->createMock(CouponManagement::class);
+
+        $this->plugin = new CheckoutCouponApply($this->helperMock);
     }
 
     /**
-     * @return array
+     * @dataProvider couponCodeProvider
      */
-    public function dataProviderForTestBeforeSet()
+    public function testBeforeSetWithMobileCouponCode(string $couponCode, bool $headerStatus, bool $isMobileSpecific, bool $expectException)
+    {
+        $cartId = 1;
+        $this->helperMock->expects($this->once())->method('getMobileHeaderStatus')->willReturn($headerStatus);
+
+        $collectionMock = $this->getMockBuilder(\Magento\SalesRule\Model\ResourceModel\Rule\Collection::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $collectionMock->method('addFieldToFilter')->willReturn($collectionMock);
+        $collectionMock->method('getData')->willReturn([['code' => $couponCode, 'is_mobile_specific' => $isMobileSpecific]]);
+
+        $this->helperMock->expects($this->once())->method('getCurrentCouponRule')->willReturn($collectionMock);
+
+        if ($expectException) {
+            $this->expectException(GraphQlInputException::class);
+            $this->expectExceptionMessage("Can't apply this coupon, the applied coupon is Mobile specific");
+        } else {
+            $this->subjectMock->expects($this->once())->method('set')->with($cartId, $couponCode);
+        }
+
+        $this->plugin->beforeSet($this->subjectMock, $cartId, $couponCode);
+    }
+
+    public function couponCodeProvider(): array
     {
         return [
-            'Testcase 1' => [
-                'prerequisites' => ['param' => 1],
-                'expectedResult' => ['param' => 1]
-            ]
+            // ['coupon_code_1', true, false, false], // mobile coupon code with mobile header enabled
+            // ['coupon_code_2', false, false, false], // non-mobile coupon code with mobile header disabled
+            ['coupon_code_3', false, true, true], // mobile coupon code with mobile header disabled
+            // ['coupon_code_4', true, true, false], // mobile coupon code with mobile header enabled
         ];
-    }
-
-    /**
-     * @dataProvider dataProviderForTestBeforeSet
-     */
-    public function testBeforeSet(array $prerequisites, array $expectedResult)
-    {
-        $this->assertEquals($expectedResult['param'], $prerequisites['param']);
     }
 }
