@@ -32,6 +32,11 @@ class UpdateDiscountPercentage implements ObserverInterface
     private $storeManager;
 
     /**
+      * @var brandsFactory
+      */
+    protected $brandsFactory;
+
+    /**
      * Constructor
      *
      * @param Data $dataHelper
@@ -43,12 +48,14 @@ class UpdateDiscountPercentage implements ObserverInterface
         Data $dataHelper,
         Action $action,
         ProductRepositoryInterface $productRepository,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        \Auraine\Brands\Model\ResourceModel\Brands\CollectionFactory $brandsFactory
     ) {
         $this->dataHelper = $dataHelper;
         $this->action = $action;
         $this->productRepository = $productRepository;
         $this->storeManager = $storeManager;
+        $this->brandsFactory  = $brandsFactory;
     }
 
     /**
@@ -66,6 +73,21 @@ class UpdateDiscountPercentage implements ObserverInterface
             $productPrice =  $product['price'];
             $productSpPrice =  $product['special_price'];
             $productData = $this->productRepository->get($sku);
+            if ($product['brand_name']) {
+                $collection = $this->brandsFactory
+                    ->create()->addFieldToSelect(
+                    'title'
+                    )->addFieldToFilter('entity_id', $product['brand_name']);
+                $brandData = $collection->getData();
+                if (!empty($brandData)) {
+                    $this->action->updateAttributes([
+                        $productData->getEntityId()
+                    ], [
+                        'brand_label' => $brandData[0]['title']
+                    ], $this->getStoreIds());
+                }
+            }
+
             if ($productPrice !=0 && $productPrice != null && $productType == 'simple') {
                 if ($productSpPrice >= $productPrice) {
                     $this->action->updateAttributes([
