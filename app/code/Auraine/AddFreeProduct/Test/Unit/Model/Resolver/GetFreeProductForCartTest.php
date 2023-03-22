@@ -1,87 +1,122 @@
 <?php
+declare(strict_types=1);
+
 namespace Auraine\AddFreeProduct\Test\Unit\Model\Resolver;
 
-class GetFreeProductForCartTest extends \PHPUnit\Framework\TestCase
+use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
+use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use PHPUnit\Framework\TestCase;
+use Auraine\AddFreeProduct\Model\Resolver\GetFreeProductForCart;
+
+class GetFreeProductForCartTest extends TestCase
 {
     /**
-     * testResolveReturnsEmptyArrayWhenNoFreeItems
-     *
-     * @return void
+     * @var GetFreeProductForCart
      */
-    public function testResolveReturnsEmptyArrayWhenNoFreeItems()
+    private $model;
+
+    /**
+     * @var PromoItemRegistry|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $promoItemRegistryMock;
+
+    /**
+     * @var ProductRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $productRepositoryMock;
+
+    /**
+     * @var StoreManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $storeManagerMock;
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
     {
-        $promoItemRegistry = $this->createMock(\Amasty\Promo\Model\ItemRegistry\PromoItemRegistry::class);
-        $promoItemRegistry->expects($this->once())
+        $this->promoItemRegistryMock = $this->createMock(PromoItemRegistry::class);
+        $this->productRepositoryMock = $this->createMock(ProductRepositoryInterface::class);
+        $this->storeManagerMock = $this->createMock(StoreManagerInterface::class);
+
+        $objectManager = new ObjectManager($this);
+        $this->model = $objectManager->getObject(GetFreeProductForCart::class, [
+            'promoItemRegistry' => $this->promoItemRegistryMock,
+            'productRepository' => $this->productRepositoryMock,
+            'storeManager' => $this->storeManagerMock
+        ]);
+    }
+
+    /**
+     * Test case for GetFreeProductForCart::resolve()
+     */
+    public function testResolve(): void
+    {
+        // Prepare test data
+        $sku = 'some-sku';
+        $imageUrl = 'some-image-url';
+        $expectedResult = [
+            [
+                'id' => 1,
+                'sku' => $sku,
+                'title' => 'Some product name',
+                'isPromoItems' => true,
+                'image' => 'https://www.example.com/media/catalog/product' . $imageUrl
+            ]
+        ];
+
+        // Mock dependencies
+        $promoItemMock = $this->createMock(\Amasty\Promo\Model\ItemRegistry\PromoItemData::class);
+        $productMock = $this->createMock(\Magento\Catalog\Model\Product::class);
+        $storeMock = $this->createMock(\Magento\Store\Model\Store::class);
+
+        // Configure the mocks
+        $promoItemMock->expects($this->once())
+            ->method('isDeleted')
+            ->willReturn(true);
+        $promoItemMock->expects($this->any())
+            ->method('getSku')
+            ->willReturn($sku);
+
+        $this->promoItemRegistryMock->expects($this->any())
             ->method('getAllItems')
-            ->willReturn([]);
+            ->willReturn([$promoItemMock]);
 
-        $productRepository = $this->createMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $this->productRepositoryMock->expects($this->any())
+            ->method('get')
+            ->with($sku)
+            ->willReturn($productMock);
 
-        $storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $productMock->expects($this->any())
+            ->method('getId')
+            ->willReturn(1);
 
-        $result = $this->resolverResponse($promoItemRegistry, $productRepository, $storeManager);
+        $productMock->expects($this->any())
+            ->method('getName')
+            ->willReturn('Some product name');
+        $productMock->expects($this->any())
+            ->method('getImage')
+            ->willReturn($imageUrl);
 
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
-    }
+        $this->storeManagerMock->expects($this->any())
+            ->method('getStore')
+            ->willReturn($storeMock);
 
-    /**
-     * testResolveReturnsCorrectDataForFreeItem
-     *
-     * @return void
-     */
-    public function testResolveReturnsCorrectDataForFreeItem()
-    {
-        // Create a mock for PromoItemRegistry that returns a fake item
-        $promoItemRegistry = $this->createMock(\Amasty\Promo\Model\ItemRegistry\PromoItemRegistry::class);
-        $promoItem = $this->createMock(\Amasty\Promo\Model\ItemRegistry\PromoItemData::class);
-        $promoItem->method('getSku')->willReturn('test_sku');
-        $promoItemRegistry->method('getAllItems')->willReturn([$promoItem]);
-
-        // Create a mock for ProductRepositoryInterface that returns a fake product
-        $product = $this->createMock(\Magento\Catalog\Api\Data\ProductInterface::class);
-        $product->method('getId')->willReturn(1);
-        $product->method('getName')->willReturn('Test Product');
-        $productRepository = $this->createMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-        $productRepository->method('get')->willReturn($product);
-
-        // Create a mock for StoreManagerInterface that returns a fake base URL
-        $storeManager = $this->createMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $store = $this->createMock(\Magento\Store\Model\Store::class);
-        $store->method('getBaseUrl')->willReturn('http://example.com/');
-        $storeManager->method('getStore')->willReturn($store);
-
-        $result = $this->resolverResponse($promoItemRegistry, $productRepository, $storeManager);
-
-        // Verify that the result contains the expected data
-        $this->assertIsArray($result);
-    }
-
-    /**
-     * Resolver response
-     *
-     * @param \Amasty\Promo\Model\ItemRegistry\PromoItemRegistry|
-     *  \PHPUnit\Framework\MockObject\MockObject $promoItemRegistry
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface|
-     *  \PHPUnit\Framework\MockObject\MockObject $productRepository
-     * @param \Magento\Store\Model\StoreManagerInterface|\PHPUnit\Framework\MockObject\MockObject $storeManager
-     *
-     * @return \Auraine\AddFreeProduct\Model\Resolver\GetFreeProductForCart
-     */
-    private function resolverResponse($promoItemRegistry, $productRepository, $storeManager)
-    {
-        $resolver = new \Auraine\AddFreeProduct\Model\Resolver\GetFreeProductForCart(
-            $promoItemRegistry,
-            $productRepository,
-            $storeManager
-        );
+        $storeMock->expects($this->any())
+            ->method('getBaseUrl')
+            ->willReturn('https://www.example.com/');
 
         $field = $this->createMock(\Magento\Framework\GraphQl\Config\Element\Field::class);
-        $context = [];
-        $info = $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class);
-        $value = null;
-        $args = null;
+        $resolverInfo = $this->createMock(\Magento\Framework\GraphQl\Schema\Type\ResolveInfo::class);
 
-        return $resolver->resolve($field, $context, $info, $value, $args);
+        // Invoke the method being tested
+        $result = $this->model->resolve($field, [], $resolverInfo, [], [], []);
+
+        // Assertions
+        $this->assertEquals($expectedResult, $result);
     }
 }
