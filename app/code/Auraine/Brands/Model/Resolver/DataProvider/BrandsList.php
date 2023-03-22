@@ -46,6 +46,7 @@ class BrandsList
         $brandData = [];
         try {
             $collection = $this->brandsFactory->create()->addFieldToFilter('status', 1);
+            $collection->getSelect()->order('title ASC');
             $brandData = $collection->getData();
        
             if ($filterEntityId) {
