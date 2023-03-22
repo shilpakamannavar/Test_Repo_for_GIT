@@ -5,6 +5,7 @@ use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
 use Auraine\AddFreeProduct\Model\DataProvider\PromoValidator;
 use PHPUnit\Framework\TestCase;
 use Amasty\Promo\Model\ItemRegistry\PromoItemData;
+use Magento\Quote\Model\Quote;
 
 class PromoValidatorTest extends TestCase
 {
@@ -132,6 +133,23 @@ class PromoValidatorTest extends TestCase
     }
 
     /**
+     * testGetPromoDataItemWithoutRuleId
+     *
+     * @return void
+     */
+    public function testGetPromoDataItemWithNull()
+    {
+        $sku = '';
+        $this->promoItemRegistryMock->expects($this->once())
+            ->method('getItemsBySku')
+            ->with(null)
+            ->willReturn([]);
+
+        $result = $this->promoValidator->getPromoDataItem($sku, []);
+        $this->assertNull($result);
+    }
+
+    /**
      * testGetQtyToAdd
      *
      * @return void
@@ -192,4 +210,53 @@ class PromoValidatorTest extends TestCase
         $result = $this->promoValidator->isPromoItemsAddedInQuote($items, $itemsForAdd);
         $this->assertTrue($result);
     }
+
+    /**
+     * @dataProvider getQuoteDataProvider
+     */
+    public function testGetQuote(array $args, bool $isLoggedIn, Quote $expectedResult)
+    {
+        $this->maskedQuoteInterfaceMock->expects($this->once())
+            ->method('execute')
+            ->with($args['cartId'])
+            ->willReturn(1);
+
+        $quote = $this->createMock(Quote::class);
+
+        $quote->expects(!$isLoggedIn ? $this->once() : $this->never())
+            ->method('load')
+            ->with(1)
+            ->willReturnSelf();
+            
+        $this->quoteFactoryMock->expects(!$isLoggedIn ? $this->once() : $this->never())
+            ->method('create')
+            ->willReturn($quote);
+
+        $this->customerSessionMock->expects($this->once())
+            ->method('isLoggedIn')
+            ->willReturn($isLoggedIn);
+
+        $this->checkoutSessionMock->expects($isLoggedIn ? $this->once() : $this->never())
+            ->method('getQuote')
+            ->willReturn($expectedResult);
+
+        $this->assertEquals($expectedResult, $this->promoValidator->getQuote($args));
+    }
+
+    public function getQuoteDataProvider(): array
+    {
+        return [
+            [
+                ['cartId' => '123'],
+                true,
+                $this->createMock(Quote::class)
+            ],
+            [
+                ['cartId' => '456'],
+                false,
+                $this->createMock(Quote::class)
+            ],
+        ];
+    }
+
 }

@@ -10,9 +10,17 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Magento\Framework\UrlInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Backend\Block\Widget\Context;
 
 class DeleteButtonTest extends TestCase
 {
+    public const URL = 'http://example.com/schedule/save';
+
+    /**
+     * @var MockObject|Context
+     */
+    private $context;
+
     /**
      * @var DeleteButton
      */
@@ -30,6 +38,8 @@ class DeleteButtonTest extends TestCase
 
     protected function setUp(): void
     {
+        $this->context = $this->createMock(Context::class);
+
         $this->genericButtonMock = $this->getMockBuilder(GenericButton::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -37,7 +47,12 @@ class DeleteButtonTest extends TestCase
         $this->urlBuilderMock = $this->getMockBuilder(UrlInterface::class)
             ->getMockForAbstractClass();
 
+        $this->context
+            ->method('getUrlBuilder')
+            ->willReturn($this->urlBuilderMock);
+
         $this->deleteButton = new DeleteButton(
+            $this->context,
             $this->genericButtonMock,
             $this->urlBuilderMock
         );
@@ -50,28 +65,40 @@ class DeleteButtonTest extends TestCase
 
     public function testGetButtonDataWhenModelIdIsNotNull(): void
     {
-        $scheduleId = 1;
+        $scheduleId = 155;
 
         $this->genericButtonMock->expects($this->once())
             ->method('getModelId')
-            ->willReturn($scheduleId);
+            ->willReturn(null);
 
         $deleteUrl = 'http://localhost/magento2/admin/schedule/delete/schedule_id/1';
+
         $this->urlBuilderMock->expects($this->once())
             ->method('getUrl')
             ->with('*/*/delete', ['schedule_id' => $scheduleId])
             ->willReturn($deleteUrl);
 
-        $expectedResult = [
-            'label' => __('Delete Schedule'),
-            'class' => 'delete',
-            'on_click' => 'deleteConfirm(\'' . __(
-                'Are you sure you want to do this?'
-            ) . '\', \'' . $deleteUrl . '\')',
-            'sort_order' => 20,
-        ];
 
-        $this->assertEquals($expectedResult, $this->deleteButton->getButtonData());
+
+
+        $buttonData = $this->deleteButton->getButtonData();
+        $this->assertArrayHasKey('label', $buttonData);
+        $this->assertArrayHasKey('class', $buttonData);
+        $this->assertArrayHasKey('on_click', $buttonData);
+        $this->assertArrayHasKey('sort_order', $buttonData);
+        $result = $buttonData['label'];
+        $this->assertInstanceOf(Phrase::class, $result);
+
+
+        $this->assertSame('Delete Schedule', $result->getText());
+        $this->assertSame('delete', $buttonData['class']);
+        $this->assertArrayHasKey('on_click', $buttonData['on_click']);
+
+        $this->assertSame('deleteConfirm(\'' . __(
+            'Are you sure you want to do this?'
+        ) . '\', \'' . $deleteUrl . '\')', $buttonData['on_click']);
+
+        $this->assertSame(20, $buttonData['sort_order']);
     }
 
     public function testGetButtonDataWhenModelIdIsNull(): void

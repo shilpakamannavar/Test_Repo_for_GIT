@@ -48,7 +48,7 @@ class CheckCustomerExists implements ResolverInterface
             $type
         );
 
-        return !empty($collection);
+        return count($collection) != 0;
     }
 
     /**

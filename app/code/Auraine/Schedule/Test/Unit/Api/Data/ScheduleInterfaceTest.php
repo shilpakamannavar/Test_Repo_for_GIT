@@ -6,6 +6,7 @@ namespace Auraine\Schedule\Api\Data;
 
 use PHPUnit\Framework\TestCase;
 
+// ch
 
 class ScheduleInterfaceTest extends TestCase
 {
@@ -17,22 +18,54 @@ class ScheduleInterfaceTest extends TestCase
     protected function setUp(): void
     {
         $this->schedule = new class implements ScheduleInterface {
-            public function getScheduleId() {}
-            public function setScheduleId($scheduleId) {}
-            public function getEntityId() {}
-            public function setEntityId($entityId) {}
-            public function getOldBannerId() {}
-            public function setOldBannerId($oldBannerId) {}
-            public function getNewBannerId() {}
-            public function setNewBannerId($newBannerId) {}
-            public function getStartDate() {}
-            public function setStartDate($startDate) {}
-            public function getEndDate() {}
-            public function setEndDate($endDate) {}
-            public function getIsActive() {}
-            public function setIsActive($isActive) {}
-            public function getStatus() {}
-            public function setStatus($status) {}
+            public function getScheduleId()
+            {
+            }
+            public function setScheduleId($scheduleId)
+            {
+            }
+            public function getEntityId()
+            {
+            }
+            public function setEntityId($entityId)
+            {
+            }
+            public function getOldBannerId()
+            {
+            }
+            public function setOldBannerId($oldBannerId)
+            {
+            }
+            public function getNewBannerId()
+            {
+            }
+            public function setNewBannerId($newBannerId)
+            {
+            }
+            public function getStartDate()
+            {
+            }
+            public function setStartDate($startDate)
+            {
+            }
+            public function getEndDate()
+            {
+            }
+            public function setEndDate($endDate)
+            {
+            }
+            public function getIsActive()
+            {
+            }
+            public function setIsActive($isActive)
+            {
+            }
+            public function getStatus()
+            {
+            }
+            public function setStatus($status)
+            {
+            }
         };
     }
 
@@ -107,5 +140,4 @@ class ScheduleInterfaceTest extends TestCase
         $this->schedule->setStatus($status);
         $this->assertSame($status, $this->schedule->getStatus());
     }
-
 }

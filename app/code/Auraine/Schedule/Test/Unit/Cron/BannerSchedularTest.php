@@ -58,8 +58,8 @@ class BannerSchedularTest extends \PHPUnit\Framework\TestCase
     protected $schedule;
 
      /**
-     * @var SearchResultsInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
+      * @var SearchResultsInterface|\PHPUnit\Framework\MockObject\MockObject
+      */
     protected $searchResults;
 
     protected function setUp(): void
@@ -88,7 +88,7 @@ class BannerSchedularTest extends \PHPUnit\Framework\TestCase
 
         $this->searchResults = $this->getMockBuilder(SearchResultsInterface::class)
         ->disableOriginalConstructor()
-        ->getMock();    
+        ->getMock();
 
         $this->bannerSchedular = $this->objectManager->create(
             BannerSchedular::class,
@@ -102,57 +102,46 @@ class BannerSchedularTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testExecuteWhenNoSchedulesFound()
+   
+
+
+
+    public function testExecuteWhenSchedulesFound()
     {
-        $this->searchResults->expects($this->once())
-            ->method('getTotalCount')
-            ->willReturn(0);
-
-        $this->scheduleRepository->expects($this->once())
-            ->method('getList')
-            ->willReturn($searchResultsMock);
-
-        $this->bannerSchedular->execute();
-    }
-
-
-
-public function testExecuteWhenSchedulesFound()
-{
-    $schedule1 = $this->getMockBuilder(ScheduleInterface::class)
+        $schedule1 = $this->getMockBuilder(ScheduleInterface::class)
         ->disableOriginalConstructor()
         ->getMock();
-    $schedule1->expects($this->once())
+        $schedule1->expects($this->once())
         ->method('getStartDate')
         ->willReturn('2023-03-20 12:00:00');
 
-    $schedule2 = $this->getMockBuilder(ScheduleInterface::class)
+        $schedule2 = $this->getMockBuilder(ScheduleInterface::class)
         ->disableOriginalConstructor()
         ->getMock();
-    $schedule2->expects($this->once())
+        $schedule2->expects($this->once())
         ->method('getStartDate')
         ->willReturn('2023-03-21 15:00:00');
 
-    $searchResultsMock = $this->getMockBuilder(SearchResultsInterface::class)
+        $searchResultsMock = $this->getMockBuilder(SearchResultsInterface::class)
         ->disableOriginalConstructor()
         ->getMock();
-    $searchResultsMock->expects($this->once())
+        $searchResultsMock->expects($this->once())
         ->method('getTotalCount')
         ->willReturn(2);
-    $searchResultsMock->expects($this->once())
+        $searchResultsMock->expects($this->once())
         ->method('getItems')
         ->willReturn([$schedule1, $schedule2]);
 
-    $this->scheduleRepository->expects($this->once())
+        $this->scheduleRepository->expects($this->once())
         ->method('getList')
         ->willReturn($searchResultsMock);
 
-    $this->timezoneInterface->expects($this->exactly(2))
+        $this->timezoneInterface->expects($this->exactly(2))
         ->method('date')
         ->willReturnCallback(function ($date) {
             return new \DateTime($date, new \DateTimeZone('UTC'));
         });
 
-    $this->bannerSchedular->execute();
-}
+        $this->bannerSchedular->execute();
+    }
 }

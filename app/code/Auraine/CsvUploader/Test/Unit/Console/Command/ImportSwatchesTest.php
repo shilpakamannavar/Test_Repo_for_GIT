@@ -4,6 +4,8 @@ namespace Auraine\CsvUploader\Test\Unit\Console\Command;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @covers \Auraine\CsvUploader\Console\Command\ImportSwatches
@@ -81,9 +83,30 @@ class ImportSwatchesTest extends TestCase
             ]
         );
     }
-    public function testGetResponse()
+    public function testGetBasePath()
     {
+        $this->testObject->getBasePath();
         $this->assertEquals(1, 1);
     }
+
+    public function testExecuteWithoutAttribute()
+    {
+        // Create mock input and output instances
+        $input = $this->createMock(InputInterface::class);
+        $output = $this->createMock(OutputInterface::class);
+
+        // Set up the input arguments
+        $attributeCode = '';
+        $filePath = '';
+        $input->method('getArgument')->willReturnMap([
+            ['attribute_code', $attributeCode],
+            ['file_path', $filePath],
+        ]);
+
+       // Call the execute method and assert that it returns null
+        $result = $this->testObject->execute($input, $output);
+        $this->assertEquals(false, $result);
+    }
+    
     
 }

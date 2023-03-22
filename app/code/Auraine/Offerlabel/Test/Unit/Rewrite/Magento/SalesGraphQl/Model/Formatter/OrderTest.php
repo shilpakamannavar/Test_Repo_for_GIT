@@ -17,13 +17,13 @@ class OrderTest extends TestCase
         
         // Create an instance of the class we want to test
         $orderFormatter = new Order($orderAddress, $orderPayments, $timezone);
-        
+        $id = '000000001';
         // Create a mock OrderInterface object to pass to the format method
         $order = $this->createMock(OrderInterface::class);
         $order->method('getCreatedAt')->willReturn('2022-03-15 12:34:56');
         $order->method('getGrandTotal')->willReturn(99.99);
         $order->method('getEntityId')->willReturn(12345);
-        $order->method('getIncrementId')->willReturn('000000001');
+        $order->method('getIncrementId')->willReturn($id);
         $order->method('getStatus')->willReturn('Complete');
         $order->method('getShippingDescription')->willReturn('Flat Rate - Fixed');
         
@@ -38,10 +38,10 @@ class OrderTest extends TestCase
             'created_at' => '2022-03-15 19:34:56',
             'grand_total' => 99.99,
             'id' => 'MTIzNDU=',
-            'increment_id' => '000000001',
-            'number' => '000000001',
+            'increment_id' => $id,
+            'number' => $id,
             'order_date' => '2022-03-15 19:34:56',
-            'order_number' => '000000001',
+            'order_number' => $id,
             'status' => 'Complete',
             'shipping_method' => 'Flat Rate - Fixed',
             'shipping_address' => null,

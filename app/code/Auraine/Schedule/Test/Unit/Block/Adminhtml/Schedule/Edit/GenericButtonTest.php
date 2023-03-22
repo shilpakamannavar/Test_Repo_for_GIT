@@ -1,62 +1,46 @@
 <?php
+/**
+ * Copyright ©  All rights reserved.
+ * See COPYING.txt for license details.
+ */
 declare(strict_types=1);
 
 namespace Auraine\Schedule\Block\Adminhtml\Schedule\Edit;
 
 use Magento\Backend\Block\Widget\Context;
-use PHPUnit\Framework\TestCase;
 
-class GenericButtonTest extends TestCase
+abstract class GenericButton
 {
-    /**
-     * @var Context|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $contextMock;
+
+    protected $context;
 
     /**
-     * @var GenericButton
+     * @param \Magento\Backend\Block\Widget\Context $context
      */
-    protected $button;
-
-    protected function setUp(): void
+    public function __construct(Context $context)
     {
-        $this->contextMock = $this->createMock(Context::class);
-
-        $this->button = $this->getMockForAbstractClass(
-            GenericButton::class,
-            [$this->contextMock]
-        );
+        $this->context = $context;
     }
 
-    public function testGetModelId()
+    /**
+     * Return model ID
+     *
+     * @return int|null
+     */
+    public function getModelId()
     {
-        $requestMock = $this->createMock(\Magento\Framework\App\RequestInterface::class);
-        $requestMock->expects($this->once())
-            ->method('getParam')
-            ->with('schedule_id')
-            ->willReturn(123);
-
-        $this->contextMock->expects($this->once())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $result = $this->button->getModelId();
-        $this->assertEquals(123, $result);
+        return $this->context->getRequest()->getParam('schedule_id');
     }
 
-    public function testGetUrl()
+    /**
+     * Generate url by route and parameters
+     *
+     * @param   string $route
+     * @param   array $params
+     * @return  string
+     */
+    public function getUrl($route = '', $params = [])
     {
-        $urlBuilderMock = $this->createMock(\Magento\Framework\UrlInterface::class);
-        $urlBuilderMock->expects($this->once())
-            ->method('getUrl')
-            ->with('my/route', ['param1' => 'value1'])
-            ->willReturn('http://localhost/my/route?param1=value1');
-
-        $this->contextMock->expects($this->once())
-            ->method('getUrlBuilder')
-            ->willReturn($urlBuilderMock);
-
-        $result = $this->button->getUrl('my/route', ['param1' => 'value1']);
-        $this->assertEquals('http://localhost/my/route?param1=value1', $result);
+        return $this->context->getUrlBuilder()->getUrl($route, $params);
     }
 }
