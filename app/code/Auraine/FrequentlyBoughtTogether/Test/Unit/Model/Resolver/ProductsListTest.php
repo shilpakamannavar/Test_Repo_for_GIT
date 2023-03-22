@@ -10,14 +10,16 @@ use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
 class ProductsListTest extends TestCase
 {
-      /**
-       * Cache instance
-       *
-       * @var CacheInterface
-       */
+    /**
+     * Cache instance
+     *
+     * @var CacheInterface
+     */
     protected $cacheMock;
 
     /**
@@ -26,24 +28,28 @@ class ProductsListTest extends TestCase
      * @var Json
      */
     protected $jsonMock;
+
     /**
      * Resource Connection instance
      *
      * @var ResourceConnection
      */
     protected $resourceConnectionMock;
+
     /**
      * Uid Encoder instance
      *
      * @var uid
      */
     protected $uidEncoderMock;
+
     /**
      * Resolver instance
      *
      * @var resolver
      */
     private $resolver;
+
     /**
      * Main setUp method for the test
      *
@@ -62,6 +68,65 @@ class ProductsListTest extends TestCase
             $this->resourceConnectionMock,
             $this->uidEncoderMock
         );
+    }
+
+    public function testResove()
+    {
+        $cacheKey = ProductsList::CACHE_KEY_PREFIX.'test';
+        $cacheMock = $this->createMock(CacheInterface::class);
+        $cacheMock->method('load')->with($cacheKey)->willReturn('success');
+        $args = ['uid' => 'abc123'];
+
+        $productUid = $args['uid'];
+
+        $this->uidEncoderMock->method('decode')
+            ->with($productUid)
+            ->willReturn('prod-uid');
+
+        $orderItems = [
+            ['sku' => 'SKU1'],
+            ['sku' => 'SKU2'],
+            ['sku' => 'SKU3'],
+            ['sku' => 'SKU4'],
+            ['sku' => 'SKU5'],
+            ['sku' => 'SKU6'],
+            ['sku' => 'SKU7'],
+            ['sku' => 'SKU8'],
+            ['sku' => 'SKU9'],
+            ['sku' => 'SKU10'],
+            ['sku' => 'SKU11'],
+            ['sku' => 'SKU12'],
+        ];
+    
+        $connection = $this->createMock(\Magento\Framework\DB\Adapter\AdapterInterface::class);
+        $connection->expects($this->once())
+            ->method('getTableName')
+            ->with('sales_order_item')
+            ->willReturn('sales_order_item');
+        $connection->expects($this->once())
+            ->method('fetchAll')
+            ->willReturn($orderItems);
+        $this->resourceConnectionMock->expects($this->once())
+            ->method('getConnection')
+            ->willReturn($connection);
+
+        $this->jsonMock->method('serialize')
+            ->with(
+                ['SKU1','SKU2','SKU3','SKU4','SKU5','SKU6','SKU7','SKU8','SKU9','SKU10','SKU11','SKU12']
+            );
+
+        $this->jsonMock->method('unserialize')
+            ->with('success')
+            ->willReturn(
+                ['SKU1','SKU2','SKU3','SKU4','SKU5','SKU6','SKU7','SKU8','SKU9','SKU10','SKU11','SKU12']
+            );
+
+        $field = $this->createMock(Field::class);
+        $context = [];
+        $info = $this->createMock(ResolveInfo::class);
+        $value = [];
+
+        $this->resolver->resolve($field, $context, $info, $value, $args);
     }
 
     /**

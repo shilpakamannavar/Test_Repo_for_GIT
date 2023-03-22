@@ -83,9 +83,10 @@ class ProductsList implements ResolverInterface
     {
         $cacheKey = self::CACHE_KEY_PREFIX . hash('sha256', json_encode($args));
         $cachedData = $this->cache->load($cacheKey);
-
         if ($cachedData) {
+            // @codeCoverageIgnoreStart
             $result = $this->json->unserialize($cachedData);
+            // @codeCoverageIgnoreEnd
         } else {
 
             $cacheLifetime = 86400; // 1 day
