@@ -14,7 +14,7 @@ jobs:
 
       - name: Set up Azure as remote
         run: |
-          git remote add azure <azure-repo-url>
+          git remote add azure https://abpl@dev.azure.com/abpl/Glamour%20Book/_git/Test_Repo_for_GIT
           git fetch azure
 
       - name: Merge GitHub changes into Azure
@@ -27,5 +27,5 @@ jobs:
           git push azure HEAD:refs/heads/main --force-with-lease
           git push azure --tags
         env:
-          AZURE_REPO_TOKEN: ${{ secrets.AZURE_REPO_TOKEN }}
+          AZURE_REPO_TOKEN: Mp6sncbpgn7yuyuuhdmku3355mgewdmefyafdqqgyjoj3icbskeq
 
