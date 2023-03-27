@@ -5,6 +5,7 @@ on:
     branches: [main]
 
 env:
+  AZURE_REPO_URL: 'https://dev.azure.com/abpl/Glamour%20Book/_git/Test_Repo_for_GIT'
   AZURE_REPO_USERNAME: 'abpl'
   AZURE_REPO_PASSWORD: 'swffcsjgsvamhjldpow3ezie4wtcie4eyl7hzkhvohbihraltenq'
 
@@ -21,13 +22,13 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name "${{ env.AZURE_REPO_USERNAME }}"
-          git config --global user.email "noreply@github.com"
+          git remote add azure $AZURE_REPO_URL
           git config credential.helper store
+          echo "${AZURE_REPO_USERNAME}:${AZURE_REPO_PASSWORD}" > ~/.git-credentials
 
       - name: Push code to Azure Repo
         run: |
-          git remote add azure https://dev.azure.com/abpl/Glamour%20Book/_git/Test_Repo_for_GIT
+          git remote add azure $AZURE_REPO_URL
           git push azure main
           git fetch --all --tags
     
