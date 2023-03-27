@@ -29,5 +29,5 @@ jobs:
           git push azure HEAD:refs/heads/main --force-with-lease
           git push azure --tags
         env:
-          AZURE_REPO_TOKEN: Mp6sncbpgn7yuyuuhdmku3355mgewdmefyafdqqgyjoj3icbskeq
+          AZURE_REPO_TOKEN: swffcsjgsvamhjldpow3ezie4wtcie4eyl7hzkhvohbihraltenq
 
