@@ -16,7 +16,7 @@ jobs:
 
       - name: Set up Azure as remote
         run: |
-          git remote add azure https://dev.azure.com/abpl/Glamour%20Book/_git/Test_Repo_for_GIT
+          git remote add azure https://abpl:mp6sncbpgn7yuyuuhdmku3355mgewdmefyafdqqgyjoj3icbskeq@dev.azure.com/abpl/Glamour%20Book/_git/glamour_book_web 
           git fetch azure
 
       - name: Merge GitHub changes into Azure
