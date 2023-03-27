@@ -26,5 +26,6 @@ jobs:
 
       - name: Push code to Azure Repo
         run: |
-          git remote add azure https://abpl@dev.azure.com/abpl/Glamour%20Book/_git/Test_Repo_for_GIT
-          git push azure main
+          git remote add azure <AZURE_REPO_URL>
+          git fetch --all --tags
+
