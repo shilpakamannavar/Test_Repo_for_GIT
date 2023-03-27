@@ -1,2 +1,4 @@
 PR from master to Main
 upgraded node js to 16.*
+
+Changed to Read - Write permissions
