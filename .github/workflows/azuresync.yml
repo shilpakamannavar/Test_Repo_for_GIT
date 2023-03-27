@@ -1,34 +1,30 @@
-name: GitHub-Azure Sync
+name: Azure Repo Sync
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+env:
+  AZURE_REPO_USERNAME: abpl
+  AZURE_REPO_PASSWORD: swffcsjgsvamhjldpow3ezie4wtcie4eyl7hzkhvohbihraltenq
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          node-version: '16.x'
+          ref: main
 
-      - name: Set up Azure as remote
+      - name: Set up Git
         run: |
-          git remote add azure https://abpl:mp6sncbpgn7yuyuuhdmku3355mgewdmefyafdqqgyjoj3icbskeq@dev.azure.com/abpl/Glamour%20Book/_git/glamour_book_web 
-          git fetch azure
+          git config --global user.name "${{ env.AZURE_REPO_USERNAME }}"
+          git config --global user.email "noreply@github.com"
+          git config credential.helper store
 
-      - name: Merge GitHub changes into Azure
+      - name: Push code to Azure Repo
         run: |
-          git merge origin/main
-          git merge --no-ff --log --no-edit azure/main
-
-      - name: Push changes to Azure
-        run: |
-          git push azure HEAD:refs/heads/main --force-with-lease
-          git push azure --tags
-        env:
-          AZURE_REPO_USERNAMEl: abpl
-          AZURE_REPO_TOKEN: swffcsjgsvamhjldpow3ezie4wtcie4eyl7hzkhvohbihraltenq
-
+          git remote add azure https://abpl@dev.azure.com/abpl/Glamour%20Book/_git/Test_Repo_for_GIT
+          git push azure main
