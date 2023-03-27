@@ -1,1 +1,31 @@
+name: GitHub-Azure Sync
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Azure as remote
+        run: |
+          git remote add azure <azure-repo-url>
+          git fetch azure
+
+      - name: Merge GitHub changes into Azure
+        run: |
+          git merge origin/main
+          git merge --no-ff --log --no-edit azure/main
+
+      - name: Push changes to Azure
+        run: |
+          git push azure HEAD:refs/heads/main --force-with-lease
+          git push azure --tags
+        env:
+          AZURE_REPO_TOKEN: ${{ secrets.AZURE_REPO_TOKEN }}
 
