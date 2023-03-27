@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  AZURE_REPO_USERNAME: abpl
-  AZURE_REPO_PASSWORD: swffcsjgsvamhjldpow3ezie4wtcie4eyl7hzkhvohbihraltenq
+  AZURE_REPO_USERNAME: 'abpl'
+  AZURE_REPO_PASSWORD: 'swffcsjgsvamhjldpow3ezie4wtcie4eyl7hzkhvohbihraltenq'
 
 jobs:
   build:
