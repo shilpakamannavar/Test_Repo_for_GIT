@@ -24,3 +24,5 @@ pivot 7
 pivot 8
 
 Manual
+
+script
